@@ -17,6 +17,7 @@ module.exports = {
         allowEmptyReject: true
       }
     ],
+    'dot-notation': 'off',
     'no-mixed-operators': 1,
     'no-duplicate-case': 2,
     'no-unreachable': 2,

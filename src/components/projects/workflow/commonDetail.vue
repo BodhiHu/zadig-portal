@@ -8,7 +8,7 @@
         @click="startTask"
         class="left"
       >
-        <span class="iconfont iconzhixing">&nbsp;执行</span>
+        <span class="iconfont iconzhixing">&nbsp;Implement</span>
       </el-button>
       <router-link
         v-if="checkPermissionSyncMixin({projectName: projectName, action: 'edit_workflow'})"
@@ -17,7 +17,7 @@
       >
         <span class="iconfont icondeploy edit-setting"></span>
       </router-link>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <span class="middle">
           <span class="permission-disabled iconfont icondeploy edit-setting"></span>
         </span>
@@ -25,18 +25,18 @@
       <div class="right">
         <CusTags :values="stages" class="item"></CusTags>
         <span class="item">
-          <span class="item left">修改人</span>
+          <span class="item left">Modified By</span>
           {{ workflow.update_by || '*' }}
         </span>
         <span class="item">
-          <span class="item left">更新时间</span>
+          <span class="item left">Update Time</span>
           {{ $utils.convertTimestamp(workflow.update_time) }}
         </span>
       </div>
     </el-card>
 
     <el-card class="box-card full" :body-style="{ padding: '0px', margin: '15px 0 30px 0' }">
-      <div slot="header" class="block-title">历史任务</div>
+      <div slot="header" class="block-title">Historical Mission</div>
       <TaskList
         :taskList="workflowTasks"
         :total="total"
@@ -49,7 +49,7 @@
       ></TaskList>
     </el-card>
 
-    <el-dialog :visible.sync="taskDialogVisible" title="运行 通用-工作流" custom-class="run-workflow" width="60%" class="dialog">
+    <el-dialog :visible.sync="taskDialogVisible" title="Run Generic-Workflow" custom-class="run-workflow" width="60%" class="dialog">
       <RunCustomWorkflow
         v-if="taskDialogVisible"
         :workflowName="workflowName"
@@ -145,28 +145,28 @@ export default {
       const workflowID = this.workflowID
       const projectName = this.projectName
       if (this.usedInPolicy.length) {
-        this.$alert(`工作流 ${workflowName} 已在协作模式 ${this.usedInPolicy.join('、')} 中被定义为基准工作流，如需删除请先修改协作模式！`, '删除工作流', {
-          confirmButtonText: '确定',
+        this.$alert(`Workflow ${workflowName} Already in collaborative mode ${this.usedInPolicy.join('、')} Is defined as the baseline workflow，If you need to delete it, please modify the collaboration mode first！`, 'Delete Workflow', {
+          confirmButtonText: 'Sure',
           type: 'warning'
         })
         return
       }
-      this.$prompt('输入工作流名称确认', '删除工作流 ' + workflowName, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Enter workflow name to confirm', 'Delete Workflow ' + workflowName, {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         confirmButtonClass: 'el-button el-button--danger',
         inputValidator: input => {
           if (input === workflowName) {
             return true
           } else if (input === '') {
-            return '请输入工作流名称'
+            return 'Please enter a workflow name'
           } else {
-            return '名称不相符'
+            return 'Name Does Not Match'
           }
         }
       }).then(({ value }) => {
         deleteCommonWorkflowAPI(projectName, workflowID).then(() => {
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
           this.$router.push(`/v1/projects/detail/${this.projectName}/pipelines`)
         })
       })
@@ -181,10 +181,10 @@ export default {
       }
       const stages = []
       if (workflow.sub_tasks.find(item => item.type === 'buildv3')) {
-        stages.push('构建')
+        stages.push('Construct')
       }
       if (workflow.sub_tasks.find(item => item.type === 'trigger')) {
-        stages.push('扩展')
+        stages.push('Expand')
       }
       this.stages = stages
     },
@@ -217,13 +217,13 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: projectName,
           url: `/v1/projects/detail/${projectName}`
         },
         {
-          title: '工作流',
+          title: 'Workflow',
           url: `/v1/projects/detail/${projectName}/pipelines`
         },
         { title: workflowName, url: '' }

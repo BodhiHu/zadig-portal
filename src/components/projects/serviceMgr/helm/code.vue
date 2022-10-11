@@ -7,12 +7,12 @@
             <el-col :span="10">
               <div class="source-dropdown">
                 <el-radio-group v-model="mode" size="mini">
-                  <el-tooltip effect="dark" content="服务管理" placement="top">
+                  <el-tooltip effect="dark" content="Service Management" placement="top">
                     <el-radio-button label="edit">
                       <i class="iconfont iconiconlog"></i>
                     </el-radio-button>
                   </el-tooltip>
-                  <el-tooltip effect="dark" content="服务编排" placement="top">
+                  <el-tooltip effect="dark" content="Service Orchestration" placement="top">
                     <el-radio-button v-hasPermi="{projectName: projectName, action: 'edit_service'}" label="arrange">
                       <i class="iconfont iconvery-sort"></i>
                     </el-radio-button>
@@ -22,13 +22,13 @@
             </el-col>
             <el-col :span="14" class="text-right">
               <div style="line-height: 32px;">
-                <el-tooltip effect="dark" content="从代码库同步" placement="top">
+                <el-tooltip effect="dark" content="Sync From Codebase" placement="top">
                   <el-button v-hasPermi="{type:'project', projectName: projectName, action: 'create_service',isBtn:true}" size="mini" icon="iconfont icon icongit" @click="openRepoModal('git')" plain circle></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="从 Chart 仓库同步" placement="top">
+                <el-tooltip effect="dark" content="From Chart Warehouse synchronization" placement="top">
                   <el-button v-hasPermi="{type:'project', projectName: projectName, action: 'create_service',isBtn:true}" @click="openRepoModal('chart')" size="mini" icon="iconfont icon iconhelmrepo" plain circle></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="使用模板新建" placement="top">
+                <el-tooltip effect="dark" content="Create new using template" placement="top">
                   <el-button v-hasPermi="{type:'project', projectName: projectName, action: 'create_service',isBtn:true}" @click="openRepoModal('chartTemplate')" size="mini" icon="iconfont icon iconvery-template" plain circle></el-button>
                 </el-tooltip>
               </div>
@@ -52,7 +52,7 @@
             :autoShowValuesYaml="autoShowValuesYaml"
           />
           <div class="bottom">
-            <el-input v-model="searchService" placeholder="搜索服务" suffix-icon="el-icon-search" size="small"></el-input>
+            <el-input v-model="searchService" placeholder="Search Service" suffix-icon="el-icon-search" size="small"></el-input>
           </div>
         </div>
         <order class="left-tree" v-show="mode === 'arrange'"></order>
@@ -88,12 +88,12 @@
             class="service-editor-content"
           />
           <div class="modal-block" v-if="currentCode.type==='file' && currentCode.source==='chartTemplate' && showModal">
-            <el-button type="primary" size="small" @click="showModal = false">预览</el-button>
+            <el-button type="primary" size="small" @click="showModal = false">Preview</el-button>
           </div>
         </div>
         <div class="footer" v-if="!isCreate">
-          <!-- <el-button size="small" type="primary" @click="commit" :disabled="!commitCache.length">保存</el-button> -->
-          <el-button v-hasPermi="{projectName: projectName, action:'manage_environment',isBtn:true}" size="small" type="primary" :disabled="!updateEnv.length || !envNameList.length" @click="update()">加入环境</el-button>
+          <!-- <el-button size="small" type="primary" @click="commit" :disabled="!commitCache.length">Save</el-button> -->
+          <el-button v-hasPermi="{projectName: projectName, action:'manage_environment',isBtn:true}" size="small" type="primary" :disabled="!updateEnv.length || !envNameList.length" @click="update()">Join The Environment</el-button>
         </div>
       </div>
       <MultipaneResizer class="multipane-resizer" v-if="service && service.length" />
@@ -104,14 +104,14 @@
     </Multipane>
     <UpdateHelmEnv v-model="updateHelmEnvDialogVisible" :chartInfo="chartInfo" />
     <el-dialog
-      :title="currentService ? '更新服务' : '新建服务'"
+      :title="currentService ? 'Update Service' : 'New Service'"
       :visible="dialogVisible"
       center
       @close="closeSelectRepo"
       custom-class="dialog-source"
     >
       <Repo ref="repo" @triggleAction="changeExpandFileList('clear');clearCommitCache()" />
-      <!-- 代码库弹窗 -->
+      <!-- Codebase Popup -->
     </el-dialog>
   </div>
 </template>
@@ -288,10 +288,10 @@ export default {
       }
     },
     async deleteServer (currentData) {
-      const deleteText = `确定要删除 ${currentData.service_name} 这个服务吗？`
-      this.$confirm(`${deleteText}`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const deleteText = `Sure You Want To Delete ${currentData.service_name} Is This Service？`
+      this.$confirm(`${deleteText}`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         this.page.expandFileList = []
@@ -450,11 +450,11 @@ export default {
       this.nodeData = cloneDeep(value)
       if (value.length === 0) {
         // const item = {
-        //   id: '导入项目',
+        //   id: 'Import Project',
         //   type: 'components',
         //   componentsName: 'Repo',
-        //   label: '导入项目',
-        //   name: '导入项目',
+        //   label: 'Import Project',
+        //   name: 'Import Project',
         // }
         // this.changeExpandFileList('add', item)
       } else {

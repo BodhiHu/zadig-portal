@@ -1,13 +1,13 @@
 <template>
-  <div class="create-product-detail-container" v-loading="loading" element-loading-text="正在加载中" element-loading-spinner="el-icon-loading">
+  <div class="create-product-detail-container" v-loading="loading" element-loading-text="Loading" element-loading-spinner="el-icon-loading">
     <div v-if="$utils.isEmpty(this.containerMap) && !loading" class="no-resources">
       <img src="@assets/icons/illustration/environment.svg" alt />
       <div class="description">
         <p>
-          该环境暂无服务，请点击
+          This environment is currently out of service，Please Click
           <router-link :to="`/v1/projects/detail/${projectName}/services`">
-            <el-button type="primary" size="mini" round plain>服务</el-button>
-          </router-link>新建服务
+            <el-button type="primary" size="mini" round plain>Serve</el-button>
+          </router-link>New Service
         </p>
       </div>
     </div>
@@ -21,34 +21,34 @@
         :rules="rules"
         inline-message
       >
-        <el-form-item label="环境名称" prop="env_name">
+        <el-form-item label="Environment Name" prop="env_name">
           <el-input @input="changeEnvName" v-model="projectConfig.env_name" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="创建方式" prop="source" v-if="!createShare">
-          <el-select class="select" @change="changeCreateMethod" v-model="projectConfig.source" size="small" placeholder="请选择环境类型">
-            <el-option label="新建" value="system"></el-option>
-            <el-option label="复制" value="copy"></el-option>
-            <el-option v-if="currentProductDeliveryVersions.length > 0" label="回溯" value="versionBack"></el-option>
+        <el-form-item label="How To Create" prop="source" v-if="!createShare">
+          <el-select class="select" @change="changeCreateMethod" v-model="projectConfig.source" size="small" placeholder="Please select an environment type">
+            <el-option label="New" value="system"></el-option>
+            <el-option label="Copy" value="copy"></el-option>
+            <el-option v-if="currentProductDeliveryVersions.length > 0" label="Backtracking" value="versionBack"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="projectConfig.source==='copy'" label="复制来源" prop="base_env_name">
-          <el-select @change="changeSourceEnv" placeholder="请选择环境" size="small" v-model="projectConfig.base_env_name" value-key="version">
+        <el-form-item v-if="projectConfig.source==='copy'" label="Copy From" prop="base_env_name">
+          <el-select @change="changeSourceEnv" placeholder="Please select an environment" size="small" v-model="projectConfig.base_env_name" value-key="version">
             <el-option v-for="(item,index) in envNameList" :key="index" :label="item.name" :value="item.name"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="projectConfig.source==='versionBack'" label="选择版本">
-          <el-select @change="changeSelectValue" placeholder="请选择版本" size="small" v-model="selection" value-key="version">
+        <el-form-item v-if="projectConfig.source==='versionBack'" label="Select Version">
+          <el-select @change="changeSelectValue" placeholder="Please Select A Version" size="small" v-model="selection" value-key="version">
             <el-option
               v-for="(item,index) in currentProductDeliveryVersions"
               :key="index"
               :disabled="!item.versionInfo.productEnvInfo"
-              :label="`版本号：${item.versionInfo.version} 创建时间：${$utils.convertTimestamp(item.versionInfo.created_at)} 创建人：${item.versionInfo.createdBy}`"
+              :label="`Version Number：${item.versionInfo.version} Creation Time：${$utils.convertTimestamp(item.versionInfo.created_at)} Founder：${item.versionInfo.createdBy}`"
               :value="item.versionInfo"
             ></el-option>
           </el-select>
         </el-form-item>
-        <div class="primary-title">资源选择</div>
-        <el-form-item label="K8s 集群" prop="cluster_id" class="secondary-label">
+        <div class="primary-title">Resource Selection</div>
+        <el-form-item label="K8s Cluster" prop="cluster_id" class="secondary-label">
           <el-select
             class="select"
             filterable
@@ -56,13 +56,13 @@
             v-model="projectConfig.cluster_id"
             size="small"
             :disabled="createShare"
-            placeholder="请选择 K8s 集群"
+            placeholder="Please Choose K8s Cluster"
           >
             <el-option v-for="cluster in allCluster" :key="cluster.id" :label="$utils.showClusterName(cluster)" :value="cluster.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item
-          label="K8s 命名空间"
+          label="K8s Namespaces"
           v-if="projectConfig.source==='system'||projectConfig.source==='copy'"
           prop="defaultNamespace"
           class="secondary-label"
@@ -71,7 +71,7 @@
             v-model="projectConfig.defaultNamespace"
             :disabled="editButtonDisabled"
             size="small"
-            placeholder="选择或自定义命名空间"
+            placeholder="Choose or customize the namespace"
             filterable
             allow-create
             clearable
@@ -82,10 +82,10 @@
           <span class="editButton" @click="editButtonDisabled = !editButtonDisabled">
             <i :class="[editButtonDisabled ? 'el-icon-edit-outline': 'el-icon-finished' ]"></i>
           </span>
-          <span class="ns-desc" v-show="nsIsExisted">Zadig 中定义的服务将覆盖所选命名空间中的同名服务，请谨慎操作！</span>
+          <span class="ns-desc" v-show="nsIsExisted">Zadig Services defined in will override services of the same name in the selected namespace，Please proceed with caution！</span>
         </el-form-item>
-        <el-form-item label="镜像仓库" class="secondary-label">
-          <el-select class="select" v-model.trim="projectConfig.registry_id" placeholder="请选择镜像仓库" size="small" @change="getImages">
+        <el-form-item label="Mirror Repository" class="secondary-label">
+          <el-select class="select" v-model.trim="projectConfig.registry_id" placeholder="Please select a mirror repository" size="small" @change="getImages">
             <el-option
               v-for="registry in imageRegistry"
               :key="registry.id"
@@ -94,12 +94,12 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="服务选择" v-if="projectConfig.source==='system'||projectConfig.source==='copy'" prop="selectedService">
+        <el-form-item label="Service Selection" v-if="projectConfig.source==='system'||projectConfig.source==='copy'" prop="selectedService">
           <div class="select-service">
-            <el-select v-model="projectConfig.selectedService" size="small" placeholder="选择服务" filterable clearable multiple collapse-tags>
+            <el-select v-model="projectConfig.selectedService" size="small" placeholder="Select Service" filterable clearable multiple collapse-tags>
               <el-option
                 disabled
-                label="全选"
+                label="Select All"
                 value="ALL"
                 :class="{selected: projectConfig.selectedService.length === serviceNames.length}"
                 style="color: #606266;"
@@ -107,11 +107,11 @@
                 <span
                   style=" display: inline-block; width: 100%; font-weight: normal; cursor: pointer;"
                   @click="projectConfig.selectedService = serviceNames"
-                >全选</span>
+                >Select All</span>
               </el-option>
               <el-option v-for="serviceName in serviceNames" :key="serviceName" :label="serviceName" :value="serviceName"></el-option>
             </el-select>
-            <el-button size="mini" plain @click="projectConfig.selectedService = []">清空</el-button>
+            <el-button size="mini" plain @click="projectConfig.selectedService = []">Empty</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -121,21 +121,21 @@
         class="common-parcel-block box-card-service"
       >
         <div class="primary-title">
-          变量列表
+          Variable List
           <VariablePreviewEditor :services="previewServices" :projectName="projectConfig.product_name" :variables="variables" />
         </div>
         <VarList :variables="variables" :rollbackMode="rollbackMode" />
       </div>
       <div v-if="projectConfig.source==='system'||projectConfig.source==='copy'" class="common-parcel-block">
-        <div class="primary-title">服务列表</div>
+        <div class="primary-title">Service List</div>
         <div>
           <div v-if="projectConfig.source==='system'" class="service-filter-block">
             <span class="service-filter">
-              快速过滤:
+              Quick Filter:
               <el-tooltip class="img-tooltip" effect="dark" placement="top">
                 <div slot="content">
-                  智能选择会优先选择最新的容器镜像，如果在 Registry
-                  <br />下不存在该容器镜像，则会选择模板中的默认镜像进行填充
+                  Smart selection will give preference to the latest container image，If In Registry
+                  <br />The container image does not exist under，The default image in the template will be selected for filling
                 </div>
                 <i class="el-icon-info"></i>
               </el-tooltip>
@@ -144,11 +144,11 @@
                 size="small"
                 class="img-select"
                 v-model="quickSelection"
-                placeholder="请选择"
+                placeholder="Please Choose"
                 @change="quickInitImage"
               >
-                <el-option label="全容器-智能选择镜像" value="latest"></el-option>
-                <el-option label="全容器-全部默认镜像" value="default"></el-option>
+                <el-option label="Full Container-Smart Select Mirror" value="latest"></el-option>
+                <el-option label="Full Container-All Default Images" value="default"></el-option>
               </el-select>
             </span>
           </div>
@@ -188,13 +188,13 @@
       </div>
       <el-form label-width="35%" class="ops">
         <el-form-item>
-          <el-button @click="$router.back()" :loading="startDeployLoading" size="medium">取消</el-button>
-          <el-button @click="deployK8sEnv" :loading="startDeployLoading" type="primary" size="medium">立即创建</el-button>
+          <el-button @click="$router.back()" :loading="startDeployLoading" size="medium">Cancel</el-button>
+          <el-button @click="deployK8sEnv" :loading="startDeployLoading" type="primary" size="medium">Create Now</el-button>
         </el-form-item>
       </el-form>
       <footer v-if="startDeployLoading" class="create-footer">
         <div class="description">
-          <el-tag type="primary">正在创建环境中....</el-tag>
+          <el-tag type="primary">Creating Environment....</el-tag>
         </div>
         <div class="deploy-loading">
           <div class="spinner__item1"></div>
@@ -230,10 +230,10 @@ import { serviceTypeMap } from '@utils/wordTranslate'
 
 const validateEnvName = (rule, value, callback) => {
   if (typeof value === 'undefined' || value === '') {
-    callback(new Error('填写环境名称'))
+    callback(new Error('Fill in the environment name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('环境名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('Environment names only support lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -273,24 +273,24 @@ export default {
       serviceTypeMap,
       rules: {
         cluster_id: [
-          { required: true, trigger: 'change', message: '请选择 K8s 集群' }
+          { required: true, trigger: 'change', message: 'Please Choose K8s Cluster' }
         ],
         source: [
-          { required: true, trigger: 'change', message: '请选择环境类型' }
+          { required: true, trigger: 'change', message: 'Please select an environment type' }
         ],
         defaultNamespace: [
-          { required: true, trigger: 'change', message: '命名空间不能为空' }
+          { required: true, trigger: 'change', message: 'Namespace cannot be empty' }
         ],
         env_name: [
           { required: true, trigger: 'change', validator: validateEnvName }
         ],
         base_env_name: [
-          { required: true, trigger: 'change', message: '请选择来源' }
+          { required: true, trigger: 'change', message: 'Please Select A Source' }
         ],
         selectedService: {
           type: 'array',
           required: true,
-          message: '请选择服务',
+          message: 'Please Select A Service',
           trigger: 'change'
         }
       },
@@ -664,7 +664,7 @@ export default {
     deployK8sEnv () {
       this.$refs.createEnvRef.validate(valid => {
         if (valid) {
-          // 同名至少要选一个
+          // At least one with the same name must be selected
           for (const name in this.containerMap) {
             let atLeastOnePicked = false
             const typeServiceMap = this.containerMap[name]
@@ -675,7 +675,7 @@ export default {
               }
             }
             if (!atLeastOnePicked) {
-              this.$message.warning(`每个服务至少要选择一种，${name} 未勾选`)
+              this.$message.warning(`Choose at least one of each service，${name} Unchecked`)
               return
             }
           }
@@ -697,7 +697,7 @@ export default {
                 }
                 for (const con of ser.containers) {
                   if (!con.image) {
-                    this.$message.warning(`${con.name}未选择镜像`)
+                    this.$message.warning(`${con.name}Mirror Not Selected`)
                     return
                   }
                 }
@@ -748,7 +748,7 @@ export default {
                 const envName = payload.env_name
                 this.startDeployLoading = false
                 this.$message({
-                  message: '创建环境成功',
+                  message: 'Created the environment successfully',
                   type: 'success'
                 })
                 this.$router.push(
@@ -796,15 +796,15 @@ export default {
       title: '',
       breadcrumb: [
         {
-          title: '项目',
+          title: 'Project',
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
           title: `${this.projectName}`,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '环境', url: '' },
-        { title: this.createShare ? '创建子环境' : '创建环境', url: '' }
+        { title: 'Surroundings', url: '' },
+        { title: this.createShare ? 'Create A Subenvironment' : 'Create An Environment', url: '' }
       ]
     })
     this.getVersionList()

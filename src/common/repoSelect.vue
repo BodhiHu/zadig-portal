@@ -1,7 +1,7 @@
 <template>
   <el-form ref="buildRepo" :inline="true" :model="config" class="form-style" label-position="top" label-width="80px">
-    <el-tooltip content="在执行工作流任务时系统根据配置克隆代码到工作目录" placement="right">
-      <div class="item-title">{{title?title:'代码信息'}}</div>
+    <el-tooltip content="When executing a workflow task, the system clones the code to the working directory according to the configuration" placement="right">
+      <div class="item-title">{{title?title:'Code Information'}}</div>
     </el-tooltip>
     <el-button
       v-if="config.repos.length===0"
@@ -9,20 +9,20 @@
       @click="addFirstBuildRepo()"
       type="primary"
       plain
-    >新增</el-button>
+    >New</el-button>
     <div v-if="showDivider" class="divider item"></div>
     <div v-for="(repo,repo_index) in config.repos" :key="repo_index">
       <el-row class="repo-select">
         <el-col :span="showAdvanced || showTrigger ?4:5">
           <el-form-item
-            :label="repo_index === 0 ? (shortDescription?'平台':'代码源') : ''"
+            :label="repo_index === 0 ? (shortDescription?'Platform':'Code Source') : ''"
             :prop="'repos.' + repo_index + '.codehost_id'"
-            :rules="{required: true, message: '平台不能为空', trigger: ['blur', 'change']}"
+            :rules="{required: true, message: 'Platform Cannot Be Empty', trigger: ['blur', 'change']}"
           >
             <el-select
               v-model="config.repos[repo_index].codehost_id"
               size="small"
-              placeholder="请选择代码源"
+              placeholder="Please select a code source"
               @change="getRepoOwnerById(repo_index,config.repos[repo_index].codehost_id,'',repo)"
               filterable
             >
@@ -39,11 +39,11 @@
         </el-col>
         <el-col :span="showAdvanced || showTrigger ?4:5" >
           <el-form-item
-            :label="repo_index === 0 ?'组织名/用户名' : ''"
+            :label="repo_index === 0 ?'Organization Name/Username' : ''"
             :prop="'repos.' + repo_index + '.repo_owner'"
-            :rules="{required: true, message: '组织名/用户名不能为空', trigger: ['blur', 'change']}"
+            :rules="{required: true, message: 'Organization Name/Username can not be empty', trigger: ['blur', 'change']}"
           >
-            <el-input v-if="repo.source==='other'"  v-model.trim="config.repos[repo_index]['repo_owner']" placeholder="请输入" size="small"></el-input>
+            <el-input v-if="repo.source==='other'"  v-model.trim="config.repos[repo_index]['repo_owner']" placeholder="Please Enter" size="small"></el-input>
             <el-select
               v-else
               @change="getRepoNameById(repo_index,config.repos[repo_index].codehost_id,config.repos[repo_index]['repo_owner'])"
@@ -51,11 +51,11 @@
               remote
               :remote-method="(query)=>{searchNamespace(repo_index,query)}"
               @clear="searchNamespace(repo_index,'')"
-              loading-text="加载中，支持手动创建"
+              loading-text="Loading，Support Manual Creation"
               allow-create
               clearable
               size="small"
-              placeholder="组织名/用户名"
+              placeholder="Organization Name/Username"
               :loading="codeInfo[repo_index].loading.owner"
               filterable
             >
@@ -70,11 +70,11 @@
         </el-col>
         <el-col :span="showAdvanced || showTrigger ?4:5" >
           <el-form-item
-            :label="repo_index === 0 ? (shortDescription?'名称':'代码库名称') : ''"
+            :label="repo_index === 0 ? (shortDescription?'Name':'Codebase Name') : ''"
             :prop="'repos.' + repo_index + '.repo_name'"
-            :rules="{required: true, message: '名称不能为空', trigger: ['blur', 'change']}"
+            :rules="{required: true, message: 'Name Is Required', trigger: ['blur', 'change']}"
           >
-            <el-input v-if="repo.source==='other'"  v-model.trim="config.repos[repo_index]['repo_name']" placeholder="请输入" size="small"></el-input>
+            <el-input v-if="repo.source==='other'"  v-model.trim="config.repos[repo_index]['repo_name']" placeholder="Please Enter" size="small"></el-input>
             <el-select
               v-else
               @change="getBranchInfoById(repo_index,config.repos[repo_index].codehost_id,config.repos[repo_index].repo_owner,config.repos[repo_index].repo_name,'',config.repos[repo_index])"
@@ -82,11 +82,11 @@
               remote
               :remote-method="(query)=>{searchProject(repo_index,query)}"
               @clear="searchProject(repo_index,'')"
-              loading-text="加载中，支持手动创建"
+              loading-text="Loading，Support Manual Creation"
               allow-create
               clearable
               size="small"
-              placeholder="请选择代码库"
+              placeholder="Please select a repository"
               :loading="codeInfo[repo_index].loading.repo"
               filterable
             >
@@ -101,17 +101,17 @@
         </el-col>
         <el-col :span="showAdvanced || showTrigger ?4:5 " >
           <el-form-item
-            :label="repo_index === 0 ? (shortDescription?'分支':'默认分支') : ''"
+            :label="repo_index === 0 ? (shortDescription?'Branch':'Default Branch') : ''"
             :prop="'repos.' + repo_index + '.branch'"
-            :rules="{required: true, message: '分支不能为空', trigger: ['blur', 'change']}"
+            :rules="{required: true, message: 'Branch Cannot Be Empty', trigger: ['blur', 'change']}"
           >
-          <el-input v-if="repo.source==='other'"  v-model.trim="config.repos[repo_index]['branch']" placeholder="请输入" size="small"></el-input>
+          <el-input v-if="repo.source==='other'"  v-model.trim="config.repos[repo_index]['branch']" placeholder="Please Enter" size="small"></el-input>
            <el-select
               v-else
               v-model.trim="config.repos[repo_index].branch"
-              placeholder="请选择"
+              placeholder="Please Choose"
               size="small"
-              loading-text="加载中，支持手动创建"
+              loading-text="Loading，Support Manual Creation"
               filterable
               remote
               :remote-method="(query)=>{searchBranch(repo_index,query)}"
@@ -130,7 +130,7 @@
           </el-form-item>
         </el-col>
         <el-col v-if="showAdvanced" :span="3">
-          <el-form-item :label="repo_index === 0 ? '高级':''">
+          <el-form-item :label="repo_index === 0 ? 'Advanced':''">
             <div class="app-operation">
               <el-button
                 type="primary"
@@ -140,7 +140,7 @@
                 v-if="!showAdvancedSetting[repo_index]"
                 @click="$set(showAdvancedSetting,repo_index,true)"
               >
-                展开
+                Expand
                 &#x3E;
               </el-button>
               <el-button
@@ -151,17 +151,17 @@
                 v-if="showAdvancedSetting[repo_index]"
                 @click="$set(showAdvancedSetting,repo_index,false)"
               >
-                收起
+                Put Away
                 &#x3C;
               </el-button>
             </div>
           </el-form-item>
         </el-col>
         <el-col v-if="showTrigger" :span="3">
-          <el-form-item :label="repo_index === 0 ? '启用触发器': ''">
+          <el-form-item :label="repo_index === 0 ? 'Enable Trigger': ''">
             <span slot="label">
-              <span>启用触发器</span>
-              <el-tooltip effect="dark" content="代码仓库的 Git Pull Request 以及 Git Push 事件会触发工作流执行，可以在后续的配置中进行修改" placement="top">
+              <span>Enable Trigger</span>
+              <el-tooltip effect="dark" content="Code Repository Git Pull Request As Well As Git Push Events trigger workflow execution，Can be modified in subsequent configurations" placement="top">
                 <i class="pointer el-icon-question"></i>
               </el-tooltip>
             </span>
@@ -169,7 +169,7 @@
           </el-form-item>
         </el-col>
         <el-col v-if="!showJustOne" :span="showAdvanced || showTrigger ?5:4 ">
-          <el-form-item :label="repo_index === 0 ? '操作':''">
+          <el-form-item :label="repo_index === 0 ? 'Operate':''">
             <div class="app-operation">
               <el-button
                 v-if="config.repos.length >= 1"
@@ -196,16 +196,16 @@
       <el-row v-if="showAdvancedSetting[repo_index]" style="padding: 4px; background-color: rgb(246, 246, 246, 0.5); border-radius: 6px;">
         <el-col :span="6">
           <el-form-item label="Remote name">
-            <el-input v-model="repo.remote_name" size="small" placeholder="请输入"></el-input>
+            <el-input v-model="repo.remote_name" size="small" placeholder="Please Enter"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <el-form-item label="克隆目录名">
-            <el-input v-model="repo.checkout_path" size="small" placeholder="请输入"></el-input>
+          <el-form-item label="Clone Directory Name">
+            <el-input v-model="repo.checkout_path" size="small" placeholder="Please Enter"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="4" style="margin-left: 4px;">
-          <el-form-item label="子模块">
+          <el-form-item label="Submodule">
             <el-switch v-model="repo.submodules"></el-switch>
           </el-form-item>
         </el-col>
@@ -254,7 +254,7 @@ export default {
     title: {
       required: false,
       type: String,
-      default: '代码信息'
+      default: 'Code Information'
     },
     addBtnMini: {
       required: false,

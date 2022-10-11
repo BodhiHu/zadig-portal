@@ -9,23 +9,23 @@
       @keydown.enter.native="$emit('submitEvent')"
       @submit.native.prevent
     >
-      <el-form-item label="阶段名称" prop="name">
+      <el-form-item label="Stage Name" prop="name">
         <el-input v-model="form.name" size="small"></el-input>
       </el-form-item>
-      <el-form-item label="并发执行" prop="parallel">
+      <el-form-item label="Concurrent Execution" prop="parallel">
         <el-switch v-model="form.parallel" size="small"></el-switch>
       </el-form-item>
-      <el-form-item label="前置步骤"></el-form-item>
-      <el-form-item label="人工审核" prop="approval.enabled" v-if="form.approval">
+      <el-form-item label="Pre Step"></el-form-item>
+      <el-form-item label="Manual Review" prop="approval.enabled" v-if="form.approval">
         <el-switch v-model="form.approval.enabled" size="small"></el-switch>
       </el-form-item>
       <div v-if="form.approval.enabled">
-        <el-form-item label="超时时间" prop="approval.timeout">
+        <el-form-item label="Overtime Time" prop="approval.timeout">
           <el-input v-model.number="form.approval.timeout" size="small" type="number" :min="0">
-            <span slot="suffix">分钟</span>
+            <span slot="suffix">Minute</span>
           </el-input>
         </el-form-item>
-        <el-form-item label="审核人">
+        <el-form-item label="Reviewer">
           <el-select
             size="small"
             v-model="form.approval.approve_users"
@@ -33,7 +33,7 @@
             filterable
             remote
             reserve-keyword
-            placeholder="请输入关键词"
+            placeholder="Please Enter A Keyword"
             :remote-method="getUserList"
             :loading="loading"
             value-key="user_id"
@@ -47,11 +47,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="需要审核人数">
+        <el-form-item label="Number of people to review">
           <el-input v-model.number="form.approval.needed_approvers" type="number" :min="0" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.approval.description" placeholder="审核通过后才可继续执行" size="small"></el-input>
+        <el-form-item label="Describe">
+          <el-input v-model="form.approval.description" placeholder="Continue to execute after approval" size="small"></el-input>
         </el-form-item>
       </div>
     </el-form>
@@ -134,9 +134,9 @@ export default {
     validateName (rule, value, callback) {
       const stageNames = rule.workflowInfo.stages.map(stage => stage.name)
       if (!value) {
-        callback(new Error('请填写阶段名称'))
+        callback(new Error('Please fill in the stage name'))
       } else if (this.type === 'add' && stageNames.includes(value)) {
-        callback(new Error('阶段名称不能重复'))
+        callback(new Error('Stage name cannot be repeated'))
       } else {
         callback()
       }

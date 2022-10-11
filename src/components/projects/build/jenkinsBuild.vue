@@ -2,7 +2,7 @@
   <section class="jenkins-build-container" :class="{'small-padding': mini}">
     <el-form ref="jenkinsForm" :model="jenkinsBuild" label-position="left" class="primary-form" label-width="120px" inline-message>
       <slot name="origin"></slot>
-      <el-form-item label="Jenkins 选择">
+      <el-form-item label="Jenkins Choose">
         <el-select v-model="jenkinsBuild.jenkins_build.jenkins_id" size="small" value-key="key" filterable>
           <el-option
             v-for="(item,index) in jenkinsList"
@@ -13,16 +13,16 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="构建名称"
+        label="Build Name"
         prop="name"
         :rules="[
-              { required: true, message: '构建名称不能为空', trigger: ['blur', 'change'] },
+              { required: true, message: 'Build name cannot be empty', trigger: ['blur', 'change'] },
               { validator: validName, trigger: ['blur', 'change'] }
             ]"
       >
-        <el-input v-model="jenkinsBuild.name" placeholder="构建名称" autofocus size="small" :disabled="!isCreate" auto-complete="off"></el-input>
+        <el-input v-model="jenkinsBuild.name" placeholder="Build Name" autofocus size="small" :disabled="!isCreate" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="服务选择">
+      <el-form-item label="Service Selection">
         <el-select v-model="jenkinsBuild.targets" multiple size="small" value-key="key" filterable>
           <el-option
             v-for="(service,index) in serviceTargets"
@@ -32,20 +32,20 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Jenkins Job" prop="jenkins_build.job_name" :rules="[{ required: true, trigger: 'change', message: 'jobs不能为空' }]">
+      <el-form-item label="Jenkins Job" prop="jenkins_build.job_name" :rules="[{ required: true, trigger: 'change', message: 'jobsCan Not Be Empty' }]">
         <el-select v-model="jenkinsBuild.jenkins_build.job_name" size="small" value-key="key" @change="changeJobName" filterable>
           <el-option v-for="(item,index) in jenkinsJobList" :key="index" :label="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="构建超时">
+      <el-form-item label="Build Timeout">
         <el-input-number size="mini" :min="1" v-model="jenkinsBuild.timeout"></el-input-number>
-        <span>分钟</span>
+        <span>Minute</span>
       </el-form-item>
-      <span class="item-title">构建参数</span>
+      <span class="item-title">Build Parameters</span>
       <el-alert
         class="description"
         show-icon
-        title="Jenkins Build Parameters 中必须存在“IMAGE”变量，作为构建镜像的名称，Jenkins 成功构建镜像后，部署阶段会使用该镜像更新服务"
+        title="Jenkins Build Parameters Must Exist In“IMAGE”Variable，As the name of the build image，Jenkins After successfully building the image，The deployment phase will use this image to update the service"
         :closable="false"
         type="warning"
       ></el-alert>
@@ -61,10 +61,10 @@ import EnvVariable from './envVariable.vue'
 
 const validName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入构建名称'))
+    callback(new Error('Please enter a build name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -129,7 +129,7 @@ export default {
         )
       ) {
         this.$message.error(
-          'Jenkins Build Parameters 中必须存在“IMAGE”变量，作为构建镜像的名称，Jenkins 成功构建镜像后，部署阶段会使用该镜像更新服务'
+          'Jenkins Build Parameters Must Exist In“IMAGE”Variable，As the name of the build image，Jenkins After successfully building the image，The deployment phase will use this image to update the service'
         )
         return Promise.reject()
       }
@@ -151,7 +151,7 @@ export default {
         this.transformParams(res)
       }
     },
-    // 变量组件需要envs参数 转换envs参数
+    // Variable component requiredenvsParameter ConversionenvsParameter
     transformParams (jenkins_build_params) {
       this.jenkinsBuild.jenkins_build.jenkins_build_params = jenkins_build_params.map(item => {
         item.key = item.name

@@ -5,44 +5,44 @@
       <div class="aside-bar">
         <div class="tabs__wrap tabs__wrap_vertical">
           <div class="tabs__item" :class="{'selected': selected === 'var'}" @click="changeRoute('var')">
-            <span class="step-name">镜像更新</span>
+            <span class="step-name">Mirror Update</span>
           </div>
           <div class="tabs__item" :class="{'selected': selected === 'policy'}" @click="changeRoute('policy')">
-            <span class="step-name">策略</span>
+            <span class="step-name">Strategy</span>
           </div>
           <div class="tabs__item" :class="{'selected': selected === 'help'}" @click="changeRoute('help')">
-            <span class="step-name">帮助</span>
+            <span class="step-name">Help</span>
           </div>
         </div>
       </div>
       <div class="aside__content">
         <div v-if="selected === 'var'" class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">镜像更新</div>
+            <div class="service-aside-box__title">Mirror Update</div>
           </header>
           <div class="service-aside-box__content">
             <h4>
               <span>
                 <i class="iconfont iconfuwu"></i>
-              </span> 检测到的服务组件
+              </span> Detected service components
               <el-tooltip effect="dark" placement="top">
-                <div slot="content">values.yaml 中可被更新的镜像</div>
+                <div slot="content">values.yaml Mirrors that can be updated in</div>
                 <span>
                   <i class="el-icon-question"></i>
                 </span>
               </el-tooltip>
-              <el-button type="text" size="small" @click="updateMatchRuleFlag = true">更新匹配规则</el-button>
+              <el-button type="text" size="small" @click="updateMatchRuleFlag = true">Update Matching Rules</el-button>
             </h4>
             <el-table :data="serviceModules" stripe style="width: 100%;">
-              <el-table-column prop="name" label="服务组件"></el-table-column>
-              <el-table-column prop="image_name" label="镜像名"></el-table-column>
-              <el-table-column prop="image" label="当前镜像版本"></el-table-column>
-              <el-table-column label="构建信息/操作">
+              <el-table-column prop="name" label="Service Component"></el-table-column>
+              <el-table-column prop="image_name" label="Mirror Name"></el-table-column>
+              <el-table-column prop="image" label="Current Image Version"></el-table-column>
+              <el-table-column label="Build Information/Operate">
                 <template slot-scope="scope">
                   <div v-for="(buildName, index) in scope.row.build_names" :key="index">
                     <span class="build-name" @click="editBuild(scope.row.name, buildName)">{{ buildName }}</span>
                   </div>
-                  <el-button v-hasPermi="{projectName: projectName, action: 'create_build',isBtn:true}" size="small" type="text" @click="addBuild(scope.row.name, scope.row.build_names)">添加构建</el-button>
+                  <el-button v-hasPermi="{projectName: projectName, action: 'create_build',isBtn:true}" size="small" type="text" @click="addBuild(scope.row.name, scope.row.build_names)">Add Build</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -51,29 +51,29 @@
             <h4>
               <span>
                 <i class="iconfont iconfuwu"></i>
-              </span> Helm Release 名称配置
+              </span> Helm Release Name Configuration
             </h4>
             <div class="release-name-config">
               <span class="title">
-                Release 名称
+                Release Name
                 <el-tooltip effect="dark" placement="top">
                   <div slot="content">
-                    <span>支持如下内置变量和常量：</span>
+                    <span>The following built-in variables and constants are supported：</span>
                     <br />
                     <span>
-                      <span style="display: inline-block; width: 100px;">$Product$</span>项目名称
+                      <span style="display: inline-block; width: 100px;">$Product$</span>Project Name
                     </span>
                     <br />
                     <span>
-                      <span style="display: inline-block; width: 100px;">$Service$</span>服务名称
+                      <span style="display: inline-block; width: 100px;">$Service$</span>Service Name
                     </span>
                     <br />
                     <span>
-                      <span style="display: inline-block; width: 100px;">$Namespace$</span>命名空间
+                      <span style="display: inline-block; width: 100px;">$Namespace$</span>Namespaces
                     </span>
                     <br />
                     <span>
-                      <span style="display: inline-block; width: 100px;">$EnvName$</span>环境名称
+                      <span style="display: inline-block; width: 100px;">$EnvName$</span>Environment Name
                     </span>
                     <br />
                   </div>
@@ -87,15 +87,15 @@
                 style="display: inline-block;"
                 :value="currentService.release_naming"
                 @input="handleInputChange"
-                placeholder="请输入 Release 名称"
+                placeholder="Please Enter Release Name"
               ></el-input>
-              <el-button size="mini" @click="renamingHelmRelease" type="primary" plain>保存</el-button>
+              <el-button size="mini" @click="renamingHelmRelease" type="primary" plain>Save</el-button>
             </div>
           </div>
         </div>
         <div v-else-if="selected === 'policy'" class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">策略</div>
+            <div class="service-aside-box__title">Strategy</div>
           </header>
           <div class="service-aside-help__content">
             <Policy />
@@ -103,7 +103,7 @@
         </div>
         <div v-else-if="selected === 'help'" class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">帮助</div>
+            <div class="service-aside-box__title">Help</div>
           </header>
           <div class="service-aside-help__content">
             <Help />
@@ -154,7 +154,7 @@ export default {
         id: name,
         type: 'components',
         componentsName: 'CommonBuild',
-        label: '新增构建',
+        label: 'New Build',
         name: name,
         isEdit: false,
         buildNameIndex
@@ -166,7 +166,7 @@ export default {
         id: name,
         type: 'components',
         componentsName: 'CommonBuild',
-        label: '修改构建',
+        label: 'Modify The Build',
         name: name,
         isEdit: true,
         buildName: buildName
@@ -185,18 +185,18 @@ export default {
         naming: this.currentService.release_naming
       }
       this.$confirm(
-        this.isGuide ? '确认修改 Helm Release 名称？' : '修改后服务会在已部署的环境中重建，请确认?',
-        '修改 Helm Release 名称',
+        this.isGuide ? 'Confirm The Changes Helm Release Name？' : 'After modification the service is rebuilt in the deployed environment，Please Confirm?',
+        'Revise Helm Release Name',
         {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }
       )
         .then(() => {
           renamingHelmReleaseAPI(projectName, payload).then(res => {
             this.$message({
-              message: '服务正在重启，稍后请前往环境中确认',
+              message: 'Service Is Restarting，Please go to the environment to confirm later',
               type: 'success'
             })
           })
@@ -204,7 +204,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消保存'
+            message: 'Save Cancelled'
           })
         })
     },

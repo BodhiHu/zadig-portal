@@ -2,9 +2,9 @@
   <div class="global-env">
     <el-form ref="buildEnvRef" :inline="true" :model="preEnvs" class="variable-form" label-position="top" label-width="80px">
       <el-row :gutter="2" class="th">
-        <el-col :span="8" class="th-title">类型</el-col>
-        <el-col :span="4" class="th-title">键</el-col>
-        <el-col :span="6" class="th-title">值</el-col>
+        <el-col :span="8" class="th-title">Type</el-col>
+        <el-col :span="4" class="th-title">Key</el-col>
+        <el-col :span="6" class="th-title">Value</el-col>
       </el-row>
       <el-button
         v-if="preEnvs.params && preEnvs.params.length===0"
@@ -13,21 +13,21 @@
         size="mini"
         plain
         class="mg-b16"
-      >+ 添加</el-button>
+      >+ Add To</el-button>
       <el-row v-for="(app,build_env_index) in preEnvs.params" :key="build_env_index" :gutter="2">
         <el-col :span="8">
           <el-form-item class="display-flex">
             <el-select
               v-model="preEnvs.params[build_env_index].type"
-              placeholder="类型"
+              placeholder="Type"
               size="small"
               :class="{'partial-width': preEnvs.params[build_env_index].type === 'choice'}"
               style="margin-right: 6px;"
               @change="changeEnvType(build_env_index)"
             >
-              <el-option label="字符串" value="string"></el-option>
-              <el-option label="多行文本" value="text"></el-option>
-              <el-option label="枚举" value="choice"></el-option>
+              <el-option label="String" value="string"></el-option>
+              <el-option label="Multiline Text" value="text"></el-option>
+              <el-option label="Enumerate" value="choice"></el-option>
             </el-select>
             <i
               v-show="preEnvs.params[build_env_index].type === 'choice'"
@@ -39,20 +39,20 @@
         <el-col :span="4">
           <el-form-item
             :prop="'params.' + build_env_index + '.name'"
-            :rules="{required: true, message: '键 不能为空', trigger: ['blur','change']}"
+            :rules="{required: true, message: 'Key Cannot Be Empty', trigger: ['blur','change']}"
           >
-            <el-input placeholder="键" v-model="preEnvs.params[build_env_index].name" size="small" @input="updateKeyParams(build_env_index)"></el-input>
+            <el-input placeholder="Key" v-model="preEnvs.params[build_env_index].name" size="small" @input="updateKeyParams(build_env_index)"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item
             :prop="'params.' + build_env_index + '.value'"
-            :rules="{required: true, message: '值 不能为空', trigger: ['blur','change']}"
+            :rules="{required: true, message: 'Value Cannot Be Empty', trigger: ['blur','change']}"
           >
             <el-select
               v-if="preEnvs.params[build_env_index].type==='choice'"
               v-model="preEnvs.params[build_env_index].value"
-              placeholder="默认值"
+              placeholder="Defaults"
               @change="updateKeyParams(build_env_index)"
               size="small"
               style="max-width: 176px;"
@@ -62,7 +62,7 @@
             <el-input
               v-if="preEnvs.params[build_env_index].type==='string'"
               :disabled="preEnvs.params[build_env_index].auto_generate"
-              placeholder="值"
+              placeholder="Value"
               @input="updateKeyParams(build_env_index)"
               v-model="preEnvs.params[build_env_index].value"
               size="small"
@@ -71,7 +71,7 @@
               v-if="preEnvs.params[build_env_index].type==='text'"
               type="textarea"
               :disabled="preEnvs.params[build_env_index].auto_generate"
-              placeholder="值"
+              placeholder="Value"
               @input="updateKeyParams(build_env_index)"
               v-model="preEnvs.params[build_env_index].value"
               size="small"
@@ -109,18 +109,18 @@
         </el-col>
       </el-row>
     </el-form>
-    <el-dialog :visible.sync="dialogVisible" title="枚举" width="600px" :close-on-click-modal="false" :show-close="false" append-to-body>
+    <el-dialog :visible.sync="dialogVisible" title="Enumerate" width="600px" :close-on-click-modal="false" :show-close="false" append-to-body>
       <el-form ref="form" :model="currentVars" label-width="90px">
-        <el-form-item label="变量名称">
+        <el-form-item label="Variable Name">
           <el-input v-model="currentVars.name" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="可选值">
-          <el-input type="textarea" v-model="currentVars.choice_option" placeholder="可选值之间用英文 “,” 隔开" size="small" rows="4"></el-input>
+        <el-form-item label="Optional Value">
+          <el-input type="textarea" v-model="currentVars.choice_option" placeholder="English between optional values “,” Separated" size="small" rows="4"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button @click="dialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="saveVariable" size="small">确 定</el-button>
+        <el-button @click="dialogVisible = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="saveVariable" size="small">Sure</el-button>
       </div>
     </el-dialog>
   </div>
@@ -167,7 +167,7 @@ export default {
       default: () => {
         return {
           origin: 'build',
-          title: '构建',
+          title: 'Construct',
           vars: []
         }
       }

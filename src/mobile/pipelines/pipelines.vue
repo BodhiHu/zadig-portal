@@ -2,13 +2,13 @@
   <div class="mobile-workflow-list">
     <van-nav-bar fixed>
       <template #title>
-        工作流列表
+        Workflow List
       </template>
     </van-nav-bar>
     <form action="/">
       <van-search v-model="keyword"
                   input-align="center"
-                  placeholder="请输入搜索关键词"
+                  placeholder="Please enter the search keyword"
                   @search="onSearch" />
     </form>
     <van-cell-group>
@@ -35,12 +35,12 @@
       </van-cell>
     </van-cell-group>
     <van-action-sheet v-model="currentAction.show"
-                      cancel-text="取消"
+                      cancel-text="Cancel"
                       close-on-click-action
                       :actions="actions"
                       @select="onSelectAction" />
     <el-dialog :visible.sync="taskDialogVisible"
-               title="运行 产品-工作流"
+               title="Run The Product-Workflow"
                custom-class="run-workflow"
                width="100%"
                class="dialog">
@@ -84,7 +84,7 @@ export default {
       workflowToRun: {},
       taskDialogVisible: false,
       actions: [
-        { name: '启动' }
+        { name: 'Start Up' }
       ],
       currentAction: {
         show: false,
@@ -112,7 +112,7 @@ export default {
       Toast(val)
     },
     onSelectAction (action) {
-      if (action.name === '启动') {
+      if (action.name === 'Start Up') {
         this.taskDialogVisible = true
       }
     },

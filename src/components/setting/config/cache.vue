@@ -5,34 +5,34 @@
       <el-alert type="info"
                 :closable="false">
         <template>
-          支持清理系统中的镜像缓存，详情可参考
+          Support cleaning the image cache in the system，For details, please refer to
           <el-link style="font-size: 14px; vertical-align: baseline;"
                    type="primary"
-                   :href="`https://docs.koderover.com/zadig/settings/system-settings/#缓存清理`"
+                   :href="`https://docs.koderover.com/zadig/settings/system-settings/#Cache Cleaning`"
                    :underline="false"
-                   target="_blank">帮助文档</el-link>
+                   target="_blank">Help Documentation</el-link>
         </template>
       </el-alert>
     </template>
     <div class="cache-container">
-      <span class="item">镜像缓存清理</span>
+      <span class="item">Image Cache Cleaning</span>
       <el-button size="mini"
                  type="danger"
                  @click="cleanCache"
                  :disabled="cleanStatus && cleanStatus.status === 'cleaning'"
                  plain
-                 round>一键清理</el-button>
+                 round>One Click Cleanup</el-button>
       <div class="timing">
-        <span>定时清理</span>
+        <span>Regular Cleaning</span>
         <el-switch v-model="cleanStatus.cron_enabled"></el-switch>
         <span v-if="cleanStatus.cron_enabled">
-          <el-input style="width: 200px;" size="small" v-model="cleanStatus.cron"  placeholder="Cron 表达式"></el-input>
-          <el-button size="mini" type="primary" @click="timingClean" plain round>保存</el-button>
+          <el-input style="width: 200px;" size="small" v-model="cleanStatus.cron"  placeholder="Cron Expression"></el-input>
+          <el-button size="mini" type="primary" @click="timingClean" plain round>Save</el-button>
         </span>
       </div>
       <template v-if="cleanStatus">
         <div class="desc">
-          <span class="title">状态：</span>
+          <span class="title">State：</span>
           <el-tag size="mini"
                   :type="tagTypeMap[cleanStatus.status]">{{statusMap[cleanStatus.status]}}
           </el-tag>
@@ -46,7 +46,7 @@
         <div v-if="cleanStatus.status==='failed'"
              class="desc">
           <el-row>
-            <el-col :span="1"> <span class="title">原因：</span></el-col>
+            <el-col :span="1"> <span class="title">Reason：</span></el-col>
             <el-col :span="23">
               <div v-for="(pod,index) in cleanStatus.dind_clean_infos"
                    :key="index">
@@ -59,7 +59,7 @@
         <div v-else-if="cleanStatus.status==='success' && cleanStatus.dind_clean_infos.length > 0"
              class="desc">
           <el-row>
-            <el-col :span="1"> <span class="title">信息：</span></el-col>
+            <el-col :span="1"> <span class="title">Information：</span></el-col>
             <el-col :span="23">
               <div v-for="(pod,index) in cleanStatus.dind_clean_infos"
                    :key="index">
@@ -87,10 +87,10 @@ export default {
       timerId: null,
       finishedReq: false,
       statusMap: {
-        cleaning: '清理中',
-        success: '清理完成',
-        failed: '清理失败',
-        unStart: '未执行过清理'
+        cleaning: 'Cleaning Up',
+        success: 'Clean Up',
+        failed: 'Cleanup Failed',
+        unStart: 'No Cleanup Performed'
       },
       tagTypeMap: {
         cleaning: '',
@@ -99,8 +99,8 @@ export default {
         unStart: 'info'
       },
       descMap: {
-        cleaning: '开始时间：',
-        success: '完成时间：'
+        cleaning: 'Starting Time：',
+        success: 'Complete Time：'
       }
     }
   },
@@ -115,24 +115,24 @@ export default {
       }
     },
     cleanCache () {
-      this.$confirm('停止的容器、所有未被容器使用的网络、无用的镜像和构建缓存镜像将被删除，确认清理？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Stopped Container、All networks not used by containers、Useless images and build cache images will be removed，Confirm Cleanup？', 'Hint', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         cleanCacheAPI().then(response => {
           this.getCleanStatus()
           this.$message({
             type: 'info',
-            message: '正在进行缓存清理'
+            message: 'Cache cleaning in progress'
           })
         }).catch(() => {
-          this.$message.error('缓存清理失败')
+          this.$message.error('Cache Cleaning Failed')
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消清理'
+          message: 'Cleanup Cancelled'
         })
       })
     },
@@ -144,14 +144,14 @@ export default {
       if (cron_enabled && !cron) {
         this.$message({
           type: 'warning',
-          message: '请填入 Cron 表达式'
+          message: 'Please Fill In Cron Expression'
         })
         return
       }
       timingCleanAPI(params).then(res => {
         this.$message({
           type: 'success',
-          message: '设置成功'
+          message: 'Set Successfully'
         })
       })
     },

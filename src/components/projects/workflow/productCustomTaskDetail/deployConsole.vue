@@ -2,12 +2,12 @@
   <div class="build-console">
     <header class="mg-b8">
       <el-col :span="6">
-        <span class="type">部署</span>
+        <span class="type">Deploy</span>
         <span>{{jobInfo.name}}</span>
       </el-col>
       <el-col v-if="jobInfo.status!=='running'" :span="2">
         <div class="grid-content item-desc">
-          <a :class="buildOverallColor" href="#buildv4-log">{{jobInfo.status?buildOverallStatusZh:"未运行"}}</a>
+          <a :class="buildOverallColor" href="#buildv4-log">{{jobInfo.status?buildOverallStatusZh:"Not Running"}}</a>
         </div>
       </el-col>
       <el-col v-if="jobInfo.status!=='running'" :span="2">
@@ -16,9 +16,9 @@
       <el-col v-if="jobInfo" :span="6">
         <span class="item-desc status">
           <i class="el-icon-question"></i>
-          <span v-if="jobInfo.spec.skip_check_run_status">未开启服务状态检测</span>
-          <span v-else-if="!jobInfo.spec.skip_check_run_status && jobInfo.status ==='passed'">服务状态检测通过</span>
-          <span v-else-if="!jobInfo.spec.skip_check_run_status && jobInfo.status ==='failed'">服务状态检测未通过</span>
+          <span v-if="jobInfo.spec.skip_check_run_status">Service status detection is not enabled</span>
+          <span v-else-if="!jobInfo.spec.skip_check_run_status && jobInfo.status ==='passed'">Service status check passed</span>
+          <span v-else-if="!jobInfo.spec.skip_check_run_status && jobInfo.status ==='failed'">Service status check failed</span>
         </span>
       </el-col>
       <el-col :span="1" class="close">
@@ -29,28 +29,28 @@
     </header>
     <main>
       <div class="error-wrapper">
-        <el-alert v-if="jobInfo.error" title="错误信息" :description="jobInfo.error" type="error" close-text="知道了"></el-alert>
+        <el-alert v-if="jobInfo.error" title="Error Message" :description="jobInfo.error" type="error" close-text="Understood"></el-alert>
       </div>
       <el-row class="text item mg-t8" :gutter="0" v-for="(build,index) in jobInfo.spec.service_and_images" :key="index">
         <el-col :span="4">
-          <div class="item-title">服务名称</div>
+          <div class="item-title">Service Name</div>
         </el-col>
         <el-col :span="8">
           <span class="item-desc">{{build.service_name}}({{build.service_module}})</span>
         </el-col>
         <el-col :span="4">
           <div class="item-title">
-            镜像名称
+            Image Name
             <el-tooltip effect="dark" placement="top">
               <div slot="content">
-                构建镜像标签生成规则 ：
-                <br />选择 Tag 进行构建 ： 构建时间戳 -
+                Build image label generation rules ：
+                <br />Choose Tag To Build ： Build Timestamp -
                 Tag
-                <br />只选择分支进行构建：构建时间戳
-                - 任务 ID - 分支名称
-                <br />选择分支和 PR 进行构建：构建时间戳 - 任务 ID - 分支名称 - PR ID
-                <br />只选择 PR
-                进行构建：构建时间戳 - 任务 ID - PR ID
+                <br />Only select branches to build：Build Timestamp
+                - Task ID - Branch Name
+                <br />Select Branch And PR To Build：Build Timestamp - Task ID - Branch Name - PR ID
+                <br />Select Only PR
+                To Build：Build Timestamp - Task ID - PR ID
               </div>
               <span>
                 <i class="el-icon-question"></i>
@@ -66,7 +66,7 @@
       </el-row>
       <el-row class="mg-t8">
         <el-col :span="4">
-          <div class="item-title">部署环境</div>
+          <div class="item-title">Deployment Environment</div>
         </el-col>
         <el-col :span="8">
           <div class="grid-content item-desc">

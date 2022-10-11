@@ -1,6 +1,6 @@
 <template>
   <div class="webhook">
-    <el-button type="primary" size="mini" icon="el-icon-plus" plain @click="addWebhook">添加</el-button>
+    <el-button type="primary" size="mini" icon="el-icon-plus" plain @click="addWebhook">Add To</el-button>
     <el-row :gutter="20" class="webhook-row" v-for="(item,index) in webhooks" :key="index">
       <el-col :span="2">
         <div class="content">
@@ -15,11 +15,11 @@
       <el-col :span="6">
         <div class="content">
           <div class="cate">
-            <span class="title">名称：</span>
+            <span class="title">Name：</span>
             <span class="desc">{{item.name}}</span>
           </div>
           <div class="cate">
-            <span class="title">代码库：</span>
+            <span class="title">Code Library：</span>
             <span class="desc">{{item.main_repo.repo_name + '/' + item.main_repo.branch}}</span>
           </div>
         </div>
@@ -27,11 +27,11 @@
       <el-col :span="9">
         <div class="content">
           <div class="cate">
-            <span class="title">目标分支：</span>
+            <span class="title">Target Branch：</span>
             <span class="desc">{{item.main_repo.branch}}</span>
           </div>
           <div class="cate">
-            <span class="title">触发事件：</span>
+            <span class="title">Trigger Event：</span>
             <span class="desc">
               <div v-if="item.main_repo.events.length">
                 <span v-for="(event,index) in item.main_repo.events" :key="index">
@@ -52,7 +52,7 @@
       <el-col :span="4">
         <div class="content">
           <div class="cate">
-            <span class="title">描述：</span>
+            <span class="title">Describe：</span>
           </div>
           <div class="cate">
             <span class="desc">{{item.description}}</span>
@@ -68,15 +68,15 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="dialogVisible" :title="editMode?'编辑触发器':'添加触发器'" width="700px" :close-on-click-modal="false" append-to-body>
+    <el-dialog :visible.sync="dialogVisible" :title="editMode?'Edit Trigger':'Add Trigger'" width="700px" :close-on-click-modal="false" append-to-body>
       <el-form ref="webhookForm" :model="currentWebhook" label-width="90px" :rules="rules">
-        <el-form-item label="名称" prop="name">
-          <el-input size="small" autofocus ref="webhookNamedRef" :disabled="editMode" v-model="currentWebhook.name" placeholder="请输入名称"></el-input>
+        <el-form-item label="Name" prop="name">
+          <el-input size="small" autofocus ref="webhookNamedRef" :disabled="editMode" v-model="currentWebhook.name" placeholder="Please Enter A Name"></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="description">
-          <el-input size="small" type="textarea" v-model="currentWebhook.description" placeholder="请输入描述"></el-input>
+        <el-form-item label="Describe" prop="description">
+          <el-input size="small" type="textarea" v-model="currentWebhook.description" placeholder="Please enter a description"></el-input>
         </el-form-item>
-        <el-form-item label="代码库" prop="repo">
+        <el-form-item label="Code Library" prop="repo">
           <el-select
             style="width: 100%;"
             v-model="currentWebhook.repo"
@@ -86,12 +86,12 @@
             allow-create
             clearable
             value-key="key"
-            placeholder="请选择"
+            placeholder="Please Choose"
           >
             <el-option v-for="(repo,index) in webhookRepos" :key="index" :label="repo.repo_owner+'/'+repo.repo_name" :value="repo"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="目标分支" prop="main_repo.branch">
+        <el-form-item label="Target Branch" prop="main_repo.branch">
           <el-select
             style="width: 100%;"
             v-model="currentWebhook.main_repo.branch"
@@ -99,7 +99,7 @@
             filterable
             allow-create
             clearable
-            placeholder="请选择分支"
+            placeholder="Please Select A Branch"
           >
             <el-option
               v-for="(branch,index) in webhookBranches[currentWebhook.repo.repo_name]"
@@ -109,55 +109,55 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="currentWebhook.repo.source==='gerrit'" label="触发事件" prop="main_repo.events">
+        <el-form-item v-if="currentWebhook.repo.source==='gerrit'" label="Trigger Event" prop="main_repo.events">
           <el-checkbox-group v-model="currentWebhook.main_repo.events">
             <el-checkbox style="display: block;" label="change-merged">Change merged</el-checkbox>
             <el-checkbox style="display: block;" label="patchset-created">
               <span>Patchset created</span>
               <template v-if="currentWebhook.main_repo.events.includes('patchset-created')">
-                <span style="color: #606266;">评分标签</span>
+                <span style="color: #606266;">Rating Label</span>
                 <el-input size="mini" style="width: 250px;" v-model="currentWebhook.main_repo.label" placeholder="Code-Review"></el-input>
               </template>
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item v-else-if="currentWebhook.repo.source!=='gerrit'" label="触发事件" prop="main_repo.events">
+        <el-form-item v-else-if="currentWebhook.repo.source!=='gerrit'" label="Trigger Event" prop="main_repo.events">
           <el-checkbox-group v-model="currentWebhook.main_repo.events">
             <el-checkbox v-for="tri in triggerMethods.git" :key="tri.value" :label="tri.value">{{ tri.label }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="触发策略" prop="auto_cancel">
+        <el-form-item label="Trigger Strategy" prop="auto_cancel">
           <el-checkbox v-model="currentWebhook.auto_cancel">
-            <span>自动取消</span>
-            <el-tooltip effect="dark" content="如果您希望只构建最新的提交，则使用这个选项会自动取消队列中的任务" placement="top">
+            <span>Cancel Automatically</span>
+            <el-tooltip effect="dark" content="If you wish to build only the latest commit，Then using this option will automatically cancel the task in the queue" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </el-checkbox>
           <el-checkbox v-if="currentWebhook.repo.source==='gerrit'" v-model="currentWebhook.check_patch_set_change">
-            <span>代码无变化时不触发工作流</span>
-            <el-tooltip effect="dark" content="例外情况说明：当目标代码仓配置为 Gerrit 的情况下，受限于其 API 的能力，当单行代码有变化时也不被触发" placement="top">
+            <span>Workflow is not triggered when no code changes</span>
+            <el-tooltip effect="dark" content="Exceptions：When the target repository is configured as Gerrit In The Case Of，Limited By API Ability，It is also not triggered when a single line of code changes" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </el-checkbox>
         </el-form-item>
         <template v-if="currentWebhook.main_repo.source!=='gerrit'">
-          <el-form-item label="文件目录" prop="main_repo.match_folders">
+          <el-form-item label="File Directory" prop="main_repo.match_folders">
             <el-input
               :autosize="{ minRows: 4, maxRows: 10}"
               type="textarea"
               v-model="currentWebhook.main_repo.match_folders"
-              placeholder="输入目录时，多个目录请用回车换行分隔"
+              placeholder="When entering a directory，Please separate multiple directories with carriage return and line feed"
             ></el-input>
           </el-form-item>
           <ul style="padding-left: 120px; color: #909399; font-size: 12px; line-height: 20px;">
-            <li>输入目录时，多个目录请用回车换行分隔</li>
-            <li>"/" 表示代码库中的所有文件</li>
-            <li>用 "!" 符号开头可以排除相应的文件</li>
+            <li>When entering a directory，Please separate multiple directories with carriage return and line feed</li>
+            <li>"/" Represents all files in the codebase</li>
+            <li>Use "!" The corresponding file can be excluded at the beginning of the symbol</li>
           </ul>
         </template>
       </el-form>
       <div>
-        <span>工作流执行变量</span>
+        <span>Workflow Execution Variables</span>
         <WebhookRunConfig
           :workflowName="workflowName"
           :projectName="projectName"
@@ -166,8 +166,8 @@
         />
       </div>
       <div slot="footer">
-        <el-button @click="dialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="saveWebhook" size="small">确 定</el-button>
+        <el-button @click="dialogVisible = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="saveWebhook" size="small">Sure</el-button>
       </div>
     </el-dialog>
   </div>
@@ -188,7 +188,7 @@ const validateName = (rule, value, callback) => {
   if (!/^[a-zA-Z0-9]([a-zA-Z0-9_\-\.]*[a-zA-Z0-9])?$/.test(value)) {
     callback(
       new Error(
-        "触发器名称仅支持数字字符、'-'、'_'、'.' 且开始结束只能是数字字符"
+        "Trigger names only support numeric characters、'-'、'_'、'.' And start and end can only be numeric characters"
       )
     )
   } else {
@@ -197,13 +197,13 @@ const validateName = (rule, value, callback) => {
 }
 const validateRepo = (rule, value, callback) => {
   if (Object.keys(value).length === 0) {
-    callback(new Error('请选择代码库'))
+    callback(new Error('Please select a repository'))
   } else {
     callback()
   }
 }
 const webhookInfo = {
-  check_patch_set_change: false, // gerrit 类型 codehost 需要配置，代码无变更是否跳过
+  check_patch_set_change: false, // gerrit Type codehost Needs To Be Configured，Whether to skip without code changes
   name: '',
   auto_cancel: false,
   enabled: true,
@@ -216,13 +216,13 @@ const webhookInfo = {
     repo_name: '',
     branch: '',
     tag: '',
-    label: '', // gerrit 类型 codehost，event 包含 patchset-created 需要配置
+    label: '', // gerrit Type codehost，event Include patchset-created Needs To Be Configured
     committer: '',
     match_folders: '/\n!.md',
     codehost_id: null,
-    is_regular: false, // 是否正则匹配
+    is_regular: false, // Is It A Regular Match
     events: [
-      // # gerrit 类型 codehost: patchset-created,change-merged,剩余类型 codehost: push, pull_request,tag
+      // # gerrit Type codehost: patchset-created,change-merged,Remaining Type codehost: push, pull_request,tag
     ]
   },
   repo: {},
@@ -269,21 +269,21 @@ export default {
         'main_repo.branch': [
           {
             required: true,
-            message: '请选择目标分支',
+            message: 'Please select the target branch',
             trigger: ['blur', 'change']
           }
         ],
         'main_repo.events': [
           {
             required: true,
-            message: '请选择触发事件',
+            message: 'Please select a trigger event',
             trigger: ['blur', 'change']
           }
         ],
         'main_repo.match_folders': [
           {
             required: true,
-            message: '请输入文件目录',
+            message: 'Please enter the file directory',
             trigger: ['blur', 'change']
           }
         ]
@@ -334,7 +334,7 @@ export default {
       const workflowName = this.workflowName
       updateCustomWebhookAPI(projectName, workflowName, webhook).then(() => {
         this.$message.success(
-          `${webhook.name} 已${webhook.enabled ? '启用' : '禁用'}`
+          `${webhook.name} Already${webhook.enabled ? 'Enable' : 'Disabled'}`
         )
         this.getWebhooks()
       })
@@ -420,7 +420,7 @@ export default {
       const projectName = this.projectName
       const workflowName = this.workflowName
       removeCustomWebhookAPI(projectName, workflowName, triggerName).then(res => {
-        this.$message.success('删除成功')
+        this.$message.success('Successfully Deleted')
         this.getWebhooks()
       })
     },
@@ -491,7 +491,7 @@ export default {
           if (this.editMode) {
             const result = await updateCustomWebhookAPI(projectName, workflowName, payload)
             if (result) {
-              this.$message.success('修改成功')
+              this.$message.success('Successfully Modified')
               this.$refs.webhookForm.resetFields()
               this.dialogVisible = false
               this.getWebhooks()
@@ -499,7 +499,7 @@ export default {
           } else {
             const result = await addCustomWebhookAPI(projectName, workflowName, payload)
             if (result) {
-              this.$message.success('添加成功')
+              this.$message.success('Added Successfully')
               this.$refs.webhookForm.resetFields()
               this.dialogVisible = false
               this.getWebhooks()
@@ -525,9 +525,9 @@ export default {
     },
     checkingBuildStageChanged (newConfig, oldConfig) {
       if (!isEqual(newConfig, oldConfig)) {
-        this.$confirm('保存当前工作流配置后才可配置触发器?', '确认', {
-          confirmButtonText: '保存',
-          cancelButtonText: '取消',
+        this.$confirm('Triggers cannot be configured until the current workflow configuration is saved?', 'Confirm', {
+          confirmButtonText: 'Save',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         })
           .then(() => {
@@ -553,9 +553,9 @@ export default {
       async handler (newValue, oldValue) {
         if (newValue) {
           if (!this.isEdit) {
-            this.$confirm('保存当前工作流配置后才可配置触发器?', '确认', {
-              confirmButtonText: '保存',
-              cancelButtonText: '取消',
+            this.$confirm('Triggers cannot be configured until the current workflow configuration is saved?', 'Confirm', {
+              confirmButtonText: 'Save',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             })
               .then(() => {

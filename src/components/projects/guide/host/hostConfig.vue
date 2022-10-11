@@ -8,13 +8,13 @@
       <div class="controls__right">
         <el-button type="primary"
                   size="small"
-                  @click="nextStep">{{currentStep === 2 ? '完成' : '下一步'}}</el-button>
+                  @click="nextStep">{{currentStep === 2 ? 'Finish' : 'Next Step'}}</el-button>
         <el-button type="primary" size="small"
                 v-if="currentStep === 0"
                 @click="exitOnboarding">
           <i v-if="exitLoading"
              class="el-icon-loading"></i>
-          <span>跳过向导</span>
+          <span>Skip Wizard</span>
         </el-button>
       </div>
     </div>
@@ -66,7 +66,7 @@ export default {
     }
   },
   created () {
-    bus.$emit('set-topbar-title', { title: '', breadcrumb: [{ title: '项目', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
+    bus.$emit('set-topbar-title', { title: '', breadcrumb: [{ title: 'Project', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
   }
 }
 </script>

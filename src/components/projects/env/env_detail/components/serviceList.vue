@@ -1,7 +1,7 @@
 <template>
   <div class="service-list">
     <el-table v-if="containerServiceList.length > 0" :data="containerServiceList">
-      <el-table-column label="服务名" width="280px">
+      <el-table-column label="Service Name" width="280px">
         <template slot-scope="scope">
           <router-link :to="setRoute(scope)">
             <span :class="$utils._getStatusColor(scope.row.status)" class="service-name">
@@ -16,7 +16,7 @@
               <el-tabs v-model="activeDiffTab" type="card">
                 <el-tab-pane name="template">
                   <span slot="label">
-                    <i class="el-icon-tickets"></i> 模板对比
+                    <i class="el-icon-tickets"></i> Template Comparison
                   </span>
                   <div class="diff-container">
                     <div class="diff-content">
@@ -30,22 +30,22 @@
                 </el-tab-pane>
               </el-tabs>
               <span slot="reference" class="service-updateable">
-                <el-tooltip effect="dark" content="配置变更" placement="top">
+                <el-tooltip effect="dark" content="Configuration Changes" placement="top">
                   <i @click="openPopper(scope.row)" class="el-icon-question icon operation"></i>
                 </el-tooltip>
               </span>
             </el-popover>
-            <el-tooltip  effect="dark" content="更新服务" placement="top">
+            <el-tooltip  effect="dark" content="Update Service" placement="top">
               <i v-hasPermi="{projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'},isBtn:true}" @click="updateService(scope.row)" class="iconfont icongengxin operation"></i>
             </el-tooltip>
           </template>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="状态" width="220px">
+      <el-table-column align="left" label="State" width="220px">
         <template slot="header" slot-scope="{}">
-          状态{{`(${runningContainerService}/${containerServiceList.length})`}}
+          State{{`(${runningContainerService}/${containerServiceList.length})`}}
           <el-tooltip effect="dark" placement="top">
-            <div slot="content">实际正常的服务/预期的正常服务数量</div>
+            <div slot="content">Actual Normal Service/Expected normal number of services</div>
             <i class="status-icon el-icon-question"></i>
           </el-tooltip>
         </template>
@@ -53,7 +53,7 @@
           <el-tag size="small" :type="statusIndicator[scope.row.status]">{{scope.row.status}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="镜像信息" min-width="150px">
+      <el-table-column align="left" label="Mirror Information" min-width="150px">
         <template slot-scope="scope">
           <div v-for="(image,index) in scope.row.images" :key="index">
             <el-tooltip effect="dark" :content="image" placement="top">
@@ -62,7 +62,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column align="left" width="150px" label="服务入口">
+      <el-table-column align="left" width="150px" label="Service Entrance">
         <template slot-scope="scope">
           <template v-if="scope.row.ingress && scope.row.ingress.host_info && scope.row.ingress.host_info.length>0">
             <el-tooltip
@@ -80,13 +80,13 @@
           <span v-else>N/A</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="150px">
+      <el-table-column align="center" label="Operate" width="150px">
         <template slot-scope="scope">
           <span v-if="envSource !=='external' && envSource !=='helm'" class="operation">
             <el-tooltip
               v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'}})"
               effect="dark"
-              content="通过工作流升级服务"
+              content="Upgrading Services via Workflow"
               placement="top"
             >
               <i @click="upgradeServiceByWorkflow(projectName,envName,scope.row.service_name,scope.row.type)" class="iconfont iconshengji"></i>
@@ -94,17 +94,17 @@
             <el-tooltip
               v-else
               effect="dark"
-              content="无权限操作"
+              content="Unauthorized Operation"
               placement="top"
             >
               <i class="iconfont iconshengji permission-disabled"></i>
             </el-tooltip>
           </span>
           <span class="operation">
-            <el-tooltip v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'}})" effect="dark" content="重启服务" placement="top">
+            <el-tooltip v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'}})" effect="dark" content="Restart The Service" placement="top">
               <i @click="restartService(projectName,scope.row.service_name,$route.query.envName)" class="el-icon-refresh"></i>
             </el-tooltip>
-            <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+            <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
               <i class="el-icon-refresh permission-disabled"></i>
             </el-tooltip>
           </span>
@@ -112,7 +112,7 @@
             <el-tooltip
               v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'}})"
               effect="dark"
-              content="查看服务配置"
+              content="View service configuration"
               placement="top"
             >
               <router-link :to="setServiceConfigRoute(scope)">
@@ -122,7 +122,7 @@
             <el-tooltip
               v-else
               effect="dark"
-              content="无权限操作"
+              content="Unauthorized Operation"
               placement="top"
             >
               <span><i class="iconfont iconfuwupeizhi permission-disabled"></i></span>

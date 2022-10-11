@@ -1,20 +1,20 @@
 <template>
-  <el-drawer title="更新匹配规则" :visible.sync="updateMatchRule" :wrapperClosable="false" class="match-rule-container" size="640px">
+  <el-drawer title="Update Matching Rules" :visible.sync="updateMatchRule" :wrapperClosable="false" class="match-rule-container" size="640px">
     <ul class="tooltip">
-      <li>系统会解析镜像名为服务组件</li>
-      <li>项目范围内匹配规则全局生效</li>
-      <li>符合以下任一规则的镜像都可以被解析成服务组件</li>
+      <li>The system will resolve the image as the service component</li>
+      <li>Project-wide matching rules take effect globally</li>
+      <li>Images that meet any of the following rules can be resolved into service components</li>
     </ul>
     <div class="mr-content" v-loading="pageLoading">
-      <div class="mr-title">系统内置规则</div>
+      <div class="mr-title">System Built In Rules</div>
       <div class="inner-rule">
         <el-checkbox v-model="systemMatchRules[0].inUse"></el-checkbox>
         <div class="rule">
-          <span class="title">格式一</span>
+          <span class="title">Format One</span>
           <div class="rule-items">
             image:
-            <br />&nbsp;&nbsp;repository: 仓库地址/命名空间/镜像名
-            <br />&nbsp;&nbsp;tag: 标签名
+            <br />&nbsp;&nbsp;repository: Warehouse Address/Namespaces/Mirror Name
+            <br />&nbsp;&nbsp;tag: Label Name
             <br />
           </div>
         </div>
@@ -22,34 +22,34 @@
       <div class="inner-rule">
         <el-checkbox v-model="systemMatchRules[1].inUse"></el-checkbox>
         <div class="rule">
-          <span class="title">格式二</span>
+          <span class="title">Format 2</span>
           <div class="rule-items">
-            image: 仓库地址/命名空间/镜像名:标签名
+            image: Warehouse Address/Namespaces/Mirror Name:Label Name
             <br />
           </div>
         </div>
       </div>
-      <div class="mr-title">自定义规则</div>
+      <div class="mr-title">Custom Rules</div>
       <div>
         <el-form ref="ruleForm" :model="formModel" v-if="formModel.matchRules.filter(rule => !rule.presetId).length > 0">
           <div v-for="(rule,index) in formModel.matchRules" :key="index">
             <el-row v-if="!rule.presetId" :gutter="5">
               <el-col :span="8">
                 <el-form-item>
-                  <el-input v-model="rule.repo" placeholder="仓库地址/命名空间" size="mini"></el-input>
+                  <el-input v-model="rule.repo" placeholder="Warehouse Address/Namespaces" size="mini"></el-input>
                 </el-form-item>
-                <span class="warning" v-if="rule.showWarningText">仓库地址/命名空间 和 镜像名称 至少填写一项</span>
+                <span class="warning" v-if="rule.showWarningText">Warehouse Address/Fill in at least one of namespace and image name</span>
               </el-col>
               <el-col :span="1" class="separator">/</el-col>
               <el-col :span="4">
                 <el-form-item :prop="'matchRules.'+ index +'.image'" >
-                  <el-input v-model="rule.image" placeholder="镜像名" size="mini"></el-input>
+                  <el-input v-model="rule.image" placeholder="Mirror Name" size="mini"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="1" class="separator">:</el-col>
               <el-col :span="4">
                 <el-form-item :prop="'matchRules.'+ index +'.tag'" >
-                  <el-input v-model="rule.tag" placeholder="标签名" size="mini"></el-input>
+                  <el-input v-model="rule.tag" placeholder="Label Name" size="mini"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="4">
@@ -60,11 +60,11 @@
             </el-row>
           </div>
         </el-form>
-        <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="addMatchRule">添加</el-button>
+        <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="addMatchRule">Add To</el-button>
       </div>
       <div class="example-rule">
-        <div class="er-title">示例：</div>
-        <div class="er-sub-title">values 文件：</div>
+        <div class="er-title">Example：</div>
+        <div class="er-sub-title">values Document：</div>
         <div class="rule border">
           &nbsp;&nbsp;deploy:
           <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image:
@@ -72,7 +72,7 @@
           <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: ubuntu
           <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tag: 12.04
         </div>
-        <div class="er-sub-title">自定义规则：</div>
+        <div class="er-sub-title">Custom Rules：</div>
         <div class="rule">
           <span class="gray-bg">deploy.image.repo</span>
           <span>/</span>
@@ -83,8 +83,8 @@
       </div>
     </div>
     <div class="mr-footer">
-      <el-button type="primary" :loading="addLoading" size="small" @click="updateMatchRules">保存</el-button>
-      <span class="tootip">保存规则且重新匹配服务组件</span>
+      <el-button type="primary" :loading="addLoading" size="small" @click="updateMatchRules">Save</el-button>
+      <span class="tootip">Save the rule and rematch the service component</span>
     </div>
   </el-drawer>
 </template>
@@ -186,7 +186,7 @@ export default {
     },
     addMatchRule () {
       if (this.$refs.ruleForm) {
-        // 至少填入一个表单 即可通过检验
+        // Fill out at least one form to pass the test
         const curItem = this.formModel.matchRules[this.formModel.matchRules.length - 1]
         if (
           !curItem.image && !curItem.repo
@@ -218,7 +218,7 @@ export default {
         rules: this.formModel.matchRules
       })
         .then(res => {
-          this.$message.success(`更新规则成功！`)
+          this.$message.success(`Update Rule Succeeded！`)
           this.updateMatchRule = false
           this.addLoading = false
           this.serviceName &&
@@ -229,7 +229,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          this.$message.error(`更新规则失败！`)
+          this.$message.error(`Update Rule Failed！`)
           this.addLoading = false
         })
     }

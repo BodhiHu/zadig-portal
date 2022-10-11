@@ -4,15 +4,15 @@
       <Step :activeStep="2"/>
       <div class="current-step-container">
         <div class="title-container">
-          <span class="first">第三步</span>
-          <span class="second">将服务加入环境，并准备对应的交付工作流，后续均可在项目中进行配置</span>
+          <span class="first">Third Step</span>
+          <span class="second">Add the service to the environment，And prepare the corresponding delivery workflow，It can be configured later in the project</span>
         </div>
         <div class="info-container block-list">
           <div class="title">
-            <h4>环境准备</h4>
+            <h4>Environmental preparation</h4>
             <el-alert v-if="envFailure.length > 0||timeOut" type="warning" show-icon>
               <template v-slot:title>
-                环境正在准备中，可点击 「下一步」 或者 <span class="view-env-btn" @click="viewEnvStatus">查看环境状态</span>
+                Environment is being prepared，Clickable 「Next Step」 Or <span class="view-env-btn" @click="viewEnvStatus">View Environment Status</span>
                 <i v-if="exitLoading"
                    class="el-icon-loading"></i>
               </template>
@@ -36,17 +36,17 @@
                        class="integration-details">
                     <template v-if="env.env_name==='dev'">
                       <span class="env-name">
-                        开发环境：{{projectName}}-dev
+                        Development Environment：{{projectName}}-dev
                       </span>
-                      <span class="desc">，开发日常自测、业务联调</span>
+                      <span class="desc">，Develop Daily Self Tests、Business Joint Debugging</span>
                       <el-link v-if="env.err_message!==''"
                                type="warning">{{env.err_message}}</el-link>
                     </template>
                     <template v-if="env.env_name==='qa'"
                               class="env-item">
-                      <span class="env-name">测试环境：{{projectName}}-qa
+                      <span class="env-name">Test Environment：{{projectName}}-qa
                       </span>
-                      <span class="desc">，自动化测试、业务验收</span>
+                      <span class="desc">，Automated Test、Business Acceptance</span>
                       <el-link v-if="env.err_message!==''"
                                type="warning">{{env.err_message}}</el-link>
                     </template>
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="title">
-            <h4>工作流准备</h4>
+            <h4>Workflow Preparation</h4>
             <el-alert v-if="workflowStatus.err_message"
                       :title="workflowStatus.err_message"
                       type="warning" show-icon>
@@ -77,13 +77,13 @@
                 </div>
                 <div class="integration-card__info">
                   <div class="integration-details">
-                    开发工作流：{{projectName}}-workflow-dev，应用日常升级，用于开发自测和联调
+                    Development Workflow：{{projectName}}-workflow-dev，Application daily upgrade，For development self-test and joint debugging
                   </div>
                   <div class="integration-details">
-                    测试工作流：{{projectName}}-workflow-qa，应用按需升级，用于自动化测试和业务验收
+                    Test Workflow：{{projectName}}-workflow-qa，Application upgrades on demand，For automated testing and business acceptance
                   </div>
                   <div class="integration-details">
-                    运维工作流：{{projectName}}-ops-workflow，业务按需发布，用于版本升级和业务上线
+                    Operational Workflow：{{projectName}}-ops-workflow，Business release on demand，Used for version upgrade and business online
                   </div>
                 </div>
               </div>
@@ -98,10 +98,10 @@
           <el-button v-if="!getResult"
                   type="primary"
                   size="small"
-                  disabled>下一步</el-button>
+                  disabled>Next Step</el-button>
           <el-button v-else-if="getResult"
                   size="small"
-                  type="primary">下一步</el-button>
+                  type="primary">Next Step</el-button>
         </router-link>
       </div>
     </div>
@@ -126,9 +126,9 @@ export default {
   },
   methods: {
     viewEnvStatus () {
-      this.$confirm('跳出后进入项目将不再进入向导流程', '确认跳出项目初始化向导？', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Entering the project after jumping out will no longer enter the wizard process', 'Confirm to jump out of the project initialization wizard？', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         this.exitLoading = true
@@ -138,7 +138,7 @@ export default {
           this.exitLoading = false
         })
       }).catch(() => {
-        this.$message.info('取消跳转')
+        this.$message.info('Cancel Jump')
       })
     },
     generateEnv (projectName, envType) {
@@ -208,7 +208,7 @@ export default {
         this.generateEnv(this.projectName, this.envType)
       }, 1000)
     };
-    bus.$emit('set-topbar-title', { title: '', breadcrumb: [{ title: '项目', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
+    bus.$emit('set-topbar-title', { title: '', breadcrumb: [{ title: 'Project', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
   },
   beforeDestroy () {
     clearInterval(this.envTimer)

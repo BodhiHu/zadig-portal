@@ -5,7 +5,7 @@
              :body-style="{padding: '8px 20px', margin: '5px 0 0 0' }">
       <div slot="header"
            class="clearfix subtask-header">
-        <span>构建</span>
+        <span>Construct</span>
         <div v-if="buildv2.status==='running'"
              class="loader">
           <div class="ball-scale-multiple">
@@ -17,29 +17,29 @@
       </div>
       <div class="error-wrapper">
         <el-alert v-if="buildv2.error"
-                  title="错误信息"
+                  title="Error Message"
                   :description="buildv2.error"
                   type="error"
-                  close-text="知道了">
+                  close-text="Understood">
         </el-alert>
       </div>
       <div class="text item">
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconzhuangtai"></i> 构建状态
+              <i class="iconfont iconzhuangtai"></i> Build Status
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-desc">
               <a :class="buildOverallColor"
-                 href="#buildv2-log">{{buildv2.status?buildOverallStatusZh:"未运行"}}</a>
+                 href="#buildv2-log">{{buildv2.status?buildOverallStatusZh:"Not Running"}}</a>
             </div>
           </el-col>
           <el-col v-if="buildv2.status!=='running'"
                   :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconshijian"></i> 持续时间
+              <i class="iconfont iconshijian"></i> Duration
             </div>
           </el-col>
           <el-col v-if="buildv2.status!=='running'"
@@ -54,7 +54,7 @@
                   :key="index">
             <el-col :span="6">
               <div class="grid-content item-title">
-                <i class="iconfont icondaima"></i> 代码库({{build.source}})
+                <i class="iconfont icondaima"></i> Code Library({{build.source}})
               </div>
             </el-col>
             <el-col :span="6">
@@ -63,7 +63,7 @@
             </el-col>
             <el-col :span="6">
               <div class="grid-content item-title">
-                <i class="iconfont iconinfo"></i> 代码信息
+                <i class="iconfont iconinfo"></i> Code Information
               </div>
             </el-col>
             <el-col :span="6">
@@ -75,7 +75,7 @@
                 :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconfuwu"></i> 服务名称
+              <i class="iconfont iconfuwu"></i> Service Name
             </div>
           </el-col>
           <el-col :span="6">
@@ -84,13 +84,13 @@
           <el-col v-if="serviceType!=='pm'"
                   :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconSliceCopy"></i> 镜像信息
+              <i class="iconfont iconSliceCopy"></i> Mirror Information
                 <el-tooltip effect="dark"
                             placement="top">
-                  <div slot="content">构建镜像标签生成规则 ：<br />选择 Tag 进行构建 ： 构建时间戳 -
-                    Tag<br />只选择分支进行构建：构建时间戳
-                    - 任务 ID - 分支名称<br />选择分支和 PR 进行构建：构建时间戳 - 任务 ID - 分支名称 - PR ID<br />只选择 PR
-                    进行构建：构建时间戳 - 任务 ID - PR ID</div>
+                  <div slot="content">Build image label generation rules ：<br />Choose Tag To Build ： Build Timestamp -
+                    Tag<br />Only select branches to build：Build Timestamp
+                    - Task ID - Branch Name<br />Select Branch And PR To Build：Build Timestamp - Task ID - Branch Name - PR ID<br />Select Only PR
+                    To Build：Build Timestamp - Task ID - PR ID</div>
                   <span><i class="el-icon-question"></i></span>
                 </el-tooltip>
             </div>
@@ -114,7 +114,7 @@
           <el-col v-if="serviceType==='pm'"
                   :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconvery-delitracking"></i> 打包信息
+              <i class="iconfont iconvery-delitracking"></i> Packaging Information
             </div>
           </el-col>
           <el-col v-if="serviceType==='pm' && buildv2.job_ctx"
@@ -126,7 +126,7 @@
                 :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconvery-delitracking"></i> 打包信息
+              <i class="iconfont iconvery-delitracking"></i> Packaging Information
             </div>
           </el-col>
           <el-col :span="6">

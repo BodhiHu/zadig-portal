@@ -1,12 +1,12 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconvery-testing"
     class="function-test-manage"
   >
-    <el-dialog title="选择关联的工作流" :visible.sync="selectWorkflowDialogVisible" width="30%" center>
-      <el-select v-model="selectWorkflow" style="width: 100%;" filterable value-key="name" size="small" placeholder="请选择要关联的工作流，支持搜索">
+    <el-dialog title="Select the associated workflow" :visible.sync="selectWorkflowDialogVisible" width="30%" center>
+      <el-select v-model="selectWorkflow" style="width: 100%;" filterable value-key="name" size="small" placeholder="Please select a workflow to associate，Support Search">
         <el-option
           v-for="(workflow,index) in availableWorkflows"
           :key="index"
@@ -15,13 +15,13 @@
         ></el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="selectWorkflowDialogVisible = false">取 消</el-button>
-        <el-button type="primary" size="small" :disabled="!selectWorkflow" @click="bindWorkflow">确 定</el-button>
+        <el-button size="small" @click="selectWorkflowDialogVisible = false">Cancel</el-button>
+        <el-button type="primary" size="small" :disabled="!selectWorkflow" @click="bindWorkflow">Sure</el-button>
       </span>
     </el-dialog>
     <div v-if="testList.length > 0" class="tab-container">
       <div class="test-container">
-        <el-input v-model="selectKey" placeholder="搜索测试" class="search-test" prefix-icon="el-icon-search" clearable></el-input>
+        <el-input v-model="selectKey" placeholder="Search Test" class="search-test" prefix-icon="el-icon-search" clearable></el-input>
       </div>
       <ul class="test-content">
         <TestRow
@@ -37,7 +37,7 @@
     </div>
     <div v-if="testList.length === 0 && !loading" class="no-product">
       <img src="@assets/icons/illustration/test.svg" alt />
-      <p>暂无可展示的测试用例，请手动新建测试</p>
+      <p>No Test Cases To Show，Please create a new test manually</p>
     </div>
   </div>
 </template>
@@ -117,7 +117,7 @@ export default {
       updateWorkflowAPI(workflow, true).then(() => {
         this.$message({
           type: 'success',
-          message: '关联工作流成功'
+          message: 'Association workflow succeeded'
         })
         this.selectWorkflow = null
         this.availableWorkflows = []
@@ -132,7 +132,7 @@ export default {
       }
       runTestsAPI(payload)
         .then(res => {
-          this.$message.success('任务启动成功')
+          this.$message.success('Task started successfully')
           return res
         })
         .then(res => {
@@ -142,13 +142,13 @@ export default {
         })
     },
     removeTest (obj) {
-      this.$confirm(`确定要删除 ${obj.name} 吗？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Sure You Want To Delete ${obj.name} Do You？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteTestAPI(obj.name, obj.product_name).then(() => {
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
           this.fetchTestList()
         })
       })
@@ -164,9 +164,9 @@ export default {
       })
     },
     deleteConnection (testName, workflow) {
-      this.$confirm(`确定要取消和工作流 ${workflow.name} 的关联`, '取消关联', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`OK to cancel and workflow ${workflow.name} Association`, 'Disassociate', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(() => {
@@ -183,7 +183,7 @@ export default {
           updateWorkflowAPI(workflow, true).then(() => {
             this.$message({
               type: 'success',
-              message: '移除关联成功'
+              message: 'Remove Link Successfully'
             })
             this.fetchTestList()
           })
@@ -191,7 +191,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: 'Undeleted'
           })
         })
     }
@@ -201,15 +201,15 @@ export default {
       title: '',
       breadcrumb: this.projectName
         ? [
-          { title: '项目', url: '/v1/projects' },
+          { title: 'Project', url: '/v1/projects' },
           {
             title: this.projectName,
             isProjectName: true,
             url: `/v1/projects/detail/${this.projectName}/detail`
           },
-          { title: '测试', url: '' }
+          { title: 'Test', url: '' }
         ]
-        : [{ title: '测试中心', url: '' }]
+        : [{ title: 'Test Center', url: '' }]
     })
 
     this.fetchTestList()

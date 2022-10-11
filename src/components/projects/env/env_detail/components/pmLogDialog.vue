@@ -3,11 +3,11 @@
     :visible.sync="visible"
     :close-on-click-modal="false"
     width="70%"
-    title="服务日志"
+    title="Service Log"
     class="pm-log-dialog"
   >
     <span slot="title" class="modal-title">
-      <span class="unimportant">服务名称:</span>
+      <span class="unimportant">Service Name:</span>
       {{ serviceName }}
     </span>
     <div class="service-detail-pm-service-log">
@@ -29,7 +29,7 @@
                 size="small"
                 prefix-icon="el-icon-search"
                 clearable
-                placeholder="请输入关键词搜索日志"
+                placeholder="Please enter keywords to search logs"
               ></el-input>
             </div>
             <template v-if="realtimeLog.status === 'connected'">
@@ -39,9 +39,9 @@
                 icon="icon iconfont iconstop"
                 type="primary"
               >
-                停止连接
+                Stop Connection
               </el-button>
-              <span class="tip">接收中</span>
+              <span class="tip">Receiving</span>
               <i class="el-icon-loading"></i>
             </template>
             <el-button
@@ -51,9 +51,9 @@
               icon="el-icon-refresh"
               type="primary"
             >
-              刷新日志
+              Refresh Log
             </el-button>
-            <el-tooltip content="去底部" effect="light" placement="top">
+            <el-tooltip content="Go To The Bottom" effect="light" placement="top">
               <el-button
                 @click="scrollToBottom"
                 class="go-to"
@@ -62,7 +62,7 @@
               >
               </el-button>
             </el-tooltip>
-            <el-tooltip content="去顶部" effect="light" placement="top">
+            <el-tooltip content="Go To The Top" effect="light" placement="top">
               <el-button
                 @click="scrollToTop"
                 class="go-to"
@@ -73,7 +73,7 @@
             </el-tooltip>
             <!-- Temporarily not showing kodespace in 1.10.0 --->
             <!-- <div class="log-tip">
-            <span>日志量较大时会出现加载过慢的情况，建议使用 CLI 工具查看</span>
+            <span>When the log volume is large, the loading will be too slow，It Is Recommended To Use CLI Tool View</span>
             <a href="https://docs.koderover.com/zadig/cli/search-logs/"
                target="_blank">
               <i class="icon el-icon-question"></i></a>
@@ -169,7 +169,7 @@ export default {
     this.wsDataBuffer = []
   },
   mounted () {
-    // visible=true之后这个组件才被create，这个true `watch`不到
+    // visible=trueThis Component Was Thencreate，Thistrue `watch`Less Than
     // this.openLog()
   },
   destroyed () {

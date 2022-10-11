@@ -1,6 +1,6 @@
 <template>
     <div >
-      <el-form-item label="服务">
+      <el-form-item label="Serve">
         <el-select v-model="pickedTargetServices"
                    @change="getArtifactFile"
                    value-key="key"
@@ -19,7 +19,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="对象存储" >
+      <el-form-item label="Object Storage" >
         <el-select v-model="pickedStorage"
                    filterable
                    clearable
@@ -35,19 +35,19 @@
       </el-form-item>
       <el-table v-if="pickedTargetServices.length > 0"
                 :data="pickedTargetServices"
-                empty-text="无"
+                empty-text="None"
                 class="service-deploy-table">
         <el-table-column prop="name"
-                         label="服务"
+                         label="Serve"
                          width="150px">
         </el-table-column>
-        <el-table-column label="交付物">
+        <el-table-column label="Deliverables">
           <template slot-scope="scope">
             <div class="workflow-build-rows">
               <el-row class="build-row">
                 <template>
                   <el-col :span="12">
-                    <!-- 绑定元数据 -->
+                    <!-- Binding Metadata -->
                     <!-- Todo Use virtual-item-list -->
                     <el-select v-if="tarFileMap[scope.row.name] && tarFileMap[scope.row.name].length > 0"
                                v-model="scope.row.file"
@@ -56,7 +56,7 @@
                                value-key="file_name"
                                size="small"
                                style="width: 100%;"
-                               placeholder="请选择交付物">
+                               placeholder="Please select deliverable">
                       <el-option v-for="(source,index) in tarFileMap[scope.row.name]" :key="index"
                         :label="source.file_name"
                         :value="source">
@@ -64,13 +64,13 @@
 
                     </el-select>
                     <el-tooltip v-else
-                                content="交付物不存在，请手动输入交付物信息"
+                                content="Deliverable does not exist，Please enter deliverable information manually"
                                 placement="top"
                                 popper-class="gray-popper">
                       <el-input v-model="scope.row.file_name"
                                 class="short-input"
                                 size="small"
-                                placeholder="请填写交付物信息"></el-input>
+                                placeholder="Please fill in the deliverable information"></el-input>
                     </el-tooltip>
                   </el-col>
                 </template>
@@ -142,11 +142,11 @@ export default {
     }
   },
   created () {
-    // 如果 PM 交付物部署开启则获取对应服务和对象仓库
+    // If PM When the deliverable deployment is enabled, the corresponding service and object warehouse are obtained.
     const key = this.$utils.rsaEncrypt()
     getStorageListAPI(key).then((res) => {
       this.objectstorageList = res
-      // 克隆任务数据
+      // Clone Task Data
       if (this.forcedUserInput.storage_id) {
         this.pickedStorage = this.forcedUserInput.storage_id
         this.pickedTargetServices = sortBy(this.forcedUserInput.artifact_args.map(element => {

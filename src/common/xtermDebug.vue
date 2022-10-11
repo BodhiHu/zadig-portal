@@ -42,7 +42,7 @@ export default {
         const fitAddon = new FitAddon()
         this.term.loadAddon(fitAddon)
         this.term.open(document.getElementById(this.id))
-        this.term.writeln('****************系统信息：正在连接容器****************')
+        this.term.writeln('****************System Message：Connecting To Container****************')
         this.term.onData(data => {
           if (wsLink) {
             this.ws.send(JSON.stringify({ operation: 'stdin', data: data }))
@@ -69,8 +69,8 @@ export default {
           }
           this.ws.send(JSON.stringify(setEnv))
           this.term.clear()
-          this.term.writeln('\u001b[32;1m****************系统信息：容器连接已打开****************\u001b[0m')
-          this.term.writeln('欢迎使用 Pod 调试功能，通过模拟终端的方式，方便快速进入容器进行调试。(注意：默认连接的 Shell 为 Bash)')
+          this.term.writeln('\u001b[32;1m****************System Message：Container connection is open****************\u001b[0m')
+          this.term.writeln('Welcome Pod Debug Function，By simulating the terminal，It is convenient to quickly enter the container for debugging。(Notice：Connected By Default Shell For Bash)')
           wsLink = true
           fitAddon.fit()
         }
@@ -79,11 +79,11 @@ export default {
         }
         this.ws.onclose = (evt) => {
           wsLink = false
-          this.$nextTick(() => { this.term.writeln('\u001b[31m****************系统信息：容器连接已关闭，请关闭窗口重试！****************\u001b[0m') })
+          this.$nextTick(() => { this.term.writeln('\u001b[31m****************System Message：Container connection closed，Please close the window and try again！****************\u001b[0m') })
         }
         this.ws.onerror = (evt) => {
           wsLink = false
-          this.$nextTick(() => { this.term.writeln(`\u001b[31m****************系统信息：遇到错误${evt.message ? evt.message : ''}，请关闭窗口重试 ****************\u001b[0m`) })
+          this.$nextTick(() => { this.term.writeln(`\u001b[31m****************System Message：Encountered An Error${evt.message ? evt.message : ''}，Please close the window and try again ****************\u001b[0m`) })
         }
       })
     }

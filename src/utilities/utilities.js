@@ -1,6 +1,6 @@
 import store from 'storejs'
 import { isEmpty } from 'lodash'
-const forge = require('node-forge') // rsa加密
+const forge = require('node-forge') // rsaEncryption
 const aesjs = require('aes-js')
 const entitiesRegexp = /[&"'<>]/g
 const entityMap = {
@@ -44,11 +44,11 @@ const utils = {
     return true
   },
   /*
-  属性分割
-  * @param  {object}           obj 修改的对象
-  * @param  {array,string}     props 要分割的属性["ports","config_paths","command"]
-  * @param  {string}           character 分隔符
-  * @return {object}           newObj 新对象, prop, character
+  Attribute Segmentation
+  * @param  {object}           obj Modified Object
+  * @param  {array,string}     props Attribute To Split["ports","config_paths","command"]
+  * @param  {string}           character Delimiter
+  * @return {object}           newObj New Object, prop, character
   */
   propCut (obj, props, character) {
     const newObj = {}
@@ -74,7 +74,7 @@ const utils = {
   isEmpty,
   /**
    *
-   * 深拷贝
+   * Deep Copy
    * @param {object} obj
    * @returns
    */
@@ -94,10 +94,10 @@ const utils = {
     return newobj
   },
   /*
-  时间戳转换
-  * @param  {number}           unix 时间戳
-  * @param  {string}           时间格式
-  * @return {object}           指定格式的时间
+  Timestamp Conversion
+  * @param  {number}           unix Timestamp
+  * @param  {string}           Time Format
+  * @return {object}           Time In Specified Format
   */
   convertTimestamp (timestamp, string) {
     if (timestamp) {
@@ -128,9 +128,9 @@ const utils = {
     }
   },
   /*
-  获取状态颜色
-  * @param  {string}           状态字符串
-  * @return {string}           状态 css class name
+  Get Status Color
+  * @param  {string}           Status String
+  * @return {string}           State css class name
   */
   _getStatusColor (status) {
     if (status && status !== '') {
@@ -145,31 +145,31 @@ const utils = {
       return 'service-not-running'
     }
   },
-  /*   秒格式化
-  * @param  {number}           秒数
-  * @return {string}           x分x秒|*
+  /*   Seconds Format
+  * @param  {number}           Seconds
+  * @return {string}           xMinutexSecond|*
   */
   timeFormat (sec) {
     if (!isNaN(sec)) {
       if (sec < 60) {
-        return Math.floor(sec) + ' 秒'
+        return Math.floor(sec) + ' Second'
       } else if (sec >= 60) {
         let min = 0
         let second = 0
         min = parseInt(sec / 60)
         second = Math.floor(sec % 60)
         if (second === 0) {
-          return min + ' 分 ' + '0 秒'
+          return min + ' Minute ' + '0 Second'
         } else {
-          return min + ' 分 ' + second + ' 秒'
+          return min + ' Minute ' + second + ' Second'
         }
       }
     } else {
       return '*'
     }
   },
-  /*   秒格式化
-  * @param  {number}           秒数
+  /*   Seconds Format
+  * @param  {number}           Seconds
   * @return {string}           XmYs|*
   */
   timeFormatEn (sec) {
@@ -209,7 +209,7 @@ const utils = {
   },
   /**
    *
-   *深排序
+   *Deep Sort
    * @param {array} arr
    * @param {string} arg
    * @returns
@@ -227,7 +227,7 @@ const utils = {
     return result_arr
   },
   /**
-   *版本排序
+   *Version Ordering
    *
    * @param {array} arr
    * @param {string} arg
@@ -269,7 +269,7 @@ const utils = {
     })
   },
   /**
-   *获取窗口宽*高
+   *Get Window Width*High
    *
    * @returns
    */
@@ -283,7 +283,7 @@ const utils = {
     return { width: win[a + 'Width'], height: win[a + 'Height'] }
   },
   /**
-   *日期格式化
+   *Date Formatting
    *
    * @param {*} fmt
    * @returns
@@ -316,10 +316,10 @@ const utils = {
     return fmt
   },
   /**
-   * 尾截断，
+   * Tail Truncation，
    * @param text
-   * @param showLen 总共展示的长度，包括尾部省略符的长度
-   * @param ellipsis 尾部省略符，默认值为'...'
+   * @param showLen Total Display Length，Length including trailing ellipsis
+   * @param ellipsis Trailing Ellipsis，Default Is'...'
    */
   tailCut (text, showLen, ellipsis) {
     ellipsis = ellipsis || '...'
@@ -333,10 +333,10 @@ const utils = {
     }
   },
   /**
-   * 头截断，
+   * Head Truncation，
    * @param text
-   * @param showLen 总共展示的长度，包括尾部省略符的长度
-   * @param ellipsis 尾部省略符，默认值为''
+   * @param showLen Total Display Length，Length including trailing ellipsis
+   * @param ellipsis Trailing Ellipsis，Default Is''
    */
   headCut (text, showLen, ellipsis) {
     ellipsis = ellipsis || ''
@@ -351,7 +351,7 @@ const utils = {
 
   /**
    *
-   *角色检查
+   *Role Check
    * @returns {boolean}
    */
   roleCheck (role) {
@@ -368,7 +368,7 @@ const utils = {
     }
   },
   /**
-   *协议检查
+   *Protocol Check
    *
    * @returns
    */
@@ -382,7 +382,7 @@ const utils = {
     return protocol
   },
   /**
-   *域名+协议
+   *Domain Name+Protocol
    *
    * @returns
    */
@@ -391,7 +391,7 @@ const utils = {
   },
   /**
    *
-   *是否包含大写字母
+   *Whether to contain capital letters
    * @param {*} str
    * @returns
    */
@@ -418,10 +418,10 @@ const utils = {
     return included
   },
   /**
-   *byte 格式化
+   *byte Format
    *
-   * @param {*} bytes 原始大小 bytes
-   * @param {*} decimals 保留位数
+   * @param {*} bytes Original Size bytes
+   * @param {*} decimals Reserved Bits
    * @returns
    */
   formatBytes (bytes, decimals) {
@@ -466,11 +466,11 @@ const utils = {
   },
   validatePipelineName (pipeline_names, new_name) {
     if (!new_name || new_name === '') {
-      return '请输入工作流名称'
+      return 'Please enter a workflow name'
     } else if (pipeline_names.includes(new_name)) {
-      return '工作流名称重复'
+      return 'Duplicate Workflow Name'
     } else if (!/^[a-zA-Z0-9-]+$/.test(new_name)) {
-      return '名称只支持字母大小写和数字，特殊字符只支持中划线'
+      return 'Names only support uppercase and lowercase letters and numbers，Special characters only support underscores'
     } else {
       return true
     }
@@ -481,12 +481,12 @@ const utils = {
     })
   },
   /**
-   * 根据指定关键字匹配对象数组里的值
+   * Match the values in the object array according to the specified key
    *
-   * @param {string} prop 指定的对象字段
-   * @param {string} key  要查找的值
-   * @param {array} arr  对象数组
-   * @returns 过滤结果
+   * @param {string} prop Specified Object Field
+   * @param {string} key  Value To Look Up
+   * @param {array} arr  Array Of Objects
+   * @returns Filter Results
    */
   filterObjectArrayByKey (prop, key, arr) {
     if (!key) {
@@ -609,11 +609,11 @@ const utils = {
     }
   },
   /**
-   * 返回根据 key 排序好的 object
+   * Return According To key Sorted object
    *
-   * @param {object} object 需要排序的对象
-   * @param {array||funtion} sortWith 排序的方式，支持 function 和传入 key 的数组
-   * @returns 排序好的 object
+   * @param {object} object Objects To Be Sorted
+   * @param {array||funtion} sortWith Sort By，Support function And Incoming key Array Of
+   * @returns Sorted object
    */
   sortObjectKeys (object, sortWith) {
     let keys
@@ -634,9 +634,9 @@ const utils = {
     }, Object.create(null))
   },
   /**
-   * 判断 IP 为内网
+   * Judge IP For Intranet
    *
-   * @param {string} addr 需要判断的 IP 地址
+   * @param {string} addr Need To Judge IP Address
    * @returns bool
    */ isPrivateIP (addr) {
     return (
@@ -653,11 +653,11 @@ const utils = {
     )
   },
   /**
-   * 对象数组根据 namePropName 将同一个 namePropName 的数组映射到 map 里
+   * Array of objects according to namePropName The Same namePropName The array of is mapped to map Inside
    *
-   * @param {array} arr 需要处理的对象数组
-   * @param {string} 对象数组的 排序的方式，支持 function 和传入 key 的数组
-   * @returns 处理后的 map
+   * @param {array} arr Array of objects to process
+   * @param {string} How to sort an array of objects，Support function And Incoming key Array Of
+   * @returns Processed map
    */
   makeMapOfArray (arr, namePropName) {
     const map = {}
@@ -671,7 +671,7 @@ const utils = {
     return map
   },
   /**
-   * 获取 Hostname
+   * Obtain Hostname
    *
    * @param
    * @returns string hostname
@@ -681,9 +681,9 @@ const utils = {
   },
   showClusterName (cluster) {
     if (cluster.local) {
-      return '本地集群'
+      return 'Local Cluster'
     } else {
-      return `${cluster.name} （${cluster.production ? '生产集群' : '测试集群'})`
+      return `${cluster.name} （${cluster.production ? 'Production Cluster' : 'Test Cluster'})`
     }
   },
   showServiceName (unionString, serviceName = '') {
@@ -699,7 +699,7 @@ const utils = {
       }
     }
   },
-  // 随机生成32位aesKey
+  // Randomly Generated32BitaesKey
   generateAesKey (len = 16) {
     const arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     let num = ''
@@ -709,27 +709,27 @@ const utils = {
     return num
   },
   /**
- * aes加密方法
- * @param {string} text 待加密的字符串
- * @param {array} key 加密key
+ * aesEncryption Method
+ * @param {string} text String To Be Encrypted
+ * @param {array} key Encryptionkey
  */
   rsaEncrypt () {
     const aesKey = this.generateAesKey(32)
     store.set('aesKey', aesKey)
-    const localPublicKey = store.get('publicKey') // 取出本地publicKey
+    const localPublicKey = store.get('publicKey') // Take Out LocalpublicKey
     const publicKey = forge.pki.publicKeyFromPem(localPublicKey)
     const buffer = forge.util.createBuffer(aesKey)
     const bytes = buffer.getBytes()
     const encrypted = publicKey.encrypt(bytes, 'RSAES-PKCS1-V1_5')
-    const b64Encoded = forge.util.encode64(encrypted) // 转base64
-    const res = encodeURIComponent(b64Encoded) // base64有空格问题 再编码一下
+    const b64Encoded = forge.util.encode64(encrypted) // Changebase64
+    const res = encodeURIComponent(b64Encoded) // base64If there is a space problem, re-code it
     return res
   },
 
   /**
- * aes解密方法
- * @param {string} encryptedHex 加密的字符串
- * @param {array} key 加密key
+ * aesDecryption Method
+ * @param {string} encryptedHex Encrypted String
+ * @param {array} key Encryptionkey
  */
   aesDecrypt (data) {
     const aesKey = store.get('aesKey')
@@ -739,7 +739,7 @@ const utils = {
     // eslint-disable-next-line new-cap
     const aesCfb = new aesjs.ModeOfOperation.cfb(text, iv, 16)
     const decryptedBytes = aesCfb.decrypt(encryptedBytes)
-    const decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes.slice(16)) // 截取后16位
+    const decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes.slice(16)) // After Interception16Bit
     // base64
     return decryptedText
   }

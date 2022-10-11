@@ -1,21 +1,21 @@
 <template>
   <div v-loading="loading" class="artifacts-container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="详情" name="summary">
+      <el-tab-pane label="Details" name="summary">
         <el-row class="row-container" :gutter="20">
           <el-col :span="8">
             <div class="function-area">
               <div class="item-container">
-                <h3 v-if="artifact.type==='image'" class="item-title">镜像信息</h3>
-                <h3 v-if="artifact.type==='file'" class="item-title">文件信息</h3>
+                <h3 v-if="artifact.type==='image'" class="item-title">Mirror Information</h3>
+                <h3 v-if="artifact.type==='file'" class="item-title">File Information</h3>
                 <div class="item-detail">
                   <div>
-                    <span class="key">服务名称：</span>
+                    <span class="key">Service Name：</span>
                     <span class="value">{{artifact.name}}</span>
                   </div>
                   <template v-if="artifact.type==='image'">
                     <div>
-                      <span class="key">镜像标签：</span>
+                      <span class="key">Mirror Label：</span>
                       <el-tooltip :content="artifact.image" placement="top" effect="light">
                         <span class="value">{{artifact.image_tag}}</span>
                       </el-tooltip>
@@ -25,29 +25,29 @@
                       <span class="value">{{artifact.image_digest}}</span>
                     </div>
                     <div>
-                      <span class="key">创建时间：</span>
+                      <span class="key">Creation Time：</span>
                       <span class="value">{{ $utils.convertTimestamp(artifact.created_time)}}</span>
                     </div>
                     <div>
-                      <span class="key">架构：</span>
+                      <span class="key">Architecture：</span>
                       <span class="value">{{artifact.architecture}}</span>
                     </div>
                     <div>
-                      <span class="key">操作系统：</span>
+                      <span class="key">Operating System：</span>
                       <span class="value">{{artifact.os}}</span>
                     </div>
                   </template>
                   <div v-else-if="artifact.type==='file'">
-                    <span class="key">创建时间：</span>
+                    <span class="key">Creation Time：</span>
                     <span class="value">{{ $utils.convertTimestamp(artifact.created_time)}}</span>
                   </div>
                 </div>
               </div>
               <div v-if="artifact.commits && artifact.commits.length > 0" class="item-container">
-                <h3 class="item-title">代码信息</h3>
+                <h3 class="item-title">Code Information</h3>
                 <div v-for="(cm,index) in artifact.commits" :key="index" class="item-detail">
                   <div>
-                    <span class="key">代码库：</span>
+                    <span class="key">Code Library：</span>
                     <span class="value">
                       <a
                         class="link"
@@ -67,7 +67,7 @@
                     </span>
                   </div>
                   <div>
-                    <span class="key">分支：</span>
+                    <span class="key">Branch：</span>
                     <span class="value">
                       <a
                         class="link"
@@ -87,24 +87,24 @@
                     </span>
                   </div>
                   <div v-if="cm.commit_message">
-                    <span class="key">最新提交：</span>
+                    <span class="key">Latest Commit：</span>
                     <span class="value">{{cm.commit_message}}</span>
                   </div>
                   <div v-if="cm.author_name">
-                    <span class="key">提交人：</span>
+                    <span class="key">Submitter：</span>
                     <span class="value">{{cm.author_name}}</span>
                   </div>
                 </div>
               </div>
               <div class="item-container">
-                <h3 class="item-title">构建信息</h3>
+                <h3 class="item-title">Build Information</h3>
                 <div class="item-detail">
                   <div v-if="artifact.type==='image'">
-                    <span class="key">镜像大小：</span>
+                    <span class="key">Image Size：</span>
                     <span class="value">{{$utils.formatBytes(artifact.image_size)}}</span>
                   </div>
                   <div v-if="this.buildUrl">
-                    <span class="key">工作流：</span>
+                    <span class="key">Workflow：</span>
                     <router-link :to="this.buildUrl">
                       <span class="value link">{{this.buildUrlSplit}}</span>
                     </router-link>
@@ -116,7 +116,7 @@
           <el-col :span="8">
             <div class="function-area">
               <div class="item-container">
-                <h3 class="item-title">活动时间线</h3>
+                <h3 class="item-title">Activity Timeline</h3>
                 <div class="events-container">
                   <div v-for="(event,index) in artifact.activities" :key="index" class="event">
                     <el-row class="event-item">
@@ -138,15 +138,15 @@
                           </router-link>
                         </div>
                         <div v-if="event.content">
-                          <span>内容：</span>
+                          <span>Content：</span>
                           <span>{{event.content}}</span>
                         </div>
                         <div v-if="event.namespace" class="event-data">
-                          <span>命名空间：</span>
+                          <span>Namespaces：</span>
                           <span>{{event.namespace}}</span>
                         </div>
                         <div v-if="event.env_name" class="event-data">
-                          <span>部署环境：</span>
+                          <span>Deployment Environment：</span>
                           <span>{{event.env_name}}</span>
                         </div>
                       </el-col>
@@ -159,9 +159,9 @@
           <el-col :span="8">
             <div class="function-area">
               <div class="item-container">
-                <h3 class="item-title">添加备注</h3>
+                <h3 class="item-title">Add Notes</h3>
                 <div>
-                  <el-input placeholder="请输入内容" v-model="commentContent">
+                  <el-input placeholder="Please Enter Content" v-model="commentContent">
                     <template slot="append">
                       <el-button
                         @click="addArtifactActivities"
@@ -305,8 +305,8 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '交付物中心', url: '/v1/delivery' },
-        { title: '交付物追踪', url: '/v1/delivery/artifacts' },
+        { title: 'Delivery Center', url: '/v1/delivery' },
+        { title: 'Delivery Tracking', url: '/v1/delivery/artifacts' },
         { title: this.serviceName, url: '' }
       ]
     })

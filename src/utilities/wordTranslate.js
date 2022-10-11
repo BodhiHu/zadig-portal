@@ -1,79 +1,79 @@
 export function wordTranslate (word, category, subitem = '') {
   const wordComparisonTable = {
     container: {
-      'NOT-RUNNING': '未正常运行',
-      RUNNING: '正常运行',
-      STOPPED: '容器被停止',
-      EXITED: '容器已退出',
-      RESTARTING: '容器一直在重启'
+      'NOT-RUNNING': 'Not Functioning Properly',
+      RUNNING: 'Normal Operation',
+      STOPPED: 'Container Is Stopped',
+      EXITED: 'Container Exited',
+      RESTARTING: 'Container keeps restarting'
     },
     service: {
-      Running: '正在运行',
-      Pending: '正在等待',
-      CrashLoopBackOff: '发生错误',
+      Running: 'Running',
+      Pending: 'Waiting',
+      CrashLoopBackOff: 'An Error Occurred',
       '': '*'
     },
     product: {
-      Running: '正常',
-      Deleting: '删除中',
-      Updating: '更新中',
-      Unstable: '运行不稳定',
-      Error: '内部错误'
+      Running: 'Normal',
+      Deleting: 'Deleting',
+      Updating: 'Updating',
+      Unstable: 'Unstable Operation',
+      Error: 'Internal Error'
     },
     pipeline: {
       task: {
-        '': '未运行',
-        created: '排队中',
-        waiting: '排队中',
-        running: '正在运行',
-        failed: '失败',
-        passed: '成功',
-        timeout: '超时',
-        cancelled: '取消',
-        blocked: '阻塞',
-        queued: '队列中',
-        skipped: '跳过',
-        prepare: '准备环境',
-        reject: '拒绝'
+        '': 'Not Running',
+        created: 'In The Line',
+        waiting: 'In The Line',
+        running: 'Running',
+        failed: 'Fail',
+        passed: 'Success',
+        timeout: 'Time Out',
+        cancelled: 'Cancel',
+        blocked: 'Block',
+        queued: 'In Queue',
+        skipped: 'Jump Over',
+        prepare: 'Prepare The Environment',
+        reject: 'Reject'
       }
     },
     approval: {
       status: {
-        '': '待审核',
-        waiting: '排队中',
-        running: '正在运行',
-        failed: '失败',
-        passed: '成功',
-        timeout: '超时',
-        cancelled: '取消',
-        blocked: '阻塞',
-        queued: '队列中',
-        skipped: '跳过',
-        prepare: '准备环境',
-        reject: '拒绝',
-        approve: '通过'
+        '': 'Pending Review',
+        waiting: 'In The Line',
+        running: 'Running',
+        failed: 'Fail',
+        passed: 'Success',
+        timeout: 'Time Out',
+        cancelled: 'Cancel',
+        blocked: 'Block',
+        queued: 'In Queue',
+        skipped: 'Jump Over',
+        prepare: 'Prepare The Environment',
+        reject: 'Reject',
+        approve: 'Pass'
       }
     },
     project: {
       vars: {
-        unused: '未使用',
-        present: '已使用',
-        new: '值为空'
+        unused: 'Unused',
+        present: 'Used',
+        new: 'Value Is Empty'
       }
     },
     setting: {
       cluster: {
-        pending: '等待接入',
-        normal: '正常', // 正常
-        abnormal: '异常', // 异常
-        disconnected: '主动断开'
+        pending: 'Waiting For Access',
+        normal: 'Normal', // Normal
+        abnormal: 'Abnormal', // Abnormal
+        disconnected: 'Active Disconnect'
       }
     },
     workflowStage: {
-      build: '构建部署',
-      artifact: '交付物部署',
-      test: '测试',
-      distribute: '分发部署'
+      build: 'Build And Deploy',
+      artifact: 'Deliverables Deployment',
+      test: 'Test',
+      distribute: 'Distribution Deployment'
     }
   }
   if (subitem === '') {
@@ -149,28 +149,28 @@ export function calcEnvStatusColor (status) {
 
 export function translateEnvStatus (status, updateble) {
   if (status === 'Running' && updateble) {
-    return '环境可更新'
+    return 'Environment can be updated'
   } else if (status === 'Creating') {
-    return '正在创建'
+    return 'Creating'
   } else if (status === 'Running') {
-    return '正在运行'
+    return 'Running'
   } else if (status === 'Updating') {
-    return '更新中'
+    return 'Updating'
   } else if (status === 'Succeeded') {
-    return '正常'
+    return 'Normal'
   } else if (status === 'Unstable') {
-    return '运行不稳定'
+    return 'Unstable Operation'
   } else if (status === 'Deleting') {
-    return '删除中'
+    return 'Deleting'
   } else if (status === 'Error') {
-    return '内部错误'
+    return 'Internal Error'
   } else if (status === 'Unknown') {
-    return '未知'
+    return 'Unknown'
   }
 }
 
 export const serviceTypeMap = {
-  k8s: '容器'
+  k8s: 'Container'
 }
 
 export function translateServiceType (type) {
@@ -178,8 +178,8 @@ export function translateServiceType (type) {
 }
 
 export const subTaskTypeMap = {
-  distribute2kodo: '存储分发',
-  release_image: '镜像分发'
+  distribute2kodo: 'Storage Distribution',
+  release_image: 'Mirror Distribution'
 }
 
 export function translateSubTaskType (type) {

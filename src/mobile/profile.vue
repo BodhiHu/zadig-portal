@@ -13,14 +13,14 @@
     </div>
 
     <template v-else>
-      <van-panel title="用户名"
+      <van-panel title="Username"
                  :desc="username"
                  :status="userRole">
       </van-panel>
-      <van-panel title="用户来源"
+      <van-panel title="User Source"
                  :desc="from">
       </van-panel>
-      <van-panel title="最近登录"
+      <van-panel title="Recently Logged In"
                  :desc="$utils.convertTimestamp(currentEditUserInfo.info.last_login_time)">
       </van-panel>
       <van-panel v-if="jwtToken"
@@ -31,7 +31,7 @@
         <van-button type="danger"
                     @click="logout"
                     round
-                    block>退出登录</van-button>
+                    block>Sign Out</van-button>
       </div>
 
     </template>
@@ -87,7 +87,7 @@ export default {
       store.remove('token')
       this.$store.dispatch('clearProjectTemplates')
       this.$router.push('/signin')
-      Notify({ type: 'success', message: '账号退出成功' })
+      Notify({ type: 'success', message: 'Account logout successfully' })
     }
   },
   computed: {
@@ -99,9 +99,9 @@ export default {
     },
     userRole () {
       if (this.currentEditUserInfo.info.isSuperUser) {
-        return '管理员'
+        return 'Administrator'
       } else {
-        return '普通用户'
+        return 'General User'
       }
     },
     from () {

@@ -1,13 +1,13 @@
 <template>
   <div class="workflow-build-rows">
-    <el-table :data="pickedTargets" v-if="pickedTargets.length > 0" empty-text="无">
+    <el-table :data="pickedTargets" v-if="pickedTargets.length > 0" empty-text="None">
       <el-table-column type="expand"  width="50px">
         <template slot-scope="props">
           <el-table :data="props.row.key_vals.filter(item=>item.isShow)" style="width: 70%; margin: 0 auto;" size="mini">
-            <el-table-column label="键">
+            <el-table-column label="Key">
               <template slot-scope="scope">{{scope.row.key}}</template>
             </el-table-column>
-            <el-table-column label="值">
+            <el-table-column label="Value">
               <template slot-scope="scope">
                 <el-select v-model="scope.row.value" v-if="scope.row.type === 'choice'" size="small" style="width: 220px;">
                   <el-option v-for="(item,index) in scope.row.choice_option" :key="index" :value="item" :label="item">{{item}}</el-option>
@@ -26,8 +26,8 @@
           </el-table>
         </template>
       </el-table-column>
-      <el-table-column prop="service_module" label="服务" width="100px"></el-table-column>
-      <el-table-column label="代码库">
+      <el-table-column prop="service_module" label="Serve" width="100px"></el-table-column>
+      <el-table-column label="Code Library">
         <template slot-scope="scope">
           <el-row v-for="build of scope.row.repos" class="build-row" :key="build.code_host_id">
             <template>
@@ -40,7 +40,7 @@
               </el-col>
               <div v-if="build.showTip">
                 <el-col :span="7">
-                 <span style="color: #909399; font-size: 12px; line-height: 33px;">使用变更的代码执行</span>
+                 <span style="color: #909399; font-size: 12px; line-height: 33px;">Execute with changed code</span>
                 </el-col>
               </div>
               <div v-else>
@@ -54,7 +54,7 @@
                     clearable
                     size="small"
                     value-key="id"
-                    :placeholder="build.source==='other'?'请输入分支或标签':'请选择分支或标签'"
+                    :placeholder="build.source==='other'?'Please enter a branch or tag':'Please select a branch or tag'"
                     @change="changeBranchOrTag(build)"
                   >
                     <el-option-group v-for="group in build.branchAndTagList" :key="group.label" :label="group.label">
@@ -67,7 +67,7 @@
                     v-if="!$utils.isEmpty(build.branchPRsMap)"
                     v-model.number="build[build.prNumberPropName]"
                     size="small"
-                    placeholder="请选择 PR"
+                    placeholder="Please Choose PR"
                     filterable
                     clearable
                     :disabled="build.branchOrTag && build.branchOrTag.type === 'tag'"
@@ -79,23 +79,23 @@
                       popper-class="gray-popper"
                     >
                       <div slot="content">
-                        {{`创建人: ${$utils.tailCut(item.authorUsername,10)}`}}
+                        {{`Founder: ${$utils.tailCut(item.authorUsername,10)}`}}
                         <br />
-                        {{`时间: ${$utils.convertTimestamp(item.createdAt)}`}}
+                        {{`Time: ${$utils.convertTimestamp(item.createdAt)}`}}
                         <br />
-                        {{`源分支: ${item.sourceBranch}`}}
+                        {{`Source Branch: ${item.sourceBranch}`}}
                         <br />
-                        {{`目标分支: ${item.targetBranch}`}}
+                        {{`Target Branch: ${item.targetBranch}`}}
                       </div>
                       <el-option :label="`#${item[build.prNumberPropName]} ${item.title}`" :value="item[build.prNumberPropName]"></el-option>
                     </el-tooltip>
                   </el-select>
-                  <el-tooltip v-else content="PR 不存在，支持手动输入 PR 号" placement="top" popper-class="gray-popper">
+                  <el-tooltip v-else content="PR Does Not Exist，Support Manual Input PR No" placement="top" popper-class="gray-popper">
                     <el-input
                       v-model.number="build[build.prNumberPropName]"
                       class="short-input"
                       size="small"
-                      placeholder="请填写 PR 号"
+                      placeholder="Please Fill Out PR No"
                       :disabled="build.branchOrTag && build.branchOrTag.type === 'tag'"
                     ></el-input>
                   </el-tooltip>

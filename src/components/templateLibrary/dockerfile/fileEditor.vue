@@ -34,7 +34,7 @@
             <el-button v-hasPermi="{type: 'system', action: fileStatus === 'added'?'edit_template':'create_template',isBtn:true, disabled: disabledSave }" type="primary"
                        size="small"
                        :disabled="disabledSave"
-                       @click="updateFile">保存</el-button>
+                       @click="updateFile">Save</el-button>
           </div>
         </div>
     </div>
@@ -116,7 +116,7 @@ export default {
           this.$emit('onUpdateFile', { name: fileName, status: 'added', payload })
           this.$message({
             type: 'success',
-            message: `模板 ${fileName} 更新成功`
+            message: `Template ${fileName} Update Completed`
           })
         }
       } else if (status === 'named') {
@@ -128,7 +128,7 @@ export default {
           this.$emit('onUpdateFile', { name: fileName, status: 'added', payload })
           this.$message({
             type: 'success',
-            message: `模板 ${fileName} 创建成功`
+            message: `Template ${fileName} Created Successfully`
           })
         }
       }

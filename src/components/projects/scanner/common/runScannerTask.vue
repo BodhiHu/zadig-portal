@@ -1,8 +1,8 @@
 <template>
   <div class="run-code-scanner-container">
-    <el-dialog :title="`代码扫描 ${scannerInfo.name}`" :visible="dialogVisible" @close="cancelTask" custom-class="scanner-dialog" width="60%">
+    <el-dialog :title="`Code Scan ${scannerInfo.name}`" :visible="dialogVisible" @close="cancelTask" custom-class="scanner-dialog" width="60%">
       <el-table :data="scannerInfoDetail.repos" v-loading="loading">
-        <el-table-column prop="repo_name" label="代码库" width="180"></el-table-column>
+        <el-table-column prop="repo_name" label="Code Library" width="180"></el-table-column>
         <el-table-column>
           <template slot-scope="{ row }" v-if="row.repo_name">
             <el-row>
@@ -17,7 +17,7 @@
                     clearable
                     value-key="id"
                     size="small"
-                    :placeholder="row.source==='other'?'请输入分支或标签':'请选择分支或标签'"
+                    :placeholder="row.source==='other'?'Please enter a branch or tag':'Please select a branch or tag'"
                     @change="changeBranchOrTag(row)"
                   >
                     <el-option-group v-for="group in row.branchAndTagList" :key="group.label" :label="group.label">
@@ -31,7 +31,7 @@
                     v-if="!$utils.isEmpty(row.branchPRsMap)"
                     v-model.number="row[row.prNumberPropName]"
                     size="small"
-                    placeholder="请选择 PR"
+                    placeholder="Please Choose PR"
                     filterable
                     clearable
                   >
@@ -42,23 +42,23 @@
                       popper-class="gray-popper"
                     >
                       <div slot="content">
-                        {{`创建人: ${$utils.tailCut(item.authorUsername,10)}`}}
+                        {{`Founder: ${$utils.tailCut(item.authorUsername,10)}`}}
                         <br />
-                        {{`时间: ${$utils.convertTimestamp(item.createdAt)}`}}
+                        {{`Time: ${$utils.convertTimestamp(item.createdAt)}`}}
                         <br />
-                        {{`源分支: ${item.sourceBranch}`}}
+                        {{`Source Branch: ${item.sourceBranch}`}}
                         <br />
-                        {{`目标分支: ${item.targetBranch}`}}
+                        {{`Target Branch: ${item.targetBranch}`}}
                       </div>
                       <el-option :label="`#${item[row.prNumberPropName]} ${item.title}`" :value="item[row.prNumberPropName]"></el-option>
                     </el-tooltip>
                   </el-select>
-                  <el-tooltip v-else content="PR 不存在，支持手动输入 PR 号" placement="top" popper-class="gray-popper">
+                  <el-tooltip v-else content="PR Does Not Exist，Support Manual Input PR No" placement="top" popper-class="gray-popper">
                     <el-input
                       v-model.number="row[row.prNumberPropName]"
                       class="short-input"
                       size="small"
-                      placeholder="请填写 PR 号"
+                      placeholder="Please Fill Out PR No"
                       :disabled="row.branchOrTag && row.branchOrTag.type === 'tag'"
                     ></el-input>
                   </el-tooltip>
@@ -81,7 +81,7 @@
           :loading="startTaskLoading"
           :disabled="scannerInfoDetail.repos.length === 0"
           type="primary"
-        >启动任务</el-button>
+        >Start Task</el-button>
       </div>
     </el-dialog>
   </div>
@@ -162,7 +162,7 @@ export default {
         this.$emit('update:dialogVisible', false)
         this.$message({
           type: 'success',
-          message: '任务创建成功'
+          message: 'Task created successfully'
         })
         this.$router.push(
           `/v1/projects/detail/${projectName}/scanner/detail/${scannerName}/task/${taskId}?status=running&id=${scannerId}`

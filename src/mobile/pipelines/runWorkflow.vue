@@ -3,10 +3,10 @@
            label-position="top">
     <el-form-item prop="productName">
       <slot name="label">
-        <span>环境</span>
+        <span>Surroundings</span>
         <el-tooltip v-if="specificEnv"
                     effect="dark"
-                    content="该工作流已指定环境运行，可通过修改 工作流->基本信息 来解除指定环境绑定"
+                    content="The workflow has a specified environment to run，Workflow can be modified by->Basic information to unbind the specified environment"
                     placement="top">
           <span><i style="color: #909399;"
                class="el-icon-question"></i></span>
@@ -20,21 +20,21 @@
                  class="full-width">
         <el-option v-for="pro of matchedProducts"
                    :key="`${pro.projectName} / ${pro.name}`"
-                   :label="`${pro.projectName} / ${pro.name}${pro.is_prod?'（生产）':''}`"
+                   :label="`${pro.projectName} / ${pro.name}${pro.is_prod?'（Production）':''}`"
                    :value="`${pro.projectName} / ${pro.name}`">
           <span>{{`${pro.projectName} / ${pro.name}`}}
             <el-tag v-if="pro.is_prod"
                     type="danger"
                     size="mini"
                     effect="light">
-              生产
+              Production
             </el-tag>
           </span>
         </el-option>
         <el-option v-if="matchedProducts.length===0"
                    label=""
                    value="">
-          {{`(环境不存在，请前往 PC 端创建环境)`}}
+          {{`(Environment does not exist，Go To PC Side creation environment)`}}
         </el-option>
       </el-select>
 
@@ -42,7 +42,7 @@
 
     <div v-if="workflowMeta.build_stage.enabled"
          v-loading="precreateLoading">
-      <el-form-item label="服务">
+      <el-form-item label="Serve">
         <el-select v-model="pickedTargetNames"
                    filterable
                    multiple
@@ -62,7 +62,7 @@
       </el-form-item>
       <template>
         <van-divider v-if="pickedTargets.length > 0"
-                     content-position="left">构建部署</van-divider>
+                     content-position="left">Build And Deploy</van-divider>
         <div v-for="(target,index) in pickedTargets"
              :key="index">
           <div>
@@ -86,7 +86,7 @@
     </div>
     <template>
       <van-divider v-if="runner.tests.length >0"
-                   content-position="left">测试</van-divider>
+                   content-position="left">Test</van-divider>
       <div v-for="(runner,index) in runner.tests"
            :key="index">
         <div>
@@ -99,20 +99,20 @@
 
     <div class="advanced-setting">
       <el-collapse v-model="activeNames">
-        <el-collapse-item title="高级设置"
+        <el-collapse-item title="Advanced Settings"
                           name="1">
-          <el-checkbox v-model="runner.reset_cache">不使用工作空间缓存
+          <el-checkbox v-model="runner.reset_cache">Do not use workspace cache
             <el-tooltip effect="dark"
-                        content="可能会增加任务时长。如果构建中不使用工作空间缓存，该设置会被忽略"
+                        content="May increase task duration。If the build does not use the workspace cache，This setting will be ignored"
                         placement="top">
               <span><i style="color: #909399;"
                    class="el-icon-question"></i></span>
             </el-tooltip>
           </el-checkbox>
           <br>
-          <el-checkbox v-model="runner.ignore_cache">不使用 Docker 缓存
+          <el-checkbox v-model="runner.ignore_cache">Do Not Use Docker Cache
             <el-tooltip effect="dark"
-                        content="只对配置了镜像构建步骤的构建生效"
+                        content="Only takes effect for builds configured with an image build step"
                         placement="top">
               <span><i style="color: #909399;"
                    class="el-icon-question"></i></span>
@@ -127,7 +127,7 @@
                   round
                   plain
                   :loading="startTaskLoading"
-                  block>启动任务</van-button>
+                  block>Start Task</van-button>
     </div>
 
   </el-form>
@@ -383,7 +383,7 @@ export default {
         }
       }
       runWorkflowAPI(this.runner.product_tmpl_name, clone).then(res => {
-        Notify({ type: 'success', message: '任务创建成功' })
+        Notify({ type: 'success', message: 'Task created successfully' })
         this.$emit('success')
         this.$router.push(`/mobile/pipelines/project/${this.targetProject}/multi/${res.pipeline_name}/${res.task_id}?status=running`)
       }).catch(error => {
@@ -391,7 +391,7 @@ export default {
           const projectName = error.response.data.extra.productName
           const envName = error.response.data.extra.envName
           const serviceName = error.response.data.extra.serviceName
-          Notify({ type: 'warning', duration: 5000, message: `检测到 ${projectName} 中 ${envName} 环境下的 ${serviceName} 服务未启动 <br> 请检查后再运行工作流` })
+          Notify({ type: 'warning', duration: 5000, message: `Detected ${projectName} Middle ${envName} Environment ${serviceName} Service Not Started <br> Please check before running the workflow` })
         }
       }).finally(() => {
         this.startTaskLoading = false
@@ -399,7 +399,7 @@ export default {
     },
     checkInput () {
       if (!this.runner.product_tmpl_name || !this.runner.namespace) {
-        Notify({ type: 'warning', message: '请选择环境' })
+        Notify({ type: 'warning', message: 'Please select an environment' })
         return false
       }
 
@@ -433,9 +433,9 @@ export default {
         return true
       } else {
         if (invalidRepo.length > 0) {
-          Notify({ type: 'warning', message: invalidRepo.join(',') + ' 代码库不存在 Release Tag，请重新选择构建方式' })
+          Notify({ type: 'warning', message: invalidRepo.join(',') + ' Codebase Does Not Exist Release Tag，Please re-select the build method' })
         } else if (emptyValue.length > 0) {
-          Notify({ type: 'warning', message: emptyValue.join(',') + ' 代码库尚未选择信息' })
+          Notify({ type: 'warning', message: emptyValue.join(',') + ' Codebase has not selected information yet' })
         }
         return false
       }

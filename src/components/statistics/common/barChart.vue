@@ -42,7 +42,7 @@ export default {
           trigger: 'axis'
         },
         legend: {
-          data: ['成功', '失败']
+          data: ['Success', 'Fail']
         },
         grid: {
           left: '3%',
@@ -74,9 +74,9 @@ export default {
         },
         series: [
           {
-            name: '成功',
+            name: 'Success',
             type: 'bar',
-            stack: '总量',
+            stack: 'Total',
             barMaxWidth: 45,
             label: {
               normal: {
@@ -87,9 +87,9 @@ export default {
             data: this.ySuccessData
           },
           {
-            name: '失败',
+            name: 'Fail',
             type: 'bar',
-            stack: '总量',
+            stack: 'Total',
             barMaxWidth: 45,
             label: {
               normal: {

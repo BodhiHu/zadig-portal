@@ -65,16 +65,16 @@ export default {
       this.$emit('clickFile', data)
     },
     deleteChart (data) {
-      this.$confirm(`确定要删除 ${data.name} 这个模板吗？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Sure You Want To Delete ${data.name} Is This Template？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(() => {
           deleteChartTemplateAPI(data.name).then(() => {
             this.$message({
               type: 'success',
-              message: '模板删除成功'
+              message: 'Template deleted successfully'
             })
             this.$emit('deleteChart', { deleteFlag: true, name: data.name })
           })
@@ -82,7 +82,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '取消删除模板'
+            message: 'Undelete Template'
           })
         })
     },

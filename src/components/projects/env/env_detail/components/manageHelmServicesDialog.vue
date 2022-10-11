@@ -7,17 +7,17 @@
     :close-on-click-modal="false"
     :before-close="closeDialog"
   >
-    <div slot="title">{{ productInfo.env_name }} 环境 - {{ opeDesc }}服务</div>
+    <div slot="title">{{ productInfo.env_name }} Surroundings - {{ opeDesc }}Serve</div>
     <div class="manage-services-container">
       <el-form ref="serviceFormRef" class="primary-form" :model="updateServices" label-width="100px" label-position="left">
         <el-form-item
-          label="服务选择"
+          label="Service Selection"
           props="service_names"
-          :rules="{ required: true, type: 'array', message: '请选择服务名称', trigger: ['blur', 'change']}"
+          :rules="{ required: true, type: 'array', message: 'Please select a service name', trigger: ['blur', 'change']}"
         >
           <el-select
             v-model="updateServices.service_names"
-            placeholder="请选择服务"
+            placeholder="Please Select A Service"
             size="small"
             value-key="serviceName"
             filterable
@@ -27,11 +27,11 @@
           >
             <el-option v-for="(service, index) in currentServices" :key="index" :label="service.serviceName" :value="service"></el-option>
           </el-select>
-          <el-button type="primary" size="mini" plain @click="updateServices.service_names = currentServices">全选</el-button>
+          <el-button type="primary" size="mini" plain @click="updateServices.service_names = currentServices">Select All</el-button>
         </el-form-item>
       </el-form>
       <template v-if="opeType !== 'delete'">
-        <div class="var-title">变量配置</div>
+        <div class="var-title">Variable Configuration</div>
         <ChartValues
           ref="chartValuesRef"
           :chartNames="updateServices.service_names"
@@ -42,14 +42,14 @@
       </template>
     </div>
     <div slot="footer">
-      <el-button @click="closeDialog()" size="small" :disabled="loading">取 消</el-button>
+      <el-button @click="closeDialog()" size="small" :disabled="loading">Cancel</el-button>
       <el-button
         type="primary"
         size="small"
         :disabled="!updateServices.service_names.length"
         @click="updateEnvironment"
         :loading="loading"
-      >确 定</el-button>
+      >Sure</el-button>
     </div>
   </el-dialog>
 </template>
@@ -85,9 +85,9 @@ export default {
     },
     opeDesc () {
       const typeEnum = {
-        add: '添加',
-        update: '更新',
-        delete: '删除'
+        add: 'Add To',
+        update: 'Renew',
+        delete: 'Delete'
       }
       return typeEnum[this.opeType] || ''
     },
@@ -112,7 +112,7 @@ export default {
           service_names
         }
         deleteEnvServicesAPI(this.projectName, this.productInfo.env_name, payload).then(() => {
-          this.$message.success(`${this.opeDesc}服务成功！`)
+          this.$message.success(`${this.opeDesc}Service Success！`)
           this.closeDialog()
           this.fetchAllData()
         }).catch(error => {
@@ -122,10 +122,10 @@ export default {
             for (const service in error.response.data.extra) {
               if (Object.hasOwnProperty.call(error.response.data.extra, service)) {
                 const envNames = error.response.data.extra[service]
-                HtmlStrings.push(`服务 ${service} 存在于子环境 ${envNames.join(',')} 中`)
+                HtmlStrings.push(`Serve ${service} Exists in the sub-environment ${envNames.join(',')} Middle`)
               }
             }
-            const HtmlTemplate = `<p>待删除服务存在于子环境中，请先删除引用后再进行${this.opeDesc}操作！</p><br><p>${HtmlStrings.join('<br>')}</p>`
+            const HtmlTemplate = `<p>The service to be deleted exists in the subenvironment，Please remove the reference before proceeding${this.opeDesc}Operate！</p><br><p>${HtmlStrings.join('<br>')}</p>`
             this.$message({
               message: HtmlTemplate,
               type: 'warning',
@@ -154,7 +154,7 @@ export default {
         }
         updateHelmEnvAPI(this.projectName, payload)
           .then(() => {
-            this.$message.success(`${this.opeDesc}服务成功！`)
+            this.$message.success(`${this.opeDesc}Service Success！`)
             this.closeDialog()
             this.fetchAllData()
           })

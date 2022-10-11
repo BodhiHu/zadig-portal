@@ -86,8 +86,8 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresSuperAdmin) {
     if (!isSuperAdmin()) {
       Element.Notification({
-        title: '非超级管理员',
-        message: '无权访问',
+        title: 'Non Super Administrator',
+        message: 'No Access',
         type: 'error'
       })
       next({

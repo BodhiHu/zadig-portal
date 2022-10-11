@@ -2,43 +2,43 @@
   <div class="import-hosts-container">
     <el-alert type="warning" class="tip" :closable="false">
       <template>
-        主机资源用于主机服务资源配置
-        <br />详细配置可参考
+        Host resources are used for host service resource configuration
+        <br />For detailed configuration, please refer to
         <el-link
           style="font-size: 14px; vertical-align: baseline;"
           type="primary"
           :href="`https://docs.koderover.com/zadig/settings/vm-management/`"
           :underline="false"
           target="_blank"
-        >帮助文档</el-link>
+        >Help Documentation</el-link>
       </template>
     </el-alert>
     <el-form ref="importHosts" :rules="rules" label-width="100px" label-position="left" :model="host" class="host-form">
-      <el-form-item label="主机提供商" prop="provider">
-        <el-select v-model="host.provider" style="width: 100%;" size="small" placeholder="请选择主机提供商">
-          <el-option :value="1" label="阿里云">
+      <el-form-item label="Hosting Provider" prop="provider">
+        <el-select v-model="host.provider" style="width: 100%;" size="small" placeholder="Please select a hosting provider">
+          <el-option :value="1" label="Ali Cloud">
             <i class="iconfont iconaliyun"></i>
-            <span>阿里云</span>
+            <span>Ali Cloud</span>
           </el-option>
 
-          <el-option :value="2" label="腾讯云">
+          <el-option :value="2" label="Tencent Cloud">
             <i class="iconfont icontengxunyun"></i>
-            <span>腾讯云</span>
+            <span>Tencent Cloud</span>
           </el-option>
-          <el-option :value="3" label="华为云">
+          <el-option :value="3" label="HUAWEI CLOUD">
             <i class="iconfont iconhuawei"></i>
-            <span>华为云</span>
+            <span>HUAWEI CLOUD</span>
           </el-option>
-          <el-option :value="0" label="其他">
+          <el-option :value="0" label="Other">
             <i class="iconfont iconwuliji"></i>
-            <span>其他</span>
+            <span>Other</span>
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="下载模板" prop="download">
-        <el-button style="width: 50%;" size="small" type="primary" @click="downloadTemplate" plain>下载模板</el-button>
+      <el-form-item label="Download Template" prop="download">
+        <el-button style="width: 50%;" size="small" type="primary" @click="downloadTemplate" plain>Download Template</el-button>
       </el-form-item>
-      <el-form-item label="上传文件" prop="upload">
+      <el-form-item label="Upload Files" prop="upload">
         <el-upload
           ref="file-uploader"
           class="upload-file"
@@ -51,27 +51,27 @@
           :file-list="fileList"
           :on-remove="onRemoveFile"
         >
-          <el-button :disabled="uploadBtnDisabled" style="width: 50%;" size="small" type="primary" plain>上传文件</el-button>
+          <el-button :disabled="uploadBtnDisabled" style="width: 50%;" size="small" type="primary" plain>Upload Files</el-button>
           <div slot="tip" class="el-upload__tip" v-html="host.msg"></div>
         </el-upload>
       </el-form-item>
-      <el-form-item label="导入选项" prop="option">
+      <el-form-item label="Import Options" prop="option">
         <el-radio-group v-model="host.option">
           <el-radio label="increment">
-            增量
-            <el-tooltip effect="dark" content="已有主机管理列表中的条目不会重新导入，仅添加文件中新增的主机信息" placement="top">
+            Incremental
+            <el-tooltip effect="dark" content="Entries in the existing host management list will not be reimported，Only add host information newly added in the file" placement="top">
               <i class="pointer el-icon-question"></i>
             </el-tooltip>
           </el-radio>
           <el-radio label="patch">
-            覆盖已有主机
-            <el-tooltip effect="dark" content="已有主机管理列表中的条目重新导入且添加文件中新增的主机信息" placement="top">
+            Overwrite an existing host
+            <el-tooltip effect="dark" content="Re-import the entries in the existing host management list and add the newly added host information in the file" placement="top">
               <i class="pointer el-icon-question"></i>
             </el-tooltip>
           </el-radio>
           <!-- <el-radio label="override">
-            全量覆盖
-            <el-tooltip effect="dark" content="已有主机管理列表中的条目不再保留，文件中的主机信息全量导入" placement="top">
+            Full Coverage
+            <el-tooltip effect="dark" content="Entries in the existing host management list are no longer preserved，Full import of host information in the file" placement="top">
               <i class="pointer el-icon-question"></i>
             </el-tooltip>
           </el-radio>-->
@@ -102,14 +102,14 @@ export default {
     return {
       template: [
         {
-          主机名称: '',
+          Hostname: '',
           IP: '',
           PORT: 22,
-          用户名: '',
-          标签: '',
-          'SSH 私钥': '',
-          '是否生产机器(y/n)': '',
-          主机探活: JSON.stringify({
+          Username: '',
+          Label: '',
+          'SSH Private Key': '',
+          'Whether to produce machines(y/n)': '',
+          'Host Detection': JSON.stringify({
             probe_type: '',
             http_probe: {
               path: '',
@@ -124,10 +124,10 @@ export default {
       host: {
         provider: '',
         option: 'increment',
-        msg: '只能上传 xls/xlsx 文件'
+        msg: 'Upload Only xls/xlsx Document'
       },
       rules: {
-        provider: [{ required: true, message: '请选择提供商', trigger: 'blur' }]
+        provider: [{ required: true, message: 'Please Select A Provider', trigger: 'blur' }]
       },
       fileList: [],
       uploadBtnDisabled: false,
@@ -151,21 +151,21 @@ export default {
         const invalidItems = []
         fileJson.forEach((element, index) => {
           if (
-            !element['主机名称'] ||
-            !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(element['主机名称'])
+            !element['Hostname'] ||
+            !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(element['Hostname'])
           ) {
             invalidItems.push(index + 2)
           }
         })
         if (invalidItems.length > 0) {
-          this.host.msg = `主机名称仅支持英文字母、数字、下划线且首个字符不以数字开头 <br> 第 ${invalidItems.join(
+          this.host.msg = `The host name only supports English letters、Number、Underscore and the first character does not start with a digit <br> The First ${invalidItems.join(
             ','
-          )} 行主机名称不符合需求，请检查`
+          )} Line hostname does not meet requirements，Please Check`
         } else {
-          this.host.msg = '只能上传 xls/xlsx 文件'
+          this.host.msg = 'Upload Only xls/xlsx Document'
         }
       } else {
-        this.host.msg = '模板文件不存在条目，请检查'
+        this.host.msg = 'Template file does not have entry，Please Check'
       }
       this.fileJson = fileJson
     },
@@ -181,15 +181,15 @@ export default {
       ) {
         return true
       } else {
-        this.$message.error = '请上传 xls 或者 xlsx 类型文件'
+        this.$message.error = 'Please Upload xls Or xlsx Type File'
         return false
       }
     },
     downloadTemplate () {
       const worksheet = XLSX.utils.json_to_sheet(this.template)
       const workbook = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Zadig 主机模板')
-      XLSX.writeFile(workbook, 'Zadig 主机模板.xlsx')
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Zadig Host Template')
+      XLSX.writeFile(workbook, 'Zadig Host Template.xlsx')
     },
     importHost () {
       return this.$refs.importHosts.validate().then(async () => {
@@ -198,15 +198,15 @@ export default {
         const option = this.host.option
         const result = fileJson.map(item => {
           return {
-            name: item['主机名称'],
+            name: item['Hostname'],
             provider: provider,
-            label: item['标签'],
+            label: item['Label'],
             ip: item.IP,
             port: item.PORT ? parseInt(item.PORT) : 22,
-            is_prod: item['是否生产机器(y/n)'] === 'y',
-            user_name: item['用户名'],
-            private_key: window.btoa(item['SSH 私钥']),
-            probe: item['主机探活'] ? JSON.parse(item['主机探活']) : null
+            is_prod: item['Whether to produce machines(y/n)'] === 'y',
+            user_name: item['Username'],
+            private_key: window.btoa(item['SSH Private Key']),
+            probe: item['Host Detection'] ? JSON.parse(item['Host Detection']) : null
           }
         })
         const payload = {
@@ -228,11 +228,11 @@ export default {
           this.host = {
             provider: '',
             option: 'increment',
-            msg: '只能上传 xls/xlsx 文件'
+            msg: 'Upload Only xls/xlsx Document'
           }
           this.$message({
             type: 'success',
-            message: '导入主机信息成功'
+            message: 'Import host information successfully'
           })
           this.$refs['file-uploader'].clearFiles()
           this.uploadBtnDisabled = false

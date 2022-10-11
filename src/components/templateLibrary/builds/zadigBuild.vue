@@ -15,13 +15,13 @@
         </el-form>
       </div>
       <div class="section">
-        <div class="primary-title">代码信息</div>
-        <span>使用模板新建时配置</span>
+        <div class="primary-title">Code Information</div>
+        <span>Configured when creating a new template using a template</span>
       </div>
       <section>
-        <div class="primary-title not-first-child">构建变量</div>
+        <div class="primary-title not-first-child">Build Variable</div>
         <EnvVariable :preEnvs="buildConfig.pre_build" :validObj="validObj" :fromServicePage="false" :mini="mini"/>
-        <div class="primary-title not-first-child">通用构建脚本</div>
+        <div class="primary-title not-first-child">Generic Build Script</div>
         <div class="deploy-script">
           <Resize :resize="'both'">
             <Editor v-model="buildConfig.scripts"/>
@@ -32,7 +32,7 @@
     <section>
       <div style="margin-bottom: 8px;">
         <el-button type="primary" size="small" plain @click="buildConfig.advanced_setting_modified = !buildConfig.advanced_setting_modified">
-          高级配置
+          Advanced Configuration
           <i :class="[buildConfig.advanced_setting_modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
         </el-button>
       </div>
@@ -66,10 +66,10 @@ import { cloneDeep } from 'lodash'
 
 const validateBuildConfigName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入构建名称'))
+    callback(new Error('Please enter a build name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -127,7 +127,7 @@ export default {
         'pre_build.image_id': {
           type: 'string',
           required: true,
-          message: '请选择操作系统',
+          message: 'Please select an operating system',
           trigger: 'blur'
         }
       },

@@ -2,21 +2,21 @@
   <el-form class="workflow-args"
            label-width="100px">
     <el-form-item prop="productName"
-                  label="环境">
+                  label="Surroundings">
       <el-select :value="runner.product_tmpl_name&&runner.namespace ? `${runner.product_tmpl_name} / ${runner.namespace}` : ''"
                  @change="precreate"
                  size="small"
                  class="full-width">
         <el-option v-for="pro of matchedProducts"
                    :key="`${pro.projectName} / ${pro.name}`"
-                   :label="`${pro.projectName} / ${pro.name}（${pro.is_prod?'生产':'测试'}）`"
+                   :label="`${pro.projectName} / ${pro.name}（${pro.is_prod?'Production':'Test'}）`"
                    :value="`${pro.projectName} / ${pro.name}`">
           <span>{{`${pro.projectName} / ${pro.name}`}}
             <el-tag v-if="pro.is_prod"
                     type="danger"
                     size="mini"
                     effect="light">
-              生产
+              Production
             </el-tag>
           </span>
         </el-option>
@@ -25,7 +25,7 @@
 
     <div v-if="workflowMeta.build_stage.enabled"
          v-loading="precreateLoading">
-      <el-form-item label="服务">
+      <el-form-item label="Serve">
         <el-select v-model="pickedTargets"
                    filterable
                    multiple
@@ -41,7 +41,7 @@
             <span v-if="!service.has_build">
               <router-link style="color: #ccc;"
                            :to="`/v1/projects/detail/${runner.product_tmpl_name}/builds/create?service_name=${service.name}`">
-                {{`${service.name}(${service.service_name})(服务不存在构建，点击添加构建)`}}
+                {{`${service.name}(${service.service_name})(Service does not exist build，Click Add Build)`}}
               </router-link>
             </span>
             <span v-else>
@@ -64,7 +64,7 @@
       <el-button @click="submit"
                  type="primary"
                  size="small">
-        确定
+        Sure
       </el-button>
     </div>
 
@@ -322,7 +322,7 @@ export default {
     },
     checkInput () {
       if (!this.runner.product_tmpl_name || !this.runner.namespace) {
-        this.$message.error('请选择环境')
+        this.$message.error('Please select an environment')
         return false
       }
 
@@ -342,7 +342,7 @@ export default {
         return true
       } else {
         this.$message({
-          message: emptyValue.join(',') + ' 代码尚未选择构建信息',
+          message: emptyValue.join(',') + ' Code has not yet selected build information',
           type: 'error'
         })
         return false

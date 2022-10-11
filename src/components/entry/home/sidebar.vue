@@ -84,81 +84,81 @@ export default {
       backUrl: '/v1/status',
       systemMenu: [
         {
-          category_name: '集成管理',
+          category_name: 'Integrated Management',
           items: [
             {
-              name: '系统集成',
+              name: 'System Integration',
               icon: 'iconfont iconicon_jichengguanli',
               url: 'system/integration'
             },
             {
-              name: '软件包管理',
+              name: 'Package Management',
               icon: 'iconfont iconyingyongshezhi',
               url: 'system/apps'
             },
             {
-              name: '构建镜像管理',
+              name: 'Build Image Management',
               icon: 'iconfont iconjingxiang',
               url: 'system/imgs'
             },
             {
-              name: '工作流任务',
+              name: 'Workflow Tasks',
               icon: 'iconfont el-icon-sell',
               url: 'system/plugins'
             }
           ]
         },
         {
-          category_name: '基础设施',
+          category_name: 'Infrastructure',
           items: [
             {
-              name: '镜像仓库',
+              name: 'Mirror Repository',
               icon: 'iconfont icondocker',
               url: 'system/registry'
             },
             {
-              name: '对象存储',
+              name: 'Object Storage',
               icon: 'iconfont iconduixiangcunchu',
               url: 'system/storage'
             },
             {
-              name: 'HELM 仓库',
+              name: 'HELM Storehouse',
               icon: 'iconfont iconhelmrepo',
               url: 'system/helm',
               features: 'helm'
             },
             {
-              name: '集群管理',
+              name: 'Cluster Management',
               icon: 'iconfont iconjiqun',
               url: 'system/cluster'
             },
             {
-              name: '主机管理',
+              name: 'Host Management',
               icon: 'iconfont iconzhuji',
               url: 'system/host'
             }
           ]
         },
         {
-          category_name: '系统',
+          category_name: 'System',
           items: [
             {
-              name: '系统配置',
+              name: 'System Configuration',
               icon: 'iconfont iconfuwupeizhi',
               url: 'system/config'
             },
             {
-              name: '用户管理',
+              name: 'User Management',
               icon: 'iconfont icongeren',
               url: 'system/users'
             },
             {
-              name: '公告管理',
+              name: 'Announcement Management',
               icon: 'iconfont icongonggao',
               url: 'system/announcement'
             },
             {
-              name: '操作日志',
+              name: 'Operation Log',
               icon: 'iconfont iconiconlog',
               url: 'system/auditlog'
             }
@@ -167,40 +167,40 @@ export default {
       ],
       defaultMenu: [
         {
-          category_name: '产品交付',
+          category_name: 'Product Delivery',
           items: [
             {
-              name: '运行状态',
+              name: 'Operating Status',
               icon: 'iconfont iconyunhangzhuangtai',
               url: 'status'
             },
             {
-              name: '项目',
+              name: 'Project',
               icon: 'iconfont iconxiangmuloading',
               url: 'projects'
             },
             {
-              name: '测试中心',
+              name: 'Test Center',
               url: 'tests',
               icon: 'iconfont iconvery-testing'
             },
             {
-              name: '交付中心',
+              name: 'Delivery Center',
               url: 'delivery',
               icon: 'iconfont iconvery-deli'
             }
           ]
         },
         {
-          category_name: '数据视图',
+          category_name: 'Data View',
           items: [
             {
-              name: '数据概览',
+              name: 'Data Overview',
               icon: 'iconfont iconvery-dataov',
               url: 'statistics'
             },
             {
-              name: '效能洞察',
+              name: 'Effectiveness Insights',
               icon: 'iconfont iconvery-datain',
               url: 'insight'
             }
@@ -209,10 +209,10 @@ export default {
       ],
       adminMenu: [
         {
-          category_name: '设置',
+          category_name: 'Set Up',
           items: [
             {
-              name: '系统设置',
+              name: 'System Settings',
               icon: 'iconfont iconvery-setting',
               url: 'system'
             }
@@ -240,10 +240,10 @@ export default {
     showBackPath () {
       const path = this.$route.path
       if (path.includes('/v1/users')) {
-        this.backTitle = '用户管理'
+        this.backTitle = 'User Management'
         return true
       } else if (path.includes('/v1/system')) {
-        this.backTitle = '系统设置'
+        this.backTitle = 'System Settings'
         return true
       } else {
         return false
@@ -295,22 +295,22 @@ export default {
         const cloneMenu = _.cloneDeep(this.defaultMenu)
         if (!this.showTestCenter) {
           _.remove(cloneMenu[0].items, (item) => {
-            return item.name === '测试中心'
+            return item.name === 'Test Center'
           })
         }
         if (!this.showDataOverview) {
           _.remove(cloneMenu[1].items, (item) => {
-            return item.name === '数据概览'
+            return item.name === 'Data Overview'
           })
         }
         if (!this.showEfficiencyInsight) {
           _.remove(cloneMenu[1].items, (item) => {
-            return item.name === '效能洞察'
+            return item.name === 'Effectiveness Insights'
           })
         }
         if (!this.showDeliveryCenter) {
           _.remove(cloneMenu[0].items, (item) => {
-            return item.name === '交付中心'
+            return item.name === 'Delivery Center'
           })
         }
         return cloneMenu

@@ -2,27 +2,27 @@
   <div class="workflow-distribute">
     <el-card class="box-card">
       <el-form ref="distributeForm" :model="distributeStageDetail" label-width="100px">
-        <el-form-item label="服务选择" prop="serviceTargets">
+        <el-form-item label="Service Selection" prop="serviceTargets">
           <el-select
             v-model="distributeStageDetail.serviceTargets"
             multiple
             filterable
             collapse-tags
             clearable
-            placeholder="请选择服务"
+            placeholder="Please Select A Service"
             size="small"
             value-key="key"
           >
             <el-option v-for="service in allTargets" :key="service.key" :label="service.key" :value="service"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="分发方式">
+        <el-form-item label="Distribution Method">
           <el-select v-model="distributeStageDetail.methods" @change="changeReleaseMethod"  @remove-tag="removeReleaseMethod" multiple size="small">
-            <el-option label="镜像分发" value="image"></el-option>
-            <el-option label="对象存储分发" value="object"></el-option>
+            <el-option label="Mirror Distribution" value="image"></el-option>
+            <el-option label="Object storage distribution" value="object"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="distributeStageDetail.methods && distributeStageDetail.methods.includes('object')" label="对象存储">
+        <el-form-item v-if="distributeStageDetail.methods && distributeStageDetail.methods.includes('object')" label="Object Storage">
           <el-select v-model="distributeStageDetail.s3_storage_id" filterable size="small">
             <el-option
               v-for="(storage,index) of storageList"
@@ -32,7 +32,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="distributeStageDetail.methods.includes('image')" label="镜像仓库" class="repo-form">
+        <el-form-item v-if="distributeStageDetail.methods.includes('image')" label="Mirror Repository" class="repo-form">
           <el-row v-for="(release,index) in distributeStageDetail.releases" :key="index" :gutter="0" class="row">
             <el-col :span="8">
               <div>
@@ -49,7 +49,7 @@
             <el-col :span="6">
               <div style="padding: 0 15px;">
                 <el-switch v-model="release.deploy_enabled"></el-switch>
-                <span style="color: #909199; font-size: 14px;">部署到指定环境</span>
+                <span style="color: #909199; font-size: 14px;">Deploy to the specified environment</span>
               </div>
             </el-col>
             <el-col :span="6">
@@ -198,7 +198,7 @@ export default {
       if (this.distributeStageDetail.methods.includes('object')) {
         if (this.distributeStageDetail.s3_storage_id === '') {
           this.$message({
-            message: '请选择对象存储',
+            message: 'Please select Object Storage',
             type: 'warning'
           })
           errors.push('object')
@@ -213,19 +213,19 @@ export default {
         )
         if (this.distributeStageDetail.releases.length === 0) {
           this.$message({
-            message: '尚未添加镜像仓库，请检查',
+            message: 'Mirror repository has not been added，Please Check',
             type: 'warning'
           })
           errors.push('image')
         } else if (emptyRepos.length > 0) {
           this.$message({
-            message: '镜像仓库不能为空，请检查',
+            message: 'Mirror repository cannot be empty，Please Check',
             type: 'warning'
           })
           errors.push('image')
         } else if (emptyEnvs.length > 0) {
           this.$message({
-            message: '部署环境不能为空，请检查',
+            message: 'Deployment environment cannot be empty，Please Check',
             type: 'warning'
           })
           errors.push('image')

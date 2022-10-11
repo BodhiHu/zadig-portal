@@ -1,29 +1,29 @@
 <template>
-  <el-dialog title="策略详情" :visible.sync="policyDialog" width="50%">
+  <el-dialog title="Policy Details" :visible.sync="policyDialog" width="50%">
     <section class="policy-content" v-loading="loading">
       <div>
-        <span class="info-title">策略名称</span>
+        <span class="info-title">Policy Name</span>
         <span>{{ policyDetail.name }}</span>
       </div>
       <div style="margin-bottom: 10px;">
-        <span class="info-title">描述信息</span>
-        <span>{{ policyDetail.description || '无' }}</span>
+        <span class="info-title">Description</span>
+        <span>{{ policyDetail.description || 'None' }}</span>
       </div>
       <el-table :data="policyDetail.rules || []">
-        <el-table-column label="模块名称">
+        <el-table-column label="Module Name">
           <template slot-scope="{ row }">{{ getPolicyDesc(row.resources) }}</template>
         </el-table-column>
-        <el-table-column label="权限项">
+        <el-table-column label="Permission Item">
           <template slot-scope="{ row }">
             <div v-for="verb in row.verbs" :key="verb">{{ getPolicyDesc(verb) }}</div>
           </template>
         </el-table-column>
-        <!-- <el-table-column label="过滤规则">
+        <!-- <el-table-column label="Filter Rules">
           <template slot-scope="{ row }">
             <div v-for="(attribute, index) in row.match_attributes" :key="index">{{ attribute.key }}={{ attribute.value }}</div>
           </template>
         </el-table-column>-->
-        <el-table-column label="关联资源">
+        <el-table-column label="Associated Resources">
           <template slot-scope="{ row }">
             <div v-for="resource in row.related_resources" :key="resource">{{ resource }}</div>
           </template>
@@ -31,7 +31,7 @@
       </el-table>
     </section>
     <div slot="footer">
-      <el-button type="primary" @click="policyDialog = false" size="small">确 定</el-button>
+      <el-button type="primary" @click="policyDialog = false" size="small">Sure</el-button>
     </div>
   </el-dialog>
 </template>

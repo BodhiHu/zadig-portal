@@ -1,27 +1,27 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconfenzucopy"
     class="setting-profile-container"
   >
-    <el-dialog title="修改密码" :fullscreen="true" class="modifiled-pwd" :visible.sync="modifiedPwdDialogVisible" center>
+    <el-dialog title="Change Password" :fullscreen="true" class="modifiled-pwd" :visible.sync="modifiedPwdDialogVisible" center>
       <div class="modifiled-pwd-container">
         <el-form label-position="top" label-width="100px" :rules="rules" ref="ruleForm" :model="pwd">
-          <el-form-item label="旧密码" prop="oldPassword">
+          <el-form-item label="Old Password" prop="oldPassword">
             <el-input show-password v-model="pwd.oldPassword"></el-input>
           </el-form-item>
-          <el-form-item label="新密码" prop="newPassword">
+          <el-form-item label="New Password" prop="newPassword">
             <el-input show-password v-model="pwd.newPassword"></el-input>
           </el-form-item>
-          <el-form-item label="确认新密码" prop="confirmPassword">
+          <el-form-item label="Confirm The New Password" prop="confirmPassword">
             <el-input show-password v-model="pwd.confirmPassword"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancelUpdateUserInfo">取 消</el-button>
-        <el-button type="primary" @click="updateUserInfo">确 定</el-button>
+        <el-button @click="cancelUpdateUserInfo">Cancel</el-button>
+        <el-button type="primary" @click="updateUserInfo">Sure</el-button>
       </span>
     </el-dialog>
     <div v-if="currentEditUserInfo" class="section">
@@ -34,8 +34,8 @@
           </div>
           <div class="info-tag">
             <span  class="username">{{currentEditUserInfo.name}}</span>
-            <el-tag v-if="role.includes('admin')" size="mini" type="primary">管理员</el-tag>
-            <el-tag v-else size="mini" type="primary">普通用户</el-tag>
+            <el-tag v-if="role.includes('admin')" size="mini" type="primary">Administrator</el-tag>
+            <el-tag v-else size="mini" type="primary">General User</el-tag>
           </div>
 
           <div class="info-details">
@@ -43,7 +43,7 @@
               <tbody>
                 <template>
                   <tr>
-                    <td>最近登录</td>
+                    <td>Recently Logged In</td>
                     <td class>{{$utils.convertTimestamp(currentEditUserInfo.last_login_time)}}</td>
                   </tr>
                 </template>
@@ -51,16 +51,16 @@
                   <td>
                     <span>Kube Config</span>
                     <HelpLink :inline="true"
-                                 :keyword="{location:'个人中心',key:'KubeConfig'}"></HelpLink>
+                                 :keyword="{location:'Personal Center',key:'KubeConfig'}"></HelpLink>
                   </td>
                   <td class="">
                     <el-button @click="downloadConfig()"
-                               type="text">点击下载</el-button>
+                               type="text">Click To Download</el-button>
                   </td>
                 </tr>-->
                 <tr v-if="currentEditUserInfo.identity_type">
                   <td>
-                    <span>用户来源</span>
+                    <span>User Source</span>
                   </td>
                   <td>
                     <span >
@@ -71,16 +71,16 @@
                 </tr>
                 <tr v-if="currentEditUserInfo.identity_type ==='system'">
                   <td>
-                    <span>修改密码</span>
+                    <span>Change Password</span>
                   </td>
                   <td>
-                    <el-button @click="modifiedPwd" type="text">点击修改</el-button>
+                    <el-button @click="modifiedPwd" type="text">Click To Modify</el-button>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <span>API Token</span>
-                    <HelpLink :inline="true" :keyword="{location:'个人中心',key:'APIToken'}" />
+                    <HelpLink :inline="true" :keyword="{location:'Personal Center',key:'APIToken'}" />
                   </td>
                   <td>
                     <el-input size="small" placeholder readonly type="text" v-model="currentEditUserInfo.token">
@@ -90,16 +90,16 @@
                         v-clipboard:error="copyError"
                         slot="append"
                         icon="el-icon-document-copy"
-                      >复制</el-button>
+                      >Copy</el-button>
                     </el-input>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <span>通知设置</span>
+                    <span>Notification Settings</span>
                   </td>
                   <td>
-                    <el-checkbox v-model="workflowNoti.pipelinestatus" @change="saveSubscribe()" true-label="*" false-label>工作流状态变更</el-checkbox>
+                    <el-checkbox v-model="workflowNoti.pipelinestatus" @change="saveSubscribe()" true-label="*" false-label>Workflow Status Change</el-checkbox>
                   </td>
                 </tr>
               </tbody>
@@ -127,7 +127,7 @@ export default {
   data () {
     const validateNewPass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入新密码'))
+        callback(new Error('Please enter a new password'))
       } else {
         if (this.pwd.confirmPassword !== '') {
           this.$refs.ruleForm.validateField('confirmPassword')
@@ -137,9 +137,9 @@ export default {
     }
     const validateConfirmPass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请再次输入新密码'))
+        callback(new Error('Please enter new password again'))
       } else if (value !== this.pwd.newPassword) {
-        callback(new Error('两次输入密码不一致!'))
+        callback(new Error('The passwords entered twice do not match!'))
       } else {
         callback()
       }
@@ -147,7 +147,7 @@ export default {
     return {
       identityTypeMap: {
         github: 'GitHub',
-        system: '系统创建',
+        system: 'System Creation',
         ldap: 'OpenLDAP',
         oauth: 'OAuth'
       },
@@ -162,7 +162,7 @@ export default {
       workflowNoti: {},
       rules: {
         oldPassword: [
-          { required: true, message: '请输入旧密码', trigger: 'blur' }
+          { required: true, message: 'Please enter old password', trigger: 'blur' }
         ],
         newPassword: [
           { required: true, validator: validateNewPass, trigger: 'blur' }
@@ -186,13 +186,13 @@ export default {
     },
     copySuccess (event) {
       this.$message({
-        message: '已成功复制到剪贴板',
+        message: 'Successfully copied to clipboard',
         type: 'success'
       })
     },
     copyError (event) {
       this.$message({
-        message: '复制失败',
+        message: 'Replication Failed',
         type: 'error'
       })
     },
@@ -209,7 +209,7 @@ export default {
           }
           updateCurrentUserInfoAPI(id, payload).then(res => {
             this.$message({
-              message: '密码修改成功',
+              message: 'Password Reset Complete',
               type: 'success'
             })
             this.cancelUpdateUserInfo()
@@ -230,12 +230,12 @@ export default {
     },
     downloadConfig () {
       this.$message({
-        message: '获取配置中，请稍候...',
+        message: 'Getting Configuration，Please Wait...',
         type: 'info'
       })
       downloadConfigAPI().then(res => {
         this.$message({
-          message: '配置获取完毕，下载后请按照文档使用',
+          message: 'Configuration is complete，After downloading, please follow the documentation to use',
           type: 'success'
         })
         const content = res
@@ -261,7 +261,7 @@ export default {
       payload.type = 2
       saveSubscribeAPI(payload).then(res => {
         this.$message({
-          message: '通知设置保存成功',
+          message: 'Notification settings saved successfully',
           type: 'success'
         })
         this.getSubscribe()
@@ -285,7 +285,7 @@ export default {
   },
   created () {
     bus.$emit('set-topbar-title', {
-      breadcrumb: [{ title: '账号设置', url: '' }]
+      breadcrumb: [{ title: 'Account Settings', url: '' }]
     })
     this.getSubscribe()
     this.getCurrentUserInfo()

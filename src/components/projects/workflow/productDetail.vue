@@ -8,11 +8,11 @@
         @click="startTask(workflow)"
         class="left"
       >
-        <span class="iconfont iconzhixing">&nbsp;执行</span>
+        <span class="iconfont iconzhixing">&nbsp;Implement</span>
       </el-button>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <el-button type="primary" effect="dark" class="left permission-disabled">
-          <span class="iconfont iconzhixing">&nbsp;执行</span>
+          <span class="iconfont iconzhixing">&nbsp;Implement</span>
         </el-button>
       </el-tooltip>
       <router-link
@@ -22,7 +22,7 @@
       >
         <span class="iconfont icondeploy edit-setting"></span>
       </router-link>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <span class="middle">
           <span class="permission-disabled iconfont icondeploy edit-setting"></span>
         </span>
@@ -30,11 +30,11 @@
       <div class="right">
         <CusTags :values="stages" class="item"></CusTags>
         <span class="item">
-          <span class="item left">修改人</span>
+          <span class="item left">Modified By</span>
           {{ workflow.update_by }}
         </span>
         <span class="item">
-          <span class="item left">更新时间</span>
+          <span class="item left">Update Time</span>
           {{ $utils.convertTimestamp(workflow.update_time) }}
         </span>
       </div>
@@ -43,7 +43,7 @@
     <el-card class="box-card full" :body-style="{ padding: '0px', margin: '15px 0 30px 0' }">
       <div slot="header" class="block-title">
         <span>
-          <i class="iconfont iconhistory title-icon"></i>历史任务
+          <i class="iconfont iconhistory title-icon"></i>Historical Mission
         </span>
         <FilterStatus
           ref="filterStatusRef"
@@ -72,7 +72,7 @@
       ></TaskList>
     </el-card>
 
-    <el-dialog :visible.sync="taskDialogVisible" title="运行 产品-工作流" custom-class="run-workflow" width="60%" class="dialog">
+    <el-dialog :visible.sync="taskDialogVisible" title="Run The Product-Workflow" custom-class="run-workflow" width="60%" class="dialog">
       <run-workflow
         v-if="taskDialogVisible"
         :workflowName="workflowName"
@@ -104,11 +104,11 @@ export default {
       filteredItems: [
         {
           value: 'creator',
-          text: '执行人'
+          text: 'Executor'
         },
         {
           value: 'serviceName',
-          text: '服务组件'
+          text: 'Service Component'
         },
         {
           value: 'committer',
@@ -116,15 +116,15 @@ export default {
         },
         {
           value: 'taskStatus',
-          text: '状态'
+          text: 'State'
         }
       ],
       defaultFilterList: {
         taskStatus: [
-          { text: '失败', value: 'failed' },
-          { text: '成功', value: 'passed' },
-          { text: '超时', value: 'timeout' },
-          { text: '取消', value: 'cancelled' }
+          { text: 'Fail', value: 'failed' },
+          { text: 'Success', value: 'passed' },
+          { text: 'Time Out', value: 'timeout' },
+          { text: 'Cancel', value: 'cancelled' }
         ]
       },
       workflow: {},
@@ -167,7 +167,7 @@ export default {
     async refreshHistoryTask () {
       await this.fetchHistory(this.pageStart, this.pageSize)
       if (!this.timeTimeoutFinishFlag) {
-        this.timerId = setTimeout(this.refreshHistoryTask, 3000) // 保证内存中只有一个定时器
+        this.timerId = setTimeout(this.refreshHistoryTask, 3000) // Ensure that there is only one timer in memory
       }
     },
     processTestData (res) {
@@ -239,34 +239,34 @@ export default {
       const name = this.workflowName
       if (this.usedInPolicy.length) {
         this.$alert(
-          `工作流 ${name} 已在协作模式 ${this.usedInPolicy.join(
+          `Workflow ${name} Already in collaborative mode ${this.usedInPolicy.join(
             '、'
-          )} 中被定义为基准工作流，如需删除请先修改协作模式！`,
-          '删除工作流',
+          )} Is defined as the baseline workflow，If you need to delete it, please modify the collaboration mode first！`,
+          'Delete Workflow',
           {
-            confirmButtonText: '确定',
+            confirmButtonText: 'Sure',
             type: 'warning'
           }
         )
         return
       }
-      this.$prompt('输入工作流名称确认', '删除工作流 ' + name, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Enter workflow name to confirm', 'Delete Workflow ' + name, {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         confirmButtonClass: 'el-button el-button--danger',
         inputValidator: pipe_name => {
           if (pipe_name === name) {
             return true
           } else if (pipe_name === '') {
-            return '请输入工作流名称'
+            return 'Please enter a workflow name'
           } else {
-            return '名称不相符'
+            return 'Name Does Not Match'
           }
         }
       }).then(({ value }) => {
         deleteProductWorkflowAPI(this.$route.params.project_name, name).then(
           () => {
-            this.$message.success('删除成功')
+            this.$message.success('Successfully Deleted')
             this.$router.push(
               `/v1/projects/detail/${this.projectName}/pipelines`
             )
@@ -312,22 +312,22 @@ export default {
       const isEmpty = this.$utils.isEmpty
       const stages = []
       if (!isEmpty(workflow.build_stage) && workflow.build_stage.enabled) {
-        stages.push('构建部署')
+        stages.push('Build And Deploy')
       }
       if (
         !isEmpty(workflow.artifact_stage) &&
         workflow.artifact_stage.enabled
       ) {
-        stages.push('交付物部署')
+        stages.push('Deliverables Deployment')
       }
       if (!isEmpty(workflow.test_stage) && workflow.test_stage.enabled) {
-        stages.push('测试')
+        stages.push('Test')
       }
       if (
         !isEmpty(workflow.distribute_stage) &&
         workflow.distribute_stage.enabled
       ) {
-        stages.push('分发部署')
+        stages.push('Distribution Deployment')
       }
       this.stages = stages
     }
@@ -346,14 +346,14 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '工作流',
+          title: 'Workflow',
           url: `/v1/projects/detail/${this.projectName}/pipelines`
         },
         { title: this.workflowName, url: '' }

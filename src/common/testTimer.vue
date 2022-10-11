@@ -1,6 +1,6 @@
 <template>
   <div class="test-timer">
-    <el-dialog :title="timerEditMode?'修改定时器配置':'添加定时器'"
+    <el-dialog :title="timerEditMode?'Modify timer configuration':'Add Timer'"
                :width="dialogWidth"
                :center="!dialogLeft"
                :close-on-click-modal="false"
@@ -13,7 +13,7 @@
                  :rules="triggerRules"
                  label-width="100px"
                  label-position="left">
-          <el-form-item label="触发方式"
+          <el-form-item label="Trigger Method"
                         prop="type">
             <el-radio v-model="schedule_config.type"
                       label="timing">{{ schedule_config.timing.name }}</el-radio>
@@ -22,15 +22,15 @@
             <el-radio v-model="schedule_config.type"
                       label="crontab">{{ schedule_config.crontab.name }}</el-radio>
           </el-form-item>
-          <el-form-item label="时间配置">
+          <el-form-item label="Time Configuration">
             <div v-if="schedule_config.type === 'timing'"
                  class="inline-show">
-              <!--定时-->
+              <!--Timing-->
               <el-form-item prop="timing.frequency">
                 <el-select v-model="schedule_config.timing.frequency"
                            size="small"
                            style="width: 150px;"
-                           placeholder="请选择">
+                           placeholder="Please Choose">
                   <el-option v-for="(item,index) in dateTranslate"
                              :key="index"
                              :label="item.label"
@@ -44,12 +44,12 @@
                                 format="HH:mm"
                                 size="small"
                                 style="width: 150px;"
-                                placeholder="请选择时间"></el-time-picker>
+                                placeholder="Please Select A Time"></el-time-picker>
               </el-form-item>
             </div>
             <div v-else-if="schedule_config.type === 'gap'"
                  class="inline-show">
-              <!--间隔-->
+              <!--Interval-->
               <el-form-item prop="gap.number">
                 <el-input-number v-model="schedule_config.gap.number"
                                  :min="1"
@@ -60,10 +60,10 @@
                 <el-select v-model="schedule_config.gap.frequency"
                            size="small"
                            style="width: 150px;">
-                  <el-option label="分钟"
+                  <el-option label="Minute"
                              value="minutes">
                   </el-option>
-                  <el-option label="小时"
+                  <el-option label="Hour"
                              value="hours">
                   </el-option>
                 </el-select>
@@ -80,7 +80,7 @@
           </el-form-item>
         </el-form>
         <div v-if="schedule_config.type === 'crontab'">
-          <div class="cron-title-show">Cron 表达式解析</div>
+          <div class="cron-title-show">Cron Expression Parsing</div>
           <el-table :data="cronValue"
                     border
                     size="small"
@@ -88,15 +88,15 @@
                     :header-cell-style="()=>{return {background: '#dddddd'}}"
                     :cell-style="()=>{return {height:'30px'}}">
             <el-table-column prop="min"
-                             label="分钟"></el-table-column>
+                             label="Minute"></el-table-column>
             <el-table-column prop="hour"
-                             label="小时"></el-table-column>
+                             label="Hour"></el-table-column>
             <el-table-column prop="date"
-                             label="日期"></el-table-column>
+                             label="Date"></el-table-column>
             <el-table-column prop="month"
-                             label="月份"></el-table-column>
+                             label="Month"></el-table-column>
             <el-table-column prop="week"
-                             label="星期"></el-table-column>
+                             label="Week"></el-table-column>
           </el-table>
         </div>
         <slot name="content"
@@ -110,11 +110,11 @@
            class="dialog-footer">
         <el-button size="small"
                    @click="cancelSchedule()"
-                   round>取 消</el-button>
+                   round>Cancel</el-button>
         <el-button size="small"
                    type="primary"
                    @click="addSchedule"
-                   round>确 定</el-button>
+                   round>Sure</el-button>
       </div>
     </el-dialog>
     <div v-show="schedules.enabled"
@@ -122,32 +122,32 @@
       <div class="section-wrapper">
         <el-table :data="schedules['items']"
                   style="width: 100%;">
-          <el-table-column label="触发方式"
+          <el-table-column label="Trigger Method"
                            #default="{ row }">
             {{ schedule_config[row.type].name }}
           </el-table-column>
-          <el-table-column label="时间配置"
+          <el-table-column label="Time Configuration"
                            #default="{ row}">
             <span v-if="row.type === 'timing'">
               {{ getWeekday(row.frequency) }}&nbsp;&nbsp;{{ row.time }}
             </span>
             <span v-if="row.type === 'gap'">
-              每&nbsp;&nbsp;{{ row.number }}&nbsp;&nbsp;{{ row.frequency === 'hours' ? '小时' : '分钟'}}
+              Every&nbsp;&nbsp;{{ row.number }}&nbsp;&nbsp;{{ row.frequency === 'hours' ? 'Hour' : 'Minute'}}
             </span>
             <span v-if="row.type === 'crontab'">
               {{ row.cron }}
             </span>
           </el-table-column>
-          <el-table-column label="操作"
+          <el-table-column label="Operate"
                            #default="{ $index }">
             <el-button @click="editSchedule($index)"
                        size="mini"
                        type="primary"
-                       plain>编辑</el-button>
+                       plain>Edit</el-button>
             <el-button @click="deleteSchedule($index)"
                        size="mini"
                        type="danger"
-                       plain>删除</el-button>
+                       plain>Delete</el-button>
           </el-table-column>
         </el-table>
       </div>
@@ -160,9 +160,9 @@ export default {
   data () {
     const checkCron = (rule, value, callback) => {
       if (value.trim().split(/\s+/).length !== 5) {
-        callback(new Error('请检查格式，仅支持五位！'))
+        callback(new Error('Please Check The Format，Only five digits are supported！'))
       } else if (!/^[0-9\s/\-\*\,]+$/.test(value)) {
-        callback(new Error('请检查格式，仅支持数字 * , - / '))
+        callback(new Error('Please Check The Format，Only numbers are supported * , - / '))
       } else {
         callback()
       }
@@ -170,21 +170,21 @@ export default {
     return {
       addTimerDialogVisible: false,
       dateTranslate: [
-        { label: '每天', value: 'day' },
-        { label: '每周一', value: 'monday' },
-        { label: '每周二', value: 'tuesday' },
-        { label: '每周三', value: 'wednesday' },
-        { label: '每周四', value: 'thursday' },
-        { label: '每周五', value: 'friday' },
-        { label: '每周六', value: 'saturday' },
-        { label: '每周日', value: 'sunday' }
+        { label: 'Every Day', value: 'day' },
+        { label: 'Every Monday', value: 'monday' },
+        { label: 'Every Tuesday', value: 'tuesday' },
+        { label: 'Every Wednesday', value: 'wednesday' },
+        { label: 'Every Thursday', value: 'thursday' },
+        { label: 'Every Friday', value: 'friday' },
+        { label: 'Every Saturday', value: 'saturday' },
+        { label: 'Every Sunday', value: 'sunday' }
       ],
       triggerRules: {
-        type: [{ required: true, message: '请选择触发方式', trigger: 'blur' }],
-        'timing.frequency': [{ required: true, message: '请选择周期', trigger: 'blur' }],
-        'timing.time': [{ required: true, message: '请填选择时间', trigger: 'blur' }],
-        'gap.number': [{ required: true, message: '请填选择时间', trigger: 'blur' }],
-        'gap.frequency': [{ required: true, message: '请选择周期', trigger: 'blur' }],
+        type: [{ required: true, message: 'Please select a trigger method', trigger: 'blur' }],
+        'timing.frequency': [{ required: true, message: 'Please Select A Period', trigger: 'blur' }],
+        'timing.time': [{ required: true, message: 'Please fill in the selected time', trigger: 'blur' }],
+        'gap.number': [{ required: true, message: 'Please fill in the selected time', trigger: 'blur' }],
+        'gap.frequency': [{ required: true, message: 'Please Select A Period', trigger: 'blur' }],
         'crontab.cron': [{ required: true, validator: checkCron, trigger: 'blur' }]
       },
       timerEditMode: false,
@@ -192,21 +192,21 @@ export default {
         type: 'timing',
         timing: {
           type: 'timing',
-          name: '定时循环',
+          name: 'Timed Loop',
           frequency: '',
           number: 1,
           time: ''
         },
         gap: {
           type: 'gap',
-          name: '间隔循环',
+          name: 'Interval Loop',
           number: 1,
           frequency: '',
           time: ''
         },
         crontab: {
           type: 'crontab',
-          name: 'Cron 表达式',
+          name: 'Cron Expression',
           number: 1,
           frequency: '',
           time: '',
@@ -300,7 +300,7 @@ export default {
             this.schedules.items.push(this.schedule_config.timing)
             this.schedule_config.timing = {
               type: 'timing',
-              name: '定时循环',
+              name: 'Timed Loop',
               frequency: '',
               number: 1,
               time: '',
@@ -310,7 +310,7 @@ export default {
             this.schedules.items.push(this.schedule_config.gap)
             this.schedule_config.gap = {
               type: 'gap',
-              name: '间隔循环',
+              name: 'Interval Loop',
               number: null,
               frequency: '',
               time: '',
@@ -321,7 +321,7 @@ export default {
             this.schedules.items.push(this.schedule_config.crontab)
             this.schedule_config.crontab = {
               type: 'crontab',
-              name: 'Cron 表达式',
+              name: 'Cron Expression',
               number: null,
               frequency: '',
               time: '',

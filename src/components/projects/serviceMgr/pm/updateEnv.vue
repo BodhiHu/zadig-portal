@@ -1,13 +1,13 @@
 <template>
   <el-dialog
-    title="是否更新对应环境？"
+    title="Whether to update the corresponding environment？"
     custom-class="dialog-upgrade-env"
     :visible.sync="updateEnvDialogVisible"
     width="40%"
   >
     <div class="title">
       <el-alert
-        title="勾选需要更新的环境，点击确定之后，该服务将自动在对应的环境中进行更新"
+        title="Check the environment that needs to be updated，After Clicking OK，The service will automatically be updated in the corresponding environment"
         :closable="false"
         type="warning"
       >
@@ -22,7 +22,7 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button size="small" type="primary" @click="autoUpgradeEnv"
-        >确 定</el-button
+        >Sure</el-button
       >
     </span>
   </el-dialog>
@@ -61,7 +61,7 @@ export default {
       autoUpgradeEnvAPI(projectName, payload, false).then((res) => {
         this.$router.push(`/v1/projects/detail/${projectName}/envs`)
         this.$message({
-          message: '更新环境成功',
+          message: 'Update environment succeeded',
           type: 'success'
         })
       })

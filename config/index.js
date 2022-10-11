@@ -3,7 +3,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path');
-const backEndAddr = '';
+const backEndAddr = process.env.SERVER_ADDR || 'http://127.0.0.1:31500';
+
 module.exports = {
   dev: {
     // Paths

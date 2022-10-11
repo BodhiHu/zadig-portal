@@ -4,7 +4,7 @@
                :body-style="{ padding: '0px', margin: '15px 0 0 0' }">
         <div slot="header"
              class="block-title">
-          最新一次测试报告
+          The Latest Test Report
         </div>
         <div class="text item">
           <el-row>
@@ -12,7 +12,7 @@
               <div>
                 <el-row :gutter="0">
                   <el-col :span="6">
-                    <div class="item-title">总测试用例</div>
+                    <div class="item-title">Total Test Cases</div>
                   </el-col>
                   <el-col :span="5">
                     <div class="item-desc">{{latestTestSummary.tests }}
@@ -20,7 +20,7 @@
                   </el-col>
 
                   <el-col :span="6">
-                    <div class="item-title">成功用例</div>
+                    <div class="item-title">Successful Use Case</div>
                   </el-col>
                   <el-col :span="5">
                     <div class="">
@@ -32,13 +32,13 @@
 
                 <el-row :gutter="0">
                   <el-col :span="6">
-                    <div class="item-title">失败用例</div>
+                    <div class="item-title">Failed Use Case</div>
                   </el-col>
                   <el-col :span="5">
                     <div class="item-desc">{{latestTestSummary.failures}}</div>
                   </el-col>
                   <el-col :span="6">
-                    <div class="item-title">错误用例</div>
+                    <div class="item-title">Bad Use Case</div>
                   </el-col>
                   <el-col :span="5">
                     <div class="item-desc">{{latestTestSummary.errors}}</div>
@@ -46,7 +46,7 @@
                 </el-row>
                 <el-row :gutter="0">
                   <el-col :span="6">
-                    <div class="item-title">未执行用例</div>
+                    <div class="item-title">Use Case Not Executed</div>
                   </el-col>
 
                   <el-col :span="5">
@@ -54,7 +54,7 @@
                   </el-col>
 
                   <el-col :span="6">
-                    <div class=" item-title">测试用时</div>
+                    <div class=" item-title">Test Time</div>
                   </el-col>
                   <el-col :span="5">
                     <div class=" item-desc">
@@ -71,14 +71,14 @@
                  type="primary"
                  size="small"
                  @click="showTestCase = !showTestCase"
-                 plain>查看用例</el-button>
+                 plain>View Use Cases</el-button>
       <el-collapse-transition>
         <el-card v-show="showTestCase"
                  class="box-card task-process"
                  :body-style="{ padding: '0px', margin: '15px 0 0 0' }">
           <div slot="header"
                class="clearfix">
-            <span class="block-title">详细用例（可滚动查看）</span>
+            <span class="block-title">Detailed Use Case（Scrollable View）</span>
           </div>
           <function-test-case :testCases="testCases"></function-test-case>
         </el-card>
@@ -87,7 +87,7 @@
                :body-style="{ padding: '0px', margin: '15px 0 30px 0' }">
         <div slot="header"
              class="block-title">
-          历史任务
+          Historical Mission
         </div>
         <TaskList :taskList="workflowTasks"
                    :total="total"
@@ -127,19 +127,19 @@ export default {
       ],
       testResultLabels: [
         {
-          text: '失败',
+          text: 'Fail',
           value: 'failure'
         },
         {
-          text: '成功',
+          text: 'Success',
           value: 'succeeded'
         },
         {
-          text: '未执行',
+          text: 'Not Performed',
           value: 'skipped'
         },
         {
-          text: '错误',
+          text: 'Mistake',
           value: 'error'
         }
       ],
@@ -179,19 +179,19 @@ export default {
         this.testCases.forEach(testCase => {
           const blocks = []
           if (testCase.failure && typeof testCase.failure === 'string') {
-            blocks.push(`失败原因:\n${testCase.failure}`)
+            blocks.push(`Reason For Failure:\n${testCase.failure}`)
           }
           if (testCase.failure && typeof testCase.failure === 'object') {
-            blocks.push(`失败信息:\n${testCase.failure.message}`)
-            blocks.push(`失败详情:\n${testCase.failure.text}`)
+            blocks.push(`Failure Message:\n${testCase.failure.message}`)
+            blocks.push(`Failure Details:\n${testCase.failure.text}`)
           }
           if (testCase.system_out) {
-            blocks.push(`标准输出:\n${testCase.system_out}`)
+            blocks.push(`Stdout:\n${testCase.system_out}`)
           }
           if (testCase.error) {
-            blocks.push(`错误信息:\n${testCase.error.message}`)
-            blocks.push(`错误详情:\n${testCase.error.text}`)
-            blocks.push(`错误类型:\n${testCase.error.type}`)
+            blocks.push(`Error Message:\n${testCase.error.message}`)
+            blocks.push(`Error Details:\n${testCase.error.text}`)
+            blocks.push(`Error Type:\n${testCase.error.type}`)
           }
           testCase.mergedOutput = blocks.join('\n')
         })

@@ -1,6 +1,6 @@
 <template>
   <div class="host-select">
-    <el-dialog title="选择主机资源" :visible.sync="editHostDialogVisible" width="50%" center>
+    <el-dialog title="Select Host Resource" :visible.sync="editHostDialogVisible" width="50%" center>
       <div class="tab-container">
         <el-tabs v-model="currentTab" type="card">
           <el-tab-pane v-for="item in tabList" :name="item.name" :label="item.label" :key="item.name">
@@ -14,8 +14,8 @@
         </el-tabs>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="editHostDialogVisible = false">取 消</el-button>
-        <el-button type="primary" size="small" :disabled="currentPmServiceData.env_configs && currentPmServiceData.env_configs.length === 0" @click="bindHost">确 定</el-button>
+        <el-button size="small" @click="editHostDialogVisible = false">Cancel</el-button>
+        <el-button type="primary" size="small" :disabled="currentPmServiceData.env_configs && currentPmServiceData.env_configs.length === 0" @click="bindHost">Sure</el-button>
       </span>
     </el-dialog>
   </div>
@@ -39,11 +39,11 @@ export default {
       currentTab: 'project',
       tabList: [
         {
-          label: '项目资源',
+          label: 'Project Resources',
           name: 'project'
         },
         {
-          label: '系统资源',
+          label: 'System Resource',
           name: 'system'
         }
       ],
@@ -85,7 +85,7 @@ export default {
       }
       addHostToPmEnvAPI(projectName, payload).then(res => {
         this.$message({
-          message: '主机资源修改成功',
+          message: 'Host resource modification succeeded',
           type: 'success'
         })
         this.$emit('success')

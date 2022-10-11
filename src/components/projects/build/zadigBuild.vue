@@ -12,12 +12,12 @@
           inline-message
         >
           <slot name="buildName">
-            <el-form-item label="构建名称" prop="name">
-              <el-input v-model="buildConfig.name" placeholder="构建名称" autofocus size="small" :disabled="!isCreate" auto-complete="off"></el-input>
+            <el-form-item label="Build Name" prop="name">
+              <el-input v-model="buildConfig.name" placeholder="Build Name" autofocus size="small" :disabled="!isCreate" auto-complete="off"></el-input>
             </el-form-item>
           </slot>
           <slot v-if="!useTemplate" name="serviceName">
-            <el-form-item label="服务选择">
+            <el-form-item label="Service Selection">
               <el-select v-model="buildConfig.targets" multiple size="small" value-key="key" filterable>
                 <el-option
                   v-for="(service,index) in serviceTargets"
@@ -29,7 +29,7 @@
             </el-form-item>
           </slot>
           <slot v-if="useTemplate" name="template">
-            <el-form-item label="选择模板" prop="template_id">
+            <el-form-item label="Choose A Template" prop="template_id">
               <el-select v-model="buildConfig.template_id" size="small" filterable @change="changeTemplate">
                 <el-option
                   v-for="(template,index) in templates"
@@ -50,9 +50,9 @@
         <ServiceRepoSelect ref="serviceRepoSelectRef" :serviceTargets="serviceTargets" :targets="buildConfig.target_repos" :currentTemplateEnvs="currentTemplateEnvs" :isCreate="isCreate" :validObj="validObj" :mini="mini" class="build-secondary-form" showFirstLine/>
       </section>
       <section v-show="!useTemplate">
-        <div class="primary-title not-first-child">构建变量</div>
+        <div class="primary-title not-first-child">Build Variable</div>
         <EnvVariable :preEnvs="buildConfig.pre_build" :validObj="validObj" :fromServicePage="fromServicePage" :mini="mini"></EnvVariable>
-        <div class="primary-title not-first-child">通用构建脚本</div>
+        <div class="primary-title not-first-child">Generic Build Script</div>
         <div class="deploy-script">
           <Resize :resize="'both'">
             <Editor v-model="buildConfig.scripts"></Editor>
@@ -64,7 +64,7 @@
       <section>
         <div style="margin-bottom: 8px;">
           <el-button type="primary" size="small" plain @click="buildConfig.advanced_setting_modified = !buildConfig.advanced_setting_modified">
-            高级配置
+            Advanced Configuration
             <i :class="[buildConfig.advanced_setting_modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
           </el-button>
         </div>
@@ -103,10 +103,10 @@ import { cloneDeep, differenceBy, intersectionBy } from 'lodash'
 
 const validateBuildConfigName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入构建名称'))
+    callback(new Error('Please enter a build name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -184,14 +184,14 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请选择构建模板',
+            message: 'Please select a build template',
             trigger: ['blur', 'change']
           }
         ],
         'pre_build.image_id': {
           type: 'string',
           required: true,
-          message: '请选择操作系统',
+          message: 'Please select an operating system',
           trigger: 'blur'
         }
       },

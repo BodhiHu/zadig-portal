@@ -1,8 +1,8 @@
 <template>
   <div class="import-chart-container">
     <el-form ref="gitForm" :model="tempData" label-width="140px" :rules="rules">
-      <el-form-item label="模板名称" prop="name">
-        <el-input v-model="tempData.name" placeholder="请输入模板名称" size="small" :disabled="isUpdate"></el-input>
+      <el-form-item label="Template Name" prop="name">
+        <el-input v-model="tempData.name" placeholder="Please enter a template name" size="small" :disabled="isUpdate"></el-input>
       </el-form-item>
       <el-form-item label-width="0">
         <GitRepo
@@ -23,7 +23,7 @@
           :disabled="!tempData.name || disabled"
           size="small"
           :loading="loading"
-        >{{isUpdate? '更新':'加载'}}</el-button>
+        >{{isUpdate? 'Renew':'Load'}}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -47,7 +47,7 @@ export default {
       disabled: true,
       loading: false,
       rules: {
-        name: [{ required: true, message: '请输入模板名称', trigger: 'blur' }]
+        name: [{ required: true, message: 'Please enter a template name', trigger: 'blur' }]
       },
       currentService: null,
       isUpdate: false
@@ -95,7 +95,7 @@ export default {
 
       if (res) {
         this.$message.success(
-          `${this.isUpdate ? '更新' : '导入'}模板 ${this.tempData.name} 成功`
+          `${this.isUpdate ? 'Renew' : 'Import'}Template ${this.tempData.name} Success`
         )
         this.loading = false
         this.resetField()

@@ -1,12 +1,12 @@
 <template>
   <div class="projects-guide-info-container">
     <div class="guide-container">
-      <Step :activeStep="0" :stepThreeTitle="`配置环境`"/>
+      <Step :activeStep="0" :stepThreeTitle="`Configuration Environment`"/>
       <div class="current-step-container">
         <div class="title-container">
-          <span class="first">第一步</span>
-          <span class="second">对项目的流程做初步定义后，后续可在项目中进行调整。当您创建好服务后，我们会为您做如下的智能交付准备。Zadig
-            会自动生成以下资源：</span>
+          <span class="first">First Step</span>
+          <span class="second">After a preliminary definition of the project process，Adjustments can be made later in the project。After you create the service，We will do the following smart delivery preparations for you。Zadig
+            The following resources are automatically generated：</span>
         </div>
         <div class="block-list">
           <div class="info-block">
@@ -18,7 +18,7 @@
                              circle></el-button>
                 </div>
                 <div class="integration-card__info">
-                  <div class="card-title">2 套测试环境</div>
+                  <div class="card-title">2 Test Environment</div>
                   <div class="card-desc">dev, qa
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                              circle></el-button>
                 </div>
                 <div class="integration-card__info">
-                  <div class="card-title">3 条工作流</div>
+                  <div class="card-title">3 Workflow</div>
                   <div class="card-desc">
                     {{projectName}}-workflow-dev ,
                     {{projectName}}-workflow-qa ,
@@ -50,13 +50,13 @@
     <div class="controls__wrap">
       <div class="controls__right">
         <router-link :to="`/v1/projects/create/${projectName}/helm/service?rightbar=help`">
-          <el-button type="primary" size="small">下一步</el-button>
+          <el-button type="primary" size="small">Next Step</el-button>
         </router-link>
         <el-button type="primary" size="small"
                 @click="exitOnboarding">
           <i v-if="exitLoading"
              class="el-icon-loading"></i>
-          <span>跳过向导</span>
+          <span>Skip Wizard</span>
         </el-button>
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
   },
   created () {
     bus.$emit(`show-sidebar`, true)
-    bus.$emit(`set-topbar-title`, { title: '', breadcrumb: [{ title: '项目', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
+    bus.$emit(`set-topbar-title`, { title: '', breadcrumb: [{ title: 'Project', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
   },
   components: {
     Step

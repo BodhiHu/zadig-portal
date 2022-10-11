@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="operation">
-      <el-select v-model="selectedProjects" @change="changeProject" size="small" collapse-tags multiple placeholder="筛选项目">
+      <el-select v-model="selectedProjects" @change="changeProject" size="small" collapse-tags multiple placeholder="Filter Items">
         <el-option v-for="item in projects" :key="item.name" :label="item.alias" :value="item.name"></el-option>
       </el-select>
       <el-date-picker
@@ -25,8 +25,8 @@
         unlink-panels
         range-separator="-"
         value-format="timestamp"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
+        start-placeholder="Start Date"
+        end-placeholder="End Date"
         :picker-options="pickerOptions"
       ></el-date-picker>
     </div>
@@ -40,7 +40,7 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: 'Last Week',
             onClick (picker) {
               const end = new Date()
               const start = new Date()
@@ -49,7 +49,7 @@ export default {
             }
           },
           {
-            text: '最近一个月',
+            text: 'Last Month',
             onClick (picker) {
               const end = new Date()
               const start = new Date()
@@ -58,7 +58,7 @@ export default {
             }
           },
           {
-            text: '最近三个月',
+            text: 'Last Three Months',
             onClick (picker) {
               const end = new Date()
               const start = new Date()
@@ -67,7 +67,7 @@ export default {
             }
           },
           {
-            text: '最近一年',
+            text: 'Last Year',
             onClick (picker) {
               const end = new Date()
               const start = new Date()
@@ -90,17 +90,17 @@ export default {
     routerList () {
       return [
         {
-          name: '构建效能',
+          name: 'Build Efficiency',
           icon: 'iconfont icongongzuoliucheng',
           url: `/v1/insight/build`
         },
         {
-          name: '测试效能',
+          name: 'Test Performance',
           icon: 'iconfont iconvery-testing',
           url: `/v1/insight/test`
         },
         {
-          name: '部署效能',
+          name: 'Deployment Efficiency',
           icon: 'iconfont iconvery-environ',
           url: `/v1/insight/service`
         }

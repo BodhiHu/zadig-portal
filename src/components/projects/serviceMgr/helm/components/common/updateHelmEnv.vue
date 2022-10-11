@@ -16,11 +16,11 @@
       ></ChartValues>
     </div>
     <div class="overwrite-warning" v-show="checkedEnvList.find(env => env.is_existed)">
-      <p>Zadig 中定义的服务将覆盖所选命名空间中的同名服务，请谨慎操作！</p>
+      <p>Zadig Services defined in will override services of the same name in the selected namespace，Please proceed with caution！</p>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" :disabled="!checkedEnvList.length" type="primary" @click="autoUpgradeEnv">确 定</el-button>
-      <el-button size="small" @click="skipUpdate">跳过</el-button>
+      <el-button size="small" :disabled="!checkedEnvList.length" type="primary" @click="autoUpgradeEnv">Sure</el-button>
+      <el-button size="small" @click="skipUpdate">Jump Over</el-button>
     </span>
   </el-dialog>
 </template>
@@ -71,7 +71,7 @@ export default {
         this.updateHelmEnvDialogVisible = false
         this.$router.push(`/v1/projects/detail/${projectName}/envs`)
         this.$message({
-          message: '环境更新成功',
+          message: 'Environment updated successfully',
           type: 'success'
         })
       })
@@ -110,9 +110,9 @@ export default {
     },
     dialogTitle () {
       if (this.chartInfo.type === 'delete') {
-        return `选择需要将 ${this.chartInfo.actionServiceName} 服务删除的环境`
+        return `Select To Be ${this.chartInfo.actionServiceName} Service deleted environment`
       } else {
-        return `选择需要将 ${this.chartInfo.actionServiceName} 服务加入的环境`
+        return `Select To Be ${this.chartInfo.actionServiceName} The environment in which the service joins`
       }
     }
   },

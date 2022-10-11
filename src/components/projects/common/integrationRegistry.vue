@@ -2,12 +2,12 @@
   <div class="integration-registry">
     <el-alert type="warning">
       <div>
-        镜像仓库集成可以参考该
+        Mirror warehouse integration can refer to this
         <el-link type="warning"
                  class="integration-reference"
                  :href="`https://docs.koderover.com/zadig/settings/image-registry/`"
                  :underline="false"
-                 target="_blank">文档</el-link>
+                 target="_blank">Documentation</el-link>
       </div>
     </el-alert>
     <div class="content">
@@ -16,16 +16,16 @@
                label-width="110px"
                label-position="top"
                :model="registry">
-        <el-form-item label="默认使用"
+        <el-form-item label="Use By Default"
                       prop="is_default">
           <el-checkbox v-model="registry.is_default"></el-checkbox>
         </el-form-item>
-        <el-form-item label="提供商"
+        <el-form-item label="Provider"
                       prop="reg_provider">
           <el-select v-model="registry.reg_provider"
                      @change="changeProvider"
                      style="width: 100%;"
-                     placeholder="请选择镜像仓库提供商">
+                     placeholder="Please select a mirror repository provider">
             <el-option v-for="(provider,index) in providers" :key="index" :value="provider.value"
                        :label="provider.label">
               <i class="iconfont" :class="provider.icon"></i> <span>{{provider.label}}</span>
@@ -52,13 +52,13 @@
                     v-model="registry.namespace"></el-input>
         </el-form-item>
         <el-form-item v-if="registry.reg_provider" :label="providerMap[registry.reg_provider].access_key"
-                      :rules="{ required: true, message: `请输入 ${providerMap[registry.reg_provider].access_key}`, trigger: ['blur'] }"
+                      :rules="{ required: true, message: `Please Enter ${providerMap[registry.reg_provider].access_key}`, trigger: ['blur'] }"
                       prop="access_key">
           <el-input clearable
                     v-model="registry.access_key"></el-input>
         </el-form-item>
         <el-form-item v-if="registry.reg_provider" :label="providerMap[registry.reg_provider].secret_key"
-                      :rules="{ required: true, message: `请输入 ${providerMap[registry.reg_provider].secret_key}`, trigger: ['blur'] }"
+                      :rules="{ required: true, message: `Please Enter ${providerMap[registry.reg_provider].secret_key}`, trigger: ['blur'] }"
                       prop="secret_key">
           <el-input clearable
                     type="passsword"
@@ -69,9 +69,9 @@
         <el-button :plain="true"
                    type="success"
                    size="small"
-                   @click="registryOperation">保存</el-button>
+                   @click="registryOperation">Save</el-button>
         <el-button @click="$emit('cancel')"
-                   size="small">取 消</el-button>
+                   size="small">Cancel</el-button>
       </div>
     </div>
   </div>
@@ -96,19 +96,19 @@ export default {
       providers: [
         {
           value: 'acr',
-          label: '阿里云 ACR',
-          reg_addr: '地址',
-          namespace: '命名空间',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          label: 'Ali Cloud ACR',
+          reg_addr: 'Address',
+          namespace: 'Namespaces',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo iconaliyun'
         },
         {
           value: 'swr',
-          label: '华为云 SWR',
-          reg_addr: '地址',
-          namespace: '组织名称',
-          region: '区域',
+          label: 'HUAWEI CLOUD SWR',
+          reg_addr: 'Address',
+          namespace: 'Name Of Association',
+          region: 'Area',
           access_key: 'Access Key',
           secret_key: 'Secret Key',
           icon: 'iconfont logo iconhuawei'
@@ -116,29 +116,29 @@ export default {
 
         {
           value: 'tcr',
-          label: '腾讯云 TCR',
-          reg_addr: '地址',
-          namespace: '命名空间',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          label: 'Tencent Cloud TCR',
+          reg_addr: 'Address',
+          namespace: 'Namespaces',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo icontengxunyun'
         },
         {
           value: 'harbor',
           label: 'Harbor',
-          reg_addr: '地址',
-          namespace: '项目',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          reg_addr: 'Address',
+          namespace: 'Project',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo iconHarbor'
         },
         {
           value: 'dockerhub',
           label: 'DockerHub',
-          reg_addr: '地址',
+          reg_addr: 'Address',
           namespace: 'Namespace',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo icondocker'
         },
         {
@@ -153,28 +153,28 @@ export default {
         },
         {
           value: 'native',
-          label: '其他',
-          reg_addr: '地址',
+          label: 'Other',
+          reg_addr: 'Address',
           namespace: 'Namespace',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo iconqita'
         }
       ],
       rules: {
-        reg_provider: [{ required: true, message: '请选择镜像仓库提供商', trigger: ['blur'] }],
+        reg_provider: [{ required: true, message: 'Please select a mirror repository provider', trigger: ['blur'] }],
         reg_addr: [{
           required: true,
-          message: '请输入 URL',
+          message: 'Please Enter URL',
           trigger: ['blur']
         },
         {
           type: 'url',
-          message: '请输入正确的 URL，包含协议',
+          message: 'Please Enter The Correct URL，Include Agreement',
           trigger: ['blur']
         }],
-        region: [{ required: true, message: '请输入区域', trigger: ['blur'] }],
-        namespace: [{ required: true, message: '请输入 Namespace', trigger: ['blur'] }]
+        region: [{ required: true, message: 'Please Enter A Region', trigger: ['blur'] }],
+        namespace: [{ required: true, message: 'Please Enter Namespace', trigger: ['blur'] }]
       }
     }
   },
@@ -213,7 +213,7 @@ export default {
           createRegistryAPI(payload).then((res) => {
             this.$message({
               type: 'success',
-              message: '新增成功'
+              message: 'Added Successfully'
             })
             this.$emit('cancel')
             this.$emit('createSuccess')

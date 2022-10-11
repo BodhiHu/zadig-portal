@@ -12,20 +12,20 @@
           style="width: 132px; margin-right: 10px;"
           plain
         >
-          <i class="el-icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新建项目&nbsp;&nbsp;
+          <i class="el-icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;New Project&nbsp;&nbsp;
         </el-button>
         <template>
           <el-dropdown placement="bottom" trigger="hover" v-hasPermi="{type: 'system', action: 'get_template'}">
             <button type="button" class="display-btn el-button">
               <i class="iconfont iconvery-template el-icon--left"></i>
-              &nbsp;&nbsp;模板库&nbsp;&nbsp;
+              &nbsp;&nbsp;Template Library&nbsp;&nbsp;
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </button>
             <el-dropdown-menu slot="dropdown" class="template-config">
               <el-dropdown-item icon="iconfont iconvery-k8s" @click.native="$router.push(`/v1/template/k8s-yamls`)">K8s YAML</el-dropdown-item>
               <el-dropdown-item icon="iconfont iconhelmrepo" @click.native="$router.push(`/v1/template/charts`)">Helm Chart</el-dropdown-item>
               <el-dropdown-item icon="iconfont icondocker" @click.native="$router.push(`/v1/template/dockerfiles`)">Dockerfile</el-dropdown-item>
-              <el-dropdown-item icon="iconfont iconvery-build" @click.native="$router.push(`/v1/template/builds`)">构建</el-dropdown-item>
+              <el-dropdown-item icon="iconfont iconvery-build" @click.native="$router.push(`/v1/template/builds`)">Construct</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>
@@ -34,7 +34,7 @@
     <div
       v-if="currentTab==='grid'"
       v-loading="loading"
-      element-loading-text="加载中..."
+      element-loading-text="Loading..."
       element-loading-spinner="iconfont iconfont-loading iconxiangmuloading"
       class="projects-grid"
     >
@@ -47,8 +47,8 @@
                   <i class="el-icon-more"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item :command="{action:'edit',projectName:project.name}">修改</el-dropdown-item>
-                  <el-dropdown-item :command="{action:'delete',projectName:project.name}">删除</el-dropdown-item>
+                  <el-dropdown-item :command="{action:'edit',projectName:project.name}">Revise</el-dropdown-item>
+                  <el-dropdown-item :command="{action:'delete',projectName:project.name}">Delete</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -58,23 +58,23 @@
                 <el-tooltip effect="dark" :content="project.alias?project.alias:project.name" placement="top">
                   <span class="name">{{project.alias?project.alias:project.name}}</span>
                 </el-tooltip>
-                <el-tooltip v-if="!project.public" effect="dark" content="私有项目" placement="top">
+                <el-tooltip v-if="!project.public" effect="dark" content="Private Project" placement="top">
                   <i class="icon iconfont iconprivate"></i>
                 </el-tooltip>
               </h4>
               <div class="project-desc">{{project.desc}}</div>
             </div>
             <div class="footer">
-              <el-tooltip effect="dark" content="工作流" placement="top">
+              <el-tooltip effect="dark" content="Workflow" placement="top">
                 <span @click="$router.push(`/v1/projects/detail/${project.name}/pipelines`)" class="icon iconfont icongongzuoliucheng"></span>
               </el-tooltip>
-              <el-tooltip effect="dark" content="环境" placement="top">
+              <el-tooltip effect="dark" content="Surroundings" placement="top">
                 <span @click="$router.push(`/v1/projects/detail/${project.name}/envs`)" class="icon iconfont iconvery-environ"></span>
               </el-tooltip>
-              <el-tooltip effect="dark" content="测试" placement="top">
+              <el-tooltip effect="dark" content="Test" placement="top">
                 <span @click="$router.push(`/v1/projects/detail/${project.name}/test`)" class="icon iconfont iconvery-testing"></span>
               </el-tooltip>
-              <el-tooltip effect="dark" content="服务" placement="top">
+              <el-tooltip effect="dark" content="Serve" placement="top">
                 <span @click="$router.push(`/v1/projects/detail/${project.name}/services`)" class="icon iconfont iconvery-service"></span>
               </el-tooltip>
             </div>
@@ -83,31 +83,31 @@
       </el-row>
       <div v-if="projectList.length === 0" class="empty-list">
         <img src="@assets/icons/illustration/project.svg" alt />
-        <p>暂无可展示的项目，请手动添加项目</p>
+        <p>There are currently no projects to show，Please add items manually</p>
       </div>
     </div>
     <div
       v-if="currentTab==='list'"
       v-loading="loading"
-      element-loading-text="加载中..."
+      element-loading-text="Loading..."
       element-loading-spinner="iconfont iconfont-loading iconxiangmuloading"
       class="projects-list"
     >
       <el-table v-if="projectList.length > 0" :data="projectList" stripe style="width: 100%;">
-        <el-table-column label="项目名称">
+        <el-table-column label="Project Name">
           <template slot-scope="scope">
             <router-link :to="`/v1/projects/detail/${scope.row.name}/detail`" class="project-name">
               {{scope.row.alias?scope.row.alias:scope.row.name }}
-              <el-tooltip v-if="!scope.row.public" effect="dark" content="私有项目" placement="top">
+              <el-tooltip v-if="!scope.row.public" effect="dark" content="Private Project" placement="top">
                 <i class="icon iconfont iconprivate"></i>
               </el-tooltip>
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="envs" label="环境">
+        <el-table-column prop="envs" label="Surroundings">
           <template slot-scope="scope">{{scope.row.envs.length}}</template>
         </el-table-column>
-        <el-table-column label="更新信息">
+        <el-table-column label="Update Information">
           <template slot-scope="scope">
             <div>
               <i class="el-icon-time"></i>
@@ -122,15 +122,15 @@
         <el-table-column label>
           <template slot-scope="scope">
             <router-link :to="`/v1/projects/detail/${scope.row.name}/detail`">
-              <el-button class="operation" type="text">配置</el-button>
+              <el-button class="operation" type="text">Configure</el-button>
             </router-link>
-            <el-button @click="deleteProject(scope.row.name)" class="operation" type="text">删除</el-button>
+            <el-button @click="deleteProject(scope.row.name)" class="operation" type="text">Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div v-if="projectList.length === 0 && !loading" class="empty-list">
         <img src="@assets/icons/illustration/project.svg" alt />
-        <p>暂无可展示的项目，请手动添加项目</p>
+        <p>There are currently no projects to show，Please add items manually</p>
       </div>
     </div>
     <DeleteProject ref="deleteProject" :followUpFn="followUpFn"></DeleteProject>
@@ -177,7 +177,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('getProjectList')
-    bus.$emit('set-topbar-title', { title: '项目', breadcrumb: [] })
+    bus.$emit('set-topbar-title', { title: 'Project', breadcrumb: [] })
   },
   components: {
     DeleteProject

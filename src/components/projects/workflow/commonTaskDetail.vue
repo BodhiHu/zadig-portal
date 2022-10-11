@@ -2,7 +2,7 @@
   <div class="task-detail-container" ref="task-detail-container">
     <el-card class="box-card" :body-style="{ padding: '0px', margin: '15px 0 0 0' }">
       <div slot="header" class="clearfix">
-        <span>基本信息</span>
+        <span>Basic Information</span>
       </div>
       <div class="text item">
         <el-row>
@@ -10,7 +10,7 @@
             <div class="bg-purple">
               <el-row :gutter="0">
                 <el-col :span="5">
-                  <div class="status item-title">状态</div>
+                  <div class="status item-title">State</div>
                 </el-col>
                 <el-col :span="4">
                   <div class>
@@ -20,7 +20,7 @@
               </el-row>
               <el-row :gutter="0">
                 <el-col :span="5">
-                  <div class="item-title">创建者</div>
+                  <div class="item-title">Creator</div>
                 </el-col>
                 <el-col :span="4">
                   <div class="item-desc">{{taskDetail.task_creator}}</div>
@@ -28,7 +28,7 @@
               </el-row>
               <el-row v-if="taskDetail.task_revoker" :gutter="0">
                 <el-col :span="5">
-                  <div class="item-title">取消者</div>
+                  <div class="item-title">Canceller</div>
                 </el-col>
                 <el-col :span="4">
                   <div class="item-desc">{{taskDetail.task_revoker}}</div>
@@ -36,7 +36,7 @@
               </el-row>
               <el-row :gutter="0">
                 <el-col :span="5">
-                  <div class="item-title">持续时间</div>
+                  <div class="item-title">Duration</div>
                 </el-col>
                 <el-col :span="4">
                   <div v-if="taskDetail.status!=='running'" class="item-desc">
@@ -47,7 +47,7 @@
                     {{
                     taskDuration(taskDetail.task_id,taskDetail.start_time) +
                     $utils.timeFormat(durationSet[taskDetail.task_id])}}
-                    <el-tooltip v-if="durationSet[taskDetail.task_id]<0" content="本地系统时间和服务端可能存在不一致，请同步。" placement="top">
+                    <el-tooltip v-if="durationSet[taskDetail.task_id]<0" content="There may be inconsistencies between the local system time and the server，Please Sync。" placement="top">
                       <i class="el-icon-warning" style="color: red;"></i>
                     </el-tooltip>
                   </div>
@@ -55,7 +55,7 @@
               </el-row>
               <el-row v-if="showOperation()" :gutter="0">
                 <el-col :span="5">
-                  <div class="item-title operation">操作</div>
+                  <div class="item-title operation">Operate</div>
                 </el-col>
                 <el-col :span="10">
                   <div class="item-desc">
@@ -65,14 +65,14 @@
                         @click="taskOperation('restart',taskDetail.task_id,taskDetail.pipeline_name)"
                         type="text"
                         size="medium"
-                      >失败重试</el-button>
+                      >Retry On Failure</el-button>
                       <el-button
                         v-hasPermi="{projectName: projectName, action: 'run_workflow',resource:{name:taskDetail.pipeline_name,type:'workflow'},isBtn:true}"
                         v-if="taskDetail.status==='running' || taskDetail.status ==='created'"
                         @click="taskOperation('cancel',taskDetail.task_id,taskDetail.pipeline_name)"
                         type="text"
                         size="medium"
-                      >取消任务</el-button>
+                      >Cancel Task</el-button>
                   </div>
                 </el-col>
               </el-row>
@@ -89,7 +89,7 @@
       :body-style="{ padding: '0px', margin: '15px 0 0 0' }"
     >
       <div slot="header" class="clearfix">
-        <span>构建</span>
+        <span>Construct</span>
         <div v-if="buildStage.status==='running'" class="loader">
           <div class="ball-scale-multiple">
             <div></div>
@@ -98,22 +98,22 @@
           </div>
         </div>
       </div>
-      <el-alert v-if="buildStage.error" title="错误信息" :description="buildStage.error" type="error" close-text="知道了"></el-alert>
+      <el-alert v-if="buildStage.error" title="Error Message" :description="buildStage.error" type="error" close-text="Understood"></el-alert>
       <div class="text item">
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="item-title">
-              <i class="iconfont iconzhuangtai"></i> 构建状态
+              <i class="iconfont iconzhuangtai"></i> Build Status
             </div>
           </el-col>
           <el-col :span="6">
             <div class="item-desc">
-              <a :class="buildOverallColor" href="#buildv3-log">{{buildStage.status?buildOverallStatusZh:"未运行"}}</a>
+              <a :class="buildOverallColor" href="#buildv3-log">{{buildStage.status?buildOverallStatusZh:"Not Running"}}</a>
             </div>
           </el-col>
           <el-col v-if="buildStage.status!=='running'" :span="6">
             <div class="item-title">
-              <i class="iconfont iconshijian"></i> 持续时间
+              <i class="iconfont iconshijian"></i> Duration
             </div>
           </el-col>
           <el-col v-if="buildStage.status!=='running'" :span="6">
@@ -128,7 +128,7 @@
             <el-col :span="6">
               <div class="item-title">
                 <i class="iconfont icondaima"></i>
-                代码库({{build.source}})
+                Code Library({{build.source}})
               </div>
             </el-col>
             <el-col :span="6">
@@ -136,16 +136,16 @@
             </el-col>
             <el-col :span="6">
               <div class="item-title">
-                <i class="iconfont iconinfo"></i> 代码信息
+                <i class="iconfont iconinfo"></i> Code Information
               </div>
             </el-col>
             <el-col :span="6">
-              <el-tooltip :content="`在 ${build.source} 上查看 Release`" placement="top" effect="dark">
+              <el-tooltip :content="`Exist ${build.source} View On Release`" placement="top" effect="dark">
                 <span v-if="build.tag" class="link">
                   <a :href="`${build.address}/${build.repo_owner}/${build.repo_name}/releases/tag/${build.tag}`" target="_blank">{{"Tag-"+build.tag}}</a>
                 </span>
               </el-tooltip>
-              <el-tooltip :content="`在 ${build.source} 上查看 Branch`" placement="top" effect="dark">
+              <el-tooltip :content="`Exist ${build.source} View On Branch`" placement="top" effect="dark">
                 <span v-if="build.branch" class="link">
                   <a
                     v-if="build.source==='github'"
@@ -164,7 +164,7 @@
                   >{{"Branch-"+build.branch}}</a>
                 </span>
               </el-tooltip>
-              <el-tooltip :content="`在 ${build.source} 上查看 PR`" placement="top" effect="dark">
+              <el-tooltip :content="`Exist ${build.source} View On PR`" placement="top" effect="dark">
                 <span v-if="build.pr && build.pr>0" class="link">
                   <a
                     v-if="build.source==='github'"
@@ -183,7 +183,7 @@
                   >{{"PR-"+build.pr}}</a>
                 </span>
               </el-tooltip>
-              <el-tooltip :content="`在 ${build.source} 上查看 Commit`" placement="top" effect="dark">
+              <el-tooltip :content="`Exist ${build.source} View On Commit`" placement="top" effect="dark">
                 <span v-if="build.commit_id" class="link">
                   <a
                     :href="`${build.address}/${build.repo_owner}/${build.repo_name}/commit/${build.commit_id}`"
@@ -207,7 +207,7 @@
       <div class="log-container">
         <div class="log-content">
           <el-collapse @change="getBuildLog">
-            <el-collapse-item id="log-container" title="查看构建日志">
+            <el-collapse-item id="log-container" title="View Build Log">
               <XtermLog v-if="showBuildLog" @mouseleave.native="leaveLog" :id="buildStage.sub_tasks.service_name" :logs="buildv3AnyLog"/>
             </el-collapse-item>
           </el-collapse>
@@ -221,9 +221,9 @@
       class="box-card task-process"
       :body-style="{ padding: '0px', margin: '15px 0 0 0' }"
     >
-      <el-alert v-if="extensionStage.sub_tasks && extensionStage.sub_tasks.error" title="错误信息" :description="extensionStage.sub_tasks.error" type="error" close-text="知道了"></el-alert>
+      <el-alert v-if="extensionStage.sub_tasks && extensionStage.sub_tasks.error" title="Error Message" :description="extensionStage.sub_tasks.error" type="error" close-text="Understood"></el-alert>
       <div slot="header" class="clearfix">
-        <span>扩展</span>
+        <span>Expand</span>
         <div v-if="extensionStage.status==='running'" class="loader">
           <div class="ball-scale-multiple">
             <div></div>
@@ -236,18 +236,18 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="item-title">
-              <i class="iconfont iconzhuangtai"></i> 状态
+              <i class="iconfont iconzhuangtai"></i> State
             </div>
           </el-col>
           <el-col :span="6">
             <div
               class="item-desc"
               :class="colorTranslation(extensionStage.status,'pipeline','task')"
-            >{{extensionStage.status?myTranslate(extensionStage.status):"未运行"}}</div>
+            >{{extensionStage.status?myTranslate(extensionStage.status):"Not Running"}}</div>
           </el-col>
           <el-col v-if="extensionStage.status!=='running'" :span="6">
             <div class="item-title">
-              <i class="iconfont iconshijian"></i> 持续时间
+              <i class="iconfont iconshijian"></i> Duration
             </div>
           </el-col>
           <el-col v-if="extensionStage.status!=='running'" :span="6">
@@ -268,7 +268,7 @@
           </el-col>
           <el-col :span="6">
             <div class="item-title">
-              <i class="iconfont iconfuwu"></i> 版本号
+              <i class="iconfont iconfuwu"></i> Version Number
             </div>
           </el-col>
           <el-col :span="6">
@@ -278,7 +278,7 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="item-title">
-              <i class="iconfont iconinfo"></i> 体验码
+              <i class="iconfont iconinfo"></i> Experience Code
             </div>
           </el-col>
           <el-col :span="6">
@@ -416,7 +416,7 @@ export default {
         const taskUrl = `/v1/projects/detail/${this.projectName}/pipelines/common/${this.workflowName}/${this.taskID}?id=${this.workflowID}`
         restartCommonWorkflowTaskAPI(projectName, workflowName, taskID).then(res => {
           this.$message({
-            message: '任务已重新启动',
+            message: 'Task Restarted',
             type: 'success'
           })
           this.$router.push(taskUrl)
@@ -424,8 +424,8 @@ export default {
       } else if (operation === 'cancel') {
         cancelCommonWorkflowTaskAPI(projectName, workflowName, taskID).then(res => {
           this.$notify({
-            title: '成功',
-            message: '任务取消成功',
+            title: 'Success',
+            message: 'The task was canceled successfully',
             type: 'success',
             offset: 50
           })
@@ -544,14 +544,14 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '工作流',
+          title: 'Workflow',
           url: `/v1/projects/detail/${this.projectName}/pipelines`
         },
         {

@@ -8,15 +8,15 @@
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="runtime" v-if="isRuntime">
         <span class="iconfont iconshuru"></span>
-        运行时输入
+        Runtime Input
       </el-dropdown-item>
       <el-dropdown-item command="fixed" v-if="isFixed">
         <span class="iconfont icongudingzhi"></span>
-        固定值
+        Fixed Value
       </el-dropdown-item>
       <el-dropdown-item command="other" v-if="isOther">
         <span class="iconfont iconhanshu"></span>
-        {{isService?'其他任务输出':'全局变量'}}
+        {{isService?'Other Task Output':'Global Variable'}}
       </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>

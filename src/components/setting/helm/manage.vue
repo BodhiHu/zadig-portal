@@ -1,13 +1,13 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconhelmrepo"
     class="setting-helm-container"
   >
     <!--helm-create-dialog-->
     <el-dialog
-      title="添加 HELM Chart 仓库"
+      title="Add To HELM Chart Storehouse"
       :visible.sync="dialogHelmCreateFormVisible"
       :close-on-click-modal="false"
       custom-class="dialog-style"
@@ -15,28 +15,28 @@
     >
       <el-form ref="helm" :rules="rules" label-width="90px" tab-position="left" :model="helm">
         <el-form-item label="URL" prop="url">
-          <el-input size="small" placeholder="请输入 http/https/acr 开头的 URL" v-model="helm.url"></el-input>
+          <el-input size="small" placeholder="Please Enter http/https/acr Beginning URL" v-model="helm.url"></el-input>
         </el-form-item>
-        <el-form-item label="仓库名称" prop="repo_name">
-          <el-input size="small" placeholder="请输入仓库名称" v-model="helm.repo_name"></el-input>
+        <el-form-item label="Warehouse Name" prop="repo_name">
+          <el-input size="small" placeholder="Please enter a warehouse name" v-model="helm.repo_name"></el-input>
         </el-form-item>
-        <el-form-item label="用户名" prop="username">
-          <el-input size="small" placeholder="请输入用户名" v-model="helm.username"></el-input>
+        <el-form-item label="Username" prop="username">
+          <el-input size="small" placeholder="Please Enter User Name" v-model="helm.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input size="small" type="passsword" v-if="dialogHelmCreateFormVisible" show-password  placeholder="请输入密码" v-model="helm.password"></el-input>
+        <el-form-item label="Password" prop="password">
+          <el-input size="small" type="passsword" v-if="dialogHelmCreateFormVisible" show-password  placeholder="Please Enter Password" v-model="helm.password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogHelmCreateFormVisible = false">取 消</el-button>
-        <el-button :plain="true" type="success" size="small" @click="repoOperation('add')">保存</el-button>
+        <el-button size="small" @click="dialogHelmCreateFormVisible = false">Cancel</el-button>
+        <el-button :plain="true" type="success" size="small" @click="repoOperation('add')">Save</el-button>
       </div>
     </el-dialog>
     <!--helm-create-dialog-->
 
     <!--helm-edit-dialog-->
     <el-dialog
-      title="编辑 HELM Chart 仓库"
+      title="Edit HELM Chart Storehouse"
       :visible.sync="dialogHelmEditFormVisible"
       :close-on-click-modal="false"
       custom-class="dialog-style"
@@ -44,57 +44,57 @@
     >
       <el-form ref="swapHelm" :rules="rules" label-width="90px" tab-position="left" :model="swapHelm">
         <el-form-item label="URL" prop="url">
-          <el-input size="small" placeholder="请输入 http/https/acr 开头的 URL" v-model="swapHelm.url"></el-input>
+          <el-input size="small" placeholder="Please Enter http/https/acr Beginning URL" v-model="swapHelm.url"></el-input>
         </el-form-item>
-        <el-form-item label="仓库名称" prop="repo_name">
-          <el-input size="small" placeholder="请输入仓库名称" v-model="swapHelm.repo_name"></el-input>
+        <el-form-item label="Warehouse Name" prop="repo_name">
+          <el-input size="small" placeholder="Please enter a warehouse name" v-model="swapHelm.repo_name"></el-input>
         </el-form-item>
-        <el-form-item label="用户名" prop="username">
-          <el-input size="small" placeholder="请输入用户名" v-model="swapHelm.username"></el-input>
+        <el-form-item label="Username" prop="username">
+          <el-input size="small" placeholder="Please Enter User Name" v-model="swapHelm.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="Password" prop="password">
           <el-input size="small"  type="passsword"
-                    show-password  placeholder="请输入密码" v-model="swapHelm.password"></el-input>
+                    show-password  placeholder="Please Enter Password" v-model="swapHelm.password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogHelmEditFormVisible = false">取 消</el-button>
-        <el-button :plain="true" type="success" size="small" @click="repoOperation('update')">保存</el-button>
+        <el-button size="small" @click="dialogHelmEditFormVisible = false">Cancel</el-button>
+        <el-button :plain="true" type="success" size="small" @click="repoOperation('update')">Save</el-button>
       </div>
     </el-dialog>
     <!--helm-edit-dialog-->
     <div class="section">
       <el-alert type="info" :closable="false">
         <template>
-          支持集成自建 Harbor 仓库及阿里、腾讯、华为等云厂商提供的 Chart 仓库，详情可参考
+          Support integrated self-build Harbor Warehouse And Ali、Tencent、Provided by cloud vendors such as Huawei Chart Storehouse，For details, please refer to
           <el-link
             style="font-size: 14px; vertical-align: baseline;"
             type="primary"
             :href="`https://docs.koderover.com/zadig/settings/helm/`"
             :underline="false"
             target="_blank"
-          >帮助文档</el-link>
+          >Help Documentation</el-link>
         </template>
       </el-alert>
       <div class="sync-container">
-        <el-button :plain="true" @click="dialogHelmCreateFormVisible=true" size="small" type="success">新建</el-button>
+        <el-button :plain="true" @click="dialogHelmCreateFormVisible=true" size="small" type="success">New</el-button>
       </div>
       <div class="helm-list">
         <template>
           <el-table :data="allHelmRepos" style="width: 100%;">
             <el-table-column label="URL" prop="url"></el-table-column>
-            <el-table-column label="仓库名称" prop="repo_name"></el-table-column>
-            <el-table-column label="用户名" prop="username"></el-table-column>
-            <el-table-column label="最后修改">
+            <el-table-column label="Warehouse Name" prop="repo_name"></el-table-column>
+            <el-table-column label="Username" prop="username"></el-table-column>
+            <el-table-column label="Last Review">
               <template slot-scope="scope">
                 <span>{{ $utils.convertTimestamp(scope.row.updated_at) }}</span>
                 <span>{{ scope.row.update_by }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="Operate">
               <template slot-scope="scope">
-                <el-button @click="repoOperation('edit',scope.row)" type="primary" size="mini" plain>编辑</el-button>
-                <el-button @click="repoOperation('delete',scope.row)" size="mini" type="danger" plain>删除</el-button>
+                <el-button @click="repoOperation('edit',scope.row)" type="primary" size="mini" plain>Edit</el-button>
+                <el-button @click="repoOperation('delete',scope.row)" size="mini" type="danger" plain>Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -117,7 +117,7 @@ export default {
   data () {
     const protocolValid = (rule, value, callback) => {
       if (!/^(http|https|acr):\/\//.test(value.trim())) {
-        callback(new Error('请确保协议以 http/https/acr 开头'))
+        callback(new Error('Make sure the agreement starts with http/https/acr Beginning'))
       } else {
         callback()
       }
@@ -144,7 +144,7 @@ export default {
         url: [
           {
             required: true,
-            message: '请输入 URL',
+            message: 'Please Enter URL',
             trigger: 'blur'
           },
           {
@@ -152,11 +152,11 @@ export default {
             trigger: ['blur', 'change']
           }
         ],
-        repo_name: [{ required: true, message: '请输入仓库名称', trigger: 'blur' }],
+        repo_name: [{ required: true, message: 'Please enter a warehouse name', trigger: 'blur' }],
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: 'Please Enter User Name', trigger: 'blur' }
         ],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        password: [{ required: true, message: 'Please Enter Password', trigger: 'blur' }]
       }
     }
   },
@@ -188,15 +188,15 @@ export default {
         })
       } else if (operate === 'delete') {
         const id = current_repo.id
-        this.$confirm(`确定要删除 ${current_repo.repo_name} 仓库?`, '确认', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(`Sure You Want To Delete ${current_repo.repo_name} Storehouse?`, 'Confirm', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(({ value }) => {
           deleteHelmAPI(id).then(res => {
             this.getHelmRepo()
             this.$message({
-              message: '删除成功',
+              message: 'Successfully Deleted',
               type: 'success'
             })
           })
@@ -209,7 +209,7 @@ export default {
         this.getHelmRepo()
         this.$message({
           type: 'success',
-          message: '新增成功'
+          message: 'Added Successfully'
         })
       })
     },
@@ -219,7 +219,7 @@ export default {
         this.getHelmRepo()
         this.$message({
           type: 'success',
-          message: '更新成功'
+          message: 'Update Completed'
         })
       })
     },
@@ -237,7 +237,7 @@ export default {
   },
   computed: {},
   mounted () {
-    bus.$emit(`set-topbar-title`, { title: 'HELM 仓库', breadcrumb: [] })
+    bus.$emit(`set-topbar-title`, { title: 'HELM Storehouse', breadcrumb: [] })
 
     this.getHelmRepo()
   }

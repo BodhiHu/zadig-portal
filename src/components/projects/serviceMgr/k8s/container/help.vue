@@ -1,7 +1,7 @@
 <template>
   <section class="pipeline-help">
     <p class="service-aside-help__welcome-message">
-      欢迎使用帮助指南。可参考以下步骤配置服务
+      Welcome to the Help Guide。You can refer to the following steps to configure the service
     </p>
     <h3 class="service-aside-help__step-header">
     </h3>
@@ -11,7 +11,7 @@
           1
         </div>
         <p class="service-aside-help__step-list-item-text">
-          新建服务，支持三种方式：手工输入/从代码库同步/使用模板新建
+          New Service，Support Three Ways：Manual Input/Sync From Codebase/Create new using template
         </p>
       </li>
       <li class="service-aside-help__step-list-item">
@@ -19,12 +19,12 @@
           2
         </div>
         <p class="service-aside-help__step-list-item-text">
-          添加和修改 YAML 中的变量，在运行环境中会被作为环境变量使用
+          Add And Modify YAML Variables In，It will be used as an environment variable in the runtime environment
         <ul>
-          <li>容器(服务组件)的镜像版本：通过配置构建步骤，实现版本升级（代码构建->构建镜像->镜像部署）
+          <li>Container(Service Component)Mirror Version Of：By configuring the build step，Implement version upgrade（Code Build->Build Image->Image Deployment）
           </li>
-          <li>系统内置变量：可以直接在服务模板配置中引用</li>
-          <li>自定义变量：在运行环境中会被作为环境变量使用</li>
+          <li>System built-in variables：Can be referenced directly in the service template configuration</li>
+          <li>Custom Variable：It will be used as an environment variable in the runtime environment</li>
         </ul>
         </p>
       </li>
@@ -33,33 +33,33 @@
           3
         </div>
         <p class="service-aside-help__step-list-item-text">
-          添加多个服务，更新环境，将服务加入环境
+          Add Multiple Services，Update Environment，Add the service to the environment
         </p>
       </li>
     </ul>
     <h3 class="service-aside-help__step-header">
-      文档指南
+      Documentation Guidelines
     </h3>
     <ul class="service-aside-help__step-list">
       <el-row :gutter="20">
         <el-col :span="8">
           <li class="service-aside-help__step-list-item">
             <a target="_blank"
-               href="https://docs.koderover.com/zadig/project/service/k8s/#无状态服务"
+               href="https://docs.koderover.com/zadig/project/service/k8s/#Stateless Service"
                class="service-aside-help__step-list-item-link">
               <i class="icon el-icon-link"></i>
               <span class="service-aside-help__step-list-item-link-text">
-                无状态服务</span>
+                Stateless Service</span>
             </a>
           </li>
         </el-col>
         <el-col :span="8">
           <li class="service-aside-help__step-list-item">
-            <a href="https://docs.koderover.com/zadig/project/service/k8s/#无状态服务"
+            <a href="https://docs.koderover.com/zadig/project/service/k8s/#Stateless Service"
                target="_blank"
                class="service-aside-help__step-list-item-link">
               <i class="icon el-icon-link"></i>
-              <span class="service-aside-help__step-list-item-link-text">有状态服务 </span>
+              <span class="service-aside-help__step-list-item-link-text">Stateful Service </span>
             </a>
           </li>
         </el-col>
@@ -72,7 +72,7 @@
                target="_blank"
                class="service-aside-help__step-list-item-link">
               <i class="icon el-icon-link"></i>
-              <span class="service-aside-help__step-list-item-link-text">新增构建步骤</span>
+              <span class="service-aside-help__step-list-item-link-text">Added Build Step</span>
             </a>
           </li>
         </el-col>

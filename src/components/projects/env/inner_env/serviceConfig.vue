@@ -1,10 +1,10 @@
 <template>
-  <div v-loading="loading" element-loading-text="正在获取配置" element-loading-spinner="el-icon-loading" class="config-overview-container">
+  <div v-loading="loading" element-loading-text="Getting Config" element-loading-spinner="el-icon-loading" class="config-overview-container">
     <div v-if="configMaps.length === 0" class="no-config">
-      <h3>暂无配置</h3>
+      <h3>No Configuration Yet</h3>
     </div>
     <div v-else class="config-container">
-      <div class="type">注意：修改服务配置会重启服务</div>
+      <div class="type">Notice：Modifying the service configuration will restart the service</div>
       <el-table :data="configMaps" style="width: 100%;">
         <el-table-column label="Name" prop="cm_name"></el-table-column>
         <el-table-column label="Value">
@@ -14,8 +14,8 @@
         </el-table-column>
         <el-table-column width="300">
           <template slot-scope="{ row }">
-            <el-button @click="jumpEnvConfig('edit', row)" size="mini" icon="el-icon-edit">编辑</el-button>
-            <el-button @click="jumpEnvConfig('history', row)" size="mini" icon="el-icon-notebook-2">历史版本</el-button>
+            <el-button @click="jumpEnvConfig('edit', row)" size="mini" icon="el-icon-edit">Edit</el-button>
+            <el-button @click="jumpEnvConfig('history', row)" size="mini" icon="el-icon-notebook-2">Historic Version</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -71,14 +71,14 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '环境',
+          title: 'Surroundings',
           url: `/v1/projects/detail/${this.projectName}/envs/detail?envName=${this.envName}`
         },
         {
@@ -89,7 +89,7 @@ export default {
           title: this.serviceName,
           url: `/v1/projects/detail/${this.projectName}/envs/detail/${this.serviceName}${window.location.search}`
         },
-        { title: '配置管理', url: `` }
+        { title: 'Configuration Management', url: `` }
       ]
     })
   }

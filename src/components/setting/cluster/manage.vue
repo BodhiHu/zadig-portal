@@ -1,19 +1,19 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconjiqun"
     class="setting-cluster-container"
   >
     <!--Cluster-access-dialog-->
     <el-dialog
-      :title="`接入集群 ${accessCluster.name}`"
+      :title="`Access Cluster ${accessCluster.name}`"
       :visible.sync="dialogClusterAccessVisible"
       custom-class="dialog-style"
       :close-on-click-modal="false"
       width="75%"
     >
-      <p>运行下面的 kubectl 命令，将其导入到 Zadig 系统中</p>
+      <p>Run The Following kubectl Order，Import It To Zadig In The System</p>
       <div class="highlighter-rouge">
         <div class="highlight">
           <span class="code-line">
@@ -28,104 +28,104 @@
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button :plain="true" size="small" type="primary" @click="dialogClusterAccessVisible=false">确定</el-button>
+        <el-button :plain="true" size="small" type="primary" @click="dialogClusterAccessVisible=false">Sure</el-button>
       </div>
     </el-dialog>
     <!--Cluster-access-dialog-->
 
     <!--Cluster-dialog-->
     <el-dialog
-      :title="isEdit ? '修改集群': '添加集群'"
+      :title="isEdit ? 'Modify The Cluster': 'Add A Cluster'"
       :visible.sync="dialogClusterFormVisible"
       custom-class="dialog-style"
       :close-on-click-modal="false"
       width="45%"
     >
-      <el-alert title="注意:" type="warning" style="margin-bottom: 15px;" :closable="false">
+      <el-alert title="Notice:" type="warning" style="margin-bottom: 15px;" :closable="false">
         <slot>
-          <span class="tip-item">- 如果指定生产集群为“否”，有环境创建权限的用户，可以指定使用哪个集群资源。</span>
+          <span class="tip-item">- If the specified production cluster is“No”，A user with environment creation privileges，Can specify which cluster resource to use。</span>
           <span class="tip-item">
             -
-            如果指定生产集群为“是”，超级管理员可以通过权限控制集群资源的使用，以实现业务与资源的严格隔离和安全生产管控。
+            If the specified production cluster is“Yes”，Super administrators can control the use of cluster resources through permissions，In order to achieve strict isolation of business and resources and safe production control。
           </span>
           <span class="tip-item">
-            - 接入新的集群后，如需该集群支持泛域名访问，需安装 Ingress Controller，请参阅
+            - After joining the new cluster，If the cluster supports generic domain name access，Need To Be Installed Ingress Controller，See
             <el-link
               style="font-size: 14px; vertical-align: baseline;"
               type="primary"
               :href="`https://docs.koderover.com/zadig/pages/cluster_manage/`"
               :underline="false"
               target="_blank"
-            >帮助</el-link> 查看 Agent 部署样例。
+            >Help</el-link> Check Agent Deployment Example。
           </span>
           <span class="tip-item">
-            - 如需配置工作流任务的“调度策略”和“缓存资源配置”，请在集群正常接入后进行配置，请参阅
+            - To configure workflow tasks“Scheduling Strategy”And“Cache resource configuration”，Please configure it after the cluster is connected normally，See
             <el-link
               style="font-size: 14px; vertical-align: baseline;"
               type="primary"
               :href="`https://docs.koderover.com/zadig/pages/cluster_manage/`"
               :underline="false"
               target="_blank"
-            >帮助</el-link> 查看具体的配置。
+            >Help</el-link> View specific configuration。
           </span>
         </slot>
       </el-alert>
       <el-form ref="cluster" :rules="rules" label-width="150px" label-position="left" :model="cluster">
-        <el-form-item label="连接方式" prop="type">
-          <el-select v-model="cluster.type" style="width: 100%;" size="small" placeholder="请选择连接方式" :disabled="isEdit">
-            <el-option value="agent" label="代理连接"></el-option>
-            <el-option value="kubeconfig" label="直接连接"></el-option>
+        <el-form-item label="Connection Method" prop="type">
+          <el-select v-model="cluster.type" style="width: 100%;" size="small" placeholder="Please select a connection method" :disabled="isEdit">
+            <el-option value="agent" label="Proxy Connection"></el-option>
+            <el-option value="kubeconfig" label="Direct Connection"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="名称" prop="name">
-          <el-input size="small" v-model="cluster.name" placeholder="请输入集群名称"></el-input>
+        <el-form-item label="Name" prop="name">
+          <el-input size="small" v-model="cluster.name" placeholder="Please enter a cluster name"></el-input>
         </el-form-item>
-        <el-form-item label="集群提供商" prop="provider">
-          <el-select v-model="cluster.provider" style="width: 100%;" size="small" placeholder="请选择集群提供商">
-            <el-option :value="1" label="阿里云 ACK">
+        <el-form-item label="Cluster Provider" prop="provider">
+          <el-select v-model="cluster.provider" style="width: 100%;" size="small" placeholder="Please select a cluster provider">
+            <el-option :value="1" label="Ali Cloud ACK">
               <i class="iconfont iconaliyun"></i>
-              <span>阿里云 ACK</span>
+              <span>Ali Cloud ACK</span>
             </el-option>
 
-            <el-option :value="2" label="腾讯云 TKE">
+            <el-option :value="2" label="Tencent Cloud TKE">
               <i class="iconfont icontengxunyun"></i>
-              <span>腾讯云 TKE</span>
+              <span>Tencent Cloud TKE</span>
             </el-option>
-            <el-option :value="3" label="华为云 CCE">
+            <el-option :value="3" label="HUAWEI CLOUD CCE">
               <i class="iconfont iconhuawei"></i>
-              <span>华为云 CCE</span>
+              <span>HUAWEI CLOUD CCE</span>
             </el-option>
-            <el-option :value="0" label="其他">
+            <el-option :value="0" label="Other">
               <i class="iconfont iconqita"></i>
-              <span>其他</span>
+              <span>Other</span>
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="描述" prop="description">
-          <el-input size="small" v-model="cluster.description" placeholder="请输入描述"></el-input>
+        <el-form-item label="Describe" prop="description">
+          <el-input size="small" v-model="cluster.description" placeholder="Please enter a description"></el-input>
         </el-form-item>
-        <el-form-item label="生产集群" prop="production">
+        <el-form-item label="Production Cluster" prop="production">
           <el-radio-group v-model="cluster.production">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+            <el-radio :label="true">Yes</el-radio>
+            <el-radio :label="false">No</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="KubeConfig" prop="config" v-if="cluster.type === 'kubeconfig'" :show-message="false">
           <Resize :resize="'vertical'" :height="'100px'" @sizeChange="$refs.codemirror.refresh()">
-            <Codemirror ref="codemirror" v-model="cluster.config" placeholder="请输入目标集群 KubeConfig"></Codemirror>
+            <Codemirror ref="codemirror" v-model="cluster.config" placeholder="Please enter the target cluster KubeConfig"></Codemirror>
           </Resize>
         </el-form-item>
         <el-button type="text" @click="expandAdvanced = !expandAdvanced">
-          高级配置
+          Advanced Configuration
           <i :class="{'el-icon-arrow-right': !expandAdvanced,'el-icon-arrow-down': expandAdvanced}"></i>
         </el-button>
         <template v-if="expandAdvanced">
           <section>
-            <h4>指定项目范围</h4>
-            <el-form-item label="选择项目" prop="advanced_config.project_names" class="project-scoped">
+            <h4>Specify Project Scope</h4>
+            <el-form-item label="Select Item" prop="advanced_config.project_names" class="project-scoped">
               <el-select
                 v-model="cluster.advanced_config.project_names"
-                placeholder="请选择项目"
+                placeholder="Please Select An Item"
                 size="small"
                 style="width: 100%;"
                 filterable
@@ -135,46 +135,46 @@
               >
                 <el-option v-for="name in projectNames" :key="name" :label="name" :value="name"></el-option>
               </el-select>
-              <el-button size="mini" plain @click="cluster.advanced_config.project_names = []">清空所有</el-button>
+              <el-button size="mini" plain @click="cluster.advanced_config.project_names = []">Clear All</el-button>
             </el-form-item>
           </section>
           <section v-show="isEdit">
             <h4>
-              调度策略
+              Scheduling Strategy
               <el-tooltip effect="dark" placement="top">
                 <div slot="content" style="line-height: 1.5;">
-                  <div>随机调度：工作流任务被随机调度到集群的可用节点上</div>
-                  <div>强制调度：工作流任务被强制调度到对应节点上，如果节点有问题，任务可能调度不成功</div>
-                  <div>优先调度：工作流任务被优先调度到对应节点上，如果节点有问题，会调度到其他可用节点上</div>
+                  <div>Random Scheduling：Workflow tasks are randomly scheduled to available nodes in the cluster</div>
+                  <div>Force Scheduling：Workflow tasks are forced to be scheduled to the corresponding nodes，If there is a problem with the node，The task may not be scheduled successfully</div>
+                  <div>Priority Scheduling：Workflow tasks are preferentially scheduled to the corresponding nodes，If there is a problem with the node，Will be scheduled to other available nodes</div>
                 </div>
                 <i class="el-icon-question"></i>
               </el-tooltip>
-              <span v-if="!isConfigurable" style="color: #e6a23c; font-weight: 400; font-size: 12px;">集群正常接入后才可选择调度策略</span>
+              <span v-if="!isConfigurable" style="color: #e6a23c; font-weight: 400; font-size: 12px;">The scheduling policy can only be selected after the cluster is connected normally</span>
             </h4>
             <el-form-item prop="advanced_config.strategy" >
-              <span slot="label">选择策略</span>
+              <span slot="label">Choose Strategy</span>
               <el-select
                 v-model="cluster.advanced_config.strategy"
-                placeholder="请选择策略"
+                placeholder="Please Select A Strategy"
                 style="width: 100%;"
                 size="small"
                 required
                 :disabled="!isConfigurable"
               >
-                <el-option label="随机调度" value="normal"></el-option>
-                <el-option label="强制调度" value="required"></el-option>
-                <el-option label="优先调度" value="preferred"></el-option>
+                <el-option label="Random Scheduling" value="normal"></el-option>
+                <el-option label="Force Scheduling" value="required"></el-option>
+                <el-option label="Priority Scheduling" value="preferred"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
               v-if="cluster.advanced_config.strategy && cluster.advanced_config.strategy !== 'normal'"
               prop="advanced_config.node_labels"
-              label="选择标签"
+              label="Select Label"
             >
-              <el-select v-model="cluster.advanced_config.node_labels" placeholder="请选择" multiple style="width: 100%;" size="small">
+              <el-select v-model="cluster.advanced_config.node_labels" placeholder="Please Choose" multiple style="width: 100%;" size="small">
                 <el-option v-for="node in clusterNodes.labels" :key="node" :label="node" :value="node"></el-option>
               </el-select>
-              <span style="color: #e6a23c; font-size: 12px;" v-if="clusterNodes.labels.length == 0">请先在对应节点上打上标签</span>
+              <span style="color: #e6a23c; font-size: 12px;" v-if="clusterNodes.labels.length == 0">Please label the corresponding node first</span>
               <div class="list-host">
                 <div v-for="host in  matchedHost" :key="host.ip">
                   {{host.ip}} &nbsp;&nbsp;-&nbsp;&nbsp;
@@ -187,62 +187,62 @@
           </section>
           <section v-show="isEdit">
             <h4>
-              缓存资源配置
+              Cache resource configuration
               <el-tooltip effect="dark" placement="top">
-                <div slot="content" style="line-height: 1.5;">调度到当前集群的工作流任务将会使用指定存储介质进行缓存</div>
+                <div slot="content" style="line-height: 1.5;">Workflow tasks scheduled to the current cluster will be cached using the specified storage medium</div>
                 <i class="el-icon-question"></i>
               </el-tooltip>
               <el-link
                 style="font-size: 14px; vertical-align: baseline;"
                 type="primary"
-                :href="`https://docs.koderover.com/zadig/pages/cluster_manage/#缓存资源配置`"
+                :href="`https://docs.koderover.com/zadig/pages/cluster_manage/#Cache resource configuration`"
                 :underline="false"
                 target="_blank"
-              >帮助</el-link>
+              >Help</el-link>
             </h4>
             <el-form-item prop="cache.medium_type">
-              <span slot="label">选择存储介质</span>
+              <span slot="label">Select Storage Medium</span>
               <el-radio-group v-model="cluster.cache.medium_type" @change="changeMediumType" class="storage-medium">
-                <el-radio label="object">对象存储</el-radio>
+                <el-radio label="object">Object Storage</el-radio>
                 <el-radio :disabled="!isConfigurable" label="nfs">
-                  集群存储
-                  <span v-if="!isConfigurable" style="color: #e6a23c; font-weight: 400; font-size: 12px;">集群正常接入后才可使用集群资源</span>
+                  Cluster Storage
+                  <span v-if="!isConfigurable" style="color: #e6a23c; font-weight: 400; font-size: 12px;">Cluster resources can only be used after the cluster is connected normally</span>
                 </el-radio>
               </el-radio-group>
             </el-form-item>
             <!-- <el-form-item v-if="cluster.cache.medium_type === 'object'" prop="cache.object_properties.id">
-              <span slot="label">选择对象存储</span>
-              <el-select v-model="cluster.cache.object_properties.id" placeholder="请选择对象存储" style="width: 100%;" size="small">
+              <span slot="label">Choose Object Storage</span>
+              <el-select v-model="cluster.cache.object_properties.id" placeholder="Please select Object Storage" style="width: 100%;" size="small">
                 <template v-if="allStorage.length > 0">
                   <el-option v-for="(item,index) in (cluster.local ? allStorage : externalStorage)" :key="index" :label="`${item.endpoint}/${item.bucket}`" :value="item.id"></el-option>
                 </template>
                 <el-option v-if="(cluster.local ? allStorage : externalStorage).length === 0" value="NEWCUSTOM">
-                  <router-link to="/v1/system/storage" style="color: #606266;">集成对象存储</router-link>
+                  <router-link to="/v1/system/storage" style="color: #606266;">Integrated Object Storage</router-link>
                 </el-option>
               </el-select>
             </el-form-item>-->
             <template v-if="cluster.cache.medium_type === 'nfs'">
               <el-form-item prop="cache.nfs_properties.provision_type">
-                <span slot="label">选择存储资源</span>
+                <span slot="label">Choose Storage Resources</span>
                 <el-radio-group v-model="cluster.cache.nfs_properties.provision_type">
-                  <el-radio label="dynamic">动态生成资源</el-radio>
-                  <el-radio label="static">使用现有存储资源</el-radio>
+                  <el-radio label="dynamic">Dynamically generate resources</el-radio>
+                  <el-radio label="static">Use existing storage resources</el-radio>
                 </el-radio-group>
               </el-form-item>
               <template v-if="cluster.cache.nfs_properties.provision_type === 'dynamic'">
                 <el-form-item prop="cache.nfs_properties.storage_class">
-                  <span slot="label">选择 Storage Class</span>
-                  <el-select v-model="cluster.cache.nfs_properties.storage_class" placeholder="请选择" style="width: 100%;" size="small">
+                  <span slot="label">Choose Storage Class</span>
+                  <el-select v-model="cluster.cache.nfs_properties.storage_class" placeholder="Please Choose" style="width: 100%;" size="small">
                     <el-option v-for="(item,index) in allFileStorageClass" :key="index" :label="item" :value="item"></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item prop="cache.nfs_properties.storage_size_in_gib">
-                  <span slot="label">存储空间大小</span>
+                  <span slot="label">Storage Space Size</span>
                   <el-input
                     v-model.number="cluster.cache.nfs_properties.storage_size_in_gib"
                     style="width: 100%; vertical-align: baseline;"
                     size="small"
-                    placeholder="请输入存储空间大小"
+                    placeholder="Please enter storage size"
                   >
                     <template slot="append">GiB</template>
                   </el-input>
@@ -251,16 +251,16 @@
               <template v-else-if="cluster.cache.nfs_properties.provision_type === 'static'">
                 <el-form-item prop="cache.nfs_properties.pvc">
                   <span slot="label">
-                    指定 PVC
+                    Specify PVC
                     <el-link
                       style="font-size: 14px; vertical-align: baseline;"
                       type="primary"
                       :href="`https://docs.koderover.com/zadig/pages/cluster_manage/`"
                       :underline="false"
                       target="_blank"
-                    >帮助</el-link>
+                    >Help</el-link>
                   </span>
-                  <el-select v-model="cluster.cache.nfs_properties.pvc" placeholder="请选择" style="width: 100%;" size="small">
+                  <el-select v-model="cluster.cache.nfs_properties.pvc" placeholder="Please Choose" style="width: 100%;" size="small">
                     <el-option
                       v-for="(item,index) in allPvc"
                       :key="index"
@@ -272,68 +272,68 @@
               </template>
               <el-form-item prop="cache.nfs_properties.subpath">
                 <span slot="label">
-                  缓存目录规则
+                  Cache Directory Rules
                   <el-tooltip effect="dark" placement="right">
                     <div slot="content">
-                      缓存目录规则支持以下变量：<br><br>
-                      <span style="display: inline-block; width: 120px;">$PROJECT</span><span>项目名称</span><br>
-                      <span style="display: inline-block; width: 120px;">$WORKFLOW</span>工作流名称<br>
-                      <span style="display: inline-block; width: 120px;">$SERVICE_MODULE</span>服务组件名称 (执行测试工作流时，该值为空)<br><br>
-                      也可使用相对路径比如 cache 等来实现共享缓存，空值表示集群存储的根目录
+                      The cache directory rule supports the following variables：<br><br>
+                      <span style="display: inline-block; width: 120px;">$PROJECT</span><span>Project Name</span><br>
+                      <span style="display: inline-block; width: 120px;">$WORKFLOW</span>Workflow Name<br>
+                      <span style="display: inline-block; width: 120px;">$SERVICE_MODULE</span>Service Component Name (When executing a test workflow，The Value Is Empty)<br><br>
+                      You can also use relative paths such as cache Etc. to implement shared cache，A null value indicates the root directory of the cluster storage
                     </div>
                     <i class="el-icon-question tooltip"></i>
                   </el-tooltip>
                 </span>
-                <el-input v-model="cluster.cache.nfs_properties.subpath" size="small" placeholder="请输入相对路径">
-                  <el-button slot="append" @click="cluster.cache.nfs_properties.subpath = '$PROJECT/$WORKFLOW/$SERVICE_MODULE'" size="mini">恢复默认</el-button>
+                <el-input v-model="cluster.cache.nfs_properties.subpath" size="small" placeholder="Please enter relative path">
+                  <el-button slot="append" @click="cluster.cache.nfs_properties.subpath = '$PROJECT/$WORKFLOW/$SERVICE_MODULE'" size="mini">Reset</el-button>
                 </el-input>
               </el-form-item>
             </template>
           </section>
           <section>
             <h4>
-              Dind 资源配置
+              Dind Resource Configuration
               <el-link
                 style="font-size: 14px; vertical-align: baseline;"
                 type="primary"
-                :href="`https://docs.koderover.com/zadig/pages/cluster_manage/#dind-资源配置`"
+                :href="`https://docs.koderover.com/zadig/pages/cluster_manage/#dind-Resource Configuration`"
                 :underline="false"
                 target="_blank"
-              >帮助</el-link>
+              >Help</el-link>
             </h4>
-            <el-form-item label="副本数量" prop="dind_cfg.replicas">
-              <el-input v-model.number="cluster.dind_cfg.replicas" size="small" placeholder="请输入副本数量"></el-input>
+            <el-form-item label="Number Of Copies" prop="dind_cfg.replicas">
+              <el-input v-model.number="cluster.dind_cfg.replicas" size="small" placeholder="Please enter the number of copies"></el-input>
             </el-form-item>
-            <el-form-item label="资源限制(limit)">
+            <el-form-item label="Resource Constraints(limit)">
               <el-form-item label="CPU(m)" label-width="90px" prop="dind_cfg.resources.limits.cpu">
-                <el-input v-model.number="cluster.dind_cfg.resources.limits.cpu" size="small" placeholder="请输入 CPU"></el-input>
+                <el-input v-model.number="cluster.dind_cfg.resources.limits.cpu" size="small" placeholder="Please Enter CPU"></el-input>
               </el-form-item>
               <el-form-item label="Mem(Mi)" label-width="90px" prop="dind_cfg.resources.limits.memory">
-                <el-input v-model.number="cluster.dind_cfg.resources.limits.memory" size="small" placeholder="请输入 Memory"></el-input>
+                <el-input v-model.number="cluster.dind_cfg.resources.limits.memory" size="small" placeholder="Please Enter Memory"></el-input>
               </el-form-item>
             </el-form-item>
             <template v-if="isEdit">
-              <el-form-item label="存储资源">
+              <el-form-item label="Storage Resources">
                 <el-radio-group v-model="cluster.dind_cfg.storage.type" @change="changeDindStorageType">
-                  <el-radio label="rootfs">临时存储</el-radio>
+                  <el-radio label="rootfs">Temporary Storage</el-radio>
                   <el-radio label="dynamic" :disabled="cluster.status !== 'normal'">
-                    集群存储资源
-                    <span v-if="cluster.status !== 'normal'" style="color: #e6a23c; font-weight: 400; font-size: 12px;">集群正常接入后才可使用集群存储资源</span>
+                    Cluster storage resources
+                    <span v-if="cluster.status !== 'normal'" style="color: #e6a23c; font-weight: 400; font-size: 12px;">Cluster storage resources can only be used after the cluster is connected normally</span>
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
               <template v-if="cluster.dind_cfg.storage.type === 'dynamic' && cluster.status === 'normal'">
-                <el-form-item prop="dind_cfg.storage.storage_class" label="选择 Storage Class">
-                  <el-select v-model="cluster.dind_cfg.storage.storage_class" placeholder="请选择" style="width: 100%;" size="small">
+                <el-form-item prop="dind_cfg.storage.storage_class" label="Choose Storage Class">
+                  <el-select v-model="cluster.dind_cfg.storage.storage_class" placeholder="Please Choose" style="width: 100%;" size="small">
                     <el-option v-for="(item,index) in allStorageClass" :key="index" :label="item" :value="item"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="dind_cfg.storage.storage_size_in_gib" label="存储空间大小">
+                <el-form-item prop="dind_cfg.storage.storage_size_in_gib" label="Storage Space Size">
                   <el-input
                     v-model.number="cluster.dind_cfg.storage.storage_size_in_gib"
                     style="width: 100%; vertical-align: baseline;"
                     size="small"
-                    placeholder="请输入存储空间大小"
+                    placeholder="Please enter storage size"
                   >
                     <template slot="append">GiB</template>
                   </el-input>
@@ -344,8 +344,8 @@
         </template>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogClusterFormVisible = false">取 消</el-button>
-        <el-button :plain="true" size="small" type="success" @click="clusterOperation(isEdit ? 'update' : 'add')">保存</el-button>
+        <el-button size="small" @click="dialogClusterFormVisible = false">Cancel</el-button>
+        <el-button :plain="true" size="small" type="success" @click="clusterOperation(isEdit ? 'update' : 'add')">Save</el-button>
       </div>
     </el-dialog>
     <!--Cluster-dialog-->
@@ -353,74 +353,74 @@
     <div class="section">
       <el-alert type="info" :closable="false">
         <template>
-          支持阿里云 ACK、腾讯云 TKE、华为云 CCE 等 K8s 集群的接入和使用，详情可参考
+          Support Alibaba Cloud ACK、Tencent Cloud TKE、HUAWEI CLOUD CCE Wait K8s Access and use of clusters，For details, please refer to
           <el-link
             style="font-size: 14px; vertical-align: baseline;"
             type="primary"
             :href="`https://docs.koderover.com/zadig/pages/cluster_manage/`"
             :underline="false"
             target="_blank"
-          >帮助文档</el-link>
+          >Help Documentation</el-link>
         </template>
       </el-alert>
       <div class="sync-container">
-        <el-button size="small" :plain="true" @click="clusterOperation('init')" type="success">新建</el-button>
+        <el-button size="small" :plain="true" @click="clusterOperation('init')" type="success">New</el-button>
       </div>
       <div class="cluster-list">
         <template>
           <el-table :data="allCluster" style="width: 100%;" :row-class-name="tableRowClassName">
-            <el-table-column label="名称">
+            <el-table-column label="Name">
               <template slot-scope="scope">
                 <i v-if="scope.row.local" class="iconfont iconvery-k8s"></i>
                 <i v-else :class="getProviderMap(scope.row.provider,'icon')"></i>
-                <span v-if="scope.row.local">本地集群（local）</span>
+                <span v-if="scope.row.local">Local Cluster（local）</span>
                 <span v-else>{{scope.row.name}}</span>
               </template>
             </el-table-column>
-            <el-table-column width="120" label="状态">
+            <el-table-column width="120" label="State">
               <template slot-scope="scope">
                 <el-tag size="small" effect="dark" :type="statusIndicator[scope.row.status]">{{myTranslate(scope.row.status)}}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="生产集群">
+            <el-table-column label="Production Cluster">
               <template slot-scope="scope">
-                <span>{{scope.row.production?'是':'否'}}</span>
+                <span>{{scope.row.production?'Yes':'No'}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="描述">
+            <el-table-column label="Describe">
               <template slot-scope="scope">
                 <span>{{scope.row.description}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="最近连接时间">
+            <el-table-column label="Last Connection Time">
               <template slot-scope="{ row }">
                 <span>{{$utils.convertTimestamp(row.last_connection_time)}}</span>
-                <el-tooltip v-if="row.update_hubagent_error_msg" effect="dark" content="最近一次组件更新失败，点击「更新组件」按钮再次更新" placement="top">
+                <el-tooltip v-if="row.update_hubagent_error_msg" effect="dark" content="The last component update failed，Click「Update Components」Button To Update Again" placement="top">
                   <i class="el-icon-warning-outline" style="color: red;"></i>
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column label="创建人">
+            <el-table-column label="Founder">
               <template slot-scope="scope">
                 <span>{{scope.row.createdBy}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column width="310" label="操作">
+            <el-table-column width="310" label="Operate">
               <template slot-scope="scope">
                 <span v-show="!scope.row.local && scope.row.type !== 'kubeconfig'">
                   <el-button
                     v-if="scope.row.status==='pending'||scope.row.status==='abnormal'"
                     @click="clusterOperation('access',scope.row)"
                     size="mini"
-                  >接入</el-button>
-                  <el-button v-if="scope.row.status==='normal'" @click="clusterOperation('disconnect',scope.row)" size="mini">断开</el-button>
-                  <el-button v-if="scope.row.status==='disconnected'" @click="clusterOperation('recover',scope.row)" size="mini">恢复</el-button>
+                  >Access</el-button>
+                  <el-button v-if="scope.row.status==='normal'" @click="clusterOperation('disconnect',scope.row)" size="mini">Disconnect</el-button>
+                  <el-button v-if="scope.row.status==='disconnected'" @click="clusterOperation('recover',scope.row)" size="mini">Recover</el-button>
                 </span>
-                <el-button @click="clusterOperation('edit',scope.row)" type="primary" size="mini" plain>编辑</el-button>
-                <el-button v-show="!scope.row.local" @click="clusterOperation('delete',scope.row)" size="mini" type="danger" plain>删除</el-button>
-                <el-tooltip effect="dark" content="更新 Zadig 系统管理集群的相关组件" placement="top">
-                  <el-button v-if="!scope.row.local" :disabled="scope.row.type === 'agent' && scope.row.status !== 'normal'" @click="updateAgent(scope.row)" size="mini" type="primary" plain>更新组件</el-button>
+                <el-button @click="clusterOperation('edit',scope.row)" type="primary" size="mini" plain>Edit</el-button>
+                <el-button v-show="!scope.row.local" @click="clusterOperation('delete',scope.row)" size="mini" type="danger" plain>Delete</el-button>
+                <el-tooltip effect="dark" content="Renew Zadig Relevant components of the system management cluster" placement="top">
+                  <el-button v-if="!scope.row.local" :disabled="scope.row.type === 'agent' && scope.row.status !== 'normal'" @click="updateAgent(scope.row)" size="mini" type="primary" plain>Update Components</el-button>
                 </el-tooltip>
               </template>
             </el-table-column>
@@ -452,10 +452,10 @@ import bus from '@utils/eventBus'
 import { cloneDeep, omit } from 'lodash'
 const validateClusterName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入集群名称'))
+    callback(new Error('Please enter a cluster name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -522,20 +522,20 @@ export default {
       providerMap: {
         0: {
           icon: 'iconfont logo iconqita',
-          name: '其他'
+          name: 'Other'
         },
 
         1: {
           icon: 'iconfont logo iconaliyun ',
-          name: '阿里云'
+          name: 'Ali Cloud'
         },
         2: {
           icon: 'iconfont logo icontengxunyun',
-          name: '腾讯云'
+          name: 'Tencent Cloud'
         },
         3: {
           icon: 'iconfont logo iconhuawei',
-          name: '华为云'
+          name: 'HUAWEI CLOUD'
         }
       },
       accessCluster: {
@@ -555,54 +555,54 @@ export default {
           }
         ],
         provider: [
-          { required: true, message: '请选择提供商', trigger: ['blur', 'change'] }
+          { required: true, message: 'Please Select A Provider', trigger: ['blur', 'change'] }
         ],
         production: [
           {
             type: 'boolean',
             required: true,
-            message: '请选择是否为生产集群'
+            message: 'Please select whether it is a production cluster'
           }
         ],
         config: {
           type: 'string',
           required: true,
-          message: '请输入目标集群 KubeConfig',
+          message: 'Please enter the target cluster KubeConfig',
           trigger: 'change'
         },
         'advanced_config.node_labels': {
           required: false,
-          message: '请选择标签',
+          message: 'Please Select A Label',
           type: 'array'
         },
         'advanced_config.project_names': {
           required: false,
-          message: '请选择项目',
+          message: 'Please Select An Item',
           type: 'array'
         },
         'cache.object_properties.id': {
           required: true,
-          message: '请选择对象存储',
+          message: 'Please select Object Storage',
           type: 'string'
         },
         'cache.nfs_properties.provision_type': {
           required: true,
-          message: '请选择存储资源',
+          message: 'Please select a storage resource',
           type: 'string'
         },
         'cache.nfs_properties.storage_class': {
           required: true,
-          message: '请选择 Storage Class',
+          message: 'Please Choose Storage Class',
           type: 'string'
         },
         'cache.nfs_properties.storage_size_in_gib': {
           required: true,
-          message: '请输入存储空间大小',
+          message: 'Please enter storage size',
           type: 'number'
         },
         'cache.nfs_properties.pvc': {
           required: true,
-          message: '请选择 PVC',
+          message: 'Please Choose PVC',
           type: 'string'
         },
         'cache.nfs_properties.subpath': {
@@ -610,7 +610,7 @@ export default {
           type: 'string',
           validator: (rule, value, callback) => {
             if (value.charAt(0) === '/') {
-              callback(new Error('请填写相对路径，不能以 / 开头'))
+              callback(new Error('Please fill in relative path，Cannot Be / Beginning'))
             } else {
               callback()
             }
@@ -618,27 +618,27 @@ export default {
         },
         'dind_cfg.replicas': {
           required: true,
-          message: '请输入副本数量',
+          message: 'Please enter the number of copies',
           type: 'number'
         },
         'dind_cfg.resources.limits.cpu': {
           required: true,
-          message: '请输入 CPU',
+          message: 'Please Enter CPU',
           type: 'number'
         },
         'dind_cfg.resources.limits.memory': {
           required: true,
-          message: '请输入 Memory',
+          message: 'Please Enter Memory',
           type: 'number'
         },
         'dind_cfg.storage.storage_class': {
           required: true,
-          message: '请选择 Storage Class',
+          message: 'Please Choose Storage Class',
           type: 'string'
         },
         'dind_cfg.storage.storage_size_in_gib': {
           required: true,
-          message: '请输入存储空间大小',
+          message: 'Please enter storage size',
           type: 'number'
         }
       },
@@ -742,9 +742,9 @@ export default {
         this.accessCluster = cloneDeep(currentCluster)
         this.dialogClusterAccessVisible = true
       } else if (operate === 'disconnect') {
-        this.$confirm(`确定要断开 ${currentCluster.name} 的连接?`, '确认', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(`Sure you want to disconnect ${currentCluster.name} Connection?`, 'Confirm', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(({ value }) => {
           this.disconnectCluster(currentCluster.id)
@@ -789,15 +789,15 @@ export default {
         })
       } else if (operate === 'delete') {
         const id = currentCluster.id
-        this.$confirm(`确定要删除 ${currentCluster.name} ?`, '确认', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(`Sure You Want To Delete ${currentCluster.name} ?`, 'Confirm', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(({ value }) => {
           deleteClusterAPI(id).then(res => {
             this.getCluster()
             this.$message({
-              message: '删除集群成功',
+              message: 'Delete cluster successfully',
               type: 'success'
             })
           })
@@ -812,7 +812,7 @@ export default {
     async changeMediumType (type) {
       if (!this.hasNotified) {
         this.$message({
-          message: '修改后，之前的缓存将不再生效',
+          message: 'After Modification，The previous cache will no longer take effect',
           type: 'info'
         })
       }
@@ -835,7 +835,7 @@ export default {
         }
         this.$message({
           type: 'success',
-          message: '新增成功'
+          message: 'Added Successfully'
         })
       })
     },
@@ -844,7 +844,7 @@ export default {
         this.getCluster()
         this.$message({
           type: 'success',
-          message: '断开集群连接成功'
+          message: 'Disconnect the cluster successfully'
         })
       })
     },
@@ -853,7 +853,7 @@ export default {
         this.getCluster()
         this.$message({
           type: 'success',
-          message: '恢复集群连接成功'
+          message: 'The cluster connection was restored successfully'
         })
       })
     },
@@ -862,7 +862,7 @@ export default {
         this.getCluster()
         this.$message({
           type: 'success',
-          message: '更新成功'
+          message: 'Update Completed'
         })
       })
     },
@@ -875,7 +875,7 @@ export default {
           const local = res.splice(localId, 1)
           res.unshift(local[0])
         } else {
-          this.$message.error(`未找到本地集群！`)
+          this.$message.error(`Local Cluster Not Found！`)
         }
         this.allCluster = res.map(re => {
           if (!re.advanced_config.node_labels) {
@@ -887,13 +887,13 @@ export default {
     },
     copyCommandSuccess (event) {
       this.$message({
-        message: '命令已成功复制到剪贴板',
+        message: 'Command successfully copied to clipboard',
         type: 'success'
       })
     },
     copyCommandError (event) {
       this.$message({
-        message: '命令复制失败',
+        message: 'Command Copy Failed',
         type: 'error'
       })
     },
@@ -907,14 +907,14 @@ export default {
       })
     },
     updateAgent (row) {
-      this.$confirm('确定更新组件吗?', '更新', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to update components?', 'Renew', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         upgradeHubAgentAPI(row.id).then(res => {
           this.$message({
-            message: '更新组件成功',
+            message: 'Update components succeeded',
             type: 'success'
           })
           this.getCluster()
@@ -922,14 +922,14 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消更新'
+          message: 'Update Cancelled'
         })
       })
     }
   },
   created () {
     this.getCluster()
-    bus.$emit(`set-topbar-title`, { title: '集群管理', breadcrumb: [] })
+    bus.$emit(`set-topbar-title`, { title: 'Cluster Management', breadcrumb: [] })
   },
   components: {
     Resize,

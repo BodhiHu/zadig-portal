@@ -1,19 +1,19 @@
 <template>
   <div class="run-common-workflow">
     <section v-if="!cantRun">
-      <div class="title">构建</div>
+      <div class="title">Construct</div>
       <el-table class="content" :data="runCommonInfo.builds" style="width: 100%;">
-        <el-table-column prop="repo_name" label="仓库"></el-table-column>
-        <el-table-column prop="branch" label="分支">
+        <el-table-column prop="repo_name" label="Storehouse"></el-table-column>
+        <el-table-column prop="branch" label="Branch">
           <template slot-scope="{row}">
-            <el-select v-model="row.branch" placeholder="请选择分支" size="small">
+            <el-select v-model="row.branch" placeholder="Please Select A Branch" size="small">
               <el-option v-for="branch in row.branches" :key="branch.key" :label="branch.name" :value="branch.name"></el-option>
             </el-select>
           </template>
         </el-table-column>
         <el-table-column prop="pr" label="PR">
           <template slot-scope="{row}">
-            <el-select v-model="row.pr" placeholder="请选择分支" size="small">
+            <el-select v-model="row.pr" placeholder="Please Select A Branch" size="small">
               <el-option
                 v-for="pr in row.prs.filter(pr=>pr.targetBranch === row.branch)"
                 :key="pr.id"
@@ -26,16 +26,16 @@
       </el-table>
     </section>
     <section v-if="!cantRun">
-      <div class="title">变量设置</div>
+      <div class="title">Variable Settings</div>
       <el-table class="content" :data="runCommonInfo.build_args" style="width: 100%;">
-        <el-table-column prop="key" label="变量"></el-table-column>
-        <el-table-column label="值">
+        <el-table-column prop="key" label="Variable"></el-table-column>
+        <el-table-column label="Value">
           <template slot-scope="{row}">
-            <el-input v-if="row.type === 'string'" v-model="row.value" placeholder="请输入默认值" size="small"></el-input>
-            <el-select v-else-if="row.type === 'choice'" v-model="row.value" placeholder="请选择值" size="small">
+            <el-input v-if="row.type === 'string'" v-model="row.value" placeholder="Please enter a default value" size="small"></el-input>
+            <el-select v-else-if="row.type === 'choice'" v-model="row.value" placeholder="Please Select A Value" size="small">
               <el-option v-for="val in row.choice" :key="val" :label="val" :value="val"></el-option>
             </el-select>
-            <el-select v-else-if="row.type === 'external'" v-model="row.value" placeholder="请选择值" size="small" :value-key="row.key">
+            <el-select v-else-if="row.type === 'external'" v-model="row.value" placeholder="Please Select A Value" size="small" :value-key="row.key">
               <el-option v-for="val in row.options" :key="val[row.key]" :label="stringFromData(val[row.key])" :value="val"></el-option>
             </el-select>
           </template>
@@ -43,7 +43,7 @@
       </el-table>
     </section>
     <footer>
-      <el-button :loading="loading" type="primary" plain size="small" :disabled="cantRun" @click="runCommonWorkflow">启动任务</el-button>
+      <el-button :loading="loading" type="primary" plain size="small" :disabled="cantRun" @click="runCommonWorkflow">Start Task</el-button>
     </footer>
   </div>
 </template>
@@ -193,7 +193,7 @@ export default {
       runCommonWorkflowAPI(projectName, payload)
         .then(res => {
           this.loading = false
-          this.$message.success('创建成功')
+          this.$message.success('Created Successfully')
           this.$router.push(
             `/v1/projects/detail/${projectName}/pipelines/custom/${res.name}/${res.task_id}?status=running&id=${this.workflow.id}`
           )

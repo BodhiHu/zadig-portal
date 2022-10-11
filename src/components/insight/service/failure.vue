@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%; height: 250px;">
     <el-table :data="serviceData" v-loading="loading" height="250" :show-header="true" class="service-table">
-      <el-table-column prop="serviceName" label="服务名">
+      <el-table-column prop="serviceName" label="Service Name">
         <template slot-scope="scope">
           <router-link :to="`/v1/projects/detail/${scope.row.productName}/services?name=${scope.row.serviceName}`">
             <span class="service-name">{{scope.row.serviceName}}</span>
@@ -9,7 +9,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="totalFailure" label="失败次数">
+      <el-table-column prop="totalFailure" label="Number Of Failures">
         <template slot-scope="scope">
           <span>{{scope.row.totalFailure}}</span>
         </template>

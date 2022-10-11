@@ -2,8 +2,8 @@
   <div class="create-external-container">
     <AddHostEnv ref="addHostEnv" />
     <div class="footer">
-      <el-button type="primary" @click="$router.back()" size="medium" plain>取消</el-button>
-      <el-button type="primary" @click="save()" size="medium">立即创建</el-button>
+      <el-button type="primary" @click="$router.back()" size="medium" plain>Cancel</el-button>
+      <el-button type="primary" @click="save()" size="medium">Create Now</el-button>
     </div>
   </div>
 </template>

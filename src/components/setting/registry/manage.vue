@@ -1,10 +1,10 @@
 <template>
   <div v-loading="loading"
-       element-loading-text="加载中..."
+       element-loading-text="Loading..."
        element-loading-spinner="iconfont iconfont-loading icondocker"
        class="setting-registry-container">
     <!--registry-create-dialog-->
-    <el-dialog :title="mode === 'create'?'添加':'编辑'"
+    <el-dialog :title="mode === 'create'?'Add To':'Edit'"
                :visible.sync="dialogRegistryFormVisible"
                :close-on-click-modal="false"
                custom-class="dialog-style"
@@ -14,17 +14,17 @@
                label-width="160px"
                label-position="left"
                :model="registry">
-        <el-form-item label="默认使用"
+        <el-form-item label="Use By Default"
                       prop="is_default">
           <el-checkbox v-model="registry.is_default"></el-checkbox>
         </el-form-item>
-        <el-form-item label="提供商"
+        <el-form-item label="Provider"
                       prop="reg_provider">
           <el-select v-model="registry.reg_provider"
                      @change="changeProvider"
                      style="width: 100%;"
                      size="small"
-                     placeholder="请选择镜像仓库提供商">
+                     placeholder="Please select a mirror repository provider">
             <el-option v-for="(provider,index) in providers" :key="index" :value="provider.value"
                        :label="provider.label">
               <i :class="provider.icon"></i> <span>{{provider.label}}</span>
@@ -54,14 +54,14 @@
                     v-model="registry.namespace"></el-input>
         </el-form-item>
         <el-form-item v-if="registry.reg_provider" :label="providerMap[registry.reg_provider].access_key"
-                      :rules="{ required: true, message: `请输入 ${providerMap[registry.reg_provider].access_key}`, trigger: ['blur'] }"
+                      :rules="{ required: true, message: `Please Enter ${providerMap[registry.reg_provider].access_key}`, trigger: ['blur'] }"
                       prop="access_key">
           <el-input size="small"
                     clearable
                     v-model="registry.access_key"></el-input>
         </el-form-item>
         <el-form-item v-if="registry.reg_provider" :label="providerMap[registry.reg_provider].secret_key"
-                      :rules="{ required: true, message: `请输入 ${providerMap[registry.reg_provider].secret_key}`, trigger: ['blur'] }"
+                      :rules="{ required: true, message: `Please Enter ${providerMap[registry.reg_provider].secret_key}`, trigger: ['blur'] }"
                       prop="secret_key">
           <el-input size="small"
                     clearable
@@ -71,32 +71,32 @@
                     v-model="registry.secret_key"></el-input>
         </el-form-item>
         <el-button type="text" @click="registry.advanced_setting.modified = !registry.advanced_setting.modified" >
-          高级配置
+          Advanced Configuration
           <i :class="[registry.advanced_setting.modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
         </el-button>
         <template v-if="registry.advanced_setting.modified">
           <el-alert type="info" :closable="false">
             <template>
-              <div >修改以下配置后，如使用跨集群构建功能，需重启对应集群中 koderover-agent 命名空间下的 koderover-agent-node-agent 服务，重启后配置方可生效</div>
+              <div >After modifying the following configuration，Such as using the cross-cluster build function，Need to restart the corresponding cluster koderover-agent Under The Namespace koderover-agent-node-agent Serve，The configuration will take effect after restart</div>
             </template>
           </el-alert>
-          <el-form-item label="开启 SSL 校验" prop="enable_tls">
+          <el-form-item label="Turn On SSL Check" prop="enable_tls">
             <el-switch v-model='registry.advanced_setting.enable_tls' @change="showTip($event,registry,'switch')"></el-switch>
           </el-form-item>
           <span></span>
-          <el-form-item label="TLS 证书内容（公钥）" prop="secret_key" v-if="registry.advanced_setting.enable_tls">
-            <el-input type="textarea" placeholder="选填" rows="4" @input="showTip($event,registry,'input')" clearable v-model="registry.advanced_setting.tls_cert"></el-input>
+          <el-form-item label="TLS Certificate Content（Public Key）" prop="secret_key" v-if="registry.advanced_setting.enable_tls">
+            <el-input type="textarea" placeholder="Optional" rows="4" @input="showTip($event,registry,'input')" clearable v-model="registry.advanced_setting.tls_cert"></el-input>
           </el-form-item>
         </template>
       </el-form>
       <div slot="footer"
            class="dialog-footer">
         <el-button size="small"
-                   @click="dialogRegistryFormVisible = false">取 消</el-button>
+                   @click="dialogRegistryFormVisible = false">Cancel</el-button>
         <el-button :plain="true"
                    type="success"
                    size="small"
-                   @click="mode === 'create' ? registryAction('add'): registryAction('update')">保存</el-button>
+                   @click="mode === 'create' ? registryAction('add'): registryAction('update')">Save</el-button>
       </div>
     </el-dialog>
     <!--registry-create-dialog-->
@@ -104,25 +104,25 @@
       <el-alert type="info"
                 :closable="false">
         <template>
-          支持集成阿里云 ACR、腾讯云 TCR、华为云 SWR、Amazon ECR、DockerHub、Harbor 等镜像仓库，详情可参考
+          Support integration with Alibaba Cloud ACR、Tencent Cloud TCR、HUAWEI CLOUD SWR、Amazon ECR、DockerHub、Harbor Mirror Warehouse，For details, please refer to
           <el-link style="font-size: 14px; vertical-align: baseline;"
                    type="primary"
                    :href="`https://docs.koderover.com/zadig/settings/image-registry/`"
                    :underline="false"
-                   target="_blank">帮助文档</el-link>
+                   target="_blank">Help Documentation</el-link>
         </template>
       </el-alert>
       <div class="sync-container">
         <el-button :plain="true"
                    @click="addRegistryBtn"
                    size="small"
-                   type="success">新建</el-button>
+                   type="success">New</el-button>
       </div>
       <div class="registry-list">
         <template>
           <el-table :data="allRegistry"
                     style="width: 100%;">
-            <el-table-column label="提供商/地址/Namespace">
+            <el-table-column label="Provider/Address/Namespace">
               <template slot-scope="scope">
                 <i :class="getProviderMap(scope.row.reg_provider,'icon')"></i>
                 <span v-if="scope.row.namespace">{{`${scope.row.reg_addr.split('://')[1]}/${scope.row.namespace}`}}</span>
@@ -130,37 +130,37 @@
               </template>
             </el-table-column>
             <el-table-column width="150px"
-                             label="默认使用">
+                             label="Use By Default">
               <template slot-scope="scope">
                 <el-tag size="small"
-                        v-if="scope.row.is_default">默认使用</el-tag>
+                        v-if="scope.row.is_default">Use By Default</el-tag>
                 <span v-else>-</span>
               </template>
             </el-table-column>
             <el-table-column width="220px"
-                             label="修改时间">
+                             label="Change The Time">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
                 <span
                       style="margin-left: 5px;">{{ $utils.convertTimestamp(scope.row.update_time) }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="最后修改">
+            <el-table-column label="Last Review">
               <template slot-scope="scope">
                 <span>{{ scope.row.update_by}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="操作"
+            <el-table-column label="Operate"
                              width="180px">
               <template slot-scope="scope">
                 <el-button @click="registryAction('edit',scope.row)"
                            size="mini"
                            type="primary"
-                           plain>编辑</el-button>
+                           plain>Edit</el-button>
                 <el-button @click="registryAction('delete',scope.row)"
                            size="mini"
-                           type="danger" plain>删除</el-button>
+                           type="danger" plain>Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -189,27 +189,27 @@ export default {
         region: '',
         is_default: false,
         advanced_setting: {
-          modified: false, // 是否启用高级设置
-          enable_tls: true, // 是否开启 TLS
-          tls_cert: '' // 证书内容
+          modified: false, // Whether to enable advanced settings
+          enable_tls: true, // Whether To Open TLS
+          tls_cert: '' // Certificate Content
         }
       },
       providers: [
         {
           value: 'acr',
-          label: '阿里云 ACR',
-          reg_addr: '地址',
-          namespace: '命名空间',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          label: 'Ali Cloud ACR',
+          reg_addr: 'Address',
+          namespace: 'Namespaces',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo iconaliyun'
         },
         {
           value: 'swr',
-          label: '华为云 SWR',
-          reg_addr: '地址',
-          namespace: '组织名称',
-          region: '区域',
+          label: 'HUAWEI CLOUD SWR',
+          reg_addr: 'Address',
+          namespace: 'Name Of Association',
+          region: 'Area',
           access_key: 'Access Key',
           secret_key: 'Secret Key',
           icon: 'iconfont logo iconhuawei'
@@ -217,29 +217,29 @@ export default {
 
         {
           value: 'tcr',
-          label: '腾讯云 TCR',
-          reg_addr: '地址',
-          namespace: '命名空间',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          label: 'Tencent Cloud TCR',
+          reg_addr: 'Address',
+          namespace: 'Namespaces',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo icontengxunyun'
         },
         {
           value: 'harbor',
           label: 'Harbor',
-          reg_addr: '地址',
-          namespace: '项目',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          reg_addr: 'Address',
+          namespace: 'Project',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo iconHarbor'
         },
         {
           value: 'dockerhub',
           label: 'DockerHub',
-          reg_addr: '地址',
+          reg_addr: 'Address',
           namespace: 'Namespace',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo icondocker'
         },
         {
@@ -254,30 +254,30 @@ export default {
         },
         {
           value: 'native',
-          label: '其他',
-          reg_addr: '地址',
+          label: 'Other',
+          reg_addr: 'Address',
           namespace: 'Namespace',
-          access_key: 'Docker 用户名',
-          secret_key: 'Docker 密码',
+          access_key: 'Docker Username',
+          secret_key: 'Docker Password',
           icon: 'iconfont logo iconqita'
         }
       ],
       dialogRegistryFormVisible: false,
       loading: true,
       rules: {
-        reg_provider: [{ required: true, message: '请选择镜像仓库提供商', trigger: ['blur'] }],
+        reg_provider: [{ required: true, message: 'Please select a mirror repository provider', trigger: ['blur'] }],
         reg_addr: [{
           required: true,
-          message: '请输入 URL',
+          message: 'Please Enter URL',
           trigger: ['blur']
         },
         {
           type: 'url',
-          message: '请输入正确的 URL，包含协议',
+          message: 'Please Enter The Correct URL，Include Agreement',
           trigger: ['blur']
         }],
-        region: [{ required: true, message: '请输入区域', trigger: ['blur'] }],
-        namespace: [{ required: true, message: '请输入 Namespace', trigger: ['blur'] }]
+        region: [{ required: true, message: 'Please Enter A Region', trigger: ['blur'] }],
+        namespace: [{ required: true, message: 'Please Enter Namespace', trigger: ['blur'] }]
       },
       isModify: false
     }
@@ -340,7 +340,7 @@ export default {
       })
     },
     registryAction (action, registry) {
-      // 关闭ssl隐藏输入框 没保存前依然保留上次填入的结果
+      // ClosuresslThe hidden input box still retains the last filled result before saving
       if (!this.registry.advanced_setting.enable_tls) {
         this.registry.advanced_setting.tls_cert = ''
       }
@@ -349,9 +349,9 @@ export default {
           if (valid) {
             const payload = this.registry
             if (!this.registry.advanced_setting.enable_tls || this.registry.advanced_setting.tls_cert) {
-              this.$confirm(`修改「开启 SSL 校验」或 「TLS 证书内容（公钥）」会对正在运行的工作流任务产生影响，确认修改？`, '确认', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+              this.$confirm(`Revise「Turn On SSL Check」Or 「TLS Certificate Content（Public Key）」Affects running workflow tasks，Confirm The Changes？`, 'Confirm', {
+                confirmButtonText: 'Sure',
+                cancelButtonText: 'Cancel',
                 type: 'warning'
               }).then(() => {
                 this.dialogRegistryFormVisible = false
@@ -380,9 +380,9 @@ export default {
             const id = this.registry.id
             const payload = this.registry
             if (this.isModify) {
-              this.$confirm(`修改「开启 SSL 校验」或 「TLS 证书内容（公钥）」会对正在运行的工作流任务产生影响，确认修改？`, '确认', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+              this.$confirm(`Revise「Turn On SSL Check」Or 「TLS Certificate Content（Public Key）」Affects running workflow tasks，Confirm The Changes？`, 'Confirm', {
+                confirmButtonText: 'Sure',
+                cancelButtonText: 'Cancel',
                 type: 'warning'
               }).then(() => {
                 this.isModify = false
@@ -400,15 +400,15 @@ export default {
         })
       } else if (action === 'delete') {
         const id = registry.id
-        this.$confirm(`确定要删除 ${registry.namespace} ?`, '确认', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(`Sure You Want To Delete ${registry.namespace} ?`, 'Confirm', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(({ value }) => {
           deleteRegistryAPI(id).then((res) => {
             this.getRegistry()
             this.$message({
-              message: '删除成功',
+              message: 'Successfully Deleted',
               type: 'success'
             })
           })
@@ -421,7 +421,7 @@ export default {
         this.getRegistry()
         this.$message({
           type: 'success',
-          message: '新增成功'
+          message: 'Added Successfully'
         })
       })
     },
@@ -430,7 +430,7 @@ export default {
         this.getRegistry()
         this.$message({
           type: 'success',
-          message: '更新成功'
+          message: 'Update Completed'
         })
       })
     },
@@ -456,7 +456,7 @@ export default {
     }
   },
   created () {
-    bus.$emit(`set-topbar-title`, { title: '镜像仓库', breadcrumb: [] })
+    bus.$emit(`set-topbar-title`, { title: 'Mirror Repository', breadcrumb: [] })
 
     this.getRegistry()
   }

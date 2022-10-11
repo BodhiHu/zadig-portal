@@ -6,7 +6,7 @@
           <el-popover placement="bottom" width="300" trigger="hover" popper-class="project-list-popover" @show="searchProject=''">
             <div class="project-list-container">
               <div class="search-container">
-                <el-input placeholder="搜索" v-model.trim="searchProject" size="small" />
+                <el-input placeholder="Search" v-model.trim="searchProject" size="small" />
               </div>
               <div class="list-container">
                 <div
@@ -42,63 +42,63 @@
             <li>
               <a href="https://docs.koderover.com/zadig/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>文档站</span>
+                <span>Documentation Station</span>
               </a>
             </li>
             <li>
               <a href="https://docs.koderover.com/zadig/quick-start/introduction/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>入门</span>
+                <span>Getting Started</span>
               </a>
             </li>
             <li>
               <a href="https://www.koderover.com/tutorials/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>最佳实践</span>
+                <span>Best Practices</span>
               </a>
             </li>
             <li>
               <a href="https://docs.koderover.com/zadig/workflow/trigger/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>工作流</span>
+                <span>Workflow</span>
               </a>
             </li>
             <li>
               <a href="https://docs.koderover.com/zadig/env/loadbalance/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>环境</span>
+                <span>Surroundings</span>
               </a>
             </li>
             <li>
               <a href="https://docs.koderover.com/zadig/project/overview/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>项目管理</span>
+                <span>Project Management</span>
               </a>
             </li>
             <li>
               <a href="https://docs.koderover.com/zadig/delivery/artifact/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>交付中心</span>
+                <span>Delivery Center</span>
               </a>
             </li>
             <li role="separator" class="divider"></li>
             <li>
               <a href="https://docs.koderover.com/zadig/settings/codehost/gitlab/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>系统设置</span>
+                <span>System Settings</span>
               </a>
             </li>
             <li>
               <a href="https://docs.koderover.com/zadig/api/usage/" target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>开发者中心</span>
+                <span>Developer Center</span>
               </a>
             </li>
             <!-- <li>
               <a href="https://docs.koderover.com/zadig/glossary/"
                  target="_blank">
                 <i class="icon el-icon-link"></i>
-                <span>术语表</span>
+                <span>Glossary</span>
               </a>
             </li>-->
           </ul>
@@ -117,13 +117,13 @@
                   <li class="profile-list__item profile-list__item-nested">
                     <div class="title">
                       <i class="iconfont iconzhanghu"></i>
-                      <span class="profile-list__text">用户名</span>
+                      <span class="profile-list__text">Username</span>
                     </div>
                     <ul class="content profile-list">
                       <li class="profile-list__item active">
                         <span>{{userName}}</span>
-                        <el-tag v-if="role.includes('admin')" size="mini" type="primary" effect="plain">管理员</el-tag>
-                        <el-tag v-else size="mini" type="primary" effect="plain">普通用户</el-tag>
+                        <el-tag v-if="role.includes('admin')" size="mini" type="primary" effect="plain">Administrator</el-tag>
+                        <el-tag v-else size="mini" type="primary" effect="plain">General User</el-tag>
                       </li>
                     </ul>
                   </li>
@@ -132,13 +132,13 @@
                   <router-link to="/v1/system/users">
                     <li class="profile-list__item">
                       <i class="iconfont icongeren"></i>
-                      <span class="profile-list__text">用户管理</span>
+                      <span class="profile-list__text">User Management</span>
                     </li>
                   </router-link>
                   <router-link to="/v1/system">
                     <li class="profile-list__item">
                       <i class="iconfont iconicon_jichengguanli"></i>
-                      <span class="profile-list__text">系统设置</span>
+                      <span class="profile-list__text">System Settings</span>
                     </li>
                   </router-link>
                 </ul>
@@ -146,12 +146,12 @@
                   <router-link to="/v1/profile/info">
                     <li class="profile-list__item">
                       <i class="iconfont iconfenzucopy"></i>
-                      <span class="profile-list__text">账号设置</span>
+                      <span class="profile-list__text">Account Settings</span>
                     </li>
                   </router-link>
                   <li class="profile-list__item profile-list__with-icon">
                     <i class="iconfont icondengchu"></i>
-                    <span @click="logOut" class="profile-list__text logout">登出账号</span>
+                    <span @click="logOut" class="profile-list__text logout">Log Out</span>
                   </li>
                 </ul>
               </div>
@@ -205,13 +205,13 @@ export default {
       return this.$route.path.includes('/v1/projects/detail/')
     },
     userName () {
-      // 系统用户
+      // System User
       if (this.userInfo.identityType === 'system') {
         if (this.userInfo.name) {
           return `${this.userInfo.name}(${this.userInfo.account})`
         } else {
           return this.userInfo.account
-        } // 第三方登录
+        } // Worth Mentioning
       } else if (this.userInfo.preferred_username) {
         return `${this.userInfo.name}(${this.userInfo.preferred_username})`
       } else {

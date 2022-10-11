@@ -8,7 +8,7 @@
       :class="{'is-current': tab.isCurrent}"
     >
       {{tab.tab}}
-      <i v-if="tab.tab !== '基本信息'" class="icon el-icon-error" @click.stop="updateTab(tab, 'delete')"></i>
+      <i v-if="tab.tab !== 'Basic Information'" class="icon el-icon-error" @click.stop="updateTab(tab, 'delete')"></i>
     </div>
   </div>
 </template>

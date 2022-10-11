@@ -8,8 +8,8 @@
       label-width="120px"
       inline-message
     >
-      <div class="item-title">策略配置</div>
-      <el-form-item label="超时时间">
+      <div class="item-title">Policy Configuration</div>
+      <el-form-item label="Overtime Time">
         <el-input-number v-if="(typeof buildConfig.timeout) !== 'undefined'" size="mini" :min="1" v-model="buildConfig.timeout"></el-input-number>
         <el-input-number
           v-else-if="(typeof currentResource.timeout) !== 'undefined'"
@@ -17,47 +17,47 @@
           :min="1"
           v-model="currentResource.timeout"
         ></el-input-number>
-        <span>分钟</span>
+        <span>Minute</span>
       </el-form-item>
-      <el-form-item label="缓存配置" v-if="!hiddenCache">
+      <el-form-item label="Cache Configuration" v-if="!hiddenCache">
         <el-switch v-model="buildConfig.cache_enable"></el-switch>
         <br />
         <el-radio-group v-if="buildConfig.cache_enable" v-model="buildConfig.cache_dir_type" class="radio-group">
-          <el-radio label="workspace">工作空间 $WORKSPACE</el-radio>
+          <el-radio label="workspace">Workspace $WORKSPACE</el-radio>
           <br />
           <el-radio label="user_defined">
-            <span>自定义目录</span>
+            <span>Custom Directory</span>
             <br v-if="mini" />
             <el-input
               :style=" {width: mini? '100%' : '298px', 'margin-left': mini ? '0' : '5px'}"
               v-model="buildConfig.cache_user_dir"
-              placeholder="请输入绝对路径例如 $WORKSPACE/.m2"
+              placeholder="Please enter absolute path e.g. $WORKSPACE/.m2"
               size="mini"
             ></el-input>
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <div class="item-title">资源配置</div>
+      <div class="item-title">Resource Configuration</div>
       <el-form-item
-        label="集群选择"
+        label="Cluster Selection"
         :prop="`${secondaryProp}.cluster_id`"
-        :rules="{ required: true, message: '请选择集群名称', trigger: ['change', 'blur'] }"
+        :rules="{ required: true, message: 'Please select a cluster name', trigger: ['change', 'blur'] }"
       >
-        <el-select v-model="currentResource.cluster_id" placeholder="请选择集群名称" size="small">
+        <el-select v-model="currentResource.cluster_id" placeholder="Please select a cluster name" size="small">
           <el-option v-for="cluster in clusters" :key="cluster.id" :label="$utils.showClusterName(cluster)" :value="cluster.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
-        label="操作系统规格"
+        label="Operating System Specifications"
         :prop="`${secondaryProp}.res_req`"
-        :rules="{ required: true, message: '请选择操作系统', trigger: ['change', 'blur'] }"
+        :rules="{ required: true, message: 'Please select an operating system', trigger: ['change', 'blur'] }"
       >
-        <el-select size="small" v-model="currentResource.res_req" placeholder="请选择">
-          <el-option label="高 | CPU: 16 核 内存: 32 GB" value="high"></el-option>
-          <el-option label="中 | CPU: 8 核 内存: 16 GB" value="medium"></el-option>
-          <el-option label="低 | CPU: 4 核 内存: 8 GB" value="low"></el-option>
-          <el-option label="最低 | CPU: 2 核 内存: 2 GB" value="min"></el-option>
-          <el-option label="自定义" value="define" @click.native="checkSpec"></el-option>
+        <el-select size="small" v-model="currentResource.res_req" placeholder="Please Choose">
+          <el-option label="High | CPU: 16 Kernel Memory: 32 GB" value="high"></el-option>
+          <el-option label="Middle | CPU: 8 Kernel Memory: 16 GB" value="medium"></el-option>
+          <el-option label="Low | CPU: 4 Kernel Memory: 8 GB" value="low"></el-option>
+          <el-option label="Lowest | CPU: 2 Kernel Memory: 2 GB" value="min"></el-option>
+          <el-option label="Customize" value="define" @click.native="checkSpec"></el-option>
         </el-select>
 
         <div v-if="currentResource.res_req_spec && currentResource.res_req === 'define'" class="define-resource">
@@ -67,16 +67,16 @@
             :prop="`${secondaryProp}.res_req_spec.cpu_limit`"
             :rules="{ validator: validateCpuLimit, trigger: ['change', 'blur'] }"
           >
-            <el-input v-model.number="currentResource.res_req_spec.cpu_limit" placeholder="自定义 CPU" size="small"></el-input>
+            <el-input v-model.number="currentResource.res_req_spec.cpu_limit" placeholder="Customize CPU" size="small"></el-input>
           </el-form-item>
 
           <el-form-item
-            label="内存(Mi)"
+            label="Memory(Mi)"
             label-width="70px"
             :prop="`${secondaryProp}.res_req_spec.memory_limit`"
             :rules="{ validator: validateMemoryLimit, trigger: ['change', 'blur'] }"
           >
-            <el-input v-model.number="currentResource.res_req_spec.memory_limit" placeholder="自定义内存" size="small"></el-input>
+            <el-input v-model.number="currentResource.res_req_spec.memory_limit" placeholder="Custom Memory" size="small"></el-input>
           </el-form-item>
         </div>
       </el-form-item>
@@ -107,11 +107,11 @@ export default {
   data () {
     this.validateCpuLimit = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入自定义 CPU'))
+        callback(new Error('Please Enter Custom CPU'))
       } else if (typeof value === 'string') {
-        callback(new Error('请输入正确数字'))
+        callback(new Error('Please enter the correct number'))
       } else if (value <= 0) {
-        callback(new Error('CPU 必须大于 0'))
+        callback(new Error('CPU Must Be Greater Than 0'))
       } else {
         callback()
       }
@@ -119,11 +119,11 @@ export default {
 
     this.validateMemoryLimit = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入自定义内存'))
+        callback(new Error('Please enter custom memory'))
       } else if (typeof value === 'string') {
-        callback(new Error('请输入正确数字'))
+        callback(new Error('Please enter the correct number'))
       } else if (value <= 0) {
-        callback(new Error('内存必须大于 0'))
+        callback(new Error('Memory must be greater than 0'))
       } else {
         callback()
       }

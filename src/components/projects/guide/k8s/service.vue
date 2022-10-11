@@ -1,6 +1,6 @@
 <template>
   <div class="projects-guide-service-container">
-    <el-drawer title="代码源集成"
+    <el-drawer title="Code Source Integration"
                :visible.sync="integrationCodeDrawer"
                direction="rtl">
       <add-code @cancel="integrationCodeDrawer = false"></add-code>
@@ -9,8 +9,8 @@
       <Step :activeStep="1"/>
       <div class="current-step-container">
         <div class="title-container">
-          <span class="first">第二步</span>
-          <span class="second">创建服务模板，后续均可在项目中重新配置</span>
+          <span class="first">Second Step</span>
+          <span class="second">Create a service template，Can be reconfigured later in the project</span>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@ export default {
 
   },
   mounted () {
-    bus.$emit('set-topbar-title', { title: '', breadcrumb: [{ title: '项目', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
+    bus.$emit('set-topbar-title', { title: '', breadcrumb: [{ title: 'Project', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: '' }] })
   },
   components: {
     Step,

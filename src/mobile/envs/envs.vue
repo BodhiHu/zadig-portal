@@ -2,7 +2,7 @@
   <div class="mobile-env">
     <van-nav-bar>
       <template #title>
-        环境
+        Surroundings
       </template>
     </van-nav-bar>
     <van-cell v-for="(item,index) in envs"

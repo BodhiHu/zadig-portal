@@ -12,36 +12,36 @@
               </header>
               <section>
                 <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" hide-required-asterisk>
-                  <el-form-item label="用户名" prop="account">
-                    <el-input v-model="loginForm.account" placeholder="请输入用户名" autocomplete="off"></el-input>
+                  <el-form-item label="Username" prop="account">
+                    <el-input v-model="loginForm.account" placeholder="Please Enter User Name" autocomplete="off"></el-input>
                   </el-form-item>
-                  <el-form-item label="密码" prop="password">
+                  <el-form-item label="Password" prop="password">
                     <el-input
                       type="password"
                       @keyup.enter.native="login"
                       v-model="loginForm.password"
                       autocomplete="off"
-                      placeholder="请输入密码"
+                      placeholder="Please Enter Password"
                       show-password
                     ></el-input>
                   </el-form-item>
                 </el-form>
-                <el-button type="submit" @click="login" v-loading="loading" class="btn-md btn-theme btn-block login-btn">登录</el-button>
+                <el-button type="submit" @click="login" v-loading="loading" class="btn-md btn-theme btn-block login-btn">Log In</el-button>
               </section>
             </div>
           </div>
         </div>
         <div class="col-lg-5 col-md-12 col-pad-0 bg-img none-992">
           <div class="information">
-            <h3>高效研发从现在开始</h3>
-            <p>面向开发者设计的高可用 CI/CD：Zadig 强大的云原生多环境能力，轻松实现本地联调、微服务并行构建、集成测试和持续部署。</p>
+            <h3>Efficient R D Starts Now</h3>
+            <p>High Availability Designed for Developers CI/CD：Zadig Powerful cloud-native multi-environment capabilities，Easy local joint debugging、Microservices are built in parallel、Integration testing and continuous deployment。</p>
           </div>
         </div>
       </div>
     </div>
     <footer>
       <div class="copyright">
-        筑栈（上海）信息技术有限公司 KodeRover ©{{moment().format('YYYY')}}
+        Build A Stack（Shanghai）Information Technology Co., Ltd KodeRover ©{{moment().format('YYYY')}}
         <el-tooltip>
           <div slot="content">
             <span v-if="processEnv.VERSION">Version: {{processEnv.VERSION}}</span>
@@ -69,9 +69,9 @@ export default {
       },
       rules: {
         account: [
-          { required: true, message: '请输入用户名', trigger: 'change' }
+          { required: true, message: 'Please Enter User Name', trigger: 'change' }
         ],
-        password: [{ required: true, message: '请输入密码', trigger: 'change' }]
+        password: [{ required: true, message: 'Please Enter Password', trigger: 'change' }]
       },
       moment
     }

@@ -28,12 +28,12 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         { title: this.projectName, isProjectName: true, url: `/v1/projects/detail/${this.projectName}/detail` },
-        { title: '测试', url: `/v1/projects/detail/${this.projectName}/test/function` },
+        { title: 'Test', url: `/v1/projects/detail/${this.projectName}/test/function` },
         { title: this.workflowName, url: `/v1/projects/detail/${this.projectName}/test/detail/function/${this.workflowName}` },
         { title: `#${this.taskId}`, url: `/v1/projects/detail/${this.projectName}/test/detail/function/${this.workflowName}/${this.taskId}` },
-        { title: '测试用例', url: '' }]
+        { title: 'Test Case', url: '' }]
     })
   }
 }

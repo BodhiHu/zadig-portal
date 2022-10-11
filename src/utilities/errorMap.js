@@ -1,8 +1,8 @@
 const errorMap = {
-  10014: '输入的邮箱不存在',
-  10018: '验证码未过期,请查看邮件获取',
-  10015: '验证码不正确',
-  10016: '验证码已过期',
-  10017: '验证码已经被使用过'
+  10014: 'The entered email address does not exist',
+  10018: 'The verification code has not expired,Please check the email for',
+  10015: 'Incorrect verification code',
+  10016: 'Verification code has expired',
+  10017: 'The verification code has already been used'
 }
 export default errorMap

@@ -7,28 +7,28 @@ import {
 const sourceRules = {
   codehostID: [{
     required: true,
-    message: '代码源不能为空',
+    message: 'Code source cannot be empty',
     trigger: 'change'
   }],
   owner: [{
     required: true,
-    message: '组织名/用户名不能为空',
+    message: 'Organization Name/Username can not be empty',
     trigger: 'change'
   }],
   repo: [{
     required: true,
-    message: '名称不能为空',
+    message: 'Name Is Required',
     trigger: 'change'
   }],
   branch: [{
     required: true,
-    message: '分支不能为空',
+    message: 'Branch Cannot Be Empty',
     trigger: 'change'
   }],
   valuesPaths: [{
     type: 'array',
     required: true,
-    message: '请选择文件',
+    message: 'Please Select File',
     trigger: 'change'
   }]
 }

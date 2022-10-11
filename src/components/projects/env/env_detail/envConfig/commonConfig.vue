@@ -1,6 +1,6 @@
 <template>
   <div class="env-common-config-container">
-    <el-button type="primary" size="small" plain @click="operateConfig('add')" style="margin-bottom: 12px;">添加</el-button>
+    <el-button type="primary" size="small" plain @click="operateConfig('add')" style="margin-bottom: 12px;">Add To</el-button>
     <div v-loading="configLoading">
       <ETable :tableData="currentInfos.tableData" :tableColumns="currentInfos.tableColumns" :id="currentInfos.id"></ETable>
     </div>
@@ -34,7 +34,7 @@ export default {
           tableColumns: [
             {
               prop: 'ingress_name',
-              label: '名称'
+              label: 'Name'
             },
             {
               prop: 'host_info',
@@ -42,11 +42,11 @@ export default {
             },
             {
               prop: 'address',
-              label: '地址'
+              label: 'Address'
             },
             // {
             //   prop: 'ports',
-            //   label: '端口'
+            //   label: 'Port'
             // },
             {
               width: '210',
@@ -61,11 +61,11 @@ export default {
           tableColumns: [
             {
               prop: 'cm_name',
-              label: '名称'
+              label: 'Name'
             },
             {
               prop: 'services',
-              label: '关联服务',
+              label: 'Associated Services',
               render: scope => {
                 return <span>{scope.row.services.join(', ')}</span>
               }
@@ -83,15 +83,15 @@ export default {
           tableColumns: [
             {
               prop: 'secret_name',
-              label: '名称'
+              label: 'Name'
             },
             {
               prop: 'secret_type',
-              label: '类型'
+              label: 'Type'
             },
             {
               prop: 'services',
-              label: '关联服务',
+              label: 'Associated Services',
               render: scope => {
                 return <span>{scope.row.services.join(', ')}</span>
               }
@@ -109,23 +109,23 @@ export default {
           tableColumns: [
             {
               prop: 'pvc_name',
-              label: '名称'
+              label: 'Name'
             },
             {
               prop: 'status',
-              label: '状态'
+              label: 'State'
             },
             {
               prop: 'volume',
-              label: '挂载点'
+              label: 'Mount Point'
             },
             {
               prop: 'capacity',
-              label: '容量'
+              label: 'Capacity'
             },
             {
               prop: 'access_modes',
-              label: '访问模式'
+              label: 'Access Mode'
             },
             {
               prop: 'storageclass',
@@ -133,7 +133,7 @@ export default {
             },
             {
               prop: 'services',
-              label: '关联服务',
+              label: 'Associated Services',
               render: scope => {
                 return <span>{scope.row.services.join(', ')}</span>
               }
@@ -199,7 +199,7 @@ export default {
               this.operateConfig('view', scope.row, scope.$index)
             }}
           >
-            查看
+            Check
           </el-button>
           <el-button
             type="text"
@@ -208,7 +208,7 @@ export default {
             }}
             disabled={scope.row.immutable}
           >
-            编辑
+            Edit
           </el-button>
           <el-button
             type="text"
@@ -216,7 +216,7 @@ export default {
               this.operateConfig('history', scope.row, scope.$index)
             }}
           >
-            历史版本
+            Historic Version
           </el-button>
           <el-button
             type="text"
@@ -224,7 +224,7 @@ export default {
               this.deleteConfig(scope.row)
             }}
           >
-            删除
+            Delete
           </el-button>
         </div>
       )
@@ -311,11 +311,11 @@ export default {
     async deleteConfig (row) {
       const objectName = row[this.currentInfos.id]
       this.$confirm(
-        `确定要删除 ${this.envName} 环境中 ${objectName} 配置?`,
-        '删除',
+        `Sure You Want To Delete ${this.envName} Environment ${objectName} Configure?`,
+        'Delete',
         {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }
       ).then(async () => {
@@ -329,7 +329,7 @@ export default {
           console.log(err)
         )
         if (res) {
-          this.$message.success(`删除 ${objectName} 成功！`)
+          this.$message.success(`Delete ${objectName} Success！`)
           this.getConfigByType(this.currentType)
         }
       })
@@ -344,7 +344,7 @@ export default {
       }
       return addConfigObjectAPI(this.projectName, payload)
         .then(res => {
-          this.$message.success(`添加配置成功！`)
+          this.$message.success(`Add configuration successfully！`)
           this.getConfigByType(this.currentType)
         })
         .catch(err => {
@@ -374,7 +374,7 @@ export default {
       }
       return updateConfigObjectAPI(this.projectName, fromRollback, payload)
         .then(res => {
-          this.$message.success(`更新配置成功！`)
+          this.$message.success(`The update configuration succeeded！`)
           this.getConfigByType(this.currentType)
         })
         .catch(err => {

@@ -56,16 +56,16 @@
         <el-col :span="12">
           <div class="grid-content bg-purple">
             <div class="description">
-              <el-tag type="primary">填写相关信息，然后点击保存</el-tag>
+              <el-tag type="primary">Fill in the relevant information，Then Click Save</el-tag>
             </div>
           </div>
         </el-col>
         <el-col :span="12">
           <div class="grid-content button-container">
             <el-button @click="stepBack"
-                       type="primary" plain>取消</el-button>
+                       type="primary" plain>Cancel</el-button>
             <el-button @click="savePipeline()"
-                       type="primary">保存</el-button>
+                       type="primary">Save</el-button>
           </div>
         </el-col>
       </el-row>
@@ -263,7 +263,7 @@ export default {
       this.workflowInfo.hook_ctl.product_tmpl_name = this.workflowInfo.product_tmpl_name
       this.checkCurrentTab().then(() => {
         (this.editMode ? updateWorkflowAPI : createWorkflowAPI)(this.workflowInfo).then(res => {
-          this.$message.success('保存成功')
+          this.$message.success('Successfully Saved')
           if (this.$route.query.from) {
             this.$router.push(this.$route.query.from)
           } else {

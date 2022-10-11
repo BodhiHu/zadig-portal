@@ -1,7 +1,7 @@
 <template>
   <div class="import-from-template-container">
     <el-dialog
-      :title="currentUpdatedServiceName?'更新服务':'新建服务 - 使用模板新建'"
+      :title="currentUpdatedServiceName?'Update Service':'New Service - Create new using template'"
       :close-on-click-modal="false"
       append-to-body
       center
@@ -12,36 +12,36 @@
       @update:visible="$emit('update:dialogImportFromYamlVisible', $event)"
     >
       <el-form :model="importYaml" @submit.native.prevent ref="importYamlForm">
-        <el-form-item label="服务名称" prop="serviceName" :rules="{ required: true, message: '服务名称不能为空', trigger: ['change','blur'] }">
-          <el-input style="width: 400px;" v-model.trim="importYaml.serviceName" size="small" :disabled="currentUpdatedServiceName!==''?true:false" placeholder="请输入服务名称" clearable></el-input>
+        <el-form-item label="Service Name" prop="serviceName" :rules="{ required: true, message: 'Service name cannot be empty', trigger: ['change','blur'] }">
+          <el-input style="width: 400px;" v-model.trim="importYaml.serviceName" size="small" :disabled="currentUpdatedServiceName!==''?true:false" placeholder="Please enter a service name" clearable></el-input>
         </el-form-item>
-        <el-form-item label="选择模板" prop="id" :rules="{ required: true, message: '请选择模板', trigger: ['change','blur'] }">
-          <el-select style="width: 400px;" size="small" v-model="importYaml.id" placeholder="请选择模板" @change="getKubernetesTemplate">
+        <el-form-item label="Choose A Template" prop="id" :rules="{ required: true, message: 'Please Select A Template', trigger: ['change','blur'] }">
+          <el-select style="width: 400px;" size="small" v-model="importYaml.id" placeholder="Please Select A Template" @change="getKubernetesTemplate">
             <el-option disabled value="NEWMODULE">
               <router-link to="/v1/template/k8s-yamls" class="module-link">
                 <i class="el-icon-circle-plus-outline" style="margin-right: 3px;"></i>
-                新建模板
+                New Template
               </router-link>
             </el-option>
             <el-option v-for="item in importYaml.yamls" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="变量配置">
+        <el-form-item label="Variable Configuration">
         <template v-if="importYaml.id && importYaml.variables.length > 0">
         <el-table :data="importYaml.variables" style="width: auto;">
-          <el-table-column label="键">
+          <el-table-column label="Key">
             <template slot-scope="scope">
               <span>{{ scope.row.key }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="值">
+          <el-table-column label="Value">
             <template slot-scope="scope">
               <el-input
                 size="small"
                 v-model="scope.row.value"
                 type="textarea"
                 :autosize="{ minRows: 1, maxRows: 4 }"
-                placeholder="请输入 Value"
+                placeholder="Please Enter Value"
               ></el-input>
             </template>
           </el-table-column>
@@ -50,8 +50,8 @@
         </el-form-item>
         <el-form-item prop="auto_sync">
           <span style="margin-right: 16px;">
-            <span>自动同步</span>
-            <el-tooltip  content="开启后，对模板库操作应用到服务时，该服务配置将自动基于模板内容同步。" placement="top">
+            <span>Auto Sync</span>
+            <el-tooltip  content="After Opening，When applying a template library operation to a service，The service configuration will be automatically synchronized based on the template content。" placement="top">
               <i  class="pointer el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -60,15 +60,15 @@
         <el-form-item>
           <el-button :disabled="!importYaml.id" style="margin-left: 5px;" type="text" :icon="previewYamlFile?'el-icon-arrow-up':'el-icon-arrow-down'" @click="previewYamlFile = !previewYamlFile">
             {{
-            previewYamlFile ? '关闭预览' : '预览'
+            previewYamlFile ? 'Close Preview' : 'Preview'
             }}
           </el-button>
         </el-form-item>
       </el-form>
       <codemirror v-if="previewYamlFile" v-model="renderedYaml" :options="importTemplateEditorOption"></codemirror>
       <div slot="footer" class="dialog-footer">
-        <el-button plain native-type="submit" @click="$emit('update:dialogImportFromYamlVisible', false)" size="small">取消</el-button>
-        <el-button type="primary" native-type="submit" size="small" class="start-create" @click="loadServiceFromKubernetesTemplate">{{currentUpdatedServiceName?'更新':'新建'}}</el-button>
+        <el-button plain native-type="submit" @click="$emit('update:dialogImportFromYamlVisible', false)" size="small">Cancel</el-button>
+        <el-button type="primary" native-type="submit" size="small" class="start-create" @click="loadServiceFromKubernetesTemplate">{{currentUpdatedServiceName?'Renew':'New'}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -184,7 +184,7 @@ export default {
           this.$emit('update:dialogImportFromYamlVisible', false)
           this.$message({
             type: 'success',
-            message: `服务模板 ${payload.service_name} ${this.currentUpdatedServiceName ? '更新' : '导入'}成功`
+            message: `Service Template ${payload.service_name} ${this.currentUpdatedServiceName ? 'Renew' : 'Import'}Success`
           })
           this.$emit('importYamlSuccess', serviceName)
         }

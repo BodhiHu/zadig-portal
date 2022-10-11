@@ -2,14 +2,14 @@
   <div class="service-details-container">
     <div class="info-card">
       <div class="info-header">
-        <span>基本信息</span>
+        <span>Basic Information</span>
       </div>
       <el-row :gutter="0"
               class="info-body">
         <el-col :span="12"
                 class="WAN">
           <div class="addr-title title">
-            服务名称
+            Service Name
           </div>
           <div class="addr-content">
             <div>{{serviceName}}</div>
@@ -19,7 +19,7 @@
     </div>
     <div class="info-card">
       <div class="info-header">
-        <span>服务状态</span>
+        <span>Service Status</span>
       </div>
       <div class="info-body">
         <template>
@@ -27,22 +27,22 @@
                     :data="envStatus"
                     :span-method="objectSpanMethod"
                     style="width: 100%;">
-            <el-table-column label="主机名称">
+            <el-table-column label="Hostname">
               <template slot-scope="scope" v-if="scope.row.pm_info">
                 <span>{{ scope.row.pm_info.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="主机地址">
+            <el-table-column label="Host Address">
               <template slot-scope="scope">
                 <span>{{ scope.row.address }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="主机标签">
+            <el-table-column label="Host Label">
               <template slot-scope="scope" v-if="scope.row.pm_info">
                 <span>{{ scope.row.pm_info.label }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="探活配置">
+            <el-table-column label="Probe Configuration">
               <template >
                 <div v-for="item,index in currentService.health_checks" :key="index" >
                   <span
@@ -53,7 +53,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="状态">
+            <el-table-column label="State">
               <template slot-scope="scope">
                 <span class="health-check"
                       :class="statusColorMap[scope.row.status]">{{statusTranslation[scope.row.status]}}</span>
@@ -63,7 +63,7 @@
               <template slot-scope="{ row, $index }">
                 <el-button v-hasPermi="{projectName: projectName, action: 'ssh_pm',isBtn:true}" @click="showContainerExec($index,row)"
                            icon="iconfont iconTerminal login-icon"
-                           size="mini">登录</el-button>
+                           size="mini">Log In</el-button>
               </template>
             </el-table-column>
 
@@ -75,11 +75,11 @@
     <el-dialog :visible.sync="execModal.visible"
                width="70%"
                :close-on-click-modal="false"
-               title="Pod 调试"
+               title="Pod Debugging"
                class="log-dialog">
       <span slot="title"
             class="modal-title">
-        <span class="unimportant">主机 IP:</span>
+        <span class="unimportant">Host IP:</span>
         {{execModal.address}}
         <i class="el-icon-full-screen screen"
            @click="fullScreen(execModal.address +'-debug')"></i>
@@ -117,8 +117,8 @@ export default {
         Error: 'red'
       },
       statusTranslation: {
-        Running: '健康',
-        Error: '不健康'
+        Running: 'Healthy',
+        Error: 'Unhealthy'
       },
       execModal: {
         visible: false,
@@ -133,7 +133,7 @@ export default {
     projectName () {
       return (this.$route.params.project_name ? this.$route.params.project_name : this.$route.query.projectName)
     },
-    // 共享服务需要该参数
+    // Shared service requires this parameter
     originProjectName () {
       return (this.$route.query.originProjectName ? this.$route.query.originProjectName : this.projectName)
     },
@@ -210,9 +210,9 @@ export default {
       {
         title: '',
         breadcrumb: [
-          { title: '项目', url: '/v1/projects' },
+          { title: 'Project', url: '/v1/projects' },
           { title: this.projectName, isProjectName: true, url: `/v1/projects/detail/${this.projectName}/detail` },
-          { title: '环境', url: `/v1/projects/detail/${this.projectName}/envs/detail` },
+          { title: 'Surroundings', url: `/v1/projects/detail/${this.projectName}/envs/detail` },
           { title: this.envName, url: `/v1/projects/detail/${this.projectName}/envs/detail?envName=${this.envName}` },
           { title: this.serviceName, url: `` }
         ]

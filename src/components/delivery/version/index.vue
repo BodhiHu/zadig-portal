@@ -1,7 +1,7 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconvery-versionmana"
     class="version-list-container"
   >
@@ -9,35 +9,35 @@
       <div v-if="showHookConfig" class="hook-config">
         <span class="hook-switch">
           <span>
-            Hook 配置
+            Hook Configure
             <a
               href="https://docs.koderover.com/zadig/project/version/#hook-%E5%A4%96%E9%83%A8%E7%B3%BB%E7%BB%9F"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <el-tag size="mini" type="success" effect="dark" class="help-tag">帮助</el-tag>
+              <el-tag size="mini" type="success" effect="dark" class="help-tag">Help</el-tag>
             </a>
           </span>
           <el-switch v-model="versionHook.enable" style="margin-left: 10px;" @change="saveHook"></el-switch>
         </span>
         <el-form ref="hookRef" :model="versionHook" v-if="versionHook.enable" inline class="hook-form">
-          <el-form-item prop="hook_host" :rules="{required: true, message: '请选择外部系统', trigger: 'blur'}">
-            <el-select v-model="versionHook.hook_host" placeholder="选择外部系统" size="small" clearable style="width: 100%;">
+          <el-form-item prop="hook_host" :rules="{required: true, message: 'Please select an external system', trigger: 'blur'}">
+            <el-select v-model="versionHook.hook_host" placeholder="Choose an external system" size="small" clearable style="width: 100%;">
               <el-option v-for="external in externalList" :key="external.id" :label="external.server" :value="external.server"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item style=" margin-right: 5px; margin-left: -5px;">
             <span>/</span>
           </el-form-item>
-          <el-form-item prop="path" :rules="{required: true, message: '请输入访问路径', trigger: 'blur'}">
-            <el-input v-model="versionHook.path" placeholder="输入访问路径" size="small"></el-input>
+          <el-form-item prop="path" :rules="{required: true, message: 'Please enter the access path', trigger: 'blur'}">
+            <el-input v-model="versionHook.path" placeholder="Enter The Access Path" size="small"></el-input>
           </el-form-item>
         </el-form>
         <i v-if="versionHook.enable" class="hook-icon el-icon-finished" @click="saveHook"></i>
       </div>
     </div>
     <el-table :data="versionList" v-if="versionList.length > 0" style="width: 100%;">
-      <el-table-column label="版本">
+      <el-table-column label="Version">
         <template slot-scope="scope">
           <span class="version-link">
             <router-link
@@ -57,37 +57,37 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="create_by" label="所属项目" v-if="!projectName">
+      <el-table-column prop="create_by" label="Its Not Played" v-if="!projectName">
         <template slot-scope="scope">
           <span>{{ scope.row.versionInfo.productName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" v-if="showStatus">
+      <el-table-column label="State" v-if="showStatus">
         <template slot-scope="{ row }">
           <el-tag
             :type="helmStatusEnum[row.versionInfo.status].tag || 'info'"
             size="small"
-          >{{ helmStatusEnum[row.versionInfo.status].text || '未知' }}</el-tag>
+          >{{ helmStatusEnum[row.versionInfo.status].text || 'Unknown' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="标签">
+      <el-table-column label="Label">
         <template slot-scope="scope">
           <span v-for="(label,index) in scope.row.versionInfo.labels" :key="index" style="margin-right: 3px;">
             <el-tag size="small">{{label}}</el-tag>
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="create_by" label="创建人">
+      <el-table-column prop="create_by" label="Founder">
         <template slot-scope="scope">
           <span>{{ scope.row.versionInfo.createdBy }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="create_at" label="创建时间">
+      <el-table-column prop="create_at" label="Creation Time">
         <template slot-scope="scope">
           <span>{{ $utils.convertTimestamp(scope.row.versionInfo.created_at) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="Operate">
         <template slot-scope="scope">
           <el-button
             v-if="checkPermissionSyncMixin({type:'project',projectName: projectName, action: 'delete_delivery'})"
@@ -95,16 +95,16 @@
             @click="deleteVersion(scope.row.versionInfo)"
             type="danger"
             plain
-          >删除</el-button>
-          <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
-            <el-button class="permission-disabled" size="mini" type="danger" plain>删除</el-button>
+          >Delete</el-button>
+          <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
+            <el-button class="permission-disabled" size="mini" type="danger" plain>Delete</el-button>
           </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
     <div v-if="versionList.length === 0 && !loading" class="version-not-available">
       <img src="@assets/icons/illustration/versionManage.svg" alt />
-      <p>暂无可展示的版本信息</p>
+      <p>There is currently no version information to display</p>
     </div>
   </div>
 </template>
@@ -136,19 +136,19 @@ export default {
       showStatus: false,
       helmStatusEnum: {
         success: {
-          text: '成功',
+          text: 'Success',
           tag: 'success'
         },
         failed: {
-          text: '失败',
+          text: 'Fail',
           tag: 'danger'
         },
         creating: {
-          text: '创建中',
+          text: 'Under Creation',
           tag: 'info'
         },
         retrying: {
-          text: '重试中',
+          text: 'Retrying',
           tag: 'warning'
         }
       }
@@ -158,16 +158,16 @@ export default {
     deleteVersion (version) {
       const projectName = version.productName
       const versionId = version.id
-      this.$confirm(`确定删除 ${version.version} 这个版本？`, '删除版本', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Confirm Delete ${version.version} This Version？`, 'Delete Version', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(() => {
           deleteVersionAPI(projectName, versionId).then(res => {
             this.$message({
               type: 'success',
-              message: '版本删除成功'
+              message: 'Version deleted successfully'
             })
             this.getVersionServiceList()
             this.searchVersionByService()
@@ -176,7 +176,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: 'Undeleted'
           })
         })
     },
@@ -233,7 +233,7 @@ export default {
           updateSingleProjectAPI(this.projectName, payload).then(res => {
             this.$message({
               type: 'success',
-              message: '配置更新成功'
+              message: 'Configuration updated successfully'
             })
           })
         })
@@ -263,21 +263,21 @@ export default {
       bus.$emit(`set-topbar-title`, {
         title: '',
         breadcrumb: [
-          { title: '项目', url: `/v1/projects` },
+          { title: 'Project', url: `/v1/projects` },
           {
             title: this.projectName,
             isProjectName: true,
             url: `/v1/projects/detail/${this.projectName}/detail`
           },
-          { title: '版本管理', url: `` }
+          { title: 'Version Management', url: `` }
         ]
       })
     } else {
       bus.$emit(`set-topbar-title`, {
         title: '',
         breadcrumb: [
-          { title: '交付中心', url: `/v1/delivery` },
-          { title: '版本管理', url: `` }
+          { title: 'Delivery Center', url: `/v1/delivery` },
+          { title: 'Version Management', url: `` }
         ]
       })
     }

@@ -5,7 +5,7 @@
              :body-style="{ margin: '15px 0 0 0' }">
       <div slot="header"
            class="clearfix subtask-header">
-        <span>交付物部署</span>
+        <span>Deliverables Deployment</span>
         <div v-if="deploy.status==='running'"
              class="loader">
           <div class="ball-scale-multiple">
@@ -18,28 +18,28 @@
       <div class="deploy-item">
         <div class="error-wrapper">
           <el-alert v-if="deploy.error"
-                    title="错误信息"
+                    title="Error Message"
                     :description="deploy.error"
                     type="error"
-                    close-text="知道了">
+                    close-text="Understood">
 
           </el-alert>
         </div>
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconzhuangtai"></i> 部署状态
+              <i class="iconfont iconzhuangtai"></i> Deployment Status
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-desc"
                  :class="$translate.calcTaskStatusColor(deploy.status)">
-              {{deploy.status?$translate.translateTaskStatus(deploy.status):"未运行"}}
+              {{deploy.status?$translate.translateTaskStatus(deploy.status):"Not Running"}}
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconjiqun1"></i> 部署环境
+              <i class="iconfont iconjiqun1"></i> Deployment Environment
             </div>
           </el-col>
           <el-col :span="6">
@@ -53,7 +53,7 @@
         <el-row :gutter="0">
           <el-col :span="6" v-if="deploy.artifact_info">
             <div class="grid-content item-title">
-              <i class="iconfont iconSliceCopy"></i> 交付物信息
+              <i class="iconfont iconSliceCopy"></i> Deliverable Information
             </div>
           </el-col>
           <el-col :span="6"  v-if="deploy.artifact_info">
@@ -61,7 +61,7 @@
           </el-col>
           <el-col :span="6"  v-if="!deploy.artifact_info">
             <div class="grid-content item-title">
-              <i class="iconfont iconSliceCopy"></i> 镜像信息
+              <i class="iconfont iconSliceCopy"></i> Mirror Information
             </div>
           </el-col>
           <el-col :span="6"  v-if="!deploy.artifact_info">
@@ -74,7 +74,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconfuwu"></i> 服务名称
+              <i class="iconfont iconfuwu"></i> Service Name
             </div>
           </el-col>
           <el-col :span="6">

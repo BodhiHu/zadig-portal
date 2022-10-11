@@ -4,7 +4,7 @@
       <div v-for="(step, index) in otherSteps" :key="index">
         <div class="dashed-container" v-if="post_script_enabled && step.name === 'shell'">
           <div class="primary-title">
-            Shell 脚本执行
+            Shell Script Execution
             <el-button type="text" @click="removeScript" icon="el-icon-delete"></el-button>
           </div>
           <div class="script-content">
@@ -22,20 +22,20 @@
         >
           <div class="dashed-container">
             <span class="primary-title">
-              文件存储
+              File Storage
               <el-button type="text" @click="removeObject" icon="el-icon-delete"></el-button>
             </span>
-            <el-form-item label="对象存储" prop="object_storage_id">
+            <el-form-item label="Object Storage" prop="object_storage_id">
               <el-select
                 size="small"
                 v-model="archive.object_storage_id"
-                placeholder="请选择对象存储"
+                placeholder="Please select Object Storage"
                 @change="$refs.objectStorageRef[0].clearValidate()"
               >
                 <el-option v-for="(item,index) in objectStorageList" :key="index" :label="`${item.endpoint}/${item.bucket}`" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="上传文件" prop="upload_detail">
+            <el-form-item label="Upload Files" prop="upload_detail">
               <template v-if="archive.upload_detail.length > 0">
                 <el-row v-for="(item,index) in archive.upload_detail" :key="index">
                   <el-col :span="11">
@@ -72,12 +72,12 @@
     <div style="margin: 14px 0 8px;">
       <el-dropdown @command="addExtra">
         <el-button type="primary" size="small" plain>
-          添加步骤
+          Add Steps
           <i style="margin-left: 8px;" class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="script" :disabled="post_script_enabled">Shell 脚本执行</el-dropdown-item>
-          <el-dropdown-item command="object" :disabled="object_storage_upload_enabled">文件存储</el-dropdown-item>
+          <el-dropdown-item command="script" :disabled="post_script_enabled">Shell Script Execution</el-dropdown-item>
+          <el-dropdown-item command="object" :disabled="object_storage_upload_enabled">File Storage</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -98,7 +98,7 @@ export default {
         object_storage_id: [
           {
             type: 'string',
-            message: '请选择对象存储',
+            message: 'Please select Object Storage',
             required: true,
             trigger: 'blur'
           }
@@ -112,9 +112,9 @@ export default {
                 return !item.file_path || !item.dest_path
               })
               if (value.length === 0) {
-                callback(new Error('请至少添加一个上传文件'))
+                callback(new Error('Please add at least one upload file'))
               } else if (empty) {
-                callback(new Error('上传文件路径为空，请检查'))
+                callback(new Error('Upload file path is empty，Please Check'))
               } else {
                 callback()
               }

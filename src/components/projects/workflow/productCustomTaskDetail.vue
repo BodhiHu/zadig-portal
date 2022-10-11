@@ -20,13 +20,13 @@
           <span>{{payload.task_revoker}}</span>
         </el-col>
         <el-col :span="1" v-if="payload.status==='waiting'||payload.status==='running'">
-          <el-button size="small" @click="cancel">取消</el-button>
+          <el-button size="small" @click="cancel">Cancel</el-button>
         </el-col>
       </el-row>
     </header>
     <div class="tab">
-      <span class="tab-item" :class="{'active': activeName==='workflow'}" @click="activeName = 'workflow'">工作流</span>
-      <span class="tab-item" :class="{'active': activeName==='env'}" @click="activeName = 'env'">变量</span>
+      <span class="tab-item" :class="{'active': activeName==='workflow'}" @click="activeName = 'workflow'">Workflow</span>
+      <span class="tab-item" :class="{'active': activeName==='env'}" @click="activeName = 'env'">Variable</span>
     </div>
     <Multipane v-if="activeName==='workflow'" layout="horizontal" style="height: 100%;">
       <main>
@@ -35,7 +35,7 @@
           <div class="line"></div>
           <div class="stages" v-for="(stage,curStageIndex) in payload.stages" :key="stage.label">
             <div v-if="stage.approval && stage.approval.enabled" class="stages-approval" @click="handleApprovalChange(stage,curStageIndex)">
-              <el-button type="primary" size="small">人工审核</el-button>
+              <el-button type="primary" size="small">Manual Review</el-button>
               <div class="line"></div>
             </div>
             <div class="stage">
@@ -98,7 +98,7 @@
       <el-table :data="envList" v-if="envList.length>0" class="table">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <div v-if="props.row.name==='工作流变量'">
+            <div v-if="props.row.name==='Workflow Variables'">
               <div v-for="(env,index) in props.row.envs" :key="index" class="table-env">
                 <span class="item">{{env.name}}</span>
                 <span class="item">{{env.value}}</span>
@@ -124,8 +124,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="键" prop="name"></el-table-column>
-        <el-table-column label="值"></el-table-column>
+        <el-table-column label="Key" prop="name"></el-table-column>
+        <el-table-column label="Value"></el-table-column>
       </el-table>
     </div>
   </div>
@@ -232,7 +232,7 @@ export default {
         if (this.envList.length === 0) {
           // global env and stage are not in same level data,  so need to handle data
           this.handleEnv()
-          const globalEnv = [{ name: '工作流变量', envs: this.payload.params }]
+          const globalEnv = [{ name: 'Workflow Variables', envs: this.payload.params }]
           const jobs = this.payload.stages.map(item => {
             return item.jobs.map(job => job)
           })
@@ -308,7 +308,7 @@ export default {
     async refreshHistoryTaskDetail () {
       await this.getWorkflowTaskDetail(this.workflowName, this.taskId)
       if (!this.timeTimeoutFinishFlag) {
-        this.timerId = setTimeout(this.refreshHistoryTaskDetail, 3000) // 保证内存中只有一个定时器
+        this.timerId = setTimeout(this.refreshHistoryTaskDetail, 3000) // Ensure that there is only one timer in memory
       }
     },
     adaptTaskDetail (detail) {
@@ -336,7 +336,7 @@ export default {
         this.taskId,
         this.projectName
       ).then(res => {
-        this.$message.success(' 取消成功')
+        this.$message.success(' Cancel Success')
       })
     },
     closeFooter () {
@@ -346,14 +346,14 @@ export default {
       bus.$emit('set-topbar-title', {
         title: '',
         breadcrumb: [
-          { title: '项目', url: '/v1/projects' },
+          { title: 'Project', url: '/v1/projects' },
           {
             title: this.projectName,
             isProjectName: true,
             url: `/v1/projects/detail/${this.projectName}/detail`
           },
           {
-            title: '工作流',
+            title: 'Workflow',
             url: `/v1/projects/detail/${this.projectName}/pipelines`
           },
           {

@@ -16,7 +16,7 @@
         @focus="handleInput(true)"
         @blur="handleInput(false)"
       ></el-input>
-      <el-button type="text" @click="handleInput(false)" size="mini" class="mg-l8">确定</el-button>
+      <el-button type="text" @click="handleInput(false)" size="mini" class="mg-l8">Sure</el-button>
     </span>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: '请输入'
+      default: 'Please Enter'
     },
     width: {
       type: String,

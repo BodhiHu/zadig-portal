@@ -1,51 +1,51 @@
 <template>
-  <el-dialog :title="mode ==='enable'?'开启自测模式':'关闭自测模式'" :visible.sync="shareEnvDialogVisible" width="750px" class="share-env-dialog">
+  <el-dialog :title="mode ==='enable'?'Enable Self Test Mode':'Turn Off Self Test Mode'" :visible.sync="shareEnvDialogVisible" width="750px" class="share-env-dialog">
     <div v-if="mode === 'enable' " class>
-      <span class="title">满足以下两个条件即可开启环境自测模式</span>
+      <span class="title">The environment self-test mode can be turned on when the following two conditions are met</span>
       <ul class="requirements">
         <li>
-          服务已使用 Tracing
-          <span class="desc">无法检测，请自行确保，否则开启后功能不可用</span>
+          Service Used Tracing
+          <span class="desc">Unable To Detect，Please Make Sure，Otherwise, the function will not be available after opening</span>
         </li>
         <li>
-          环境所在集群已经安装 Istio
+          The cluster where the environment is located has been installed Istio
           <span class="result">
             <i v-if="checkIstioResult === 'success'" class="success el-icon-circle-check"></i>
             <i v-if="checkIstioResult === 'failed'" class="failed el-icon-circle-close"></i>
             <i v-if="checkIstioLoading" class="el-icon-loading"></i>
           </span>
-          <span class="recheck" @click="checkingClusterIstio">重新检测</span>
+          <span class="recheck" @click="checkingClusterIstio">Test Again</span>
         </li>
         <li>
-          服务调用链检测情况
+          Service call chain detection
           <span class="result">
             <i v-if="checkWorkloadsResult === 'success'" class="success el-icon-circle-check"></i>
             <el-tooltip v-if="checkWorkloadsResult === 'failed'" placement="top">
               <div slot="content">
-                服务 {{ serviceWithoutWorkloads.join(',') }} 没有 K8s Service，请参考
+                Serve {{ serviceWithoutWorkloads.join(',') }} No K8s Service，Please Refer To
                 <a
                   href="https://docs.koderover.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                >文档</a>
-                ，确认是否满足自测模式开启条件
+                >Documentation</a>
+                ，Confirm whether the conditions for enabling self-test mode are met
               </div>
               <i class="warning el-icon-warning-outline"></i>
             </el-tooltip>
             <i v-if="checkWorkloadsLoading" class="el-icon-loading"></i>
           </span>
-          <span class="recheck" @click="checkingWorkloads">重新检测</span>
+          <span class="recheck" @click="checkingWorkloads">Test Again</span>
         </li>
       </ul>
       <div v-if="checkIstioResult === 'failed'">
         <el-alert show-icon :closable="false" type="error">
           <span slot="title">
-            环境中未检测到 Istio 组件，通过下述方法使用 istioctl 工具快速安装 Istio，Istio 相关知识请参考
+            Not detected in the environment Istio Components，Use The Following Method istioctl Quick installation of tools Istio，Istio For related knowledge, please refer to
             <a
               href="https://istio.io/latest/docs/setup/install/"
               target="_blank"
               rel="noopener noreferrer"
-            >Istio 文档</a>
+            >Istio Documentation</a>
           </span>
         </el-alert>
         <div class="command">
@@ -60,18 +60,18 @@
       </div>
     </div>
     <div v-if="mode === 'disable'">
-      <span class="desc">关闭 {{envName}} 环境的自测模式，子环境会被全部删除，请确认</span>
+      <span class="desc">Closure {{envName}} Self-test mode for the environment，Subenvironments will all be deleted，Please Confirm</span>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="shareEnvDialogVisible = false">取消</el-button>
+      <el-button size="small" @click="shareEnvDialogVisible = false">Cancel</el-button>
       <el-button
         v-if="mode === 'enable'"
         size="small"
         :disabled="checkIstioResult===''|| checkIstioResult==='failed'"
         @click="enableShareEnv"
         type="primary"
-      >确认</el-button>
-      <el-button v-else-if="mode === 'disable'" @click="disableShareEnv" size="small" type="primary">确认</el-button>
+      >Confirm</el-button>
+      <el-button v-else-if="mode === 'disable'" @click="disableShareEnv" size="small" type="primary">Confirm</el-button>
     </span>
   </el-dialog>
 </template>
@@ -159,7 +159,7 @@ export default {
       if (res) {
         this.$message({
           type: 'success',
-          message: '自测模式开启成功'
+          message: 'Self-test mode turned on successfully'
         })
         this.$emit('statusChange', 'enable')
         this.shareEnvDialogVisible = false
@@ -175,7 +175,7 @@ export default {
       if (res) {
         this.$message({
           type: 'success',
-          message: '自测模式关闭成功'
+          message: 'Self-test mode closed successfully'
         })
         this.$emit('statusChange', 'disable')
         this.shareEnvDialogVisible = false
@@ -183,13 +183,13 @@ export default {
     },
     copyCommandSuccess (event) {
       this.$message({
-        message: '命令已成功复制到剪贴板',
+        message: 'Command successfully copied to clipboard',
         type: 'success'
       })
     },
     copyCommandError (event) {
       this.$message({
-        message: '命令复制失败',
+        message: 'Command Copy Failed',
         type: 'error'
       })
     }

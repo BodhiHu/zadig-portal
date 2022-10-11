@@ -5,20 +5,20 @@
         <el-row :gutter="10">
           <el-col :span="8">
             <el-form-item prop="url">
-              <el-select v-model="externalData.url" placeholder="选择外部系统" size="small" clearable>
+              <el-select v-model="externalData.url" placeholder="Choose an external system" size="small" clearable>
                 <el-option v-for="external in externalList" :key="external.id" :label="external.server" :value="external.server"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item prop="path">
-              <el-input v-model="externalData.path" placeholder="输入访问路径" size="small"></el-input>
+              <el-input v-model="externalData.path" placeholder="Enter The Access Path" size="small"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <div>
           <el-tag size="small">Headers</el-tag>
-          <el-button type="text" @click="addHeader" class="add-header">添加</el-button>
+          <el-button type="text" @click="addHeader" class="add-header">Add To</el-button>
         </div>
         <el-table :data="externalData.headers" style="width: 100%;">
           <el-table-column label="Header Name">
@@ -31,7 +31,7 @@
               <el-input v-model="row.value" placeholder="Header Value" size="small"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="value" label="操作" width="100px">
+          <el-table-column prop="value" label="Operate" width="100px">
             <template slot-scope="{$index}">
               <el-button style="font-size: 20px;" type="text" icon="el-icon-remove-outline" @click="deleteHeader($index)"></el-button>
               <el-button style="font-size: 20px;" type="text" icon="el-icon-circle-plus-outline" @click="addHeader"></el-button>
@@ -39,12 +39,12 @@
           </el-table-column>
         </el-table>
       </el-form-item>
-      <el-form-item label="是否回调">
+      <el-form-item label="Whether To Call Back">
         <el-switch v-model="externalData.is_callback"></el-switch>
-        <div v-show="externalData.is_callback">请按规定调用接口：{{`${origin}/api/callback`}} 接口</div>
+        <div v-show="externalData.is_callback">Please call the interface as specified：{{`${origin}/api/callback`}} Interface</div>
       </el-form-item>
-      <el-form-item label="超时" v-show="externalData.is_callback">
-        <el-input-number v-model="externalData.timeout" :min="1" :max="100" size="small"></el-input-number>分钟
+      <el-form-item label="Time Out" v-show="externalData.is_callback">
+        <el-input-number v-model="externalData.timeout" :min="1" :max="100" size="small"></el-input-number>Minute
       </el-form-item>
     </el-form>
   </div>
@@ -68,12 +68,12 @@ export default {
     this.rules = {
       url: {
         required: true,
-        message: '请选择外部系统',
+        message: 'Please select an external system',
         trigger: ['blur', 'change']
       },
       path: {
         required: true,
-        message: '请输入访问路径',
+        message: 'Please enter the access path',
         trigger: ['blur', 'change']
       }
     }
@@ -116,7 +116,7 @@ export default {
   },
   activated () {
     this.validObj.addValidate({
-      name: '扩展',
+      name: 'Expand',
       valid: this.validate
     })
     this.externalData = {

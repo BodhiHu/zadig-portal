@@ -1,32 +1,32 @@
 <template>
   <div>
     <div v-if="currentStep === 'account'">
-      <h1 class="title">找回密码</h1>
-      <h2 class="subtitle">请输入用户名</h2>
+      <h1 class="title">Retrieve Password</h1>
+      <h2 class="subtitle">Please Enter User Name</h2>
       <el-form :model="retrieveForm" :rules="retrieveRules" ref="retrieveForm">
         <el-form-item prop="account">
-          <el-input v-model="retrieveForm.account" placeholder="用户名"></el-input>
+          <el-input v-model="retrieveForm.account" placeholder="Username"></el-input>
         </el-form-item>
       </el-form>
-      <el-button type="submit" class="btn-md btn-theme btn-block login-btn" @click="nextStep">下一步</el-button>
+      <el-button type="submit" class="btn-md btn-theme btn-block login-btn" @click="nextStep">Next Step</el-button>
     </div>
     <div v-else-if="currentStep === 'sendmail'">
-      <h2 class="title">找回密码</h2>
-      <p class="subtitle">密码重置链接已经发送至你的注册邮箱</p>
+      <h2 class="title">Retrieve Password</h2>
+      <p class="subtitle">A password reset link has been sent to your registered email</p>
       <p class="content">{{mail}}</p>
     </div>
     <div v-else-if="currentStep === 'setpass'">
-      <h1 class="title">设置新密码</h1>
-      <h2 class="subtitle">请输入新密码</h2>
+      <h1 class="title">Set New Password</h1>
+      <h2 class="subtitle">Please enter a new password</h2>
       <el-form :model="form" ref="form" :rules="rules">
         <el-form-item prop="password">
-          <el-input type="password" v-model="form.password" placeholder="新密码" show-password></el-input>
+          <el-input type="password" v-model="form.password" placeholder="New Password" show-password></el-input>
         </el-form-item>
         <el-form-item prop="checkPass">
-          <el-input type="password" v-model="form.checkPass" placeholder="再次输入新密码" show-password :minlength="8"></el-input>
+          <el-input type="password" v-model="form.checkPass" placeholder="Enter the new password again" show-password :minlength="8"></el-input>
         </el-form-item>
       </el-form>
-      <el-button type="submit" @click="submit" class="btn-md btn-theme btn-block login-btn">重置密码</el-button>
+      <el-button type="submit" @click="submit" class="btn-md btn-theme btn-block login-btn">Reset Password</el-button>
     </div>
   </div>
 </template>
@@ -41,9 +41,9 @@ export default {
   data () {
     const validatePass = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入密码'))
+        callback(new Error('Please Enter Password'))
       } else if (value.length < 8) {
-        callback(new Error('新密码应不小于 8 位字符'))
+        callback(new Error('The new password should be no less than 8 Bit Character'))
       } else {
         if (this.form.checkPass) {
           this.$refs.form.validateField('checkPass')
@@ -53,11 +53,11 @@ export default {
     }
     const validateConfirmedPass = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请再次输入密码'))
+        callback(new Error('Please enter the password again'))
       } else if (value.length < 8) {
-        callback(new Error('新密码应不小于 8 位字符'))
+        callback(new Error('The new password should be no less than 8 Bit Character'))
       } else if (value !== this.form.password) {
-        callback(new Error('两次输入密码不一致!'))
+        callback(new Error('The passwords entered twice do not match!'))
       } else {
         callback()
       }
@@ -73,7 +73,7 @@ export default {
       },
       currentStep: 'account',
       retrieveRules: {
-        account: [{ required: true, message: '请输入用户名', trigger: 'blur' }]
+        account: [{ required: true, message: 'Please Enter User Name', trigger: 'blur' }]
       },
       rules: {
         password: [{ validator: validatePass, trigger: 'change' }],
@@ -102,7 +102,7 @@ export default {
             console.log(error)
           )
           if (res) {
-            this.$message.success('重置成功')
+            this.$message.success('Reset Successfully')
             this.openLogin()
           }
         }

@@ -6,12 +6,12 @@
           <div class="tabs__item"
                :class="{'selected': $route.query.rightbar === 'var'}"
                @click="changeRoute('var')">
-            <span class="step-name">变量</span>
+            <span class="step-name">Variable</span>
           </div>
           <div class="tabs__item"
                :class="{'selected': $route.query.rightbar === 'build'}"
                @click="changeRoute('build')">
-            <span class="step-name">引用列表</span>
+            <span class="step-name">Citation List</span>
           </div>
         </div>
       </div>
@@ -19,20 +19,20 @@
         <div v-if="$route.query.rightbar === 'build'"
              class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">引用列表</div>
+            <div class="service-aside-box__title">Citation List</div>
           </header>
           <div class="service-aside-box__content">
               <el-table :data="buildReference"
                         stripe
                         style="width: 100%;">
                 <el-table-column prop="project_name"
-                                 label="项目">
+                                 label="Project">
                 </el-table-column>
                 <el-table-column prop="value"
-                                 label="构建">
+                                 label="Construct">
                   <template slot-scope="scope">
                     <router-link v-if="scope.row.build_name" :to="`/v1/projects/detail/${scope.row.project_name}/builds/detail/${scope.row.build_name}`">{{scope.row.build_name}}</router-link>
-                    <span v-else>空</span>
+                    <span v-else>Null</span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -41,7 +41,7 @@
         <div v-if="$route.query.rightbar === 'var'"
              class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">变量</div>
+            <div class="service-aside-box__title">Variable</div>
           </header>
           <div class="service-aside-box__content">
               <el-table :data="fileContent.variable"
@@ -54,7 +54,7 @@
                                  label="Value">
                   <template slot-scope="scope">
                     <span v-if="scope.row.value">{{scope.row.value}}</span>
-                    <span v-else>空</span>
+                    <span v-else>Null</span>
                   </template>
                 </el-table-column>
               </el-table>

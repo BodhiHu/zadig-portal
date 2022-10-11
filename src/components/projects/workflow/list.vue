@@ -3,7 +3,7 @@
     <div
       v-loading="workflowListLoading"
       class="pipeline-loading"
-      element-loading-text="加载中..."
+      element-loading-text="Loading..."
       element-loading-spinner="iconfont iconfont-loading icongongzuoliucheng"
     >
       <ul class="workflow-ul">
@@ -20,14 +20,14 @@
                       <i class="el-icon-sort sort"></i>
                     </button>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item command="name-asc">按名称升序</el-dropdown-item>
-                      <el-dropdown-item command="name-desc">按名称降序</el-dropdown-item>
-                      <el-dropdown-item command="time-asc">按创建时间升序</el-dropdown-item>
-                      <el-dropdown-item command="time-desc">按创建时间降序</el-dropdown-item>
+                      <el-dropdown-item command="name-asc">Ascending By Name</el-dropdown-item>
+                      <el-dropdown-item command="name-desc">Descending By Name</el-dropdown-item>
+                      <el-dropdown-item command="time-asc">Ascending by creation time</el-dropdown-item>
+                      <el-dropdown-item command="time-desc">Descending by creation time</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </div>
-                <el-input v-model="keyword" placeholder="搜索工作流" class="search-workflow" prefix-icon="el-icon-search" clearable></el-input>
+                <el-input v-model="keyword" placeholder="Search Workflow" class="search-workflow" prefix-icon="el-icon-search" clearable></el-input>
               </div>
             </div>
           </div>
@@ -43,27 +43,27 @@
         />
         <div v-if="availableWorkflows.length === 0 && !workflowListLoading" class="no-product">
           <img src="@assets/icons/illustration/workflow.svg" alt />
-          <p>暂无可展示的工作流，请手动新建工作流</p>
+          <p>There are currently no workflows to show，Please create a new workflow manually</p>
         </div>
       </ul>
     </div>
 
-    <el-dialog title="选择工作流类型" :visible.sync="showSelectWorkflowType" width="450px">
+    <el-dialog title="Choose A Workflow Type" :visible.sync="showSelectWorkflowType" width="450px">
       <div class="type-content">
-        <el-radio v-model="selectWorkflowType" label="product">工作流</el-radio>
-        <div class="type-desc">具有对项目环境构建、部署、测试和服务版本交付的能力</div>
-        <!-- <el-radio v-model="selectWorkflowType" label="common">通用-工作流</el-radio>
-        <div class="type-desc">可自定义工作流程，内置构建、K8s 部署、小程序发版等步骤</div> -->
-        <el-radio v-model="selectWorkflowType" label="custom">自定义工作流<el-tag type="success" size="small" class="mg-l8">new</el-tag></el-radio>
-        <div class="type-desc">可自定义工作流步骤和自由编排执行顺序</div>
+        <el-radio v-model="selectWorkflowType" label="product">Workflow</el-radio>
+        <div class="type-desc">Have a build on the project environment、Deploy、Ability to test and service release delivery</div>
+        <!-- <el-radio v-model="selectWorkflowType" label="common">Universal-Workflow</el-radio>
+        <div class="type-desc">Customizable Workflow，Built In Build、K8s Deploy、Small program release and other steps</div> -->
+        <el-radio v-model="selectWorkflowType" label="custom">Custom Workflow<el-tag type="success" size="small" class="mg-l8">new</el-tag></el-radio>
+        <div class="type-desc">Customizable workflow steps and freely choreographed execution sequence</div>
       </div>
       <div slot="footer">
-        <el-button size="small" @click="showSelectWorkflowType = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="createWorkflow">确 定</el-button>
+        <el-button size="small" @click="showSelectWorkflowType = false">Cancel</el-button>
+        <el-button size="small" type="primary" @click="createWorkflow">Sure</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="运行 产品-工作流" :visible.sync="showStartProductBuild" custom-class="run-workflow" width="60%">
+    <el-dialog title="Run The Product-Workflow" :visible.sync="showStartProductBuild" custom-class="run-workflow" width="60%">
       <RunProductWorkflow
         v-if="workflowToRun.name"
         :workflowName="workflowToRun.name"
@@ -73,10 +73,10 @@
       />
     </el-dialog>
 
-    <el-dialog title="运行 通用-工作流" :visible.sync="showStartCommonWorkflowBuild" :close-on-click-modal="false">
+    <el-dialog title="Run Generic-Workflow" :visible.sync="showStartCommonWorkflowBuild" :close-on-click-modal="false">
       <RunCommonWorkflow :value="showStartCommonWorkflowBuild" :workflow="commonToRun" />
     </el-dialog>
-    <el-dialog :visible.sync="isShowRunCustomWorkflowDialog" title="执行工作流" custom-class="run-workflow" width="60%" class="dialog">
+    <el-dialog :visible.sync="isShowRunCustomWorkflowDialog" title="Execute Workflow" custom-class="run-workflow" width="60%" class="dialog">
       <RunCustomWorkflow
         v-if="workflowToRun.name"
         :workflowName="workflowToRun.name"
@@ -205,13 +205,13 @@ export default {
         bus.$emit('set-topbar-title', {
           title: '',
           breadcrumb: [
-            { title: '项目', url: '/v1/projects' },
+            { title: 'Project', url: '/v1/projects' },
             {
               title: this.projectName,
               isProjectName: true,
               url: `/v1/projects/detail/${this.projectName}/detail`
             },
-            { title: '工作流', url: '' }
+            { title: 'Workflow', url: '' }
           ]
         })
       }
@@ -269,49 +269,49 @@ export default {
       const name = workflow.name
       const projectName = workflow.projectName
       if (workflow.base_refs && workflow.base_refs.length) {
-        this.$alert(`工作流 ${name} 已在协作模式 ${workflow.base_refs.join('、')} 中被定义为基准工作流，如需删除请先修改协作模式！`, '删除工作流', {
-          confirmButtonText: '确定',
+        this.$alert(`Workflow ${name} Already in collaborative mode ${workflow.base_refs.join('、')} Is defined as the baseline workflow，If you need to delete it, please modify the collaboration mode first！`, 'Delete Workflow', {
+          confirmButtonText: 'Sure',
           type: 'warning'
         })
         return
       }
-      this.$prompt('输入工作流名称确认', '删除工作流 ' + name, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Enter workflow name to confirm', 'Delete Workflow ' + name, {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         confirmButtonClass: 'el-button el-button--danger',
         inputValidator: workflowName => {
           if (workflowName === name) {
             return true
           } else if (workflowName === '') {
-            return '请输入工作流名称'
+            return 'Please enter a workflow name'
           } else {
-            return '名称不相符'
+            return 'Name Does Not Match'
           }
         }
       }).then(({ value }) => {
         deleteProductWorkflowAPI(projectName, name).then(() => {
           this.getWorkflows(this.projectName)
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
         })
       })
     },
     deleteCommonWorkflow (workflow) {
       if (workflow.base_refs && workflow.base_refs.length) {
-        this.$alert(`工作流 ${workflow.name} 已在协作模式 ${workflow.base_refs.join('、')} 中被定义为基准工作流，如需删除请先修改协作模式！`, '删除工作流', {
-          confirmButtonText: '确定',
+        this.$alert(`Workflow ${workflow.name} Already in collaborative mode ${workflow.base_refs.join('、')} Is defined as the baseline workflow，If you need to delete it, please modify the collaboration mode first！`, 'Delete Workflow', {
+          confirmButtonText: 'Sure',
           type: 'warning'
         })
         return
       }
-      this.$prompt('输入工作流名称确认', `删除工作流 ${workflow.name}`, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Enter workflow name to confirm', `Delete Workflow ${workflow.name}`, {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         confirmButtonClass: 'el-button--danger',
         inputValidator: value => {
           if (value === workflow.name) {
             return true
           } else {
-            return '输入名称不相符'
+            return 'Input name does not match'
           }
         }
       })
@@ -319,12 +319,12 @@ export default {
           deleteWorkflowAPI(workflow.name, this.projectName).then(
             res => {
               this.getWorkflows(this.projectName)
-              this.$message.success(`${value}删除成功！`)
+              this.$message.success(`${value}Successfully Deleted！`)
             }
           )
         })
         .catch(() => {
-          this.$message.info('取消删除')
+          this.$message.info('Undelete')
         })
     },
     startProductWorkflowBuild (workflow) {
@@ -359,20 +359,20 @@ export default {
     copyWorkflow (workflow) {
       const oldName = workflow.name
       const projectName = workflow.projectName
-      this.$prompt('请输入新的产品工作流名称', '复制工作流', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Please enter a new product workflow name', 'Duplicate Workflow', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         inputValidator: newName => {
           const pipeNames = []
           this.workflowsList.forEach(element => {
             pipeNames.push(element.name)
           })
           if (newName === '') {
-            return '请输入工作流名称'
+            return 'Please enter a workflow name'
           } else if (pipeNames.includes(newName)) {
-            return '工作流名称重复'
+            return 'Duplicate Workflow Name'
           } else if (!/^[a-zA-Z0-9-]+$/.test(newName)) {
-            return '名称只支持字母大小写和数字，特殊字符只支持中划线'
+            return 'Names only support uppercase and lowercase letters and numbers，Special characters only support underscores'
           } else {
             return true
           }
@@ -384,14 +384,14 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '取消复制'
+            message: 'Cancel Copy'
           })
         })
     },
     copyWorkflowReq (projectName, oldName, newName) {
       copyWorkflowAPI(projectName, oldName, newName).then(() => {
         this.$message({
-          message: '复制流水线成功',
+          message: 'Replication pipeline succeeded',
           type: 'success'
         })
         this.getWorkflows(this.projectName)
@@ -420,13 +420,13 @@ export default {
       bus.$emit('set-topbar-title', {
         title: '',
         breadcrumb: [
-          { title: '项目', url: '/v1/projects' },
+          { title: 'Project', url: '/v1/projects' },
           {
             title: this.projectName,
             isProjectName: true,
             url: `/v1/projects/detail/${this.projectName}/detail`
           },
-          { title: '工作流', url: '' }
+          { title: 'Workflow', url: '' }
         ]
       })
     }

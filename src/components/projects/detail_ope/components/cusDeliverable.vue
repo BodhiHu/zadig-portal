@@ -1,20 +1,20 @@
 <template>
   <div class="con">
     <div class="image-content">
-     <div class="title">镜像名称规则</div>
+     <div class="title">Image Name Rules</div>
      <div class="item" v-for="key of Object.keys(customerImage)" :key="'image'+key">
          <div class="label">{{customerImage[key].label}}</div>
          <el-input class="input1" oninput="value=value.replace(/[^\a-\z\A-\Z0-9\\_\.\-\$\{}]/g,'')" v-model="customerImage[key].service" size="small" :placeholder="`{{.IMAGE_NAME}}`" clearable  ></el-input> &nbsp;:&nbsp;
          <el-input class="input2" oninput="value=value.replace(/[^\a-\z\A-\Z0-9\\_\.\-\$\{}]/g,'')" v-model="customerImage[key].value" size="small" :placeholder="customerImage[key].placeholder" clearable></el-input>
-         <span class="reset" @click="resetFiled('customerImage',key)">重置</span>
+         <span class="reset" @click="resetFiled('customerImage',key)">Reset</span>
      </div>
     </div>
     <div class="tar-content">
-      <div class="title">TAR 包名称规则</div>
+      <div class="title">TAR Package Name Rules</div>
       <div class="item" v-for="key of Object.keys(tar)" :key="'tar'+key">
           <div class="label">{{tar[key].label}}</div>
           <el-input class="input3" oninput="value=value.replace(/[^\a-\z\A-\Z0-9\\_\.\-\$\{}]/g,'')" v-model="tar[key].value" size="small" :placeholder="tar[key].placeholder" clearable></el-input>
-          <span class="reset" @click="resetFiled('tar',key)">重置</span>
+          <span class="reset" @click="resetFiled('tar',key)">Reset</span>
       </div>
     </div>
   </div>
@@ -38,31 +38,31 @@ export default {
       isJenkins: false,
       customerImage: {
         pr: {
-          label: 'PR 生成镜像规则',
+          label: 'PR Generate Mirror Rules',
           service: defaultImage,
           value: placeholder[0],
           placeholder: placeholder[0]
         },
         branch: {
-          label: 'BRANCH 生成镜像规则',
+          label: 'BRANCH Generate Mirror Rules',
           service: defaultImage,
           value: placeholder[1],
           placeholder: placeholder[1]
         },
         prBranch: {
-          label: 'PR + BRANCH 生成镜像规则',
+          label: 'PR + BRANCH Generate Mirror Rules',
           service: defaultImage,
           value: placeholder[2],
           placeholder: placeholder[2]
         },
         tag: {
-          label: 'TAG 生成镜像规则',
+          label: 'TAG Generate Mirror Rules',
           service: defaultImage,
           value: placeholder[3],
           placeholder: placeholder[3]
         },
         jenkins: {
-          label: 'JENKINS 生成镜像规则',
+          label: 'JENKINS Generate Mirror Rules',
           service: defaultImage,
           value: placeholder[4],
           placeholder: placeholder[4]
@@ -70,23 +70,23 @@ export default {
       },
       tar: {
         pr: {
-          label: 'PR 生成 TAR 包规则',
+          label: 'PR Generate TAR Package Rules',
           value: defaultValue + '-' + placeholder[0],
           placeholder: defaultValue + '-' + placeholder[0]
         },
         branch: {
-          label: 'BRNACH 生成 TAR 包规则',
+          label: 'BRNACH Generate TAR Package Rules',
           service: defaultValue,
           value: defaultValue + '-' + placeholder[1],
           placeholder: defaultValue + '-' + placeholder[1]
         },
         prBranch: {
-          label: 'PR + BRANCH 生成 TAR 包规则',
+          label: 'PR + BRANCH Generate TAR Package Rules',
           value: defaultValue + '-' + placeholder[2],
           placeholder: defaultValue + '-' + placeholder[2]
         },
         tag: {
-          label: 'TAG 生成 TAR 包规则',
+          label: 'TAG Generate TAR Package Rules',
           value: defaultValue + '-' + placeholder[3],
           placeholder: defaultValue + '-' + placeholder[3]
         }
@@ -119,7 +119,7 @@ export default {
         tag_rule: tar.tag.value || `${defaultValue}-${placeholder[3]}`
       }
     },
-    // 是否jenkins构建
+    // WhetherjenkinsConstruct
     queryJenkinsConfig () {
       const key = this.$utils.rsaEncrypt()
       queryJenkins(key).then(res => {
@@ -147,7 +147,7 @@ export default {
         this.customerImage.prBranch.value = value.pr_and_branch_rule.split(':')[1]
         this.customerImage.tag.service = value.tag_rule.split(':')[0]
         this.customerImage.tag.value = value.tag_rule.split(':')[1]
-        // 如果jenkins集成了 则展示
+        // IfjenkinsShow If Integrated
         if (value.jenkins_rule) {
           this.customerImage.jenkins.service = value.jenkins_rule.split(':')[0]
           this.customerImage.jenkins.value = value.jenkins_rule.split(':')[1]

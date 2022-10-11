@@ -1,11 +1,11 @@
 <template>
-  <el-dialog title="更新全局服务变量" :visible.sync="updateHelmEnvVarDialogVisible" width="60%" :before-close="cancelUpdateHelmEnvVar">
+  <el-dialog title="Update global service variables" :visible.sync="updateHelmEnvVarDialogVisible" width="60%" :before-close="cancelUpdateHelmEnvVar">
     <div class="env-container">
       <EnvValues v-if="updateHelmEnvVarDialogVisible" ref="envValuesRef" :envName="envName" :defaultEnvsValues.sync="defaultEnvsValues"/>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" type="primary" :loading="updateHelmEnvVarLoading" @click="updateHelmEnvVar()">更新</el-button>
-      <el-button size="small" @click="cancelUpdateHelmEnvVar()">取 消</el-button>
+      <el-button size="small" type="primary" :loading="updateHelmEnvVarLoading" @click="updateHelmEnvVar()">Renew</el-button>
+      <el-button size="small" @click="cancelUpdateHelmEnvVar()">Cancel</el-button>
     </span>
   </el-dialog>
 </template>
@@ -59,7 +59,7 @@ export default {
           this.updateHelmEnvVarDialogVisible = false
           this.fetchAllData()
           this.$message({
-            message: '更新全局服务变量成功，请等待服务升级',
+            message: 'Update global service variables succeeded，Please wait for service upgrade',
             type: 'success'
           })
         })

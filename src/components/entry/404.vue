@@ -10,11 +10,11 @@
           <div class="navbar-links">
             <ul>
               <li><a href="/v1/status"
-                   target="_blank">首页</a></li>
+                   target="_blank">Front Page</a></li>
               <li><a href="/v1/projects"
-                   target="_blank">项目列表</a></li>
+                   target="_blank">Project List</a></li>
               <li><a href="https://docs.koderover.com"
-                   target="_blank">文档</a></li>
+                   target="_blank">Documentation</a></li>
               <li><a href="/v1/profile/info"
                    class="btn-request"
                    target="_blank"> {{ $store.state.login.userinfo.name}}</a></li>
@@ -26,7 +26,7 @@
                src="@assets/icons/404/404.svg"
                width="300px">
           <span @click="goBack"
-                class="btn-go-home">返回</span>
+                class="btn-go-home">Return</span>
         </div>
         <div class="objects">
           <img class="object_rocket"

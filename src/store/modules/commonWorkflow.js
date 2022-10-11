@@ -4,17 +4,17 @@ import { } from '@api'
 import { cloneDeep } from 'lodash'
 
 const tabInfo = [{
-  tab: '基本信息',
+  tab: 'Basic Information',
   selected: true,
   isCurrent: true
 },
 {
-  tab: '构建',
+  tab: 'Construct',
   selected: false,
   isCurrent: false,
   type: 'buildv3'
 }, {
-  tab: '扩展',
+  tab: 'Expand',
   selected: false,
   isCurrent: false,
   type: 'trigger'

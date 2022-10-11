@@ -1,21 +1,21 @@
 <template>
   <div class="config-proxy-container">
-    <!-- 这里是代理配置的内容-->
+    <!-- Here is the content of the proxy configuration-->
     <template>
       <el-alert type="info"
                 :closable="false">
         <template>
-         支持配置系统代理，配置后可以在「代码源集成」和「软件包管理」中选择使用代理，详情可参考
+         Support for configuring system proxy，After configuration, you can「Code Source Integration」And「Package Management」Choose To Use A Proxy，For details, please refer to
           <el-link style="font-size: 14px; vertical-align: baseline;"
                    type="primary"
-                   :href="`https://docs.koderover.com/zadig/settings/system-settings/#代理配置`"
+                   :href="`https://docs.koderover.com/zadig/settings/system-settings/#Proxy Configuration`"
                    :underline="false"
-                   target="_blank">帮助文档</el-link>
+                   target="_blank">Help Documentation</el-link>
         </template>
       </el-alert>
     </template>
     <div class="sync-container form-container">
-      <h1>代理配置</h1>
+      <h1>Proxy Configuration</h1>
       <el-form :model="proxyInfo"
                label-position="left"
                label-width="80px"
@@ -23,29 +23,29 @@
                ref="proxyForm"
                validateField="function(xx)">
         <el-form-item prop="type"
-                      label="类型">
+                      label="Type">
           <el-select v-model="proxyInfo.type"
                      size="small"
                      @change="changeProxy">
-            <el-option label="不使用代理"
+            <el-option label="No Proxy"
                        value="no"></el-option>
-            <el-option label="HTTP 代理"
+            <el-option label="HTTP Acting"
                        value="http"></el-option>
           </el-select>
         </el-form-item>
         <template v-if="proxyInfo.type !== 'no'">
-          <el-form-item label="服务器"
+          <el-form-item label="Server"
                         required
                         class="address-container">
             <el-form-item prop="address">
               <el-input v-model="proxyInfo.address"
                         size="small"
-                        placeholder="IP 地址"></el-input>
+                        placeholder="IP Address"></el-input>
             </el-form-item>
             <span>&nbsp;&nbsp;:&nbsp;&nbsp;</span>
             <el-form-item prop="port">
               <el-input size="small"
-                        placeholder="端口"
+                        placeholder="Port"
                         v-model.number="proxyInfo.port"
                         class="second-input"></el-input>
             </el-form-item>
@@ -53,17 +53,17 @@
           <el-form-item prop="need_password">
             <el-checkbox v-model="proxyInfo.need_password"
                          label="true"
-                         size="small">代理服务器需要密码</el-checkbox>
+                         size="small">The proxy server requires a password</el-checkbox>
           </el-form-item>
           <template v-if="proxyInfo.need_password">
             <el-form-item prop="username"
-                          label="用户名"
+                          label="Username"
                           required>
               <el-input v-model="proxyInfo.username"
                         size="small"></el-input>
             </el-form-item>
             <el-form-item prop="password"
-                          label="密码"
+                          label="Password"
                           required>
               <el-input v-model="proxyInfo.password"
                         size="small"
@@ -73,16 +73,16 @@
           <el-form-item class="margin-top-higher">
             <el-button @click="validateServer"
                        size="mini"
-                       :loading='testDisabled'>测试</el-button>
+                       :loading='testDisabled'>Test</el-button>
             <span v-if="testPass>0"
-                  :style="{color:testPass===1?'green':'red'}">{{testPass===1?'测试通过':'测试失败'}}</span>
+                  :style="{color:testPass===1?'green':'red'}">{{testPass===1?'Test Passed':'Test Failed'}}</span>
           </el-form-item>
         </template>
         <el-form-item class="margin-top-higher">
           <el-button @click="ifSetting('proxyForm')"
                      size="small"
                      type="primary"
-                     :disabled="noPost">确定</el-button>
+                     :disabled="noPost">Sure</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -94,7 +94,7 @@ export default {
   data () {
     const checkPort = (rule, value, callback) => {
       if (value <= 0 || value >= 65535) {
-        return callback(new Error('端口号应在 1 - 65535 之间'))
+        return callback(new Error('The port number should be in 1 - 65535 Between'))
       } else {
         callback()
       }
@@ -118,12 +118,12 @@ export default {
       existedProxy: false,
       noPost: true,
       rules: {
-        address: [{ required: true, message: '请输入代理地址', trigger: ['blur', 'change'] }],
-        port: [{ required: true, message: '请输入端口号', trigger: 'blur' },
-          { type: 'number', message: '端口号应为数字', trigger: 'blur' },
+        address: [{ required: true, message: 'Please enter proxy address', trigger: ['blur', 'change'] }],
+        port: [{ required: true, message: 'Please enter the port number', trigger: 'blur' },
+          { type: 'number', message: 'Port number should be a number', trigger: 'blur' },
           { validator: checkPort, trigger: 'blur' }],
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        username: [{ required: true, message: 'Please Enter User Name', trigger: 'blur' }],
+        password: [{ required: true, message: 'Please Enter Password', trigger: 'blur' }]
       }
     }
   },
@@ -164,7 +164,7 @@ export default {
               this.noPost = false
               if (response.message === 'success') {
                 this.$message({
-                  message: '配置修改成功！',
+                  message: 'Configuration modification succeeded！',
                   type: 'success'
                 })
               } else {
@@ -173,14 +173,14 @@ export default {
             }).catch(err => {
               this.noPost = false
               this.proxyInfo.enable_repo_proxy = !value
-              this.$message.error(`修改配置失败：${err}`)
+              this.$message.error(`Failed to modify configuration：${err}`)
             })
           } else {
             createProxyConfigAPI(this.proxyInfo).then(res => {
               if (res.message === 'success') {
                 this.existedProxy = true
                 this.$message({
-                  message: '代理配置保存成功！',
+                  message: 'Proxy configuration saved successfully！',
                   type: 'success'
                 })
                 this.getProxyConfig()
@@ -188,7 +188,7 @@ export default {
                 this.$message.error(res.message)
               }
             }).catch(() => {
-              this.$message.error('代理配置保存失败！')
+              this.$message.error('Failed to save proxy configuration！')
               this.noPost = false
             })
           }
@@ -204,7 +204,7 @@ export default {
         }
       }).catch(error => {
         this.noPost = false
-        this.$message.error(`获取代理配置失败：${error}`)
+        this.$message.error(`Failed to get proxy configuration：${error}`)
       })
     },
     // if proxy is unset, then turn off repo proxy

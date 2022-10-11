@@ -7,10 +7,10 @@
                 trigger="click"
                 v-model="showPopover">
       <div class="notify-header">
-        <span class="msg">通知</span>
+        <span class="msg">Notice</span>
         <el-tooltip class="item"
                     effect="dark"
-                    content="通知设置"
+                    content="Notification Settings"
                     placement="top">
           <router-link to="/v1/profile/info"
                        class="setting pull-right">
@@ -19,7 +19,7 @@
         </el-tooltip>
         <el-tooltip class="item"
                     effect="dark"
-                    content="全部通知设为已读"
+                    content="Set all notifications as read"
                     placement="top">
           <span @click="notificationOperation('mark_all_as_read')"
                 style="margin-right: 15px;"
@@ -30,7 +30,7 @@
       </div>
       <div class="notify-body">
         <div v-if="notifications.length===0"
-             class="no-msg">没有通知</div>
+             class="no-msg">Without Notice</div>
         <div>
           <ul class="notifications-list">
             <li v-for="(notification,index) in notifications"
@@ -55,7 +55,7 @@
                 </h3>
                 <div class="event-extra">
                   <span :class="{'is-read':notification.is_read,'unread':!notification.is_read}">
-                    {{notification.is_read?'已读':'未读'}}
+                    {{notification.is_read?'Have Read':'Unread'}}
                   </span>
                   <span class="time">{{$utils.convertTimestamp(notification.create_time)}}</span>
                 </div>
@@ -63,7 +63,7 @@
                       class="operation read">
                   <el-tooltip class="item"
                               effect="dark"
-                              content="设为已读"
+                              content="Set As Read"
                               placement="top">
                     <i class="el-icon-check"></i>
                   </el-tooltip>
@@ -72,7 +72,7 @@
                       class="operation delete">
                   <el-tooltip class="item"
                               effect="dark"
-                              content="删除该通知"
+                              content="Delete This Notification"
                               placement="top">
                     <i class="el-icon-delete"></i>
                   </el-tooltip>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="event-extra">
                   <span class="is-read">
-                    {{notification.is_read?'已读':'未读'}}
+                    {{notification.is_read?'Have Read':'Unread'}}
                   </span>
                   <span class="time">{{$utils.convertTimestamp(notification.create_time)}}</span>
                 </div>
@@ -96,7 +96,7 @@
                       class="operation  read">
                   <el-tooltip class="item"
                               effect="dark"
-                              content="设为已读"
+                              content="Set As Read"
                               placement="top">
                     <i class="el-icon-check"></i>
                   </el-tooltip>
@@ -105,7 +105,7 @@
                       class="operation delete">
                   <el-tooltip class="item"
                               effect="dark"
-                              content="删除该通知"
+                              content="Delete This Notification"
                               placement="top">
                     <i class="el-icon-delete"></i>
                   </el-tooltip>

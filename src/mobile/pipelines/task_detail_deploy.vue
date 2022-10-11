@@ -13,18 +13,18 @@
         </div>
         <van-row :gutter="0">
           <van-col :span="6">
-            <div class="item-title">部署状态</div>
+            <div class="item-title">Deployment Status</div>
           </van-col>
           <van-col :span="6">
             <div class="item-desc"
                  :class="$translate.calcTaskStatusColor(deploy.status)">
-              {{deploy.status?$translate.translateTaskStatus(deploy.status):"未运行"}}
+              {{deploy.status?$translate.translateTaskStatus(deploy.status):"Not Running"}}
             </div>
           </van-col>
           <van-col v-if="deploy.status!=='running'"
                    :span="6">
             <div class="item-title">
-              持续时间
+              Duration
             </div>
           </van-col>
           <van-col v-if="deploy.status!=='running'"
@@ -34,7 +34,7 @@
         </van-row>
         <van-row :gutter="0">
           <van-col :span="6">
-            <div class="item-title"> 镜像信息</div>
+            <div class="item-title"> Mirror Information</div>
           </van-col>
           <van-col :span="18">
             <el-tooltip effect="dark"
@@ -47,7 +47,7 @@
         </van-row>
         <van-row :gutter="0">
           <van-col :span="6">
-            <div class="item-title">服务名称</div>
+            <div class="item-title">Service Name</div>
           </van-col>
           <van-col :span="18">
             <div class="item-desc">

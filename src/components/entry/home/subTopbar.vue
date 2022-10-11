@@ -10,7 +10,7 @@
           >
             <li class="nav-item">
               <i class="icon iconfont icongongzuoliucheng"></i>
-              <span class="name">工作流</span>
+              <span class="name">Workflow</span>
             </li>
           </router-link>
           <router-link
@@ -20,7 +20,7 @@
           >
             <li class="nav-item">
               <i class="icon iconfont iconvery-environ"></i>
-              <span class="name">环境</span>
+              <span class="name">Surroundings</span>
             </li>
           </router-link>
 
@@ -31,7 +31,7 @@
           >
             <li class="nav-item">
               <i class="icon iconfont iconvery-service"></i>
-              <span class="name">服务</span>
+              <span class="name">Serve</span>
             </li>
           </router-link>
           <router-link
@@ -41,7 +41,7 @@
           >
             <li class="nav-item">
               <i class="icon iconfont iconvery-build"></i>
-              <span class="name">构建</span>
+              <span class="name">Construct</span>
             </li>
           </router-link>
           <router-link
@@ -51,13 +51,13 @@
           >
             <li class="nav-item">
               <i class="icon iconfont iconvery-testing"></i>
-              <span class="name">测试</span>
+              <span class="name">Test</span>
             </li>
           </router-link>
           <router-link v-hasPermi="{projectName: projectName, action: 'get_scan'}" active-class="active" :to="`/v1/projects/detail/${projectName}/scanner`">
             <li class="nav-item">
               <i class="icon iconfont iconvery-scanner"></i>
-              <span class="name">代码扫描</span>
+              <span class="name">Code Scan</span>
             </li>
           </router-link>
           <router-link
@@ -68,7 +68,7 @@
           >
             <li class="nav-item">
               <i class="icon iconfont iconvery-versionmana"></i>
-              <span class="name">版本管理</span>
+              <span class="name">Version Management</span>
             </li>
           </router-link>
         </ul>
@@ -76,7 +76,7 @@
     </div>
     <div class="operation">
       <template v-if="$route.path === `/v1/projects/detail/${projectName}/pipelines`">
-        <el-button v-hasPermi="{projectName: projectName, action: 'create_workflow',isBtn:true}"  @click="bindComp(comp,'workflow')" icon="el-icon-plus" plain>新建工作流</el-button>
+        <el-button v-hasPermi="{projectName: projectName, action: 'create_workflow',isBtn:true}"  @click="bindComp(comp,'workflow')" icon="el-icon-plus" plain>New Workflow</el-button>
       </template>
       <template v-if="$route.path === `/v1/projects/detail/${projectName}/envs/detail`">
         <el-button
@@ -84,10 +84,10 @@
           @click="bindComp(comp,'env')"
           icon="el-icon-plus"
           plain
-        >创建环境</el-button>
+        >Create An Environment</el-button>
       </template>
       <template v-if="$route.path === `/v1/projects/detail/${projectName}/builds`">
-        <el-button v-hasPermi="{projectName: projectName, action: 'create_build',isBtn:true}" @click="bindComp(comp,'build')" icon="el-icon-plus" plain>新建构建</el-button>
+        <el-button v-hasPermi="{projectName: projectName, action: 'create_build',isBtn:true}" @click="bindComp(comp,'build')" icon="el-icon-plus" plain>New Build</el-button>
       </template>
       <template v-if="$route.path === `/v1/projects/detail/${projectName}/test`">
         <el-button
@@ -95,7 +95,7 @@
           @click="bindComp(comp,'test')"
           icon="el-icon-plus"
           plain
-        >新建测试</el-button>
+        >New Test</el-button>
       </template>
       <template v-if="$route.path === `/v1/projects/detail/${projectName}/scanner`">
         <el-button
@@ -103,7 +103,7 @@
           @click="bindComp(comp,'scanner')"
           icon="el-icon-plus"
           plain
-        >新建代码扫描</el-button>
+        >New Code Scan</el-button>
       </template>
       <template v-if="$route.path === `/v1/projects/detail/${projectName}/version` && deployType === 'helm'">
         <el-button
@@ -111,7 +111,7 @@
           @click="bindComp(comp,'version')"
           icon="el-icon-plus"
           plain
-        >创建版本</el-button>
+        >Create Version</el-button>
       </template>
       <template>
         <el-dropdown
@@ -121,21 +121,21 @@
         >
           <button type="button" class="display-btn el-button">
             <i class="iconfont iconvery-options el-icon--left"></i>
-            &nbsp;&nbsp;配置&nbsp;&nbsp;
+            &nbsp;&nbsp;Configure&nbsp;&nbsp;
             <i class="el-icon-caret-bottom el-icon--right"></i>
           </button>
           <el-dropdown-menu slot="dropdown" class="project-config">
-            <el-dropdown-item icon="el-icon-edit-outline" @click.native="$router.push(`/v1/projects/edit/${projectName}`)">修改</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-edit-outline" @click.native="$router.push(`/v1/projects/edit/${projectName}`)">Revise</el-dropdown-item>
             <el-dropdown-item v-if="deployType === 'cloud_host'" @click.native="$router.push(`/v1/projects/detail/${projectName}/host`)">
-             <i class="iconfont iconwuliji"></i>主机管理
+             <i class="iconfont iconwuliji"></i>Host Management
             </el-dropdown-item>
-            <el-dropdown-item icon="el-icon-lock" @click.native="$router.push(`/v1/projects/detail/${projectName}/rbac`)">权限</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-lock" @click.native="$router.push(`/v1/projects/detail/${projectName}/rbac`)">Permission</el-dropdown-item>
             <el-dropdown-item
               v-if="deployType !== 'cloud_host'"
               icon="item-icon iconfont iconvery-collaboratiom"
               @click.native="$router.push(`/v1/projects/detail/${projectName}/policy`)"
-            >协作模式</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-delete" @click.native="comp.deleteProject">删除</el-dropdown-item>
+            >Collaborative Mode</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-delete" @click.native="comp.deleteProject">Delete</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </template>

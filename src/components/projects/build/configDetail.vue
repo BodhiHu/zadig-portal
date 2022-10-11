@@ -3,7 +3,7 @@
     <template v-slot:footer>
       <footer class="build-footer">
         <router-link :to="`/v1/projects/detail/${projectName}/builds`">
-          <el-button style="margin-right: 15px;" type="primary" plain>取消</el-button>
+          <el-button style="margin-right: 15px;" type="primary" plain>Cancel</el-button>
         </router-link>
         <el-button
           v-hasPermi="{type: 'project', projectName:projectName, action: compBind.isEdit?'edit_build':'create_build',isBtn:true }"
@@ -11,7 +11,7 @@
           @updateBtnLoading="saveLoading = $event"
           :loading="saveLoading"
           type="primary"
-        >{{ compBind.isEdit ? '确认修改' : '立即新建' }}</el-button>
+        >{{ compBind.isEdit ? 'Confirm The Changes' : 'Create Now' }}</el-button>
         <el-button
           v-if="showSaveToTemplate"
           v-hasPermi="{type: 'system', actions: ['edit_template','create_template'],operator:'or',isBtn:true }"
@@ -19,7 +19,7 @@
           @updateBtnLoading="saveLoading = $event"
           :loading="saveLoading"
           type="text"
-        >保存为模板</el-button>
+        >Save As Template</el-button>
       </footer>
     </template>
   </CommonBuild>
@@ -76,17 +76,17 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '构建',
+          title: 'Construct',
           url: `/v1/projects/detail/${this.projectName}/builds`
         },
-        { title: this.isCreate ? '新建' : this.buildConfigName, url: '' }
+        { title: this.isCreate ? 'New' : this.buildConfigName, url: '' }
       ]
     })
   },

@@ -1,13 +1,13 @@
 <template>
   <div class="variable-list">
     <el-table :data="variables" style="width: 90%; max-width: 1000px;">
-      <el-table-column label="键" prop="key" width="270px"></el-table-column>
-      <el-table-column label="值">
+      <el-table-column label="Key" prop="key" width="270px"></el-table-column>
+      <el-table-column label="Value">
         <template slot-scope="{ row }">
           <VariableEditor style="margin-right: 10px;" :varKey="row.key" :value.sync="row.value" :diabled="rollbackMode" />
         </template>
       </el-table-column>
-      <el-table-column label="关联服务">
+      <el-table-column label="Associated Services">
         <template slot-scope="{ row }">
           <span>{{ row.services?row.services.join(','):'-' }}</span>
         </template>

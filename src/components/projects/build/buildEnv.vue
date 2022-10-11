@@ -1,40 +1,40 @@
 <template>
   <section>
-    <div class="primary-title not-first-child">{{ isTest ? '测试执行' : '构建' }}环境</div>
+    <div class="primary-title not-first-child">{{ isTest ? 'Test Execution' : 'Construct' }}Surroundings</div>
     <el-form-item
-      label="操作系统"
+      label="Operating System"
       :prop="`${secondaryProp}.image_id`"
       class="secondary-label"
-      :rules="{ required: true, message: '请选择操作系统', trigger: ['change', 'blur'] }"
+      :rules="{ required: true, message: 'Please select an operating system', trigger: ['change', 'blur'] }"
     >
-      <el-select size="small" v-model="currentEnv.image_id" placeholder="请选择" @change="changeImage('id', $event)">
+      <el-select size="small" v-model="currentEnv.image_id" placeholder="Please Choose" @change="changeImage('id', $event)">
         <el-option disabled value="NEWCUSTOM">
           <router-link to="/v1/system/imgs" class="env-link">
             <i class="el-icon-circle-plus-outline" style="margin-right: 3px;"></i>
-            {{ isTest ? '测试执行环境' : '构建环境' }}
+            {{ isTest ? 'Test execution environment' : 'Build Environment' }}
           </router-link>
         </el-option>
         <el-option v-for="(sys,index) in systems" :key="index" :label="sys.label" :value="sys.id">
           <span>
             {{sys.label}}
-            <el-tag v-if="sys.image_from==='custom'" type="info" size="mini" effect="light">自定义</el-tag>
+            <el-tag v-if="sys.image_from==='custom'" type="info" size="mini" effect="light">Customize</el-tag>
           </span>
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item v-if="currentEnv.installs.length===0" label="依赖的软件包" class="secondary-label">
-      <el-button @click="addFirstApp()" type="primary" size="mini" plain>新增</el-button>
+    <el-form-item v-if="currentEnv.installs.length===0" label="Dependent Packages" class="secondary-label">
+      <el-button @click="addFirstApp()" type="primary" size="mini" plain>New</el-button>
     </el-form-item>
     <el-form-item
       v-else
       v-for="(app,appIndex) in currentEnv.installs"
       :key="appIndex"
       :prop="`${secondaryProp}.installs.${appIndex}.name`"
-      :rules="{required: false, message: '不能为空', trigger: 'blur'}"
-      :label="appIndex === 0 ? `依赖的软件包` : ''"
+      :rules="{required: false, message: 'Can Not Be Empty', trigger: 'blur'}"
+      :label="appIndex === 0 ? `Dependent Packages` : ''"
       class="secondary-label"
     >
-      <el-select v-model="currentEnv.installs[appIndex]" placeholder="请选择" size="small" value-key="id" filterable>
+      <el-select v-model="currentEnv.installs[appIndex]" placeholder="Please Choose" size="small" value-key="id" filterable>
         <el-option
           v-for="(app, index) in currentEnv.installs[appIndex].name ? [currentEnv.installs[appIndex]].concat(remainingApps) : remainingApps"
           :key="index"
@@ -43,8 +43,8 @@
         ></el-option>
       </el-select>
       <span :class="mini?'':'app-operation'">
-        <el-button v-if="currentEnv.installs.length >= 1" @click="deleteApp(appIndex)" type="danger" size="mini" plain>删除</el-button>
-        <el-button v-if="appIndex===currentEnv.installs.length-1" @click="addApp(appIndex)" type="primary" size="mini" plain>新增</el-button>
+        <el-button v-if="currentEnv.installs.length >= 1" @click="deleteApp(appIndex)" type="danger" size="mini" plain>Delete</el-button>
+        <el-button v-if="appIndex===currentEnv.installs.length-1" @click="addApp(appIndex)" type="primary" size="mini" plain>New</el-button>
       </span>
     </el-form-item>
   </section>

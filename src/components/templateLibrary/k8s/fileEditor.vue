@@ -34,10 +34,10 @@
           <div class="controls__right">
             <el-button v-hasPermi="{type: 'system', action: fileStatus === 'added'?'edit_template':'create_template', isBtn:true}" type="primary"
                        size="small"
-                       @click="updateFile">保存</el-button>
+                       @click="updateFile">Save</el-button>
             <el-button v-hasPermi="{type: 'system', action: fileStatus === 'added'?'edit_template':'create_template', isBtn:true}" type="default"
                        size="small"
-                       @click="multiUpdate">应用到服务</el-button>
+                       @click="multiUpdate">Apply To Service</el-button>
           </div>
         </div>
     </div>
@@ -127,7 +127,7 @@ export default {
           this.$emit('onUpdateFile', { name: fileName, status: 'added', payload })
           this.$message({
             type: 'success',
-            message: `模板 ${fileName} 更新成功`
+            message: `Template ${fileName} Update Completed`
           })
         }
       } else if (status === 'named') {
@@ -139,7 +139,7 @@ export default {
           this.$emit('onUpdateFile', { name: fileName, status: 'added', payload })
           this.$message({
             type: 'success',
-            message: `模板 ${fileName} 创建成功`
+            message: `Template ${fileName} Created Successfully`
           })
         }
       }
@@ -167,16 +167,16 @@ export default {
     },
     multiUpdate () {
       const fileId = this.fileContent.id
-      this.$confirm(`确认后，所有开启「自动同步」的服务配置会应用最新的模板。`, '确定应用到服务？', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`After Confirming，All On「Auto Sync」The service configuration of will apply the latest template。`, 'Determine the application to the service？', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(() => {
           updateMulKubernetesTemplateAPI(fileId).then(res => {
             this.$message({
               type: 'success',
-              message: `应用到服务成功`
+              message: `Apply to service successfully`
             })
           })
         })

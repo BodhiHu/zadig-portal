@@ -1,10 +1,10 @@
 <template>
   <div class="init-resource">
-    <header><i class="theme-color iconfont iconvery-handshake"></i>管理员为您配置了以下工作流和环境</header>
+    <header><i class="theme-color iconfont iconvery-handshake"></i>Your administrator has configured the following workflows and environments for you</header>
     <section>
       <article v-if="collaborationData.workflow.length">
         <div class="title">
-          <i class="iconfont icongongzuoliucheng"></i>工作流
+          <i class="iconfont icongongzuoliucheng"></i>Workflow
         </div>
         <div v-for="(workflow, index) in collaborationData.workflow" :key="index" class="detail-item">
           <div class="item-name">{{ workflow.name }}</div>
@@ -12,13 +12,13 @@
       </article>
       <article v-if="collaborationData.product.length" style="margin-top: 30px;">
         <div class="title">
-          <i class="iconfont iconvery-environ"></i>环境
+          <i class="iconfont iconvery-environ"></i>Surroundings
         </div>
         <div v-for="(env, index) in collaborationData.product" :key="index" class="detail-item display-flex">
           <div>
             <div class="item-name">{{ env.name }}</div>
           </div>
-          <el-button v-if="env.collaboration_type === 'new'" type="primary" plain size="small" @click="editEnvInfo(env)">环境变量</el-button>
+          <el-button v-if="env.collaboration_type === 'new'" type="primary" plain size="small" @click="editEnvInfo(env)">Environment Variable</el-button>
         </div>
       </article>
 
@@ -70,7 +70,7 @@ export default {
       }
       initializeCollaborationAPI(this.projectName, payload).then(res => {
         this.$message.success(
-          `项目更新成功，环境更新可能需要一些时间，请稍后使用！`
+          `项目更新成功，Environment update may take some time，Please Use Later！`
         )
         this.$router.go(-1)
       })
@@ -121,9 +121,9 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         { title: this.projectName, isProjectName: true, url: '' },
-        { title: '项目资源', url: '' }
+        { title: 'Project Resources', url: '' }
       ]
     })
     bus.$emit('show-sidebar', false)

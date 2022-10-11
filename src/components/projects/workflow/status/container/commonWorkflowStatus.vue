@@ -6,13 +6,13 @@
       <div class="progress-header-view">
         <div class="status-view">
           <div class="status running">
-            正在运行
+            Running
           </div>
         </div>
         <div class="info-view">
           <span class="spec">
             <span>
-              <label>通用工作流 {{`#${task.task_id}`}}</label>
+              <label>Universal Workflow {{`#${task.task_id}`}}</label>
               <br>
               <router-link
                            :to="`/v1/projects/detail/${task.product_name}/pipelines/common/${task.pipeline_name}/${task.task_id}?status=${task.status}`">
@@ -25,7 +25,7 @@
             <el-tag v-if="checkStage(task, 'buildv3')"
                     size=small
                     class="stage"
-                    type="primary">构建</el-tag>
+                    type="primary">Construct</el-tag>
           </span>
           <section class="basic-info">
             <p class="author"><i class="el-icon-user"></i> {{task.task_creator}}</p>
@@ -38,7 +38,7 @@
                 class="icon el-icon-data-board view-detail"></span>
           <el-tooltip class="item"
                       effect="dark"
-                      content="删除任务"
+                      content="Delete Task"
                       placement="top">
             <span @click="taskOperation('running','cancel',task.product_name,task.task_id,task.pipeline_name)"
                   class="icon el-icon-delete delete"></span>
@@ -52,13 +52,13 @@
       <div class="progress-header-view">
         <div class="status-view">
           <div class="status waiting">
-            队列中
+            In Queue
           </div>
         </div>
         <div class="info-view">
           <span class="spec">
             <span>
-              <label>工作流 {{`#${task.task_id}`}}</label>
+              <label>Workflow {{`#${task.task_id}`}}</label>
               <br>
               <router-link
                            :to="`/v1/projects/detail/${task.product_name}/pipelines/common/${task.pipeline_name}/${task.task_id}?status=${task.status}`">
@@ -71,11 +71,11 @@
             <el-tag v-if="showStage(task.stages,'buildv2')"
                     size=small
                     class="stage"
-                    type="primary">构建</el-tag>
+                    type="primary">Construct</el-tag>
             <el-tag v-if="showStage(task.stages,'trigger')"
                     size=small
                     class="stage"
-                    type="primary">扩展</el-tag>
+                    type="primary">Expand</el-tag>
           </span>
           <section class="basic-info">
             <p class="author"><i class="el-icon-user"></i> {{task.task_creator}}</p>
@@ -88,7 +88,7 @@
                 class="icon el-icon-data-board view-detail"></span>
           <el-tooltip class="item"
                       effect="dark"
-                      content="删除任务"
+                      content="Delete Task"
                       placement="top">
             <span @click="taskOperation('queue','cancel',task.product_name,task.task_id,task.pipeline_name)"
                   class="icon el-icon-delete delete"></span>
@@ -131,8 +131,8 @@ export default {
           case 'cancel':
             cancelCommonWorkflowTaskAPI(projectName, workflowName, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '运行任务取消成功',
+                title: 'Success',
+                message: 'Running task canceled successfully',
                 type: 'success',
                 offset: 50
               })
@@ -146,8 +146,8 @@ export default {
           case 'cancel':
             cancelCommonWorkflowTaskAPI(projectName, workflowName, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '队列任务取消成功',
+                title: 'Success',
+                message: 'Queue task canceled successfully',
                 type: 'success',
                 offset: 50
               })

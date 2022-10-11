@@ -25,7 +25,7 @@
 </template>
 <script>
 /*
-    columns支持传组件跟jsx
+    columnsSupport for passing components andjsx
     render: (scope) => {
             return (<linkUrl >12 </linkUrl>)
     }

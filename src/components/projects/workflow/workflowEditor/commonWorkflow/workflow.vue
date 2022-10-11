@@ -10,9 +10,9 @@
       </el-card>
     </div>
     <footer class="footer">
-      <el-tag>填写相关信息，然后点击保存</el-tag>
-      <el-button type="primary" plain @click="$router.go(-1)">取消</el-button>
-      <el-button type="primary" plain @click="saveCommonWorkflow">保存</el-button>
+      <el-tag>Fill in the relevant information，Then Click Save</el-tag>
+      <el-button type="primary" plain @click="$router.go(-1)">Cancel</el-button>
+      <el-button type="primary" plain @click="saveCommonWorkflow">Save</el-button>
     </footer>
   </div>
 </template>
@@ -47,13 +47,13 @@ export default {
       let res = BasicInfo
       const currentTab = this.currentTab
       switch (currentTab) {
-        case '基本信息':
+        case 'Basic Information':
           res = BasicInfo
           break
-        case '构建':
+        case 'Construct':
           res = Build
           break
-        case '扩展':
+        case 'Expand':
           res = External
           break
       }
@@ -112,7 +112,7 @@ export default {
 
           fn.then(res => {
             this.$message.success(
-              `${commonInfo.name} ${this.pipelineId ? '修改' : '创建'}成功！`
+              `${commonInfo.name} ${this.pipelineId ? 'Revise' : 'Create'}Success！`
             )
             this.$router.push(
               `/v1/projects/detail/${
@@ -141,7 +141,7 @@ export default {
           this.$store.commit('UPDATE_TABS', { type: 'add', tabType: task.type })
         }
 
-        this.$store.commit('UPDATE_TABS', { type: 'add', tab: '基本信息' })
+        this.$store.commit('UPDATE_TABS', { type: 'add', tab: 'Basic Information' })
 
         if (get(res.buildv3, 'job_ctx')) {
           res.buildv3.job_ctx.clean_workspace = !res.buildv3.job_ctx

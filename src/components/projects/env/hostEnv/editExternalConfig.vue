@@ -1,11 +1,11 @@
 <template>
   <div class="content">
-    <div class="title">配置托管</div>
+    <div class="title">Configure Hosting</div>
     <div class="step">
       <el-steps :active="currentStep" align-center finish-status="success">
-        <el-step title="配置环境托管" description=""></el-step>
-        <el-step title="配置服务构建" description=""></el-step>
-        <el-step title="运行工作流" description=""></el-step>
+        <el-step title="Configure environment hosting" description=""></el-step>
+        <el-step title="Configure Service Build" description=""></el-step>
+        <el-step title="Run The Workflow" description=""></el-step>
       </el-steps>
     </div>
     <div class="currentStep">
@@ -14,8 +14,8 @@
       <component ref="component" :envName="$route.query.envName" :projectName="projectName" class="com" :is="componentsList[currentStep]" />
     </div>
     <div class="bottom">
-      <div class="nextstep" @click="nextStep">{{currentStep===2 ? '完成' : '下一步'}} </div>
-      <span class="des" @click="exit" v-if="currentStep===1">退出向导</span>
+      <div class="nextstep" @click="nextStep">{{currentStep===2 ? 'Finish' : 'Next Step'}} </div>
+      <span class="des" @click="exit" v-if="currentStep===1">Exit The Wizard</span>
     </div>
   </div>
 </template>
@@ -30,14 +30,14 @@ export default {
     return {
       componentsList: [EditHostService, ServiceBuild, RunWorkflow],
       stepMap: [{
-        title: '第一步',
-        description: '修改托管服务'
+        title: 'First Step',
+        description: 'Modify Hosting Services'
       }, {
-        title: '第二步',
-        description: '配置服务构建'
+        title: 'Second Step',
+        description: 'Configure Service Build'
       }, {
-        title: '第三步',
-        description: '运行工作流'
+        title: 'Third Step',
+        description: 'Run The Workflow'
       }]
     }
   },

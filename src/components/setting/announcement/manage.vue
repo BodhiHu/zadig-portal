@@ -1,41 +1,41 @@
 <template>
   <div v-loading="loading"
-       element-loading-text="加载中..."
+       element-loading-text="Loading..."
        element-loading-spinner="iconfont iconfont-loading icongonggao"
        class="setting-anno-container">
     <!--announcement-create-dialog-->
-    <el-dialog title='新建'
+    <el-dialog title='New'
                :visible.sync="dialogAnnouncementCreateFormVisible">
       <el-form ref="announcement"
                :rules="rules"
                :model="announcement"
                label-width="90px">
-        <el-form-item label="标题"
+        <el-form-item label="Title"
                       prop="content.title">
           <el-input v-model="announcement.content.title"></el-input>
         </el-form-item>
-        <el-form-item label="优先级"
+        <el-form-item label="Priority"
                       prop="content.priority">
           <el-select v-model="announcement.content.priority"
-                     placeholder="请选择优先级">
-            <el-option label="高"
+                     placeholder="Please Select A Priority">
+            <el-option label="High"
                        :value="1"></el-option>
-            <el-option label="中"
+            <el-option label="Middle"
                        :value="2"></el-option>
-            <el-option label="低"
+            <el-option label="Low"
                        :value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="时间范围"
+        <el-form-item label="Time Limit"
                       prop="duration">
           <el-date-picker v-model="announcement.duration"
                           type="datetimerange"
-                          range-separator="至"
-                          start-placeholder="开始日期"
-                          end-placeholder="结束日期">
+                          range-separator="To"
+                          start-placeholder="Start Date"
+                          end-placeholder="End Date">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="内容"
+        <el-form-item label="Content"
                       prop="content.content">
           <el-input :autosize="{ minRows: 4}"
                     type="textarea"
@@ -45,48 +45,48 @@
       <div slot="footer"
            class="dialog-footer">
         <el-button size="small"
-                   @click="dialogAnnouncementCreateFormVisible = false">取 消</el-button>
+                   @click="dialogAnnouncementCreateFormVisible = false">Cancel</el-button>
         <el-button :plain="true"
                    type="success"
                    size="small"
-                   @click="announcementOperation('add')">保存</el-button>
+                   @click="announcementOperation('add')">Save</el-button>
       </div>
     </el-dialog>
     <!--announcement-create-dialog-->
 
     <!--announcement-edit-dialog-->
-    <el-dialog title='修改公告'
+    <el-dialog title='Amendment Announcement'
                :visible.sync="dialogAnnouncementEditFormVisible">
       <el-form ref="swapAnnouncement"
                :rules="rules"
                :model="swapAnnouncement"
                label-width="90px">
-        <el-form-item label="标题"
+        <el-form-item label="Title"
                       prop="content.title">
           <el-input v-model="swapAnnouncement.content.title"></el-input>
         </el-form-item>
-        <el-form-item label="优先级"
+        <el-form-item label="Priority"
                       prop="content.priority">
           <el-select v-model="swapAnnouncement.content.priority"
-                     placeholder="请选择优先级">
-            <el-option label="高"
+                     placeholder="Please Select A Priority">
+            <el-option label="High"
                        :value="1"></el-option>
-            <el-option label="中"
+            <el-option label="Middle"
                        :value="2"></el-option>
-            <el-option label="低"
+            <el-option label="Low"
                        :value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="时间范围"
+        <el-form-item label="Time Limit"
                       prop="duration">
           <el-date-picker v-model="swapAnnouncement.duration"
                           type="datetimerange"
-                          range-separator="至"
-                          start-placeholder="开始日期"
-                          end-placeholder="结束日期">
+                          range-separator="To"
+                          start-placeholder="Start Date"
+                          end-placeholder="End Date">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="内容"
+        <el-form-item label="Content"
                       prop="content.content">
           <el-input :autosize="{ minRows: 4}"
                     type="textarea"
@@ -96,11 +96,11 @@
       <div slot="footer"
            class="dialog-footer">
         <el-button size="small"
-                   @click="dialogAnnouncementEditFormVisible = false">取 消</el-button>
+                   @click="dialogAnnouncementEditFormVisible = false">Cancel</el-button>
         <el-button size="small"
                    :plain="true"
                    type="success"
-                   @click="announcementOperation('update')">保存</el-button>
+                   @click="announcementOperation('update')">Save</el-button>
       </div>
     </el-dialog>
     <div class="section">
@@ -108,40 +108,40 @@
         <el-button :plain="true"
                    size="small"
                    @click="dialogAnnouncementCreateFormVisible=true"
-                   type="success">新建</el-button>
+                   type="success">New</el-button>
       </div>
       <div class="announcement-list">
         <template>
           <el-table :data="allAnnouncements"
                     style="width: 100%;">
-            <el-table-column label="标题">
+            <el-table-column label="Title">
               <template slot-scope="scope">
                 <span v-if="showActive(scope.row.content.start_time,scope.row.content.end_time)"
                       class="ann-active"></span>
                 <span>{{scope.row.content.title}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="优先级">
+            <el-table-column label="Priority">
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.content.priority===1"
                         size="small"
-                        type="danger">高</el-tag>
+                        type="danger">High</el-tag>
                 <el-tag v-if="scope.row.content.priority===2"
                         size="small"
-                        type="warning">中</el-tag>
+                        type="warning">Middle</el-tag>
                 <el-tag v-if="scope.row.content.priority===3"
                         size="small"
-                        type="info">低</el-tag>
+                        type="info">Low</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="开始时间">
+            <el-table-column label="Starting Time">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
                 <span style="margin-left: 10px;">{{
                   $utils.convertTimestamp(scope.row.content.start_time) }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="结束时间">
+            <el-table-column label="End Time">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
                 <span style="margin-left: 10px;">{{
@@ -149,13 +149,13 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column label="Operate">
               <template slot-scope="scope">
                 <el-button @click="announcementOperation('edit',scope.row)"
-                           size="mini" type="primary" plain>编辑</el-button>
+                           size="mini" type="primary" plain>Edit</el-button>
                 <el-button @click="announcementOperation('delete',scope.row)"
                            size="mini"
-                           type="danger" plain>删除</el-button>
+                           type="danger" plain>Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -194,14 +194,14 @@ export default {
       dialogAnnouncementEditFormVisible: false,
       allAnnouncements: [],
       rules: {
-        'content.title': [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
-        'content.priority': [{ required: true, message: '请选择优先级', trigger: 'blur' }],
-        'content.content': [{ required: true, message: '请填写公告内容', trigger: 'blur' }],
+        'content.title': [{ required: true, message: 'Please enter the announcement title', trigger: 'blur' }],
+        'content.priority': [{ required: true, message: 'Please Select A Priority', trigger: 'blur' }],
+        'content.content': [{ required: true, message: 'Please fill in the announcement content', trigger: 'blur' }],
         duration: [
           {
             type: 'array',
             required: true,
-            message: '请选择起止时间',
+            message: 'Please select start and end time',
             trigger: 'change'
           }
         ]
@@ -249,7 +249,7 @@ export default {
         deleteAnnouncementAPI(current_announcement.id).then(
           response => {
             this.$message({
-              message: '公告已删除',
+              message: 'Announcement Deleted',
               type: 'success'
             })
             this.getAnnouncements()
@@ -275,7 +275,7 @@ export default {
       createAnnouncementAPI(data).then(
         response => {
           this.$message({
-            message: '新增公告成功',
+            message: 'Added announcement successfully',
             type: 'success'
           })
           this.getAnnouncements()
@@ -291,7 +291,7 @@ export default {
         },
         response => {
           this.$message({
-            message: '新增公告失败',
+            message: 'Failed to add announcement',
             type: 'error'
           })
         }
@@ -301,14 +301,14 @@ export default {
       updateAnnouncementAPI(data).then(
         response => {
           this.$message({
-            message: '修改公告成功',
+            message: 'Modify the announcement successfully',
             type: 'success'
           })
           this.getAnnouncements()
         },
         response => {
           this.$message({
-            message: '修改公告失败',
+            message: 'Failed to modify announcement',
             type: 'error'
           })
         }
@@ -328,7 +328,7 @@ export default {
 
   },
   created () {
-    bus.$emit(`set-topbar-title`, { title: '公告管理', breadcrumb: [] })
+    bus.$emit(`set-topbar-title`, { title: 'Announcement Management', breadcrumb: [] })
 
     this.getAnnouncements()
   }

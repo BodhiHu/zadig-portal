@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item label="服务">
+    <el-form-item label="Serve">
       <el-select
         v-model="pickedTargetServices"
         @change="getServiceImg"
@@ -19,14 +19,14 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="镜像仓库">
+    <el-form-item label="Mirror Repository">
       <el-select v-model="pickedRegistry" filterable clearable @change="changeRegistry" size="medium" class="full-width">
         <el-option v-for="(reg,index) of allRegistry" :key="index" :label="reg.namespace ? `${reg.reg_addr}/${reg.namespace}` : reg.reg_addr" :value="reg.id"></el-option>
       </el-select>
     </el-form-item>
-    <el-table v-if="pickedTargetServices.length > 0" :data="pickedTargetServices" empty-text="无" class="service-deploy-table">
-      <el-table-column prop="name" label="服务" width="150px"></el-table-column>
-      <el-table-column label="镜像">
+    <el-table v-if="pickedTargetServices.length > 0" :data="pickedTargetServices" empty-text="None" class="service-deploy-table">
+      <el-table-column prop="name" label="Serve" width="150px"></el-table-column>
+      <el-table-column label="Mirror">
         <template slot-scope="scope">
           <div class="workflow-build-rows">
             <el-row class="build-row">
@@ -39,7 +39,7 @@
                     clearable
                     size="small"
                     style="width: 100%;"
-                    placeholder="请选择镜像"
+                    placeholder="Please Select A Mirror"
                   >
                     <el-option
                       v-for="item in imageMap[scope.row.image_name]"
@@ -57,7 +57,7 @@
                                clearable
                                size="small"
                                style="width: 100%;"
-                               placeholder="请选择镜像">
+                               placeholder="Please Select A Mirror">
                       <virtual-scroll-list :ref="`scrollListRef${scope.$index}`"
                                            style="height: 272px; overflow-y: auto;"
                                            :size="virtualData.size"
@@ -68,8 +68,8 @@
                                            :dataComponent="itemComponent">
                       </virtual-scroll-list>
                   </el-select>-->
-                  <el-tooltip v-else content="请求镜像失败，请手动输入镜像" placement="top" popper-class="gray-popper">
-                    <el-input v-model="scope.row.image" class="short-input" size="small" placeholder="请填写镜像"></el-input>
+                  <el-tooltip v-else content="Failed to request mirroring，Please enter the mirror manually" placement="top" popper-class="gray-popper">
+                    <el-input v-model="scope.row.image" class="short-input" size="small" placeholder="Please fill in the mirror"></el-input>
                   </el-tooltip>
                 </el-col>
               </template>
@@ -80,17 +80,17 @@
     </el-table>
     <div v-if="showCreateVersion" class="create-version">
       <div v-hasPermi="{projectName: projectName, action: 'create_delivery'}" class="create-checkbox">
-        <el-checkbox v-model="versionInfo.enabled">创建版本</el-checkbox>
+        <el-checkbox v-model="versionInfo.enabled">Create Version</el-checkbox>
       </div>
       <el-form v-if="versionInfo.enabled" :model="versionInfo" label-width="90px" ref="versionForm" :rules="versionRules">
-        <el-form-item label="版本名称" prop="version">
+        <el-form-item label="Version Name" prop="version">
           <el-input class="full-width" v-model="versionInfo.version" size="small" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="版本描述" prop="desc">
-          <el-input class="full-width" type="textarea" autosize placeholder="请输入版本描述" v-model="versionInfo.desc"></el-input>
+        <el-form-item label="Version Description" prop="desc">
+          <el-input class="full-width" type="textarea" autosize placeholder="Please enter a version description" v-model="versionInfo.desc"></el-input>
         </el-form-item>
-        <el-form-item label="标签" prop="labels">
-          <el-input class="full-width" type="textarea" autosize placeholder="请输入版本标签，多个标签用 ; 分割" v-model="versionInfo.labelStr"></el-input>
+        <el-form-item label="Label" prop="labels">
+          <el-input class="full-width" type="textarea" autosize placeholder="Please enter a version tag，For Multiple Labels ; Segmentation" v-model="versionInfo.labelStr"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -120,7 +120,7 @@ export default {
         version: [
           {
             required: true,
-            message: '请填写版本名称',
+            message: 'Please fill in the version name',
             trigger: ['blur', 'change']
           }
         ]
@@ -214,10 +214,10 @@ export default {
     }
   },
   created () {
-    // 如果 K8s 交付物部署开启则获取对应服务和镜像仓库
+    // If K8s When the deliverable deployment is enabled, the corresponding services and mirror warehouses are obtained.
     getRegistryWhenBuildAPI(this.projectName).then(res => {
       this.allRegistry = res
-      // 克隆任务数据
+      // Clone Task Data
       if (
         this.forcedUserInput.version_args &&
         this.forcedUserInput.version_args.version

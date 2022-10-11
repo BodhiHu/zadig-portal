@@ -1,36 +1,36 @@
 <template>
-  <el-dialog title="构建设置" :visible.sync="isShowBuildOperateDialog" width="50%" center @close="handleClose">
+  <el-dialog title="Build Settings" :visible.sync="isShowBuildOperateDialog" width="50%" center @close="handleClose">
     <template>
       <div class="build-configs">
-        <h4>代码信息</h4>
+        <h4>Code Information</h4>
         <el-table :data="value.branch_filter">
-          <el-table-column prop="repo_name" label="代码库" width="150px"></el-table-column>
-          <el-table-column prop="filter_regexp" label="分支/标签可选范围">
+          <el-table-column prop="repo_name" label="Code Library" width="150px"></el-table-column>
+          <el-table-column prop="filter_regexp" label="Branch/Label Optional Range">
             <template slot-scope="scope">
               <el-input
                 style="width: 70%;"
                 size="mini"
-                placeholder="正则表达式"
+                placeholder="Regular Expression"
                 @input="(currentValue)=>{inputCheck(currentValue,scope.row)}"
                 v-model="scope.row.filter_regexp"
               ></el-input>
               <div v-if="scope.row.filter_regexp">
-                <span>匹配到分支：</span>
+                <span>Match To Branch：</span>
                 <span v-if="scope.row.matchedBranches" class="match">{{scope.row.matchedBranches.toString()}}</span>
               </div>
               <div v-if="scope.row.filter_regexp">
-                <span>匹配到标签：</span>
+                <span>Match To Tag：</span>
                 <span v-if="scope.row.matchedTags" class="match">{{scope.row.matchedTags.toString()}}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="default_branch" label="默认分支" width="200px">
+          <el-table-column prop="default_branch" label="Default Branch" width="200px">
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.default_branch"
                 filterable
                 size="small"
-                placeholder="请选择默认分支"
+                placeholder="Please select default branch"
                 style="width: 160px;"
                 @change="handleBranchChange"
               >
@@ -38,17 +38,17 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="100px">
+          <el-table-column label="Operate" width="100px">
             <template slot-scope="scope">
-              <el-button @click="delBuild(scope.$index,scope.row)" type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+              <el-button @click="delBuild(scope.$index,scope.row)" type="danger" icon="el-icon-delete" size="mini">Delete</el-button>
             </template>
           </el-table-column>
         </el-table>
         <div class="repo">
-          <el-select v-model="form.repo" value-key="repo_name" filterable size="small" placeholder="请选择代码库" style="width: 200px;">
+          <el-select v-model="form.repo" value-key="repo_name" filterable size="small" placeholder="Please select a repository" style="width: 200px;">
             <el-option v-for="repo of originRepoList" :key="repo.repo_name" :label="repo.repo_name" :value="repo"></el-option>
           </el-select>
-          <el-button @click="addBuild" type="default" size="small" icon="el-icon-plus">添加</el-button>
+          <el-button @click="addBuild" type="default" size="small" icon="el-icon-plus">Add To</el-button>
         </div>
       </div>
     </template>
@@ -187,7 +187,7 @@ export default {
       }
     },
     inputCheck: function (regular, row) {
-      // input事件不能删除最后一个字符 这里用空格填充一下
+      // inputThe event cannot delete the last character, fill it with spaces
       regular = ' ' + regular
       row.default_branch = ''
       debounce(() => this.checkRegular(regular, row), 500)()

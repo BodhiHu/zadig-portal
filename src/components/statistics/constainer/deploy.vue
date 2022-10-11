@@ -1,6 +1,6 @@
 <template>
   <div class="auto-deploy">
-    <span class="title">自动化部署</span>
+    <span class="title">Automated Deployment</span>
     <div class="chart-container">
       <el-row>
         <el-col :span="14">
@@ -16,7 +16,7 @@
                   <h2>
                     <ICountUp :delay="delay" :endVal="total" class="counter-number" :options="options" />
                   </h2>
-                  <span class="desc">总次数</span>
+                  <span class="desc">Total</span>
                 </div>
               </el-col>
               <el-col class="auto-deploy-container-block" :span="12">
@@ -31,7 +31,7 @@
                     />
                   </h2>
                   <h2 v-else>N/A</h2>
-                  <span class="desc">成功率</span>
+                  <span class="desc">Success Rate</span>
                 </div>
               </el-col>
             </el-row>
@@ -52,7 +52,7 @@ export default {
       xData: [],
       ySuccessData: [],
       yFailureData: [],
-      subText: '近 30 天部署情况',
+      subText: 'Close 30 Day Deployment',
       total: 0,
       success: 0,
       successRate: 0,

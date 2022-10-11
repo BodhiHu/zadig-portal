@@ -4,11 +4,11 @@
       <div slot="reference" class="icon">
         <el-button type="primary" plain circle icon=" iconfont iconlink1" size="mini"></el-button>
       </div>
-      <div class="link-title">快捷链接</div>
+      <div class="link-title">Quick Link</div>
       <div class="link-outer" v-for="(link, index) in links" :key="index">
         <el-link :href="link.url" target="_blank" rel="noopener noreferrer">{{link.name}}</el-link>
       </div>
-      <div class="link-outer" v-if="links.length === 0">暂无链接</div>
+      <div class="link-outer" v-if="links.length === 0">No Link Yet</div>
     </el-popover>
   </div>
 </template>

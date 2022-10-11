@@ -6,13 +6,13 @@ export default {
         saveOnboardingStatusAPI(projectName, status)
           .then((res) => {
             if (res.message !== 'success') {
-              this.$message.error(`${projectName}/${status}状态保存失败：${res}`)
+              this.$message.error(`${projectName}/${status}Failed To Save State：${res}`)
               reject(res.message)
             }
             resolve('ok')
           })
           .catch((err) => {
-            this.$message.error(`${projectName}/${status}状态保存失败：${err}`)
+            this.$message.error(`${projectName}/${status}Failed To Save State：${err}`)
             reject(err)
           })
           .then(() => {

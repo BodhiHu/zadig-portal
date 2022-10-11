@@ -2,7 +2,7 @@
   <div class="intergration-github-app-container">
 
     <!--start of edit github dialog-->
-    <el-dialog title="GitHub App 配置-修改"
+    <el-dialog title="GitHub App Configure-Revise"
                :close-on-click-modal="false"
                custom-class="edit-form-dialog"
                :visible.sync="dialogGithubEditFormVisible">
@@ -36,17 +36,17 @@
                    native-type="submit"
                    size="small"
                    @click="updateGithubApp()"
-                   class="start-create">确定</el-button>
+                   class="start-create">Sure</el-button>
         <el-button plain
                    native-type="submit"
                    size="small"
-                   @click="handleGithubAppCancel()">取消</el-button>
+                   @click="handleGithubAppCancel()">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of edit github dialog-->
 
     <!--start of edit github dialog-->
-    <el-dialog title="Github App 配置-添加"
+    <el-dialog title="Github App Configure-Add To"
                :close-on-click-modal="false"
                custom-class="edit-form-dialog"
                :visible.sync="dialogGithubAddFormVisible">
@@ -60,14 +60,14 @@
         <el-form-item label="App ID"
                       prop="app_id">
           <el-input v-model.number="githubAppAdd.app_id"
-                    placeholder="创建的 GitHub App ID"
+                    placeholder="Created GitHub App ID"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="App Key"
                       prop="app_key">
           <el-input v-model="githubAppAdd.app_key"
-                    placeholder="创建的 GitHub App Key"
+                    placeholder="Created GitHub App Key"
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4}"
                     autofocus
@@ -80,11 +80,11 @@
                    native-type="submit"
                    size="small"
                    @click="createGithubApp()"
-                   class="start-create">确定</el-button>
+                   class="start-create">Sure</el-button>
         <el-button plain
                    native-type="submit"
                    size="small"
-                   @click="handleGithubAppCancel()">取消</el-button>
+                   @click="handleGithubAppCancel()">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of edit github dialog-->
@@ -94,12 +94,12 @@
         <el-alert type="info"
                   :closable="false">
           <template>
-            支持集成 GitHub App，配置后可以在 GitHub - Checks 上追踪工作流状态，详情可参考
+            Support Integration GitHub App，After configuration, you can GitHub - Checks Track Workflow Status On，For details, please refer to
             <el-link style="font-size: 14px; vertical-align: baseline;"
                      type="primary"
                      :href="`https://docs.koderover.com/zadig/settings/webhook-config/`"
                      :underline="false"
-                     target="_blank">帮助文档</el-link> 。
+                     target="_blank">Help Documentation</el-link> 。
           </template>
         </el-alert>
       </template>
@@ -108,7 +108,7 @@
                    size="small"
                    type="primary"
                    plain
-                   @click="handleGithubAppAdd">添加</el-button>
+                   @click="handleGithubAppAdd">Add To</el-button>
       </div>
       <el-table :data="githubApp"
                 style="width: 100%;">
@@ -122,17 +122,17 @@
             **********
           </template>
         </el-table-column>
-        <el-table-column label="操作"
+        <el-table-column label="Operate"
                          width="160">
           <template slot-scope="scope">
             <el-button type="primary"
                        size="mini"
                        plain
-                       @click="handleGithubAppEdit(scope.row)">编辑</el-button>
+                       @click="handleGithubAppEdit(scope.row)">Edit</el-button>
             <el-button type="danger"
                        size="mini"
                        @click="handleGithubAppDelete(scope.row)"
-                       plain>删除</el-button>
+                       plain>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -158,13 +158,13 @@ export default {
       githubAppRules: {
         app_id: {
           required: true,
-          message: '请输入 App ID',
+          message: 'Please Enter App ID',
           type: 'number',
           trigger: ['blur', 'change']
         },
         app_key: {
           required: true,
-          message: '请输入 App Key',
+          message: 'Please Enter App Key',
           trigger: ['blur', 'change']
         }
       },
@@ -193,16 +193,16 @@ export default {
       this.githubAppEdit = this.$utils.cloneObj(row)
     },
     handleGithubAppDelete (row) {
-      this.$confirm('确定要删除这个 GitHub App 配置吗？', '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Sure you want to delete this GitHub App Configure？', 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         const id = row.id
         deleteGithubAppAPI(id).then((res) => {
           this.getGithubApp()
           this.$message({
-            message: 'GitHub App 配置删除成功',
+            message: 'GitHub App Configuration deleted successfully',
             type: 'success'
           })
         })
@@ -216,7 +216,7 @@ export default {
             this.getGithubApp()
             this.handleGithubAppCancel()
             this.$message({
-              message: 'GitHub App 配置添加成功',
+              message: 'GitHub App Configuration added successfully',
               type: 'success'
             })
           })
@@ -233,7 +233,7 @@ export default {
             this.getGithubApp()
             this.handleGithubAppCancel()
             this.$message({
-              message: 'GitHub App 配置修改成功',
+              message: 'GitHub App Configuration modification succeeded',
               type: 'success'
             })
           })

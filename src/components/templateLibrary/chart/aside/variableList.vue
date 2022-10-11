@@ -1,24 +1,24 @@
 <template>
   <div class="variable-list">
-    <header class="var-title">变量列表</header>
+    <header class="var-title">Variable List</header>
     <section>
       <article>
         <h4>
           <span>
             <i class="iconfont iconfuwu"></i>
-          </span> 系统内置变量
+          </span> System built-in variables
         </h4>
         <el-table :data="systemVariables" style="width: 100%;">
           <el-table-column prop="key" label="Key"></el-table-column>
-          <el-table-column prop="description" label="描述"></el-table-column>
+          <el-table-column prop="description" label="Describe"></el-table-column>
         </el-table>
       </article>
       <article>
         <h4>
           <span>
             <i class="iconfont icontanhao"></i>
-          </span> 自定义变量
-          <el-tooltip effect="dark" :content="'自定义变量通过'+' {{'+'.key}} ' +' 声明'" placement="top">
+          </span> Custom Variable
+          <el-tooltip effect="dark" :content="'Custom Variable Via'+' {{'+'.key}} ' +' Statement'" placement="top">
             <span>
               <i class="el-icon-question"></i>
             </span>
@@ -32,8 +32,8 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button v-hasPermi="{type: 'system', action: 'edit_template',isBtn:true}"  type="primary" @click="saveCustomVariables" size="small" :loading="saveLoading">保存</el-button>
-        <el-button v-hasPermi="{type: 'system', action: 'edit_template',isBtn:true}" type="default" size="small" @click="multiUpdate">应用到服务</el-button>
+        <el-button v-hasPermi="{type: 'system', action: 'edit_template',isBtn:true}"  type="primary" @click="saveCustomVariables" size="small" :loading="saveLoading">Save</el-button>
+        <el-button v-hasPermi="{type: 'system', action: 'edit_template',isBtn:true}" type="default" size="small" @click="multiUpdate">Apply To Service</el-button>
       </article>
     </section>
   </div>
@@ -65,32 +65,32 @@ export default {
   methods: {
     saveCustomVariables () {
       if (!this.serviceName) {
-        this.$message.info('未选择服务')
+        this.$message.info('No Service Selected')
         return
       }
       this.saveLoading = true
       saveHelmTemplateVariableAPI(this.serviceName, this.customVariables)
         .then(res => {
-          this.$message.success(`自定义变量保存成功！`)
+          this.$message.success(`Custom variable saved successfully！`)
         })
         .catch(err => {
-          this.$message.error(`自定义变量保存失败：${err}`)
+          this.$message.error(`Failed to save custom variable：${err}`)
         })
         .then(() => {
           this.saveLoading = false
         })
     },
     multiUpdate () {
-      this.$confirm(`确认后，所有开启「自动同步」的服务配置会应用最新的模板。`, '确定应用到服务？', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`After Confirming，All On「Auto Sync」The service configuration of will apply the latest template。`, 'Determine the application to the service？', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(() => {
           updateHelmTemplateAPI(this.serviceName).then(res => {
             this.$message({
               type: 'success',
-              message: `应用到服务成功`
+              message: `Apply to service successfully`
             })
           })
         })

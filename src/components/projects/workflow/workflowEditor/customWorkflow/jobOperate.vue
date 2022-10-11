@@ -9,7 +9,7 @@
     >
       <div class="mg-b8">
         <span class="item-title">{{item.label || item.name}}</span>
-        <el-tag size="small" class="mg-l8" v-if="item.is_offical">官方</el-tag>
+        <el-tag size="small" class="mg-l8" v-if="item.is_offical">Official</el-tag>
       </div>
       <span class="item-dec">{{item.description}}</span>
     </div>

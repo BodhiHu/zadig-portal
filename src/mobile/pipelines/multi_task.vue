@@ -13,7 +13,7 @@
       <van-row>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">状态</h2>
+            <h2 class="mobile-block-title">State</h2>
             <div class="mobile-block-desc">
               <van-tag size="small"
                        :type="$utils.mobileElTagType(taskDetail.status)">
@@ -23,7 +23,7 @@
         </van-col>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">创建者</h2>
+            <h2 class="mobile-block-title">Creator</h2>
             <div class="mobile-block-desc">{{ taskDetail.task_creator }}</div>
           </div>
         </van-col>
@@ -31,7 +31,7 @@
       <van-row>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">环境</h2>
+            <h2 class="mobile-block-title">Surroundings</h2>
             <div class="mobile-block-desc"> {{ workflow.product_tmpl_name }} -
               {{ workflow.namespace }}
             </div>
@@ -39,7 +39,7 @@
         </van-col>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">持续时间</h2>
+            <h2 class="mobile-block-title">Duration</h2>
             <div class="mobile-block-desc"> {{ taskDetail.interval }}</div>
           </div>
         </van-col>
@@ -47,22 +47,22 @@
     </div>
     <template v-if="taskDetail.status!=='passed'">
       <div class="mobile-block">
-        <h2 class="mobile-block-title">操作</h2>
+        <h2 class="mobile-block-title">Operate</h2>
       </div>
       <van-cell is-link
-                title="操作"
+                title="Operate"
                 @click="showAction = true" />
       <van-action-sheet close-on-click-action
                         v-model="showAction"
                         :actions="actions"
-                        cancel-text="取消"
+                        cancel-text="Cancel"
                         @select="onSelectAction"
                         @open="openSelectAction"
                         @cancel="onCancel" />
     </template>
     <template v-if="buildDeployArray.length > 0">
       <div class="mobile-block">
-        <h2 class="mobile-block-title">环境更新</h2>
+        <h2 class="mobile-block-title">Environment Update</h2>
       </div>
       <van-collapse v-model="buildActive">
         <van-collapse-item v-for="(item,index) in buildDeployArray"
@@ -159,25 +159,25 @@ export default {
     openSelectAction () {
       this.actions = []
       if (this.taskDetail.status === 'failed' || this.taskDetail.status === 'cancelled' || this.taskDetail.status === 'timeout') {
-        this.actions.push({ name: '失败重试' })
+        this.actions.push({ name: 'Retry On Failure' })
       }
       if (this.taskDetail.status === 'running' || this.taskDetail.status === 'created') {
-        this.actions.push({ name: '取消任务' })
+        this.actions.push({ name: 'Cancel Task' })
       }
     },
     onSelectAction (action) {
-      if (action.name === '失败重试') {
+      if (action.name === 'Retry On Failure') {
         restartWorkflowAPI(this.projectName, this.workflowName, this.taskID).then(res => {
-          Notify({ type: 'success', message: '任务已重新启动' })
+          Notify({ type: 'success', message: 'Task Restarted' })
           this.$router.push('/mobile/status')
         })
-      } else if (action.name === '取消任务') {
+      } else if (action.name === 'Cancel Task') {
         cancelWorkflowAPI(this.projectName, this.workflowName, this.taskID).then(res => {
           if (this.$refs && this.$refs.buildComp) {
             this.$refs.buildComp.killLog('buildv2')
             this.$refs.buildComp.killLog('docker_build')
           }
-          Notify({ type: 'success', message: '任务取消成功' })
+          Notify({ type: 'success', message: 'The task was canceled successfully' })
         })
       }
       this.showAction = false

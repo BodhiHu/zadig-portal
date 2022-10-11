@@ -3,7 +3,7 @@
     <ul>
       <li v-for="list in lists" :key="list.tab" @click="addTab(list)">
         {{list.tab}}
-        <i v-if="list.tab !== '基本信息'" class="el-icon-circle-plus-outline"></i>
+        <i v-if="list.tab !== 'Basic Information'" class="el-icon-circle-plus-outline"></i>
       </li>
     </ul>
   </div>

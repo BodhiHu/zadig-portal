@@ -1,7 +1,7 @@
 <template>
   <div class="import-from-namespace-container">
     <el-dialog
-      title="从 Kubernetes 命名空间导入"
+      title="From Kubernetes Namespace Import"
       :close-on-click-modal="false"
       append-to-body
       center
@@ -20,43 +20,43 @@
         label-position="left"
         class="primary-form"
       >
-        <el-form-item label="选择集群" prop="cluster_id" :show-message="false">
-          <el-select filterable v-model="importNamespace.cluster_id" placeholder="请选择集群" @change="changeCluster" size="small">
+        <el-form-item label="Choose A Cluster" prop="cluster_id" :show-message="false">
+          <el-select filterable v-model="importNamespace.cluster_id" placeholder="Please Select A Cluster" @change="changeCluster" size="small">
             <el-option v-for="cluster in allCluster" :key="cluster.id" :label="$utils.showClusterName(cluster)" :value="cluster.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="选择命名空间" prop="namespace" :show-message="false">
-          <el-select filterable v-model="importNamespace.namespace" placeholder="请选择命名空间" @change="changeNamespace" size="small">
+        <el-form-item label="Select Namespace" prop="namespace" :show-message="false">
+          <el-select filterable v-model="importNamespace.namespace" placeholder="Please select a namespace" @change="changeNamespace" size="small">
             <el-option v-for="(ns,index) in hostingNamespace" :key="index" :label="ns.name" :value="ns.name"></el-option>
           </el-select>
         </el-form-item>
 
         <el-table :data="importNamespace.services" style="width: 100%;">
-          <el-table-column width="200px" label="服务名称">
+          <el-table-column width="200px" label="Service Name">
             <template slot-scope="{ row, $index }">
               <el-form-item
                 label-width="0"
                 :prop="`services[${$index}].name`"
-                :rules="{ required: true, type: 'string', message: '请输入服务名称', trigger: 'change'}"
+                :rules="{ required: true, type: 'string', message: 'Please enter a service name', trigger: 'change'}"
                 :show-message="false"
               >
-                <el-input v-model="row.name" placeholder="输入服务名称" size="small" style="width: 85%;"></el-input>
+                <el-input v-model="row.name" placeholder="Enter Service Name" size="small" style="width: 85%;"></el-input>
                 <el-button type="text" icon="el-icon-minus" style="margin-left: 5px;" @click="operateService('delete', $index)"></el-button>
               </el-form-item>
             </template>
           </el-table-column>
-          <el-table-column label="选择配置">
+          <el-table-column label="Select Configuration">
             <template slot-scope="{ row, $index }">
               <div v-for="(workload, index) in row.workloads_map" :key="index">
                 <el-form-item
                   label-width="0"
                   :prop="`services[${$index}].workloads_map[${index}].type`"
-                  :rules="{ required: true, message: '请选择资源', trigger: 'change'}"
+                  :rules="{ required: true, message: 'Please Select A Resource', trigger: 'change'}"
                   style=" display: inline-block; width: 30%;"
                   :show-message="false"
                 >
                   <span v-show="workload.type" style=" display: inline-block; width: 100%;">{{ workload.type }}</span>
-                  <el-select v-show="!workload.type" v-model="workload.type" placeholder="选择资源" size="small">
+                  <el-select v-show="!workload.type" v-model="workload.type" placeholder="Choose A Resource" size="small">
                     <el-option
                       v-for="item in difference(Object.keys(workloadsMap), row.workloads_map.map(work => work.type))"
                       :key="item"
@@ -68,11 +68,11 @@
                 <el-form-item
                   label-width="0"
                   :prop="`services[${$index}].workloads_map[${index}].configs`"
-                  :rules="{ required: true, type: 'array', message: '请选择配置', trigger: 'change'}"
+                  :rules="{ required: true, type: 'array', message: 'Please select a configuration', trigger: 'change'}"
                   style=" display: inline-block; width: 55%;"
                   :show-message="false"
                 >
-                  <el-select v-model="workload.configs" placeholder="选择配置" multiple collapse-tags filterable size="small">
+                  <el-select v-model="workload.configs" placeholder="Select Configuration" multiple collapse-tags filterable size="small">
                     <el-option v-for="item in workload.configs" :key="item" :label="item" :value="item"></el-option>
                     <el-option v-for="item in (remainingConfig[workload.type] || [])" :key="item" :label="item" :value="item"></el-option>
                   </el-select>
@@ -96,10 +96,10 @@
           </el-table-column>
         </el-table>
 
-        <el-button type="text" icon="el-icon-plus" @click="operateService('add')">添加服务</el-button>
+        <el-button type="text" icon="el-icon-plus" @click="operateService('add')">Add Service</el-button>
       </el-form>
       <div class="dialog-footer">
-        <el-button plain native-type="submit" @click="closeDialog()" size="small" :disabled="importLoading">取消</el-button>
+        <el-button plain native-type="submit" @click="closeDialog()" size="small" :disabled="importLoading">Cancel</el-button>
         <el-button
           type="primary"
           native-type="submit"
@@ -107,7 +107,7 @@
           class="start-create"
           :loading="importLoading"
           @click="loadServiceFromKubernetesNamespace"
-        >导入</el-button>
+        >Import</el-button>
       </div>
     </el-dialog>
   </div>
@@ -141,12 +141,12 @@ export default {
       rules: {
         cluster_id: {
           required: true,
-          message: '请选择集群',
+          message: 'Please Select A Cluster',
           trigger: ['change']
         },
         namespace: {
           required: true,
-          message: '请选择命名空间',
+          message: 'Please select a namespace',
           trigger: ['change']
         }
       },
@@ -242,7 +242,7 @@ export default {
     loadServiceFromKubernetesNamespace () {
       this.$refs.importK8sNamespaceRefRef.validate().then(() => {
         if (!this.importNamespace.services.length) {
-          this.$message.info('请添加服务')
+          this.$message.info('Please Add Service')
           return
         }
         const payload = cloneDeep(this.importNamespace)
@@ -260,7 +260,7 @@ export default {
         createServiceFromK8sNamespaceAPI(this.projectName, payload)
           .then(() => {
             this.importLoading = false
-            this.$message.success('创建服务成功！')
+            this.$message.success('Create service successfully！')
             this.closeDialog()
             this.importServiceFromNamespaceSuccess()
           })

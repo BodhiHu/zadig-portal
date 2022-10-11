@@ -6,10 +6,10 @@
         <li>
           <el-dropdown placement="top" @command="selectSystemToDownloadCLI">
             <span>
-              <i class="iconfont"></i>下载开发者 CLI
+              <i class="iconfont"></i>Download The Developer CLI
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item disabled>请选择操作系统</el-dropdown-item>
+              <el-dropdown-item disabled>Please select an operating system</el-dropdown-item>
               <el-dropdown-item command="mac">Mac</el-dropdown-item>
               <el-dropdown-item command="linux">Linux</el-dropdown-item>
               <el-dropdown-item command="windows">Windows</el-dropdown-item>
@@ -19,7 +19,7 @@
         <li>
           <span>
             <i class="iconfont"></i>
-            <a href="https://docs.koderover.com/" target="_blank" rel="noopener noreferrer">帮助文档</a>
+            <a href="https://docs.koderover.com/" target="_blank" rel="noopener noreferrer">Help Documentation</a>
           </span>
         </li>
       </ul>

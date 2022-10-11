@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-alert type="info" :closable="false" description="项目成员管理，主要用于定义项目成员的角色"></el-alert>
+    <el-alert type="info" :closable="false" description="Project member management，Primarily used to define the roles of project members"></el-alert>
     <div class="btn-container">
-      <el-button plain size="small" type="primary" @click="$refs.addRoleBind.addUserFormVisible = true">添加成员</el-button>
+      <el-button plain size="small" type="primary" @click="$refs.addRoleBind.addUserFormVisible = true">Add Members</el-button>
     </div>
 
     <el-table v-loading="loading" row-key="id" :data="members" style="width: 100%;" class="users-container">
-      <el-table-column label="项目成员">
+      <el-table-column label="Project Member">
         <template slot-scope="scope">
           <div class="name-listing-details">
             <!-- Logo -->
@@ -15,7 +15,7 @@
             </div>
             <!-- Details -->
             <div class="name-listing-description">
-              <h3 v-if="scope.row.uid === '*'" class="name-listing-title">所有用户</h3>
+              <h3 v-if="scope.row.uid === '*'" class="name-listing-title">All Users</h3>
               <h3
                 v-else
                 class="name-listing-title"
@@ -41,18 +41,18 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="角色">
+      <el-table-column label="Role">
         <template slot-scope="{ row }">
           <div v-if="row.uid === '*'">
             {{ row.role }}
-            <span v-if="row.type === 'system'">(系统内置)</span>
+            <span v-if="row.type === 'system'">(System Built In)</span>
           </div>
           <div v-else>
             <div class="role-content" v-show="!row.editRole">
               <div :class="{'role-content-left': row.roles.length}">
                 <div v-for="(role, index) in row.roles" :key="index">
                   <span>{{ role.role }}</span>
-                  <span v-if="role.type === 'system'">(系统内置)</span>
+                  <span v-if="role.type === 'system'">(System Built In)</span>
                 </div>
               </div>
               <div>
@@ -61,13 +61,13 @@
             </div>
             <div class="role-content" v-show="row.editRole">
               <div class="role-content-left">
-                <el-select v-model="row.updatedRoles" placeholder="选择角色" size="small" multiple>
+                <el-select v-model="row.updatedRoles" placeholder="Choose Role" size="small" multiple>
                   <el-option
                     v-for="(item, index) in rolesFiltered"
                     :key="index"
                     :label="item.name"
                     :value="item.name"
-                  >{{item.name}} {{item.isPublic ? '(系统内置)': ''}}</el-option>
+                  >{{item.name}} {{item.isPublic ? '(System Built In)': ''}}</el-option>
                 </el-select>
               </div>
               <div>
@@ -81,34 +81,34 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="策略">
+      <el-table-column label="Strategy">
         <template slot-scope="{ row }">
           <div v-if="row.uid === '*'" :class="{'show-gray': row.hasSystemPolicy}">
             {{ row.policy || '-' }}
-            <span v-if="row.hasSystemPolicy">(系统创建)</span>
+            <span v-if="row.hasSystemPolicy">(System Creation)</span>
           </div>
           <div v-else>
             <div v-if="!row.policies.length">-</div>
             <div v-for="(policy, index) in row.policies" :key="index" :class="{'show-gray': policy.type === 'system'}">
               <span>{{ policy.policy }}</span>
-              <span v-if="policy.type === 'system'">(系统创建)</span>
+              <span v-if="policy.type === 'system'">(System Creation)</span>
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100px">
+      <el-table-column label="Operate" width="100px">
         <template slot-scope="{ row }">
-          <el-tooltip effect="dark" content="该用户关联项目协作模式，产生了相应的策略不能直接移除，请先将用户从对应协作模式中移除" placement="top">
+          <el-tooltip effect="dark" content="The user is associated with the project collaboration mode，The corresponding strategy is generated and cannot be removed directly，Please remove the user from the corresponding collaboration mode first" placement="top">
             <span>
-              <el-button v-if="row.hasSystemPolicy" size="mini" type="info" plain disabled>移除</el-button>
+              <el-button v-if="row.hasSystemPolicy" size="mini" type="info" plain disabled>Remove</el-button>
             </span>
           </el-tooltip>
-          <el-tooltip effect="dark" content="所有用户具备 read-only 权限，可以通过项目配置 -> 设置访问权限为私有将其移除" placement="top">
+          <el-tooltip effect="dark" content="All Users Have read-only Permission，Can be configured by project -> Set access to private to remove it" placement="top">
             <span>
-              <el-button v-if="row.readOnly" size="mini" type="info" plain disabled>移除</el-button>
+              <el-button v-if="row.readOnly" size="mini" type="info" plain disabled>Remove</el-button>
             </span>
           </el-tooltip>
-          <el-button v-if="!row.hasSystemPolicy && !row.readOnly" size="mini" type="danger" @click="handleDelete(row)" plain>移除</el-button>
+          <el-button v-if="!row.hasSystemPolicy && !row.readOnly" size="mini" type="danger" @click="handleDelete(row)" plain>Remove</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -144,7 +144,7 @@ export default {
       loading: false,
       identityTypeMap: {
         github: 'GitHub',
-        system: '系统创建',
+        system: 'System Creation',
         ldap: 'OpenLDAP',
         oauth: 'OAuth'
       }
@@ -169,15 +169,15 @@ export default {
         }
       })
       updateMutiRolebindingsAPI(this.projectName, row.uid, payload).then(() => {
-        this.$message.success(isDelete ? '删除成功!' : '更新用户角色成功！')
+        this.$message.success(isDelete ? 'Successfully Deleted!' : 'Update user role succeeded！')
         this.getRoleBindings()
         row.editRole = false
       })
     },
     async handleDelete (row) {
-      this.$confirm('确定要删除这个成员吗？', '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to delete this member？', 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         if (row.uid !== '*') {
@@ -191,7 +191,7 @@ export default {
         } else {
           deleteRoleBindingsAPI(row.name, this.projectName).then(() => {
             this.$message({
-              message: '删除成功',
+              message: 'Successfully Deleted',
               type: 'success'
             })
             this.getRoleBindings()
@@ -254,14 +254,14 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '权限管理', url: '' },
-        { title: '成员管理', url: '' }
+        { title: 'Authority Management', url: '' },
+        { title: 'Member Management', url: '' }
       ]
     })
   }

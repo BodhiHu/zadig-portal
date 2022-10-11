@@ -57,7 +57,7 @@ export default {
         },
         series: [
           {
-            name: '测试结果',
+            name: 'Test Results',
             type: 'pie',
             radius: ['40%', '50%'],
             center: ['20%', '35%'],
@@ -150,10 +150,10 @@ export default {
     total: {
       handler (val, old_val) {
         this.option.series[0].data = [
-          { name: '成功', value: this.success },
-          { name: '失败', value: this.failure },
-          { name: '错误', value: this.error },
-          { name: '未执行', value: this.skip }
+          { name: 'Success', value: this.success },
+          { name: 'Fail', value: this.failure },
+          { name: 'Mistake', value: this.error },
+          { name: 'Not Performed', value: this.skip }
         ]
       }
     }

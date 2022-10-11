@@ -1,7 +1,7 @@
 <template>
   <div class="helm-chart-yaml-content">
     <template v-if="showServicesTab">
-      <el-input class="search-service" v-model="searchService" placeholder="搜索服务" suffix-icon="el-icon-search" size="small"></el-input>
+      <el-input class="search-service" v-model="searchService" placeholder="Search Service" suffix-icon="el-icon-search" size="small"></el-input>
       <el-tabs class="service-list" tab-position="left" type="border-card" v-model="selectedChart" :before-leave="switchTabs">
         <el-tab-pane :name="name.serviceName" v-for="name in filteredServiceNames" :key="name.serviceName" :disabled="name.type==='delete'">
           <template slot="label">
@@ -23,7 +23,7 @@
         </el-tabs>
         <div class="v-content" v-if="usedChartNameInfo">
           <div v-show="usedChartNameInfo.yamlSource === 'default'" class="default-values">
-            <el-button type="text" @click="usedChartNameInfo.yamlSource = 'freeEdit'">添加 values 文件</el-button>
+            <el-button type="text" @click="usedChartNameInfo.yamlSource = 'freeEdit'">Add To values Document</el-button>
           </div>
           <ImportValues
             v-show="usedChartNameInfo.yamlSource !== 'default'"
@@ -42,10 +42,10 @@
           <section class="review-content">
             <div class="review-title">
               <el-button type="text" @click="getReviewValuesFile">
-                预览最终 values 文件
+                Preview Final values Document
                 <i style="margin-left: 8px;" :class="{'el-icon-arrow-down': showReview, 'el-icon-arrow-right': !showReview}"></i>
               </el-button>
-              <el-button type="text" v-show="showReview" @click="getCalculatedValuesYaml(false)">刷新</el-button>
+              <el-button type="text" v-show="showReview" @click="getCalculatedValuesYaml(false)">Refresh</el-button>
             </div>
             <Codemirror class="codemirror" ref="codemirror" v-if="showReview" :value="usedChartNameInfo.yamlContent" :cmOption="cmOption"></Codemirror>
           </section>
@@ -75,7 +75,7 @@ const chartInfoTemp = {
   overrideValues: [], // : Object{key,value}[]
   overrideYaml: '', // : String
   gitRepoConfig: null, // : Object [Not use, just record]
-  yamlContent: '' // 预览 YAML 内容
+  yamlContent: '' // Preview YAML Content
 }
 
 // const allChartNameInfoTemp = {
@@ -94,18 +94,18 @@ export default {
     },
     envNames: {
       // when envName is different from initEnvNames, the envNames is all name
-      // 环境列表
+      // Environment List
       type: Array,
       required: false,
       default: () => []
     },
     handledEnv: {
-      // 正在处理的环境名称
+      // The environment name being processed
       type: String,
       required: false
     },
     showEnvTabs: {
-      // 是否展示环境tab
+      // Whether to show the environmenttab
       default: false,
       type: Boolean,
       required: false
@@ -139,7 +139,7 @@ export default {
       readOnly: true,
       lineNumbers: false
     }
-    this.defaultEnvsValues = {} // 不需要响应式 { key: envName, value: defaultEnvValue }
+    this.defaultEnvsValues = {} // No Need To Be Responsive { key: envName, value: defaultEnvValue }
     return {
       allChartNameInfo: {}, // key: serviceName value: Object{ key:envName }
       selectedChart: '',
@@ -173,7 +173,7 @@ export default {
       return this.$route.params.project_name
     },
     usedChartNameInfo () {
-      // 每次切换环境或服务，预览收起、清空键值对
+      // Every time you switch environments or services，Preview Collapse、Clear Key Value Pairs
       this.closeReview()
       this.listKeyValues = {}
       return (
@@ -206,7 +206,7 @@ export default {
             ? ''
             : this.usedChartNameInfo.overrideYaml
       }
-      // 更新环境，不需要传环境默认value
+      // Update Environment，No need to pass environment defaultvalue
       if (this.envScene !== 'updateEnv') {
         payload.defaultValues = this.defaultEnvsValues[envName] || ''
       }

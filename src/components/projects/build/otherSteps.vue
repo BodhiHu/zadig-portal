@@ -1,6 +1,6 @@
 <template>
   <section class="other-step-container">
-    <el-drawer title="Dockerfile 模板预览" :visible.sync="showDockerfile" direction="rtl">
+    <el-drawer title="Dockerfile Template Preview" :visible.sync="showDockerfile" direction="rtl">
       <Codemirror
         v-model="dockerfileTemplate.content"
         :cmOption="{
@@ -21,14 +21,14 @@
     <div style="margin: 14px 0 8px;">
       <el-dropdown @command="addExtra">
         <el-button type="primary" size="small" plain>
-          添加步骤
+          Add Steps
           <i style="margin-left: 8px;" class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="docker" :disabled="docker_enabled">镜像构建</el-dropdown-item>
-          <el-dropdown-item command="binary" :disabled="binary_enabled">二进制包存储</el-dropdown-item>
-          <el-dropdown-item command="object" :disabled="object_storage_upload_enabled">文件存储</el-dropdown-item>
-          <el-dropdown-item command="script" v-if="!usedToHost" :disabled="post_script_enabled">Shell 脚本执行</el-dropdown-item>
+          <el-dropdown-item command="docker" :disabled="docker_enabled">Image Build</el-dropdown-item>
+          <el-dropdown-item command="binary" :disabled="binary_enabled">Binary Package Storage</el-dropdown-item>
+          <el-dropdown-item command="object" :disabled="object_storage_upload_enabled">File Storage</el-dropdown-item>
+          <el-dropdown-item command="script" v-if="!usedToHost" :disabled="post_script_enabled">Shell Script Execution</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -44,36 +44,36 @@
       >
         <div class="dashed-container">
           <span class="primary-title">
-            镜像构建
+            Image Build
             <el-button type="text" @click="removeDocker" icon="el-icon-delete"></el-button>
           </span>
           <div v-if="!usedToHost && allRegistry.length === 0" class="registry-alert">
-            <el-alert title="私有镜像仓库未集成，请前往系统设置 -> Registry 管理  进行集成。" type="warning"></el-alert>
+            <el-alert title="Private image repositories are not integrated，Please go to system settings -> Registry Management for integration。" type="warning"></el-alert>
           </div>
-          <el-form-item label="构建上下文目录" prop="work_dir">
+          <el-form-item label="Build Context Directory" prop="work_dir">
             <el-input v-model="buildPostConfig.docker_build.work_dir" size="small">
               <template slot="prepend">$WORKSPACE/</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="Dockerfile 来源" prop="source">
-            <el-select size="small" v-model="buildPostConfig.docker_build.source" placeholder="请选择" @change="$refs.dockerBuildRef.clearValidate()">
-              <el-option label="代码仓库" value="local"></el-option>
-              <el-option label="模板库" value="template"></el-option>
+          <el-form-item label="Dockerfile Source" prop="source">
+            <el-select size="small" v-model="buildPostConfig.docker_build.source" placeholder="Please Choose" @change="$refs.dockerBuildRef.clearValidate()">
+              <el-option label="Code Repository" value="local"></el-option>
+              <el-option label="Template Library" value="template"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item v-if="buildPostConfig.docker_build.source === 'local'" label="Dockerfile 的绝对路径" prop="docker_file">
+          <el-form-item v-if="buildPostConfig.docker_build.source === 'local'" label="Dockerfile The Absolute Path Of" prop="docker_file">
             <el-input v-model="buildPostConfig.docker_build.docker_file" size="small">
               <template slot="prepend">$WORKSPACE/</template>
             </el-input>
           </el-form-item>
-          <el-form-item v-if="buildPostConfig.docker_build.source === 'template'" label="模板选择" prop="template_id">
+          <el-form-item v-if="buildPostConfig.docker_build.source === 'template'" label="Template Selection" prop="template_id">
             <el-select
               style="width: 90%;"
               size="small"
               filterable
               @change="getDockerfileTemplate"
               v-model="buildPostConfig.docker_build.template_id"
-              placeholder="请选择"
+              placeholder="Please Choose"
             >
               <el-option v-for="(template,index) in dockerfileTemplates" :key="index" :label="template.name" :value="template.id"></el-option>
             </el-select>
@@ -83,7 +83,7 @@
                 style="margin-left: 5px;"
                 type="text"
                 @click="showDockerfile = true"
-              >预览</el-button>
+              >Preview</el-button>
               <div v-if="dockerfileTemplate.variable && dockerfileTemplate.variable.length > 0" class="dockerfile-args-container">
                 <span>ARG</span>
                 <span v-for="(item,index) in dockerfileTemplate.variable" :key="index">
@@ -93,8 +93,8 @@
               </div>
             </template>
           </el-form-item>
-          <el-form-item label="构建参数">
-            <el-tooltip effect="dark" content="支持所有 Docker Build 参数" placement="top-start">
+          <el-form-item label="Build Parameters">
+            <el-tooltip effect="dark" content="Support All Docker Build Parameter" placement="top-start">
               <el-input v-model="buildPostConfig.docker_build.build_args" size="small" placeholder="--build-arg key=value"></el-input>
             </el-tooltip>
           </el-form-item>
@@ -111,10 +111,10 @@
       >
         <div class="dashed-container">
           <span class="primary-title">
-            二进制包存储
+            Binary Package Storage
             <el-button type="text" @click="removeBinary" icon="el-icon-delete"></el-button>
           </span>
-          <el-form-item label="二进制包存储路径" prop="file_location">
+          <el-form-item label="Binary package storage path" prop="file_location">
             <el-input v-model="buildPostConfig.file_archive.file_location" size="small">
               <template slot="append">/$PKG_FILE</template>
               <template slot="prepend">$WORKSPACE/</template>
@@ -133,15 +133,15 @@
       >
         <div class="dashed-container">
           <span class="primary-title">
-            文件存储
+            File Storage
             <el-button type="text" @click="removeObject" icon="el-icon-delete"></el-button>
           </span>
-          <el-form-item label="对象存储" prop="object_storage_id">
-            <el-select size="small" v-model="buildPostConfig.object_storage_upload.object_storage_id" placeholder="请选择对象存储" @change="$refs.objectStorageRef.clearValidate()">
+          <el-form-item label="Object Storage" prop="object_storage_id">
+            <el-select size="small" v-model="buildPostConfig.object_storage_upload.object_storage_id" placeholder="Please select Object Storage" @change="$refs.objectStorageRef.clearValidate()">
               <el-option v-for="(item,index) in objectStorageList" :key="index" :label="`${item.endpoint}/${item.bucket}`" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="上传文件" prop="upload_detail">
+          <el-form-item label="Upload Files" prop="upload_detail">
             <template v-if="buildPostConfig.object_storage_upload.upload_detail.length > 0" >
               <el-row v-for="(item,index) in buildPostConfig.object_storage_upload.upload_detail" :key="index">
                 <el-col :span="11">
@@ -175,8 +175,8 @@
       >
         <div class="dashed-container">
           <div class="primary-title">
-            Shell 脚本执行
-            <el-tooltip effect="dark" content="构建运行完成后执行的 Shell 脚本" placement="top">
+            Shell Script Execution
+            <el-tooltip effect="dark" content="Executed after the build run is complete Shell Script" placement="top">
               <i class="el-icon-question" style="color: #a0a0a0;"></i>
             </el-tooltip>
             <el-button type="text" @click="removeScript" icon="el-icon-delete"></el-button>
@@ -212,7 +212,7 @@ export default {
         work_dir: [
           {
             type: 'string',
-            message: '请填写镜像构建目录',
+            message: 'Please fill in the mirror build directory',
             required: true,
             trigger: 'blur'
           }
@@ -220,7 +220,7 @@ export default {
         docker_file: [
           {
             type: 'string',
-            message: '请填写 Dockerfile 路径',
+            message: 'Please Fill Out Dockerfile Path',
             required: true,
             trigger: 'blur'
           }
@@ -228,7 +228,7 @@ export default {
         template_id: [
           {
             type: 'string',
-            message: '请选择模板',
+            message: 'Please Select A Template',
             required: true,
             trigger: ['blur', 'change']
           }
@@ -238,7 +238,7 @@ export default {
         file_location: [
           {
             type: 'string',
-            message: '请填写文件路径',
+            message: 'Please fill in the file path',
             required: true,
             trigger: 'blur'
           }
@@ -248,7 +248,7 @@ export default {
         object_storage_id: [
           {
             type: 'string',
-            message: '请选择对象存储',
+            message: 'Please select Object Storage',
             required: true,
             trigger: 'blur'
           }
@@ -262,9 +262,9 @@ export default {
                 return !item.file_path || !item.dest_path
               })
               if (value.length === 0) {
-                callback(new Error('请至少添加一个上传文件'))
+                callback(new Error('Please add at least one upload file'))
               } else if (empty) {
-                callback(new Error('上传文件路径为空，请检查'))
+                callback(new Error('Upload file path is empty，Please Check'))
               } else {
                 callback()
               }

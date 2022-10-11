@@ -1,22 +1,22 @@
 <template>
   <div>
-    <el-dialog title="版本历史" :visible.sync="historyVisible" width="70%" class="config-history-dialog">
+    <el-dialog title="Version History" :visible.sync="historyVisible" width="70%" class="config-history-dialog">
       <div style="margin-bottom: 16px;">
-        <el-button @click="showDiff" type="primary" plain size="mini" icon="el-icon-view">比较所选版本</el-button>
+        <el-button @click="showDiff" type="primary" plain size="mini" icon="el-icon-view">Compare selected versions</el-button>
       </div>
 
       <el-table v-loading="historyLoading" :data="histories" @selection-change="selectionChanged" ref="configHistoryTable">
         <el-table-column type="selection"></el-table-column>
-        <el-table-column prop="version" label="版本"></el-table-column>
-        <el-table-column prop="create_time" label="创建时间">
+        <el-table-column prop="version" label="Version"></el-table-column>
+        <el-table-column prop="create_time" label="Creation Time">
           <template slot-scope="scope">
             <span>{{moment(scope.row.create_time*1000).format('YYYY-MM-DD HH:mm')}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="update_user_name" label="最后修改"></el-table-column>
-        <el-table-column label="操作" width>
+        <el-table-column prop="update_user_name" label="Last Review"></el-table-column>
+        <el-table-column label="Operate" width>
           <template slot-scope="scope">
-            <el-button v-if="scope.$index!==0" @click="rollbackTo(scope.row)" icon="el-icon-refresh-left" size="mini">回滚</el-button>
+            <el-button v-if="scope.$index!==0" @click="rollbackTo(scope.row)" icon="el-icon-refresh-left" size="mini">Rollback</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,9 +79,9 @@ export default {
     diffTitle () {
       const candidates = this.selectedHistories
       if (Array.isArray(candidates) && candidates.length > 1) {
-        return `${candidates[0].version} 相对于 ${candidates[1].version} 的 diff`
+        return `${candidates[0].version} Relative To ${candidates[1].version} Of diff`
       }
-      return '配置 diff（未勾选）'
+      return 'Configure diff（Unchecked）'
     }
   },
   methods: {
@@ -90,7 +90,7 @@ export default {
       const candidates = this.selectedHistories
       if (candidates.length !== 2) {
         this.$message({
-          message: '只能选择两个版本用于比较',
+          message: 'Only two versions can be selected for comparison',
           type: 'warning'
         })
         return
@@ -117,7 +117,7 @@ export default {
     selectionChanged (val) {
       if (val.length > 2) {
         this.$message({
-          message: '只能选择两个版本用于比较',
+          message: 'Only two versions can be selected for comparison',
           type: 'warning'
         })
         this.$refs.configHistoryTable.toggleRowSelection(val[val.length - 1])
@@ -155,7 +155,7 @@ export default {
           return {
             ...re,
             services,
-            version: index === 0 ? '当前版本' : `版本 ${index}`
+            version: index === 0 ? 'Current Version' : `Version ${index}`
           }
         })
       }

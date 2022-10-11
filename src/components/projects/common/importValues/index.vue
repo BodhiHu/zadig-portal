@@ -2,19 +2,19 @@
   <div class="values-yaml-container">
     <div class="values-title">
       <span class="title-left">
-        <span class="secondary-title">Helm values 文件</span>
-        <el-button type="text" class="title-btn" @click="showGitImportDialog = true">从代码库导入</el-button>
+        <span class="secondary-title">Helm values Document</span>
+        <el-button type="text" class="title-btn" @click="showGitImportDialog = true">Import From Codebase</el-button>
       </span>
       <i v-if="showDelete" class="el-icon-delete-solid icon-delete" @click="closeValueEdit"></i>
     </div>
     <Resize class="desc mirror" :resize="setResize.direction" :height="setResize.height" @sizeChange="$refs.codemirror.refresh()">
       <codemirror ref="codemirror" v-model="importRepoInfoUse.overrideYaml"></codemirror>
     </Resize>
-    <el-dialog title="从代码库导入" :visible.sync="showGitImportDialog" append-to-body>
+    <el-dialog title="Import From Codebase" :visible.sync="showGitImportDialog" append-to-body>
       <Repository ref="valueRepoRef" :repoSource="importRepoInfoUse.gitRepoConfig" :showAutoSync="showAutoSync"></Repository>
       <div slot="footer">
-        <el-button @click="showGitImportDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="importOverrideYaml" size="small" :loading="loadValueYamls">导 入</el-button>
+        <el-button @click="showGitImportDialog = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="importOverrideYaml" size="small" :loading="loadValueYamls">Import</el-button>
       </div>
     </el-dialog>
   </div>
@@ -28,7 +28,7 @@ import { cloneDeep } from 'lodash'
 import { getValuesYamlFromGitAPI } from '@api'
 
 const valueInfo = {
-  yamlSource: '', // freeEdit or default(不上传)
+  yamlSource: '', // freeEdit or default(Do Not Upload)
   overrideYaml: '',
   gitRepoConfig: {
     codehostID: null,

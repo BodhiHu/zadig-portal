@@ -1,25 +1,25 @@
 <template>
   <div>
-    <el-alert type="info" :closable="false" description="项目角色管理，主要用于定义项目的角色"></el-alert>
+    <el-alert type="info" :closable="false" description="Project Role Management，Primarily used to define the role of the project"></el-alert>
     <div class="sync-container">
-      <el-button plain size="small" @click="addRole" type="primary">添加角色</el-button>
+      <el-button plain size="small" @click="addRole" type="primary">Add Role</el-button>
     </div>
 
     <el-table v-loading="loading" row-key="id" :data="roles" style="width: 100%;">
-      <el-table-column label="角色名称">
+      <el-table-column label="Role Name">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="角色类型">
+      <el-table-column label="Role Type">
         <template slot-scope="scope">
-          <span>{{scope.row.isPublic ? '公共角色': '私有角色'}}</span>
+          <span>{{scope.row.isPublic ? 'Public Role': 'Private Role'}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="Operate">
         <template slot-scope="scope">
-          <el-button @click="editrole(scope.row)" v-if="scope.row.name !== 'admin' || !scope.row.isPublic"  size="mini" type="primary" plain>编辑</el-button>
-          <el-button @click="deleteRole(scope.row)"  v-if="scope.row.name !== 'admin' || !scope.row.isPublic"  size="mini" type="danger" plain>删除</el-button>
+          <el-button @click="editrole(scope.row)" v-if="scope.row.name !== 'admin' || !scope.row.isPublic"  size="mini" type="primary" plain>Edit</el-button>
+          <el-button @click="deleteRole(scope.row)"  v-if="scope.row.name !== 'admin' || !scope.row.isPublic"  size="mini" type="danger" plain>Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,9 +66,9 @@ export default {
     },
     async deleteRole (row) {
       const projectName = this.projectName
-      this.$confirm('此角色的成员权限也会被删除，请谨慎操作', '确认删除此角色?', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Member permissions for this role will also be removed，Please proceed with caution', 'Confirm deletion of this role?', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(async () => {
         let res = null
@@ -78,7 +78,7 @@ export default {
           res = await deleteRoleAPI(row.name, projectName).catch(error => console.log(error))
         }
         if (res) {
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
           this.getRoles()
         }
       })
@@ -86,7 +86,7 @@ export default {
   },
   created () {
     this.getRoles()
-    bus.$emit(`set-topbar-title`, { title: '', breadcrumb: [{ title: '项目', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: `/v1/projects/detail/${this.projectName}/detail` }, { title: '权限管理', url: '' }, { title: '角色管理', url: '' }] })
+    bus.$emit(`set-topbar-title`, { title: '', breadcrumb: [{ title: 'Project', url: '/v1/projects' }, { title: this.projectName, isProjectName: true, url: `/v1/projects/detail/${this.projectName}/detail` }, { title: 'Authority Management', url: '' }, { title: 'Role Management', url: '' }] })
   }
 }
 </script>

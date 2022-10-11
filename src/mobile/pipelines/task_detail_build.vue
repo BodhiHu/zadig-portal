@@ -12,18 +12,18 @@
         <van-row :gutter="0">
           <van-col :span="6">
             <div class="item-title">
-              构建状态
+              Build Status
             </div>
           </van-col>
           <van-col :span="6">
             <div class="">
-              <span :class="buildOverallColor">{{buildv2.status?buildOverallStatusZh:"未运行"}}</span>
+              <span :class="buildOverallColor">{{buildv2.status?buildOverallStatusZh:"Not Running"}}</span>
             </div>
           </van-col>
           <van-col v-if="buildv2.status!=='running'"
                    :span="6">
             <div class="item-title">
-              持续时间
+              Duration
             </div>
           </van-col>
           <van-col v-if="buildv2.status!=='running'"
@@ -33,7 +33,7 @@
         </van-row>
         <van-row v-if="buildv2.job_ctx.builds">
           <div>
-            <span>代码信息</span>
+            <span>Code Information</span>
           </div>
         </van-row>
         <van-row :gutter="0"
@@ -41,7 +41,7 @@
                  :key="index">
           <van-col :span="24">
             <span>{{build.repo_name}} ({{build.source}})</span>
-            <el-tooltip :content="build.source==='gerrit'?`暂不支持在 gerrit 上查看 Release`:`在 ${build.source} 上查看 Release`"
+            <el-tooltip :content="build.source==='gerrit'?`Currently not supported in gerrit View On Release`:`Exist ${build.source} View On Release`"
                         placement="top"
                         effect="dark">
               <span v-if="build.tag"
@@ -53,7 +53,7 @@
                 <span v-if="build.source==='gerrit'">{{"Tag-"+build.tag}}</span>
               </span>
             </el-tooltip>
-            <el-tooltip :content="build.source==='gerrit'?`暂不支持在 gerrit 上查看 Branch`:`在 ${build.source} 上查看 Branch`"
+            <el-tooltip :content="build.source==='gerrit'?`Currently not supported in gerrit View On Branch`:`Exist ${build.source} View On Branch`"
                         placement="top"
                         effect="dark">
               <span v-if="build.branch && !build.tag"
@@ -70,7 +70,7 @@
                 </a>
               </span>
             </el-tooltip>
-            <el-tooltip :content="`在 ${build.source} 上查看 PR`"
+            <el-tooltip :content="`Exist ${build.source} View On PR`"
                         placement="top"
                         effect="dark">
               <span v-if="build.pr && build.pr>0"
@@ -89,7 +89,7 @@
                 </a>
               </span>
             </el-tooltip>
-            <el-tooltip :content="`在 ${build.source} 上查看 Commit`"
+            <el-tooltip :content="`Exist ${build.source} View On Commit`"
                         placement="top"
                         effect="dark">
               <span v-if="build.commit_id"
@@ -114,7 +114,7 @@
         <template v-if="serviceType!=='pm'">
           <van-row>
             <div>
-              <span>镜像信息</span>
+              <span>Mirror Information</span>
             </div>
           </van-row>
           <van-row :gutter="0">
@@ -130,7 +130,7 @@
         <template v-if="serviceType==='pm'">
           <van-row>
             <div>
-              <span>打包信息</span>
+              <span>Packaging Information</span>
             </div>
           </van-row>
           <van-row :gutter="0">
@@ -142,7 +142,7 @@
         <template v-if="!$utils.isEmpty(buildv2) && buildv2.job_ctx.upload_pkg">
           <van-row>
             <div>
-              <span>打包信息</span>
+              <span>Packaging Information</span>
             </div>
           </van-row>
           <van-row :gutter="0">
@@ -259,7 +259,7 @@ export default {
           window.msgServer[this.serviceName] = sse
           sse.onError(e => {
             console.error('lost connection; giving up!', e)
-            Notify({ type: 'danger', message: `${buildType}日志获取失败` })
+            Notify({ type: 'danger', message: `${buildType}Failed To Get Log` })
             sse.close()
             this.killLog(buildType)
           })
@@ -271,7 +271,7 @@ export default {
         })
         .catch(err => {
           console.error('Failed to connect to server', err)
-          Notify({ type: 'danger', message: `${buildType}日志获取失败` })
+          Notify({ type: 'danger', message: `${buildType}Failed To Get Log` })
           this.killLog(buildType)
         })
     },

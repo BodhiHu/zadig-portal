@@ -1,12 +1,12 @@
 export default function docConfig (location, word) {
   const prefix = 'https://docs.koderover.com/zadig'
   const docUrl = {
-    个人中心: {
-      KubeConfig: prefix + '/faq/product-usage/#kubectl-工具查询-安装方式',
-      APIToken: prefix + '/api/usage/#api-调用方式'
+    'Personal Center': {
+      KubeConfig: prefix + '/faq/product-usage/#kubectl-Tool Query-Installation Method',
+      APIToken: prefix + '/api/usage/#api-Call Method'
     },
-    账号系统: {
-      custom: prefix + '/settings/account/custom/#自定义账号系统登录流程图'
+    'Account System': {
+      custom: prefix + '/settings/account/custom/#Custom account system login flowchart'
     }
   }
   if (location !== '' && word !== '') {

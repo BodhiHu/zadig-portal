@@ -11,10 +11,10 @@
         <i class="el-icon-close"></i>
       </div>
     </div>
-    <el-drawer title="选择任务" :visible.sync="isShowJobOperateDialog" direction="rtl" :modal-append-to-body="false" class="drawer" size="24%">
+    <el-drawer title="Select Task" :visible.sync="isShowJobOperateDialog" direction="rtl" :modal-append-to-body="false" class="drawer" size="24%">
       <JobOperate :jobInfo="jobInfo" @change="setJob" ref="jobOperate" />
     </el-drawer>
-    <el-button @click="addJob" v-if="isShowJobAddBtn" size="small" class="add">+ 任务</el-button>
+    <el-button @click="addJob" v-if="isShowJobAddBtn" size="small" class="add">+ Task</el-button>
   </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
         freestyle: {
           name: 'default',
           type: 'freestyle',
-          isCreate: true, // 保存时删掉
+          isCreate: true, // Delete On Save
           spec: {
             properties: {
               timeout: 60,
@@ -75,7 +75,7 @@ export default {
                 memory_limit: 512
               },
               cluster_id: '',
-              build_os: 'focal', // 与 image_id 对应
+              build_os: 'focal', // And image_id Correspond
               image_id: '',
               image_from: 'koderover', // custom/koderover
               envs: [],
@@ -104,7 +104,7 @@ export default {
                   repos: []
                 }
               }
-              // 添加步骤时的数据结构，新建时无
+              // Data structure when adding steps，None When New
               // {
               //   name: 'shell',
               //   type: 'shell',
@@ -169,7 +169,7 @@ export default {
     addJob () {
       if (this.stageInfo.jobs.length > 0) {
         if (this.isShowFooter) {
-          this.$message.error('请先保存上一个任务配置')
+          this.$message.error('Please save the last task configuration first')
         } else {
           this.isShowJobOperateDialog = true
         }
@@ -178,9 +178,9 @@ export default {
       }
     },
     delJob (item, index) {
-      this.$confirm(`确定删除任务 [${item.name}]？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`OK To Delete The Task [${item.name}]？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(res => {
         this.stageInfo.jobs.splice(index, 1)

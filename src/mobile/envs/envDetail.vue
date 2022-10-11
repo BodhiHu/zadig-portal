@@ -17,17 +17,17 @@
           <template #title>
             <i class="el-icon-cloudy"></i>
             {{`${env.name}`}}
-            <el-tag v-if="env.clusterType==='生产'"
+            <el-tag v-if="env.clusterType==='Production'"
                     effect="light"
                     size="mini"
-                    type="danger">生产</el-tag>
+                    type="danger">Production</el-tag>
           </template>
-          <van-divider content-position="left">基本信息</van-divider>
+          <van-divider content-position="left">Basic Information</van-divider>
           <div class="env-info">
             <van-row>
               <van-col span="12">
                 <div class="mobile-block">
-                  <h2 class="mobile-block-title">更新时间</h2>
+                  <h2 class="mobile-block-title">Update Time</h2>
                   <div class="mobile-block-desc">
                     {{$utils.convertTimestamp(envInfo.update_time)}}
                   </div>
@@ -35,7 +35,7 @@
               </van-col>
               <van-col span="12">
                 <div class="mobile-block">
-                  <h2 class="mobile-block-title">命名空间</h2>
+                  <h2 class="mobile-block-title">Namespaces</h2>
                   <div class="mobile-block-desc">
                     {{ envInfo.namespace}}
                   </div>
@@ -45,7 +45,7 @@
             <van-row>
               <van-col span="12">
                 <div class="mobile-block">
-                  <h2 class="mobile-block-title">环境状态</h2>
+                  <h2 class="mobile-block-title">Environmental Status</h2>
                   <div class="mobile-block-desc">
                     {{getProdStatus(envInfo.status,productStatus.updatable)}}
                   </div>
@@ -53,7 +53,7 @@
               </van-col>
               <van-col span="12">
                 <div class="mobile-block">
-                  <h2 class="mobile-block-title">服务状态（实际/预期）</h2>
+                  <h2 class="mobile-block-title">Service Status（Actual/Expected）</h2>
                   <div class="mobile-block-desc">
                     {{runningService}}/{{serviceList.length}}
                   </div>
@@ -61,7 +61,7 @@
               </van-col>
             </van-row>
           </div>
-          <van-divider content-position="left">服务列表</van-divider>
+          <van-divider content-position="left">Service List</van-divider>
           <div class="service-list">
             <van-cell v-for="(item,index) in serviceList"
                       :to="`/mobile/envs/detail/${projectName}/${item.service_name}?envName=${envName}&projectName=${projectName}&namespace=${envText}&originProjectName=${item.product_name}&isProd=${isProd}`"

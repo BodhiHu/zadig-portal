@@ -2,20 +2,20 @@
   <div class="pm-service-config-container" v-loading="loading" @scroll="onScroll">
     <div class="anchor-container">
       <el-tabs v-model="anchorTab" @tab-click="goToAnchor" tab-position="right">
-        <el-tab-pane label="基本信息"></el-tab-pane>
-        <el-tab-pane v-if="isOnboarding" label="资源配置"></el-tab-pane>
-        <el-tab-pane label="部署配置"></el-tab-pane>
-        <el-tab-pane label="探活配置"></el-tab-pane>
+        <el-tab-pane label="Basic Information"></el-tab-pane>
+        <el-tab-pane v-if="isOnboarding" label="Resource Configuration"></el-tab-pane>
+        <el-tab-pane label="Deployment Configuration"></el-tab-pane>
+        <el-tab-pane label="Probe Configuration"></el-tab-pane>
       </el-tabs>
     </div>
-    <ZadigBuild id="基本信息" class="scroll" ref="zadigFormRef" :isCreate="!isEdit" :buildConfigData="buildConfig" usedToHost>
+    <ZadigBuild id="Basic Information" class="scroll" ref="zadigFormRef" :isCreate="!isEdit" :buildConfigData="buildConfig" usedToHost>
       <template v-slot:buildName>
-        <el-form-item label="构建名称" prop="name">
+        <el-form-item label="Build Name" prop="name">
           <el-select
             v-model="currentBuildConfig.name"
             @change="syncBuild"
             size="small"
-            placeholder="请选择"
+            placeholder="Please Choose"
             filterable
             :allow-create="!isEdit"
           >
@@ -26,7 +26,7 @@
       <template v-slot:serviceName>
         <el-form-item
           prop="service_name"
-          label="服务名称"
+          label="Service Name"
           :rules="{
             type: 'string',
             required: true,
@@ -36,7 +36,7 @@
         >
           <el-input
             v-model="currentBuildConfig.service_name"
-            placeholder="服务名称"
+            placeholder="Service Name"
             autofocus
             size="small"
             :disabled="isEdit"
@@ -45,15 +45,15 @@
         </el-form-item>
       </template>
     </ZadigBuild>
-    <div v-show="isOnboarding" id="资源配置" class="common-parcel-block scroll">
+    <div v-show="isOnboarding" id="Resource Configuration" class="common-parcel-block scroll">
       <el-form :model="pmService" ref="envConfigRef" label-width="120px" label-position="top" class="secondary-form" inline-message>
-        <span class="primary-title">资源配置</span>
+        <span class="primary-title">Resource Configuration</span>
         <el-row v-for="(item,item_index) in pmService.env_configs" class="env-config" :key="item_index">
           <el-col :span="3">
             <el-form-item
-              :label="item_index===0?'环境':''"
+              :label="item_index===0?'Surroundings':''"
               :prop="'env_configs.'+item_index+'.env_name'"
-              :rules="{required: false, message: '请选择部署环境', trigger: 'blur'}"
+              :rules="{required: false, message: 'Please select a deployment environment', trigger: 'blur'}"
             >
               <div class="env-name">{{ item.env_name }}</div>
             </el-form-item>
@@ -61,16 +61,16 @@
           <el-col :span="5">
             <div class>
               <el-form-item
-                :label="item_index===0?'主机':''"
+                :label="item_index===0?'Host':''"
                 :prop="'env_configs.'+item_index+'.host_ids'"
-                :rules="{required: false, message: '请选择主机', trigger: 'blur'}"
+                :rules="{required: false, message: 'Please Select A Host', trigger: 'blur'}"
               >
                 <el-button
                   v-if="isEmptyHost"
                   @click="$router.push('/v1/system/host')"
                   type="text"
-                >创建主机</el-button>
-                <el-select v-else size="mini" multiple filterable v-model="item.host_ids" placeholder="请选择主机">
+                >Create Host</el-button>
+                <el-select v-else size="mini" multiple filterable v-model="item.host_ids" placeholder="Please Select A Host">
                   <el-option-group v-for="group in allHost" :key="group.label" :label="group.label">
                     <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
                   </el-option-group>
@@ -79,7 +79,7 @@
             </div>
           </el-col>
           <el-col v-if="!isOnboarding" :span="8">
-            <el-form-item :label="item_index===0?'操作':''">
+            <el-form-item :label="item_index===0?'Operate':''">
               <div class="app-operation">
                 <el-button
                   v-if="item.showDelete"
@@ -89,7 +89,7 @@
                   size="mini"
                   circle
                 ></el-button>
-                <el-tooltip v-else effect="dark" content="环境已存在，不可删除配置" placement="top">
+                <el-tooltip v-else effect="dark" content="Environment already exists，Undeletable configuration" placement="top">
                   <span>
                     <i class="el-icon-question"></i>
                   </span>
@@ -100,31 +100,31 @@
         </el-row>
       </el-form>
     </div>
-    <div id="部署配置" class="common-parcel-block deploy-config scroll">
+    <div id="Deployment Configuration" class="common-parcel-block deploy-config scroll">
       <el-form ref="deployEnvRef" :inline="true" :model="currentBuildConfig" class="primary-form" label-position="left" inline-message>
-        <span class="item-title">部署配置</span>
+        <span class="item-title">Deployment Configuration</span>
         <div class="deploy-method">
           <el-radio-group v-model="useSshKey" class="radio-group">
             <el-radio :label="false">
-              本地直连部署
+              On-premises direct deployment
               <el-tooltip placement="top">
-                <div slot="content">本地直连部署：需确保本系统能连通或访问到脚本中的主机地址(含本机)</div>
+                <div slot="content">On-premises direct deployment：Make sure that the system can connect or access the host address in the script(Including This Machine)</div>
                 <i class="icon el-icon-question"></i>
               </el-tooltip>
             </el-radio>
             <br />
             <el-radio :label="true" class="ssh-radio">
-              使用 SSH Agent 远程部署
+              Use SSH Agent Remote Deployment
               <el-tooltip placement="top">
-                <div slot="content">使用 SSH Agent 远程部署：安全登录到目标机器，执行部署操作，可在系统设置-主机管理中进行配置</div>
+                <div slot="content">Use SSH Agent Remote Deployment：Securely log in to the target machine，Perform a deployment operation，Available in system settings-Configuration in host management</div>
                 <i class="icon el-icon-question"></i>
               </el-tooltip>
               <el-form-item
                 v-if="useSshKey"
                 prop="sshs"
-                :rules="{required: true, type: 'array', message: '主机不能为空', trigger: ['blur', 'change']}"
+                :rules="{required: true, type: 'array', message: 'Host Cannot Be Empty', trigger: ['blur', 'change']}"
               >
-                <el-select v-model="currentBuildConfig.sshs" size="mini" multiple placeholder="请选择主机">
+                <el-select v-model="currentBuildConfig.sshs" size="mini" multiple placeholder="Please Select A Host">
                   <el-option-group v-for="group in allHost" :key="group.label" :label="group.label">
                     <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
                   </el-option-group>
@@ -135,7 +135,7 @@
         </div>
         <section class="inner-variable">
           <div @click="showBuildInEnvVar = !showBuildInEnvVar" class="item-title inner-title">
-            内置部署变量
+            Built-in deployment variables
             <i style="margin-left: 10px;" :class="[showBuildInEnvVar ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"></i>
           </div>
           <div v-show="showBuildInEnvVar" class="inner-variable-content">
@@ -150,9 +150,9 @@
         </div>
       </el-form>
     </div>
-    <div id="探活配置" class="common-parcel-block check-config scroll">
+    <div id="Probe Configuration" class="common-parcel-block check-config scroll">
       <div class="primary-title">
-        <span class="check-title">探活配置</span>
+        <span class="check-title">Probe Configuration</span>
         <el-switch v-model="checkStatusEnabled"></el-switch>
       </div>
       <template v-if="checkStatusEnabled">
@@ -162,11 +162,11 @@
               <el-button type="danger" class="delete-btn" icon="el-icon-delete" plain size="mini" @click="deleteCheck(item_index)" circle></el-button>
             </div>
             <el-form-item
-              label="协议"
+              label="Protocol"
               :prop="'health_checks.'+item_index+'.protocol'"
-              :rules="{required: true, message: '请选择协议', trigger: 'blur'}"
+              :rules="{required: true, message: 'Please select an agreement', trigger: 'blur'}"
             >
-              <el-select v-model="item.protocol" size="small" placeholder="请选择协议">
+              <el-select v-model="item.protocol" size="small" placeholder="Please select an agreement">
                 <el-option label="HTTP" value="http"></el-option>
                 <el-option label="HTTPS" value="https"></el-option>
                 <el-option label="TCP" value="tcp"></el-option>
@@ -174,25 +174,25 @@
             </el-form-item>
             <el-form-item
               v-if="item.protocol==='http'||item.protocol==='https'"
-              label="路径"
-              :rules="{type: 'string',message: '请填写路径',required: false,trigger: ['blur', 'change']}"
+              label="Path"
+              :rules="{type: 'string',message: 'Please Fill In The Path',required: false,trigger: ['blur', 'change']}"
               :prop="'health_checks.'+item_index+'.path'"
             >
               <el-input v-model="item.path" placeholder="example.com/index.html" size="small"></el-input>
             </el-form-item>
             <el-form-item
-              label="端口"
+              label="Port"
               :rules="{type: 'number',required: false,validator: validateHealthCheckPort,trigger: ['blur', 'change']}"
               :prop="'health_checks.'+item_index+'.port'"
             >
               <el-input v-model.number="item.port" placeholder="1-65535" size="small"></el-input>
             </el-form-item>
             <el-form-item
-              label="响应超时"
+              label="Response Timed Out"
               :rules=" {type: 'number',required: true,validator: validateHealthCheckTimeout,trigger: ['blur', 'change']}"
               :prop="'health_checks.'+item_index+'.time_out'"
             >
-              <el-input v-model.number="item.time_out" placeholder="2(2-60) 秒" size="small"></el-input>
+              <el-input v-model.number="item.time_out" placeholder="2(2-60) Second" size="small"></el-input>
             </el-form-item>
             <el-button
               type="primary"
@@ -201,44 +201,44 @@
               plain
               :icon="showCheckStatusAdvanced[item_index]?'el-icon-arrow-up':'el-icon-arrow-down'"
               @click="changeAdvancedShow(item_index)"
-            >高级设置</el-button>
+            >Advanced Settings</el-button>
             <template v-if="showCheckStatusAdvanced[item_index]">
               <el-form-item
-                label="探测间隔"
+                label="Detection Interval"
                 :rules="{type: 'number',required: false,validator: validateHealthCheckInterval,trigger: ['blur', 'change']}"
                 :prop="'health_checks.'+item_index+'.interval'"
               >
-                <el-input v-model.number="item.interval" placeholder="2(2-60) 秒" size="small"></el-input>
+                <el-input v-model.number="item.interval" placeholder="2(2-60) Second" size="small"></el-input>
               </el-form-item>
               <el-form-item
-                label="健康阈值"
+                label="Health Threshold"
                 :rules="{ type: 'number',required: false,validator: validateHealthCheckThreshold,trigger: ['blur', 'change']}"
                 :prop="'health_checks.'+item_index+'.healthy_threshold'"
                 class="label-icon"
               >
                 <span slot="label">
-                  健康阈值
+                  Health Threshold
                   <el-tooltip effect="dark" placement="top">
-                    <div slot="content">从不健康变为健康的连续探测次数</div>
+                    <div slot="content">Number of consecutive probes from unhealthy to healthy</div>
                     <i class="el-icon-question"></i>
                   </el-tooltip>
                 </span>
-                <el-input v-model.number="item.healthy_threshold" placeholder="2(2-10) 次" size="small"></el-input>
+                <el-input v-model.number="item.healthy_threshold" placeholder="2(2-10) Second Rate" size="small"></el-input>
               </el-form-item>
               <el-form-item
-                label="不健康阈值"
+                label="Unhealthy Threshold"
                 :rules=" {type: 'number',required: false,validator: validateHealthCheckThreshold,trigger: ['blur', 'change']}"
                 :prop="'health_checks.'+item_index+'.unhealthy_threshold'"
                 class="label-icon"
               >
                 <span slot="label">
-                  不健康阈值
+                  Unhealthy Threshold
                   <el-tooltip effect="dark" placement="top">
-                    <div slot="content">从健康变为不健康的连续探测次数</div>
+                    <div slot="content">Number of consecutive probes from healthy to unhealthy</div>
                     <i class="el-icon-question"></i>
                   </el-tooltip>
                 </span>
-                <el-input v-model.number="item.unhealthy_threshold" placeholder="2(2-10) 次" size="small"></el-input>
+                <el-input v-model.number="item.unhealthy_threshold" placeholder="2(2-10) Second Rate" size="small"></el-input>
               </el-form-item>
             </template>
           </div>
@@ -254,7 +254,7 @@
         size="small"
         type="primary"
         @click="savePmService"
-      >保存</el-button>
+      >Save</el-button>
     </div>
   </div>
 </template>
@@ -277,10 +277,10 @@ import ZadigBuild from '@/components/projects/build/zadigBuild.vue'
 
 const validateServiceName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入服务名称'))
+    callback(new Error('Please enter a service name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -297,61 +297,61 @@ export default {
     this.deployVars = [
       {
         variable: '',
-        desc: '构建脚本中的变量均可使用，其他内置可用变量如下'
+        desc: 'Variables in the build script are available，Other built-in available variables are as follows'
       },
       {
         variable: '$ENV_NAME',
-        desc: '环境名称，用于区分不同的环境，系统内置环境：dev，qa'
+        desc: 'Environment Name，Used to distinguish different environments，System built-in environment：dev，qa'
       },
       {
         variable: '$<AGENT_NAME>_PK',
         desc:
-          '通过 SSH Agent 远程登录服务器使用的私钥 id_rsa，其中 <AGENT_NAME> 为 SSH Agent 名称，使用时需要自己填写完整'
+          'Pass SSH Agent The private key used by the remote login server id_rsa，In <AGENT_NAME> For SSH Agent Name，When using, you need to fill it out by yourself'
       },
       {
         variable: '$<AGENT_NAME>_USERNAME',
-        desc: '通过 SSH Agent 远程登录到服务器的用户名称'
+        desc: 'Pass SSH Agent Username for telnet to the server'
       },
       {
         variable: '$<AGENT_NAME>_IP',
-        desc: 'SSH Agent 目标服务器的 IP 地址'
+        desc: 'SSH Agent Target Servers IP Address'
       },
       {
         variable: '$<AGENT_NAME>_PORT',
-        desc: 'SSH Agent 目标服务器的端口'
+        desc: 'SSH Agent Target Server Port'
       },
       {
         variable: '$<ENV>_HOST_IPs',
-        desc: '变量支持获取指定环境关联的所有主机 IP'
+        desc: 'Variable support to get all hosts associated with the specified environment IP'
       },
       {
         variable: '$ARTIFACT',
-        desc: '部署的交付物包，通过该变量可获取交付物包'
+        desc: 'Deployed Deliverables，This variable is used to get the deliverable package'
       },
       {
         variable: '$<ENV>_HOST_NAMEs',
-        desc: '获取指定环境关联的所有主机名称'
+        desc: 'Get all hostnames associated with the specified environment'
       },
       {
         variable: '$<HOST_NAME>_PK',
-        desc: '获取主机密钥'
+        desc: 'Get Host Key'
       },
       {
         variable: '$<HOST_NAME>_USERNAME',
-        desc: '获取主机用户名'
+        desc: 'Get Host Username'
       },
       {
         variable: '$<HOST_NAME>_IP',
-        desc: '获取主机 IP'
+        desc: 'Get Host IP'
       },
       {
         variable: '$<HOST_NAME>_PORT',
-        desc: '获取主机端口'
+        desc: 'Get Host Port'
       },
       {
         variable: '',
         desc:
-          "远程部署时，可以通过使用命令 `ssh -i $<AGENT_NAME>_PK $<AGENT_NAME>_USERNAME@$<AGENT_NAME>_IP '自定义脚本'` 进行部署操作"
+          "When Deploying Remotely，Can be done by using the command `ssh -i $<AGENT_NAME>_PK $<AGENT_NAME>_USERNAME@$<AGENT_NAME>_IP 'Custom Script'` Do a deployment operation"
       }
     ]
     return {
@@ -400,7 +400,7 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入主机名称',
+            message: 'Please Enter A Hostname',
             trigger: 'change'
           }
         ],
@@ -408,7 +408,7 @@ export default {
           {
             type: 'string',
             required: false,
-            message: '请输入主机标签',
+            message: 'Please Enter Host Tag',
             trigger: 'change'
           }
         ],
@@ -416,21 +416,21 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入用户名'
+            message: 'Please Enter User Name'
           }
         ],
         ip: [
           {
             type: 'string',
             required: true,
-            message: '请输入主机 IP'
+            message: 'Please Enter Host IP'
           }
         ],
         private_key: [
           {
             type: 'string',
             required: true,
-            message: '请输入私钥'
+            message: 'Please Enter Private Key'
           }
         ]
       }
@@ -443,11 +443,11 @@ export default {
         return
       }
       this.$confirm(
-        '确认跳出后就不再进入 onboarding 流程。',
-        '确认跳出产品交付向导？',
+        'After confirming to jump out, do not enter again onboarding Process。',
+        'Confirm Jump Out of Product Delivery Wizard？',
         {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }
       )
@@ -457,17 +457,17 @@ export default {
               this.$router.push(`/v1/projects/detail/${projectName}/services`)
             })
             .catch(() => {
-              this.$message.info('跳转失败')
+              this.$message.info('Jump Failed')
             })
         })
         .catch(() => {
-          this.$message.info('取消跳转')
+          this.$message.info('Cancel Jump')
         })
     },
     onScroll (e) {
       const scrollItems = document.querySelectorAll('.scroll')
       for (let i = scrollItems.length - 1; i >= 0; i--) {
-        // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
+        // Determine whether the scrolling distance of the scroll bar is greater than the scrollable distance of the current scroll item
         const judge =
           e.target.scrollTop >=
           scrollItems[i].offsetTop - scrollItems[0].offsetTop - 150
@@ -575,32 +575,32 @@ export default {
       const reg = /^[0-9]+.?[0-9]*/
       if (value) {
         if (!reg.test(value)) {
-          callback(new Error('时间应为数字'))
+          callback(new Error('Time Should Be A Number'))
         } else {
           if (value >= 2 && value <= 60) {
             callback()
           } else {
-            callback(new Error('请输入正确的时间范围（2-60）'))
+            callback(new Error('Please enter the correct time range（2-60）'))
           }
         }
       } else {
-        callback(new Error('请输入正确的时间范围（2-60）'))
+        callback(new Error('Please enter the correct time range（2-60）'))
       }
     },
     validateHealthCheckThreshold (rule, value, callback) {
       const reg = /^[0-9]+.?[0-9]*/
       if (value) {
         if (!reg.test(value)) {
-          callback(new Error('阈值应为数字'))
+          callback(new Error('Threshold should be a number'))
         } else {
           if (value >= 2 && value <= 60) {
             callback()
           } else {
-            callback(new Error('请输入正确的阈值范围（2-10）'))
+            callback(new Error('Please enter the correct threshold range（2-10）'))
           }
         }
       } else if (value === 0) {
-        callback(new Error('请输入正确的阈值范围（2-10）'))
+        callback(new Error('Please enter the correct threshold range（2-10）'))
       } else {
         callback()
       }
@@ -609,16 +609,16 @@ export default {
       const reg = /^[0-9]+.?[0-9]*/
       if (value) {
         if (!reg.test(value)) {
-          callback(new Error('时间应为数字'))
+          callback(new Error('Time Should Be A Number'))
         } else {
           if (value >= 2 && value <= 60) {
             callback()
           } else {
-            callback(new Error('请输入正确的时间范围'))
+            callback(new Error('Please enter the correct time range'))
           }
         }
       } else if (value === 0) {
-        callback(new Error('请输入正确的时间范围'))
+        callback(new Error('Please enter the correct time range'))
       } else {
         callback()
       }
@@ -627,16 +627,16 @@ export default {
       const reg = /^[0-9]+.?[0-9]*/
       if (value) {
         if (!reg.test(value)) {
-          callback(new Error('端口应为数字'))
+          callback(new Error('Port Should Be Numeric'))
         } else {
           if (value >= 1 && value <= 65535) {
             callback()
           } else {
-            callback(new Error('请输入正确的端口范围'))
+            callback(new Error('Please enter the correct port range'))
           }
         }
       } else if (value === 0) {
-        callback(new Error('请输入正确的端口范围'))
+        callback(new Error('Please enter the correct port range'))
       } else {
         callback()
       }
@@ -670,7 +670,7 @@ export default {
         ) {
           this.$message({
             type: 'error',
-            message: '请先为部署环境关联主机，再配置探活'
+            message: 'Please associate a host for the deployment environment first，Reconfigure The Probe'
           })
           this.checkStatusEnabled = false
         }
@@ -747,7 +747,7 @@ export default {
           return item.options.map(option => option.id)
         })
         .flat()
-      // 处理主机标签
+      // Handling Host Labels
       pmServicePayload.env_configs.forEach(element => {
         element.labels = element.host_ids.filter(item => {
           return hostIds.indexOf(item) < 0
@@ -783,7 +783,7 @@ export default {
           this.$emit('listenCreateEvent', 'success')
           this.$message({
             type: 'success',
-            message: this.isEdit ? '修改主机服务成功' : '创建主机服务成功'
+            message: this.isEdit ? 'Modify the host service successfully' : 'Create host service successfully'
           })
         },
         () => {
@@ -858,11 +858,11 @@ export default {
         this.isEmptyHost = projectOptions.length + systemOptions.length === 0
         this.allHost = [
           {
-            label: '项目资源',
+            label: 'Project Resources',
             options: projectOptions
           },
           {
-            label: '系统资源',
+            label: 'System Resource',
             options: systemOptions
           }
         ]

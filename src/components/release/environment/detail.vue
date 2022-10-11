@@ -6,52 +6,52 @@
           <span>
             {{ $utils.tailCut(tab.namespace,14) }}
             {{`(${tab.alias})`}}
-            <!-- <el-tag v-if="tab.production" effect="light" size="mini" type="danger">生产</el-tag> -->
+            <!-- <el-tag v-if="tab.production" effect="light" size="mini" type="danger">Production</el-tag> -->
           </span>
         </template>
       </ChromeTabs>
     </div>
     <div class="banner">
       <!-- <el-alert
-        title="`注意：自测模式正在${shareEnvStatus.operation ==='enable'?'开启':'关闭'}，过程中服务会重启，短时间内会影响服务的正常访问，请耐心等待。`"
+        title="`Notice：Self-test mode is running${shareEnvStatus.operation ==='enable'?'Turn On':'Closure'}，The service will restart during the process，A short period of time will affect the normal access of the service，Please Wait Patiently。`"
         :closable="false"
         type="warning"
       ></el-alert>-->
     </div>
 
     <div class="info-container">
-      <div element-loading-text="正在获取基本信息" element-loading-spinner="el-icon-loading" class="common-parcel-block basic-info-content">
+      <div element-loading-text="Getting basic information" element-loading-spinner="el-icon-loading" class="common-parcel-block basic-info-content">
         <el-row :gutter="10">
           <el-col :span="8">
-            <div class="grid-title">K8s 集群</div>
+            <div class="grid-title">K8s Cluster</div>
             <div class="grid-content">{{currentNamespace.cluster_name}}</div>
           </el-col>
           <el-col :span="8">
-            <div class="grid-title">命名空间</div>
+            <div class="grid-title">Namespaces</div>
             <div class="grid-content">{{currentNamespace.namespace}}</div>
           </el-col>
           <el-col :span="8" class="operation">
-            <el-button type="primary" size="mini" plain>变更记录</el-button>
+            <el-button type="primary" size="mini" plain>Change Log</el-button>
             <el-dropdown>
               <span class="dropdown-btn">
                 <i class="iconfont iconmorelist"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="setAlias()">设置别名</el-dropdown-item>
-                <el-dropdown-item @click.native="removeNamespace(namespace)">移除</el-dropdown-item>
+                <el-dropdown-item @click.native="setAlias()">Set Alias</el-dropdown-item>
+                <el-dropdown-item @click.native="removeNamespace(namespace)">Remove</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
         </el-row>
         <!-- <div>
-          <div class="grid-title">错误信息</div>
-          <div class="grid-content error-info">错误信息</div>
+          <div class="grid-title">Error Message</div>
+          <div class="grid-content error-info">Error Message</div>
         </div>-->
       </div>
       <!--end of basic info-->
     </div>
     <div class="info-container">
-      <div element-loading-text="正在获取基本信息" element-loading-spinner="el-icon-loading" class="common-parcel-block basic-info-content">
+      <div element-loading-text="Getting basic information" element-loading-spinner="el-icon-loading" class="common-parcel-block basic-info-content">
         <CategoryTab :routerList="routerList" />
         <router-view></router-view>
       </div>
@@ -110,22 +110,22 @@ export default {
     routerList () {
       return [
         {
-          name: '工作负载',
+          name: 'Workload',
           icon: 'iconfont iconvery-k8s',
           url: `/v1/release/environment/detail/${this.groupName}/${this.groupId}/${this.namespace}/${this.namespaceId}/workload?namespace=${this.namespace}`
         },
         {
-          name: '网络',
+          name: 'Network',
           icon: 'iconfont iconhelmrepo',
           url: `/v1/release/environment/detail/${this.groupName}/${this.groupId}/${this.namespace}/${this.namespaceId}/network?namespace=${this.namespace}`
         },
         {
-          name: '存储',
+          name: 'Storage',
           icon: 'iconfont icondocker',
           url: `/v1/release/environment/detail/${this.groupName}/${this.groupId}/${this.namespace}/${this.namespaceId}/storage?namespace=${this.namespace}`
         },
         {
-          name: '配置',
+          name: 'Configure',
           icon: 'iconfont iconvery-build',
           url: `/v1/release/environment/detail/${this.groupName}/${this.groupId}/${this.namespace}/${this.namespaceId}/config?namespace=${this.namespace}`
         }
@@ -134,20 +134,20 @@ export default {
   },
   methods: {
     removeNamespace (namespace) {
-      this.$confirm(`确定要移除 ${namespace} 命名空间?`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Sure You Want To Remove ${namespace} Namespaces?`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(({ value }) => {})
     },
     setAlias (name) {
-      this.$prompt('设置别名', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Set Alias', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         confirmButtonClass: 'el-button el-button--primary',
         inputValidator: input => {
           if (input === '') {
-            return '请输入别名'
+            return 'Please Enter An Alias'
           }
         }
       })
@@ -155,7 +155,7 @@ export default {
           removeGroupAPI(name).then(res => {
             this.getGroups()
             this.$message({
-              message: '删除成功',
+              message: 'Successfully Deleted',
               type: 'success'
             })
           })
@@ -163,7 +163,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'warning',
-            message: '取消操作'
+            message: 'Cancel The Operation'
           })
         })
     },
@@ -198,8 +198,8 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '发布中心', url: `` },
-        { title: '环境组', url: `/v1/release/environment` },
+        { title: 'Release Center', url: `` },
+        { title: 'Environment Group', url: `/v1/release/environment` },
         { title: this.groupName, url: `/v1/release/environment` },
         { title: this.namespace, url: `` }
       ]
@@ -212,8 +212,8 @@ export default {
         bus.$emit(`set-topbar-title`, {
           title: '',
           breadcrumb: [
-            { title: '发布中心', url: `` },
-            { title: '环境组', url: `/v1/release/environment` },
+            { title: 'Release Center', url: `` },
+            { title: 'Environment Group', url: `/v1/release/environment` },
             { title: this.groupName, url: `/v1/release/environment` },
             { title: this.namespace, url: `` }
           ]

@@ -42,7 +42,7 @@ export default {
         this.term.loadAddon(fitAddon)
         this.term.open(document.getElementById(this.id))
         this.term.writeln(
-          '****************系统信息：正在连接主机****************'
+          '****************System Message：Connecting To Host****************'
         )
         this.term.onData(data => {
           if (wsLink) {
@@ -71,10 +71,10 @@ export default {
           this.ws.send(JSON.stringify(setEnv))
           this.term.clear()
           this.term.writeln(
-            '\u001b[32;1m****************系统信息：主机连接已打开****************\u001b[0m'
+            '\u001b[32;1m****************System Message：Host Connection Is Open****************\u001b[0m'
           )
           this.term.writeln(
-            '通过 SSH 方法登录主机进行服务调试。(注意：默认连接的 Shell 为 Bash)'
+            'Pass SSH Method to log in to the host for service debugging。(Notice：Connected By Default Shell For Bash)'
           )
           wsLink = true
           fitAddon.fit()
@@ -88,7 +88,7 @@ export default {
           wsLink = false
           this.$nextTick(() => {
             this.term.writeln(
-              '\u001b[31m****************系统信息：主机连接已关闭，请关闭窗口重试！****************\u001b[0m'
+              '\u001b[31m****************System Message：Host Connection Closed，Please close the window and try again！****************\u001b[0m'
             )
           })
         }
@@ -96,7 +96,7 @@ export default {
           wsLink = false
           this.$nextTick(() => {
             this.term.writeln(
-              `\u001b[31m****************系统信息：遇到错误 ${evt.message} ！！！，请关闭窗口重试 ****************\u001b[0m`
+              `\u001b[31m****************System Message：Encountered An Error ${evt.message} ！！！，Please close the window and try again ****************\u001b[0m`
             )
           })
         }

@@ -1,69 +1,69 @@
 <template>
-  <el-dialog :title="`请输入项目名 ${projectName} 确认删除`" :visible.sync="deleteDialogVisible" width="40%">
+  <el-dialog :title="`Please enter a project name ${projectName} Confirm Deletion`" :visible.sync="deleteDialogVisible" width="40%">
     <div class="delete-project-content">
       <template v-if="projectDeleteInfo.deploy_type === 'external'">
         <div style="margin-bottom: 4px;">
-          该项目下的以下资源会被取消托管，
-          <span style="color: red;">请谨慎操作！！</span>
+          The following resources under this project will be unhosted，
+          <span style="color: red;">Please proceed with caution！！</span>
         </div>
         <div>
-          <span style="font-weight: 500;">服务：</span>
-          <span>{{ services.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Serve：</span>
+          <span>{{ services.join(', ') || 'None' }}</span>
         </div>
         <div>
-          <span style="font-weight: 500;">环境：</span>
-          <span>{{ envNames.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Surroundings：</span>
+          <span>{{ envNames.join(', ') || 'None' }}</span>
         </div>
         <div style="margin: 12px 0 4px;">
-          该项目下的以下资源会同时被删除，
-          <span style="color: red;">请谨慎操作！！</span>
+          The following resources under this project will be deleted at the same time，
+          <span style="color: red;">Please proceed with caution！！</span>
         </div>
         <div>
-          <span style="font-weight: 500;">构建：</span>
-          <span>{{ buildConfigs.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Construct：</span>
+          <span>{{ buildConfigs.join(', ') || 'None' }}</span>
         </div>
         <div>
-          <span style="font-weight: 500;">工作流：</span>
-          <span>{{ workflows.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Workflow：</span>
+          <span>{{ workflows.join(', ') || 'None' }}</span>
         </div>
       </template>
       <template v-else>
         <div>
-          该项目下的资源会同时被删除
-          <span style="color: red;">请谨慎操作！！</span>
+          The resources under this project will be deleted at the same time
+          <span style="color: red;">Please proceed with caution！！</span>
         </div>
         <div>
-          <span style="font-weight: 500;">服务：</span>
-          <span>{{ services.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Serve：</span>
+          <span>{{ services.join(', ') || 'None' }}</span>
         </div>
         <div>
-          <span style="font-weight: 500;">环境：</span>
-          <span>{{ envNames.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Surroundings：</span>
+          <span>{{ envNames.join(', ') || 'None' }}</span>
         </div>
         <div>
-          <span style="font-weight: 500;">构建：</span>
-          <span>{{ buildConfigs.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Construct：</span>
+          <span>{{ buildConfigs.join(', ') || 'None' }}</span>
         </div>
         <div>
-          <span style="font-weight: 500;">工作流：</span>
-          <span>{{ workflows.join(', ') || '无' }}</span>
+          <span style="font-weight: 500;">Workflow：</span>
+          <span>{{ workflows.join(', ') || 'None' }}</span>
         </div>
       </template>
       <div style="margin: 16px 0 6px;">
         <el-checkbox
           v-if="['k8s', 'helm'].includes(projectDeleteInfo.deploy_type)"
           v-model="projectDeleteInfo.is_delete"
-        >同时删除环境对应的 K8s 命名空间和服务</el-checkbox>
+        >At the same time delete the corresponding environment K8s Namespaces And Services</el-checkbox>
       </div>
       <el-form ref="deleteForm" :model="projectDeleteInfo" :rules="deleteRules" label-width="80px">
         <el-form-item label-width="0" prop="project_name">
-          <el-input v-model="projectDeleteInfo.project_name" placeholder="输入项目名称" size="small"></el-input>
+          <el-input v-model="projectDeleteInfo.project_name" placeholder="Enter Project Name" size="small"></el-input>
         </el-form-item>
       </el-form>
     </div>
     <div slot="footer">
-      <el-button @click="deleteDialogVisible = false" size="small">取 消</el-button>
-      <el-button type="danger" @click="identifyDeleteProject" size="small">确 定</el-button>
+      <el-button @click="deleteDialogVisible = false" size="small">Cancel</el-button>
+      <el-button type="danger" @click="identifyDeleteProject" size="small">Sure</el-button>
     </div>
   </el-dialog>
 </template>
@@ -100,9 +100,9 @@ export default {
             required: true,
             validator: (rule, value, callback) => {
               if (!value) {
-                callback(new Error('请输入项目名称'))
+                callback(new Error('Please enter a project name'))
               } else if (value !== this.projectName) {
-                callback(new Error('项目名称不相符'))
+                callback(new Error('Project name does not match'))
               } else {
                 callback()
               }
@@ -161,7 +161,7 @@ export default {
           ).then(() => {
             this.$message({
               type: 'success',
-              message: '项目删除成功'
+              message: 'Item deleted successfully'
             })
             this.deleteDialogVisible = false
             this.followUpFn && this.followUpFn()

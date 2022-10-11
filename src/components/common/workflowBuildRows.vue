@@ -1,14 +1,14 @@
 <template>
   <div class="workflow-build-rows">
     <el-table :data="zadigBuild" v-if="zadigBuild.length > 0"
-              empty-text="无"
+              empty-text="None"
               class="service-deploy-table">
       <el-table-column prop="name"
-                       label="服务"
+                       label="Serve"
                        width="100px"
                        ></el-table-column>
 
-      <el-table-column label="代码库"  >
+      <el-table-column label="Code Library"  >
         <template slot-scope="scope"  v-if="scope.row.build" >
           <el-row v-for="build of scope.row.build.repos"
                   class="build-row"
@@ -31,7 +31,7 @@
                   clearable
                   size="small"
                   value-key="id"
-                  :placeholder="build.source==='other'?'请输入分支或标签':'请选择分支或标签'"
+                  :placeholder="build.source==='other'?'Please enter a branch or tag':'Please select a branch or tag'"
                   @change="changeBranchOrTag(build)"
                 >
                   <el-option-group v-for="group in build.branchAndTagList" :key="group.label" :label="group.label">
@@ -44,7 +44,7 @@
                 <el-select v-if="!$utils.isEmpty(build.branchPRsMap)"
                             v-model.number="build[build.prNumberPropName]"
                             size="small"
-                            placeholder="请选择 PR"
+                            placeholder="Please Choose PR"
                             filterable
                             clearable
                             :disabled="build.branchOrTag && build.branchOrTag.type === 'tag'">
@@ -54,10 +54,10 @@
                               placement="left"
                               popper-class="gray-popper">
 
-                    <div slot="content">{{`创建人: ${$utils.tailCut(item.authorUsername,10)}`}}
-                      <br />{{`时间: ${$utils.convertTimestamp(item.createdAt)}`}}
-                      <br />{{`源分支: ${item.sourceBranch}`}}
-                      <br />{{`目标分支: ${item.targetBranch}`}}
+                    <div slot="content">{{`Founder: ${$utils.tailCut(item.authorUsername,10)}`}}
+                      <br />{{`Time: ${$utils.convertTimestamp(item.createdAt)}`}}
+                      <br />{{`Source Branch: ${item.sourceBranch}`}}
+                      <br />{{`Target Branch: ${item.targetBranch}`}}
                     </div>
                     <el-option :label="`#${item[build.prNumberPropName]} ${item.title}`"
                                 :value="item[build.prNumberPropName]">
@@ -65,13 +65,13 @@
                   </el-tooltip>
                 </el-select>
                 <el-tooltip v-else
-                            content="PR 不存在，支持手动输入 PR 号"
+                            content="PR Does Not Exist，Support Manual Input PR No"
                             placement="top"
                             popper-class="gray-popper">
                   <el-input v-model.number="build[build.prNumberPropName]"
                             class="short-input"
                             size="small"
-                            placeholder="请填写 PR 号"
+                            placeholder="Please Fill Out PR No"
                             :disabled="build.branchOrTag && build.branchOrTag.type === 'tag'"></el-input>
                 </el-tooltip>
               </el-col>
@@ -92,7 +92,7 @@
       </el-table-column>
       <el-table-column   width="250px">
         <template slot="header">
-          部署
+          Deploy
           <DeployIcons/>
         </template>
         <template slot-scope="scope">
@@ -116,12 +116,12 @@
         </template>
       </el-table-column>
       <el-table-column width="100px"
-                       label="变量">
+                       label="Variable">
         <template slot-scope="scope">
           <el-popover placement="left"
                       width="450"
                       trigger="click">
-            <!-- 非jenkins构建 -->
+            <!-- NojenkinsConstruct -->
             <el-table :data="scope.row.envs" v-if="!scope.row.jenkins_build_args">
               <el-table-column property="key"
                                label="Key"></el-table-column>
@@ -131,7 +131,7 @@
                       style="width: 100%;"
                       v-if="row.type==='choice'"
                       v-model="row.value"
-                      placeholder="默认值"
+                      placeholder="Defaults"
                       size="small"
                     >
                       <el-option v-for="option in row.choice_option" :key="option" :label="option" :value="option"></el-option>
@@ -139,11 +139,11 @@
                   <el-input v-else
                             size="small"
                             v-model="row.value"
-                            placeholder="请输入 value"></el-input>
+                            placeholder="Please Enter value"></el-input>
                 </template>
               </el-table-column>
             </el-table>
-            <!-- jenkins构建 -->
+            <!-- jenkinsConstruct -->
             <el-table :data="scope.row.jenkins_build_args.jenkins_build_params" v-if="scope.row.jenkins_build_args">
               <el-table-column property="name"
                                label="name"></el-table-column>
@@ -151,22 +151,22 @@
                 <template slot-scope="scope">
                   <el-input size="small"
                             v-model="scope.row.value"
-                            placeholder="请输入 value"></el-input>
+                            placeholder="Please Enter value"></el-input>
                 </template>
               </el-table-column>
             </el-table>
             <el-button style="padding: 5px 0;"
                        slot="reference"
-                       type="text">设置</el-button>
+                       type="text">Set Up</el-button>
           </el-popover>
         </template>
       </el-table-column>
     </el-table>
     <el-table :data="jenkinsBuild" v-if="jenkinsBuild.length > 0"
-              empty-text="无"
+              empty-text="None"
               class="service-deploy-table">
       <el-table-column prop="name"
-                       label="服务"
+                       label="Serve"
                        width="100px"
                        >
         <div slot-scope="scope">
@@ -183,7 +183,7 @@
 
       <el-table-column   width="250px">
         <template slot="header">
-          部署
+          Deploy
           <deploy-icons></deploy-icons>
         </template>
         <template slot-scope="scope">
@@ -207,12 +207,12 @@
         </template>
       </el-table-column>
       <el-table-column width="100px"
-                       label="变量">
+                       label="Variable">
         <template slot-scope="scope">
           <el-popover placement="left"
                       width="450"
                       trigger="click">
-            <!-- jenkins构建 -->
+            <!-- jenkinsConstruct -->
             <el-table :data="scope.row.jenkins_build_args.jenkins_build_params" :row-style="rowStyle">
               <el-table-column property="name"
                                label="name">
@@ -223,7 +223,7 @@
                       style="width: 100%;"
                       v-if="row.type==='choice'"
                       v-model="row.value"
-                      placeholder="默认值"
+                      placeholder="Defaults"
                       size="small"
                     >
                       <el-option v-for="option in row.choice_option" :key="option" :label="option" :value="option"></el-option>
@@ -232,14 +232,14 @@
                       <el-input
                             size="small"
                             v-model="row.value"
-                            placeholder="请输入 value"></el-input>
+                            placeholder="Please Enter value"></el-input>
                     </div>
                 </template>
               </el-table-column>
             </el-table>
             <el-button style="padding: 5px 0;"
                        slot="reference"
-                       type="text">设置</el-button>
+                       type="text">Set Up</el-button>
           </el-popover>
         </template>
       </el-table-column>
@@ -377,7 +377,7 @@ export default {
         })
       }
     },
-    // 如果是勾选的不需要展示当前行 这里不处理数据  通过样式隐藏当前行
+    // If it is checked, the current row does not need to be displayed. The data is not processed here. The current row is hidden by style.
     rowStyle ({ row, rowIndex }) {
       if (row.name === 'IMAGE' && row.auto_generate) {
         return { visibility: 'collapse' }

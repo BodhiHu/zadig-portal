@@ -11,7 +11,7 @@ export default {
             reject()
           }
         })
-        bus.$emit('set-topbar-title', { title: '项目' })
+        bus.$emit('set-topbar-title', { title: 'Project' })
       })
     }
   }

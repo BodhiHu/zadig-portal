@@ -1,48 +1,48 @@
 <template>
   <div class="env-changelog-container">
-    <el-dialog :title="`API 请求：${currentLog.time}`" :visible.sync="payloadDialogVisible" width="60%">
+    <el-dialog :title="`API Ask：${currentLog.time}`" :visible.sync="payloadDialogVisible" width="60%">
       <div>
         <vue-json-pretty v-if="currentLog.request_body" :data="currentLog.request_body"></vue-json-pretty>
-        <p v-else>暂无请求 Payload 信息</p>
+        <p v-else>No Request Yet Payload Information</p>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" size="small" @click="payloadDialogVisible = false">确 定</el-button>
+        <el-button type="primary" size="small" @click="payloadDialogVisible = false">Sure</el-button>
       </span>
     </el-dialog>
     <div class="section">
       <div class="operation">
         <div class="type">
-          <el-select v-model="search.searchType" size="small" placeholder="请选择查询类型">
+          <el-select v-model="search.searchType" size="small" placeholder="Please select a query type">
             <el-option v-for="type in searchTypes" :key="type.value" :label="type.label" :value="type.value"></el-option>
           </el-select>
         </div>
         <div class="keyword">
-          <el-input clearable size="small" v-model="search.keyword" @keyup.enter.native="getEnvLogBySearch" placeholder="请输入关键字"></el-input>
+          <el-input clearable size="small" v-model="search.keyword" @keyup.enter.native="getEnvLogBySearch" placeholder="Please Enter Key Words"></el-input>
         </div>
-        <el-button plain size="small" @click="getEnvLogBySearch" type="primary">查询</el-button>
+        <el-button plain size="small" @click="getEnvLogBySearch" type="primary">Inquire</el-button>
       </div>
       <div class="storage-list">
         <template>
           <el-table
             :data="results"
             v-loading="loading"
-            element-loading-text="拼命加载中"
+            element-loading-text="Desperately Loading"
             element-loading-spinner="el-icon-loading"
             style="width: 100%;"
           >
-            <el-table-column width="180px" label="时间">
+            <el-table-column width="180px" label="Time">
               <template slot-scope="{ row }">{{$utils.convertTimestamp(row.created_at,'yyyy-mm-dd-ss')}}</template>
             </el-table-column>
-            <el-table-column label="用户名" prop="username"></el-table-column>
-            <el-table-column label="操作" prop="method"></el-table-column>
-            <el-table-column label="功能" prop="function"></el-table-column>
-            <el-table-column label="详情" prop="name"></el-table-column>
-            <el-table-column width="120px" label="状态码">
+            <el-table-column label="Username" prop="username"></el-table-column>
+            <el-table-column label="Operate" prop="method"></el-table-column>
+            <el-table-column label="Function" prop="function"></el-table-column>
+            <el-table-column label="Details" prop="name"></el-table-column>
+            <el-table-column width="120px" label="Status Code">
               <template slot-scope="{ row }">
                 <el-tag effect="dark" :type="getStatusColor(row.status)" size="small">{{row.status}}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column width="120px" label="API 请求">
+            <el-table-column width="120px" label="API Ask">
               <template slot-scope="{ row }">
                 <el-button @click="viewRequestPayload(row)" icon="el-icon-document" type="text"></el-button>
               </template>
@@ -75,19 +75,19 @@ export default {
     return {
       searchTypes: [
         {
-          label: '用户名',
+          label: 'Username',
           value: 'username'
         },
         {
-          label: '功能',
+          label: 'Function',
           value: 'function'
         },
         {
-          label: '状态码',
+          label: 'Status Code',
           value: 'status'
         },
         {
-          label: '详情',
+          label: 'Details',
           value: 'detail'
         }
       ],
@@ -137,7 +137,7 @@ export default {
           this.results = res.logs
           if (type === 'search') {
             this.$message({
-              message: '查询完毕',
+              message: 'Inquiry Is Complete',
               type: 'success'
             })
           }
@@ -187,21 +187,21 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '环境',
+          title: 'Surroundings',
           url: `/v1/projects/detail/${this.projectName}/envs/detail`
         },
         {
           title: this.envName,
           url: `/v1/projects/detail/${this.projectName}/envs/detail?envName=${this.envName}`
         },
-        { title: '变更记录', url: '' }
+        { title: 'Change Log', url: '' }
       ]
     })
     this.getEnvLog()

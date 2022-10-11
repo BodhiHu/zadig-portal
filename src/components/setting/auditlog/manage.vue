@@ -1,6 +1,6 @@
 <template>
   <div class="setting-auditlog-container">
-    <el-dialog :title="`API 请求：${currentLog.time}`"
+    <el-dialog :title="`API Ask：${currentLog.time}`"
                :visible.sync="payloadDialogVisiable"
                width="500px">
 
@@ -8,13 +8,13 @@
         <vue-json-pretty v-if="currentLog.request_body"
                          :data="currentLog.request_body">
         </vue-json-pretty>
-        <p v-if="currentLog.request_body ===''">暂无请求 Payload 信息</p>
+        <p v-if="currentLog.request_body ===''">No Request Yet Payload Information</p>
       </div>
       <span slot="footer"
             class="dialog-footer">
         <el-button type="primary"
                    size="small"
-                   @click="payloadDialogVisiable = false">确 定</el-button>
+                   @click="payloadDialogVisiable = false">Sure</el-button>
       </span>
     </el-dialog>
     <div class="section">
@@ -22,17 +22,17 @@
         <div class="type">
           <el-select v-model="searchType"
                      size="small"
-                     placeholder="请选择查询类型">
-            <el-option label="用户名"
+                     placeholder="Please select a query type">
+            <el-option label="Username"
                        value="username">
             </el-option>
-            <el-option label="项目"
+            <el-option label="Project"
                        value="product_name">
             </el-option>
-            <el-option label="功能"
+            <el-option label="Function"
                        value="function">
             </el-option>
-            <el-option label="状态码"
+            <el-option label="Status Code"
                        value="status">
             </el-option>
           </el-select>
@@ -44,55 +44,55 @@
                     size="small"
                     v-model="keyword"
                     @keyup.enter.native="getAuditLogBySearch"
-                    placeholder="请输入关键字"></el-input>
+                    placeholder="Please Enter Key Words"></el-input>
         </div>
 
         <el-button plain
                    size="small"
                    @click="getAuditLogBySearch"
-                   type="primary">查询</el-button>
+                   type="primary">Inquire</el-button>
       </div>
       <div class="storage-list">
         <template>
           <el-table :data="results"
                     v-loading="loading"
-                    element-loading-text="拼命加载中"
+                    element-loading-text="Desperately Loading"
                     element-loading-spinner="el-icon-loading"
                     style="width: 100%;">
             <el-table-column width="160px"
-                             label="时间">
+                             label="Time">
               <template slot-scope="scope">
                 {{$utils.convertTimestamp(scope.row.created_at,'yyyy-mm-dd-ss')}}
               </template>
             </el-table-column>
-            <el-table-column label="用户名">
+            <el-table-column label="Username">
               <template slot-scope="scope">
                 {{scope.row.username}}
               </template>
             </el-table-column>
             <el-table-column width="100px"
-                             label="操作">
+                             label="Operate">
               <template slot-scope="scope">
                 {{scope.row.method}}
               </template>
             </el-table-column>
-            <el-table-column label="项目">
+            <el-table-column label="Project">
               <template slot-scope="scope">
                 {{scope.row.product_name}}
               </template>
             </el-table-column>
-            <el-table-column label="功能">
+            <el-table-column label="Function">
               <template slot-scope="scope">
                 {{scope.row.function}}
               </template>
             </el-table-column>
-            <el-table-column label="详情">
+            <el-table-column label="Details">
               <template slot-scope="scope">
                 {{scope.row.name}}
               </template>
             </el-table-column>
             <el-table-column width="100px"
-                             label="状态码">
+                             label="Status Code">
               <template slot-scope="scope">
                 <el-tag effect="dark"
                         :type="getStatusColor(scope.row.status)"
@@ -102,7 +102,7 @@
               </template>
             </el-table-column>
             <el-table-column width="100px"
-                             label="API 请求">
+                             label="API Ask">
               <template slot-scope="scope">
                 <el-button @click="viewRequestPayload(scope.row)"
                            icon="el-icon-document"
@@ -181,7 +181,7 @@ export default {
         this.results = res.data
         if (type !== 'init') {
           this.$message({
-            message: '查询完毕',
+            message: 'Inquiry Is Complete',
             type: 'success'
           })
         }
@@ -225,7 +225,7 @@ export default {
     VueJsonPretty
   },
   created () {
-    bus.$emit(`set-topbar-title`, { title: '操作日志', breadcrumb: [] })
+    bus.$emit(`set-topbar-title`, { title: 'Operation Log', breadcrumb: [] })
     this.getAuditLog('init', this.logPageSize, this.currentPageList)
   }
 }

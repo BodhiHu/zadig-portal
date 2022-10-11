@@ -5,7 +5,7 @@
                :body-style="{ padding: '0px', margin: '15px 0 0 0' }">
         <div slot="header"
              class="clearfix">
-          <span>测试报告概览</span>
+          <span>Test Report Overview</span>
         </div>
         <div class="test-summary">
           <function-test-summary :success="testSummary.successes?testSummary.successes:(testSummary.tests - testSummary.failures - testSummary.errors)"
@@ -20,7 +20,7 @@
                :body-style="{ padding: '0px', margin: '15px 0 0 0' }">
         <div slot="header"
              class="clearfix">
-          <span>详细用例</span>
+          <span>Detailed Use Case</span>
         </div>
         <function-test-case :testCases="testCases"></function-test-case>
       </el-card>
@@ -106,19 +106,19 @@ export default {
           this.testCases.forEach(testCase => {
             const blocks = []
             if (testCase.failure && typeof testCase.failure === 'string') {
-              blocks.push(`失败原因:\n${testCase.failure}`)
+              blocks.push(`Reason For Failure:\n${testCase.failure}`)
             }
             if (testCase.failure && typeof testCase.failure === 'object') {
-              blocks.push(`失败信息:\n${testCase.failure.message}`)
-              blocks.push(`失败详情:\n${testCase.failure.text}`)
+              blocks.push(`Failure Message:\n${testCase.failure.message}`)
+              blocks.push(`Failure Details:\n${testCase.failure.text}`)
             }
             if (testCase.system_out) {
-              blocks.push(`标准输出:\n${testCase.system_out}`)
+              blocks.push(`Stdout:\n${testCase.system_out}`)
             }
             if (testCase.error) {
-              blocks.push(`错误信息:\n${testCase.error.message}`)
-              blocks.push(`错误详情:\n${testCase.error.text}`)
-              blocks.push(`错误类型:\n${testCase.error.type}`)
+              blocks.push(`Error Message:\n${testCase.error.message}`)
+              blocks.push(`Error Details:\n${testCase.error.text}`)
+              blocks.push(`Error Type:\n${testCase.error.type}`)
             }
             testCase.mergedOutput = blocks.join('\n')
           })
@@ -147,12 +147,12 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         { title: this.projectName, isProjectName: true, url: `/v1/projects/detail/${this.projectName}/detail` },
-        { title: '工作流', url: `/v1/projects/detail/${this.projectName}/pipelines` },
+        { title: 'Workflow', url: `/v1/projects/detail/${this.projectName}/pipelines` },
         { title: this.workflowName, url: `/v1/projects/detail/${this.projectName}/pipelines/multi/${this.workflowName}` },
         { title: `#${this.taskId}`, url: `/v1/projects/detail/${this.projectName}/pipelines/multi/${this.workflowName}/${this.taskId}` },
-        { title: '测试用例', url: '' }]
+        { title: 'Test Case', url: '' }]
     })
   },
   components: {

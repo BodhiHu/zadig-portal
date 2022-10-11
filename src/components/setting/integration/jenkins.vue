@@ -5,12 +5,12 @@
       :closable="false"
     >
       <template>
-        支持集成 Jenkins Server，配置后工作流可以使用 Jenkins Job 构建镜像，详情可参考
+        Support Integration Jenkins Server，After configuration the workflow can be used Jenkins Job Build Image，For details, please refer to
         <el-link style="font-size: 14px; vertical-align: baseline;"
                  type="primary"
                  :href="`https://docs.koderover.com/zadig/settings/jenkins/`"
                  :underline="false"
-                 target="_blank">帮助文档</el-link> 。
+                 target="_blank">Help Documentation</el-link> 。
       </template>
     </el-alert>
     <div class="sync-container">
@@ -19,7 +19,7 @@
         type="primary"
         plain
         @click="handleJenkinsaAdd"
-        >添加</el-button
+        >Add To</el-button
       >
     </div>
     <div class="jeknins-container">
@@ -45,11 +45,11 @@ export default {
       tableColumns: [
         {
           prop: 'url',
-          label: '服务地址'
+          label: 'Service Address'
         },
         {
           prop: 'username',
-          label: '用户名'
+          label: 'Username'
         },
         {
           prop: 'password',
@@ -59,16 +59,16 @@ export default {
           }
         },
         {
-          label: '操作',
+          label: 'Operate',
           width: '160px',
           render: (scope) => {
             return (
               <div>
                 <el-button type="primary" size="mini" onClick={() => { this.handleJenkinsaEdit(scope.row) }} plain>
-                  编辑
+                  Edit
                 </el-button>
                 <el-button type="danger" size="mini" onClick={() => { this.handleJenkinsaDelete(scope.row) }} plain>
-                  删除
+                  Delete
                 </el-button>
               </div>
             )
@@ -80,13 +80,13 @@ export default {
   },
   methods: {
     async handleJenkinsaDelete (data) {
-      this.$confirm('确定要删除这个配置吗？', '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to delete this configuration？', 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteJenkins(data).then(() => {
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
           this.getJenkins()
         })
       })

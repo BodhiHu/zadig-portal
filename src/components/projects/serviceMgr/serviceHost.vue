@@ -1,13 +1,13 @@
 <template>
   <div class="tab">
     <div class="policy">
-      <el-button type="primary" size="small" @click="showPolicyDrawer = true" plain>策略</el-button>
+      <el-button type="primary" size="small" @click="showPolicyDrawer = true" plain>Strategy</el-button>
     </div>
     <el-tabs type="card" :value="envName" @tab-click="tabChange">
       <el-tab-pane v-for="item in envNameList" :key="item.envName" :label="item.envName" :name="item.envName"></el-tab-pane>
     </el-tabs>
     <ServiceBuild v-if="envName" :envName="envName" :serviceName="serviceName" class="serviceBuild" />
-    <el-drawer title="策略" custom-class="policy-drawer" :visible.sync="showPolicyDrawer" direction="rtl" size="600px" destroy-on-close>
+    <el-drawer title="Strategy" custom-class="policy-drawer" :visible.sync="showPolicyDrawer" direction="rtl" size="600px" destroy-on-close>
       <Policy />
     </el-drawer>
   </div>

@@ -2,39 +2,39 @@
   <div class="build-config-container">
     <div class="section">
       <el-form ref="addConfigForm" :model="buildInfo" :rules="buildInfoRules" label-position="left" label-width="80px">
-        <span class="item-title">构建环境</span>
+        <span class="item-title">Build Environment</span>
         <div class="divider item"></div>
         <el-row :gutter="20">
           <el-col :span="10">
-            <el-form-item label="系统" prop="image_id" label-width="60px">
-              <el-select size="mini" v-model="buildInfo.image_id" placeholder="请选择">
+            <el-form-item label="System" prop="image_id" label-width="60px">
+              <el-select size="mini" v-model="buildInfo.image_id" placeholder="Please Choose">
                 <el-option v-for="(sys, index) in systems" :key="index" :label="sys.label" :value="sys.id">
                   <span>
                     {{ sys.label }}
-                    <el-tag v-if="sys.image_from === 'custom'" type="info" size="mini" effect="light">自定义</el-tag>
+                    <el-tag v-if="sys.image_from === 'custom'" type="info" size="mini" effect="light">Customize</el-tag>
                   </span>
                 </el-option>
                 <el-option value="">
-                  <router-link to="/v1/system/imgs" style="color: #606266;">新建自定义构建镜像</router-link>
+                  <router-link to="/v1/system/imgs" style="color: #606266;">Create a new custom build image</router-link>
                 </el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="资源" label-width="50px">
-              <el-select size="mini" v-model="buildInfo.res_req" placeholder="请选择">
-                <el-option label="高 | CPU: 16 核 内存: 32 GB" value="high"></el-option>
-                <el-option label="中 | CPU: 8 核 内存: 16 GB" value="medium"></el-option>
-                <el-option label="低 | CPU: 4 核 内存: 8 GB" value="low"></el-option>
-                <el-option label="最低 | CPU: 2 核 内存: 2 GB" value="min"></el-option>
+            <el-form-item label="Resource" label-width="50px">
+              <el-select size="mini" v-model="buildInfo.res_req" placeholder="Please Choose">
+                <el-option label="High | CPU: 16 Kernel Memory: 32 GB" value="high"></el-option>
+                <el-option label="Middle | CPU: 8 Kernel Memory: 16 GB" value="medium"></el-option>
+                <el-option label="Low | CPU: 4 Kernel Memory: 8 GB" value="low"></el-option>
+                <el-option label="Lowest | CPU: 2 Kernel Memory: 2 GB" value="min"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <el-form ref="buildApp" :inline="true" :model="buildInfo" class="form-bottom-0" label-position="top" label-width="80px">
-        <span class="item-title">应用列表</span>
-        <el-button v-if="buildInfo.install_items.length === 0" style="padding: 0;" @click="addFirstBuildApp()" size="mini" type="text">新增</el-button>
+        <span class="item-title">Application List</span>
+        <el-button v-if="buildInfo.install_items.length === 0" style="padding: 0;" @click="addFirstBuildApp()" size="mini" type="text">New</el-button>
         <div class="divider item"></div>
         <el-row v-for="(app, build_app_index) in buildInfo.install_items" :key="build_app_index">
           <el-col :span="12">
@@ -42,14 +42,14 @@
               :prop="'install_items.' + build_app_index + '.name'"
               :rules="{
                     required: true,
-                    message: '应用名不能为空',
+                    message: 'Application name cannot be empty',
                     trigger: 'blur',
                   }"
             >
               <el-select
                 style="width: 100%;"
                 v-model="buildInfo.install_items[build_app_index]"
-                placeholder="请选择应用"
+                placeholder="Please select an application"
                 size="mini"
                 value-key="id"
                 filterable
@@ -76,7 +76,7 @@
                   type="danger"
                   size="mini"
                   plain
-                >删除</el-button>
+                >Delete</el-button>
                 <el-button
                   v-if="
                         build_app_index ===
@@ -86,7 +86,7 @@
                   type="primary"
                   size="mini"
                   plain
-                >新增</el-button>
+                >New</el-button>
               </div>
             </el-form-item>
           </el-col>
@@ -98,14 +98,14 @@
     </div>
     <div class="section">
       <el-form ref="cacheDir" :inline="true" :model="buildInfo" class="form-bottom-0" label-position="left" label-width="130px">
-        <span class="item-title">缓存策略</span>
+        <span class="item-title">Caching Strategy</span>
         <div class="divider item"></div>
-        <el-form-item label="使用工作空间缓存">
+        <el-form-item label="Use Workspace Cache">
           <el-switch v-model="buildInfo.job_ctx.clean_workspace" active-color="#0066ff"></el-switch>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="缓存自定义目录">
+            <el-form-item label="Cache Custom Directory">
               <el-button
                 v-if="
                         !this.buildInfo.job_ctx.caches ||
@@ -114,7 +114,7 @@
                 style="padding: 0;"
                 @click="addFirstCacheDir()"
                 type="text"
-              >新增</el-button>
+              >New</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -129,14 +129,14 @@
           <el-col :span="10">
             <el-form-item :label="index === 0 ? '' : ''">
               <div class="app-operation">
-                <el-button v-if="buildInfo.job_ctx.caches.length >= 1" @click="deleteCacheDir(index)" type="danger" size="mini" plain>删除</el-button>
+                <el-button v-if="buildInfo.job_ctx.caches.length >= 1" @click="deleteCacheDir(index)" type="danger" size="mini" plain>Delete</el-button>
                 <el-button
                   v-if="index === buildInfo.job_ctx.caches.length - 1"
                   @click="addCacheDir(index)"
                   type="primary"
                   size="mini"
                   plain
-                >新增</el-button>
+                >New</el-button>
               </div>
             </el-form-item>
           </el-col>
@@ -145,29 +145,29 @@
     </div>
     <div class="section">
       <el-form ref="buildScript" :model="buildInfo" label-position="left" label-width="80px">
-        <span class="item-title">构建脚本</span>
+        <span class="item-title">Build Script</span>
         <el-tooltip effect="dark" placement="top-start">
           <div slot="content">
-            当前可用环境变量如下，可在构建脚本中进行引用
-            <br />$WORKSPACE&nbsp;&nbsp;工作目录
-            <br />$TASK_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作流任务 ID
-            <br />$IMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出镜像名称
-            <br />$SERVICE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;构建的服务名称
-            <br />$SERVICE_MODULE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;构建的服务组件名称
-            <br />$DIST_DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;构建出的 Tar 包的目的目录
-            <br />$PKG_FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;构建出的 Tar 包名称
-            <br />$ENV_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行的环境名称
-            <br />$BUILD_URL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;构建任务的 URL
+            The currently available environment variables are as follows，Can be referenced in build scripts
+            <br />$WORKSPACE&nbsp;&nbsp;Work List
+            <br />$TASK_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Workflow Tasks ID
+            <br />$IMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Output Image Name
+            <br />$SERVICE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build Service Name
+            <br />$SERVICE_MODULE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build service component name
+            <br />$DIST_DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built Tar Destination directory of the package
+            <br />$PKG_FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built Tar Package Name
+            <br />$ENV_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Executed environment name
+            <br />$BUILD_URL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build Task URL
             <br />$CI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            值恒等于 true，表示当前环境是 CI/CD 环境
-            <br />$ZADIG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值恒等于
-            true，表示在 Zadig 系统上执行脚本
-            <br />&lt;REPO&gt;_PR 构建过程中指定代码仓库使用的 Pull Request 信息
-            <br />&lt;REPO&gt;_BRANCH 构建过程中指定代码仓库使用的分支信息
-            <br />&lt;REPO&gt;_TAG 构建过程中指定代码仓库使用 Tag 信息
-            <br />&lt;REPO&gt;_COMMIT_ID 构建过程中指定代码的 commit 信息
+            Value Is Equal To true，Indicates that the current environment is CI/CD Surroundings
+            <br />$ZADIG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value Is Equal To
+            true，Expressed In Zadig Execute the script on the system
+            <br />&lt;REPO&gt;_PR Specify the code repository to use during the build process Pull Request Information
+            <br />&lt;REPO&gt;_BRANCH Specifies the branch information used by the code repository during the build process
+            <br />&lt;REPO&gt;_TAG Specify the code repository to use during the build process Tag Information
+            <br />&lt;REPO&gt;_COMMIT_ID The code specified during the build process commit Information
           </div>
-          <span class="variable">变量</span>
+          <span class="variable">Variable</span>
         </el-tooltip>
         <div class="divider item"></div>
         <el-row>
@@ -180,8 +180,8 @@
       </el-form>
       <el-form :model="buildInfo" ref="file_archive" class="stcov label-at-left">
         <div class="dashed-container">
-          <span class="title">交付物归档</span>
-          <el-form-item label="存放路径：">
+          <span class="title">Deliverables Archive</span>
+          <el-form-item label="Storage Path：">
             <el-input v-model="buildInfo.job_ctx.artifact_path" size="mini">
               <template slot="prepend">$WORKSPACE/</template>
             </el-input>
@@ -233,7 +233,7 @@ export default {
         {
           type: 'string',
           required: true,
-          message: '请选择构建系统',
+          message: 'Please select a build system',
           trigger: 'blur'
         }
       ]
@@ -354,7 +354,7 @@ export default {
   activated () {
     this.getRestoredBuild()
     this.validObj.addValidate({
-      name: '构建',
+      name: 'Construct',
       valid: this.validate
     })
   },

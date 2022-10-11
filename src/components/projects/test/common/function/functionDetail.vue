@@ -4,7 +4,7 @@
       <el-form class="primary-form" :model="test" ref="testFormRef" label-width="120px" label-position="left">
         <el-form-item
           prop="name"
-          label="测试名称"
+          label="Test Name"
           :rules=" {
             type: 'string',
             required: true,
@@ -12,10 +12,10 @@
             trigger: 'change'
           }"
         >
-          <el-input :disabled="isEdit" size="small" v-model="test.name" placeholder="请输入测试名称"></el-input>
+          <el-input :disabled="isEdit" size="small" v-model="test.name" placeholder="Please Enter A Test Name"></el-input>
         </el-form-item>
-        <el-form-item label="描述信息">
-          <el-input size="small" v-model="test.desc" placeholder="请输入描述信息"></el-input>
+        <el-form-item label="Description">
+          <el-input size="small" v-model="test.desc" placeholder="Please enter a description"></el-input>
         </el-form-item>
         <BuildEnv ref="buildEnvRef" :isCreate="!isEdit" :title="``" :secondaryProp="`pre_test`" :buildConfig="test" isTest />
       </el-form>
@@ -23,9 +23,9 @@
       <RepoSelect :config="test" :validObj="validObj" class="test-secondary-form" hidePrimary showFirstLine />
 
       <section>
-        <div class="primary-title not-first-child">测试变量</div>
+        <div class="primary-title not-first-child">Test Variable</div>
         <EnvVariable :preEnvs="test.pre_test" :validObj="validObj" :fromWhere="fromWhere" />
-        <div class="primary-title not-first-child">测试脚本</div>
+        <div class="primary-title not-first-child">Test Script</div>
         <div class="deploy-script">
           <Resize :resize="'both'">
             <Editor v-model="test.scripts"></Editor>
@@ -34,25 +34,25 @@
       </section>
 
       <section>
-        <div class="primary-title not-first-child">测试报告配置</div>
+        <div class="primary-title not-first-child">Test report configuration</div>
         <el-form class="secondary-form" :model="test" label-width="150px" label-position="left">
-          <el-form-item label="Junit 报告所在目录">
-            <el-input size="small" v-model="test.test_result_path" style="width: 100%;" placeholder="请输入测试报告目录">
+          <el-form-item label="Junit The directory where the report is located">
+            <el-input size="small" v-model="test.test_result_path" style="width: 100%;" placeholder="Please enter test report directory">
               <template slot="prepend">$WORKSPACE/</template>
             </el-input>
           </el-form-item>
           <el-form-item class="label-icon">
             <template slot="label">
-              <span>Html 报告文件地址</span>
+              <span>Html Report File Address</span>
               <el-tooltip effect="dark" placement="top">
                 <div slot="content">
-                  Html 测试报告文件将包含在工作流发送的 IM 通知内容中
+                  Html The test report file will be included in the workflow sent IM In The Notification
                   <br />
                 </div>
                 <i class="el-icon-question"></i>
               </el-tooltip>
             </template>
-            <el-input size="small" v-model="test.test_report_path" style="width: 100%;" placeholder="请输入测试报告文件">
+            <el-input size="small" v-model="test.test_report_path" style="width: 100%;" placeholder="Please enter a test report file">
               <template slot="prepend">$WORKSPACE/</template>
             </el-input>
           </el-form-item>
@@ -63,7 +63,7 @@
     <section>
       <div style="margin-bottom: 8px;">
         <el-button type="primary" size="small" plain @click="switchAdvancedStatus">
-          高级配置
+          Advanced Configuration
           <i :class="[test.advanced_setting_modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
         </el-button>
       </div>
@@ -80,9 +80,9 @@
 
     <footer class="create-footer">
       <router-link :to="`/v1/projects/detail/${projectName}/test`">
-        <el-button style="margin-right: 15px;" type="primary" plain>取消</el-button>
+        <el-button style="margin-right: 15px;" type="primary" plain>Cancel</el-button>
       </router-link>
-      <el-button @click="saveTest" type="primary">{{ isEdit ? '确认修改' : '立即新建' }}</el-button>
+      <el-button @click="saveTest" type="primary">{{ isEdit ? 'Confirm The Changes' : 'Create Now' }}</el-button>
     </footer>
   </div>
 </template>
@@ -104,10 +104,10 @@ import {
 } from '@api'
 const validateTestName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入测试名称'))
+    callback(new Error('Please Enter A Test Name'))
   } else {
     if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
-      callback(new Error('名称只支持字母和数字，特殊字符只支持中划线和下划线'))
+      callback(new Error('Name only supports letters and numbers，Special characters only support underscore and underscore'))
     } else {
       callback()
     }
@@ -165,7 +165,7 @@ export default {
       configDataLoading: false,
       fromWhere: {
         origin: 'test',
-        title: '测试',
+        title: 'Test',
         vars: []
       }
     }
@@ -216,7 +216,7 @@ export default {
         const fn = this.isEdit ? updateTestAPI : createTestAPI
         fn(this.projectName, this.test).then(res => {
           this.$message({
-            message: '保存成功',
+            message: 'Successfully Saved',
             type: 'success'
           })
           this.$router.push(
@@ -230,17 +230,17 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: `/v1/projects` },
+        { title: 'Project', url: `/v1/projects` },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}`
         },
         {
-          title: '测试',
+          title: 'Test',
           url: `/v1/projects/detail/${this.projectName}/test/function`
         },
-        { title: this.isEdit ? this.name : '添加', url: '' }
+        { title: this.isEdit ? this.name : 'Add To', url: '' }
       ]
     })
     this.test.product_name = this.projectName

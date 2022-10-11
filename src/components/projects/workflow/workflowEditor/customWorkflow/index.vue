@@ -3,8 +3,8 @@
     <div class="left">
       <header>
         <div class="name">
-          <CanInput v-model="payload.name" placeholder="工作流名称" :from="activeName" :disabled="!!isEdit" class="mg-r16" />
-          <CanInput v-model="payload.description" :from="activeName" placeholder="描述信息" />
+          <CanInput v-model="payload.name" placeholder="Workflow Name" :from="activeName" :disabled="!!isEdit" class="mg-r16" />
+          <CanInput v-model="payload.description" :from="activeName" placeholder="Description" />
         </div>
         <div class="tab">
           <span
@@ -16,8 +16,8 @@
           >{{item.label}}</span>
         </div>
         <div>
-          <el-button type="primary" size="small" @click="operateWorkflow">保存</el-button>
-          <el-button size="small" @click="cancelWorkflow">取消</el-button>
+          <el-button type="primary" size="small" @click="operateWorkflow">Save</el-button>
+          <el-button size="small" @click="cancelWorkflow">Cancel</el-button>
         </div>
       </header>
       <Multipane layout="horizontal" v-show="activeName === 'ui'" style="height: 100%;">
@@ -38,7 +38,7 @@
               <div class="line"></div>
             </div>
             <div>
-              <el-button @click="showStageOperateDialog('add')" size="small" class="stage-add">+ 阶段</el-button>
+              <el-button @click="showStageOperateDialog('add')" size="small" class="stage-add">+ Stage</el-button>
             </div>
             <div class="line"></div>
             <span class="ui-text mg-l8">End</span>
@@ -50,8 +50,8 @@
           <div class="header">
             <span>{{curJobType}}</span>
             <div>
-              <el-button size="mini" type="primary" @click="saveJobConfig">确定</el-button>
-              <el-button size="mini" @click="closeFooter">取消</el-button>
+              <el-button size="mini" type="primary" @click="saveJobConfig">Sure</el-button>
+              <el-button size="mini" @click="closeFooter">Cancel</el-button>
             </div>
           </div>
           <div v-if="payload.stages.length > 0 && job" class="main">
@@ -64,11 +64,11 @@
               label-width="90px"
               size="small"
             >
-              <el-form-item label="任务名称" prop="name" v-if="payload.stages[curStageIndex] && payload.stages[curStageIndex].jobs.length > 0">
+              <el-form-item label="Mission Name" prop="name" v-if="payload.stages[curStageIndex] && payload.stages[curStageIndex].jobs.length > 0">
                 <el-input v-model="job.name" size="small" style="width: 220px;"></el-input>
               </el-form-item>
-              <el-form-item label="镜像仓库" prop="spec.docker_registry_id" v-if="job.type===jobType.build">
-                <el-select v-model="job.spec.docker_registry_id" placeholder="请选择" size="small" style="width: 220px;">
+              <el-form-item label="Mirror Repository" prop="spec.docker_registry_id" v-if="job.type===jobType.build">
+                <el-select v-model="job.spec.docker_registry_id" placeholder="Please Choose" size="small" style="width: 220px;">
                   <el-option v-for="item in dockerList" :key="item.id" :label="`${item.reg_addr}/${item.namespace}`" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -84,7 +84,7 @@
                 <el-select size="small" v-model="service" multiple filterable clearable>
                   <el-option
                     disabled
-                    label="全选"
+                    label="Select All"
                     value="ALL"
                     :class="{selected: service.length === serviceAndBuilds.length}"
                     style="color: #606266;"
@@ -92,7 +92,7 @@
                     <span
                       style=" display: inline-block; width: 100%; font-weight: normal; cursor: pointer;"
                       @click="service = serviceAndBuilds.map(item=>item.value)"
-                    >全选</span>
+                    >Select All</span>
                   </el-option>
                   <el-option
                     v-for="(service,index) in serviceAndBuilds"
@@ -107,7 +107,7 @@
                   plain
                   :disabled="Object.keys(service).length === 0"
                   @click="addServiceAndBuild(job.spec.service_and_builds)"
-                >+ 添加</el-button>
+                >+ Add To</el-button>
               </div>
               <div v-if="job.type === 'plugin'">
                 <Plugin v-model="job" ref="plugin" :globalEnv="globalEnv" />
@@ -133,7 +133,7 @@
                 label-position="left"
               >
                 <el-form-item
-                  label="任务名称"
+                  label="Mission Name"
                   prop="name"
                   v-if="payload.stages[curStageIndex] && payload.stages[curStageIndex].jobs.length > 0"
                 >
@@ -167,17 +167,17 @@
           <el-button size="mini" plain icon="el-icon-circle-close" @click="isShowDrawer=false"></el-button>
         </div>
         <div v-else>
-          <el-button type="primary" size="mini" plain @click="handleDrawerChange">{{drawerConfirmText?drawerConfirmText:'确定'}}</el-button>
-          <el-button size="mini" plain @click="isShowDrawer=false">{{drawerCancelText?drawerCancelText:'取消'}}</el-button>
+          <el-button type="primary" size="mini" plain @click="handleDrawerChange">{{drawerConfirmText?drawerConfirmText:'Sure'}}</el-button>
+          <el-button size="mini" plain @click="isShowDrawer=false">{{drawerCancelText?drawerCancelText:'Cancel'}}</el-button>
         </div>
       </span>
       <div v-if="curDrawer === 'high'">
-        <div class="mg-b16">运行策略</div>
+        <div class="mg-b16">Run Strategy</div>
         <el-form>
           <el-form-item>
             <span class="mg-r16">
-              <span>并发运行</span>
-              <el-tooltip effect="dark" content="当同时更新多个不同服务时，产生的多个任务将会并发执行，以提升工作流运行效率" placement="top">
+              <span>Run Concurrently</span>
+              <el-tooltip effect="dark" content="When updating multiple different services at the same time，The resulting multiple tasks will be executed concurrently，To improve workflow efficiency" placement="top">
                 <i class="pointer el-icon-question"></i>
               </el-tooltip>
             </span>
@@ -192,11 +192,11 @@
         <Webhook :config="payload" :isEdit="isEdit" :isShowDrawer="isShowDrawer" :originalWorkflow="originalWorkflow" @saveWorkflow="operateWorkflow" @closeDrawer="isShowDrawer=false" ref="webhook" />
       </div>
     </el-drawer>
-    <el-dialog :title="stageOperateType === 'add' ? '新建阶段' : '编辑阶段'" :visible.sync="isShowStageOperateDialog" width="30%">
+    <el-dialog :title="stageOperateType === 'add' ? 'New Stage' : 'Editing Phase'" :visible.sync="isShowStageOperateDialog" width="30%">
       <StageOperate ref="stageOperate" :stageInfo="stage" :type="stageOperateType" :workflowInfo="payload" @submitEvent="operateStage('',stage)" />
       <div slot="footer">
-        <el-button @click="isShowStageOperateDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="operateStage('',stage)" size="small">确 定</el-button>
+        <el-button @click="isShowStageOperateDialog = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="operateStage('',stage)" size="small">Sure</el-button>
       </div>
     </el-dialog>
   </div>
@@ -239,11 +239,11 @@ import { cloneDeep, differenceWith } from 'lodash'
 const validateName = (rule, value, callback) => {
   const reg = /^[a-z][a-z0-9-]{0,32}$/
   if (value === '') {
-    callback(new Error('请输入任务名称'))
+    callback(new Error('Please Enter A Task Name'))
   } else if (!reg.test(value)) {
     callback(
       new Error(
-        '支持小写英文字母、数字或者中划线，必须小写英文字母开头，最多 32 位。'
+        'Support lowercase English letters、Number Or Dash，Must start with a lowercase English letter，Most 32 Bit。'
       )
     )
   } else {
@@ -291,7 +291,7 @@ export default {
       },
       originalWorkflow: {},
       curStageIndex: 0,
-      curJobIndex: -2, // 不指向 job
+      curJobIndex: -2, // Does Not Point job
       curDrawer: 'high',
       isShowStageOperateDialog: false,
       serviceAndBuilds: [],
@@ -315,7 +315,7 @@ export default {
           docker_registry_id: [
             {
               required: true,
-              message: '请选择镜像',
+              message: 'Please Select A Mirror',
               trigger: 'blur'
             }
           ]
@@ -407,14 +407,14 @@ export default {
       bus.$emit('set-topbar-title', {
         title: '',
         breadcrumb: [
-          { title: '项目', url: '/v1/projects' },
+          { title: 'Project', url: '/v1/projects' },
           {
             title: this.projectName,
             isProjectName: true,
             url: `/v1/projects/detail/${this.projectName}/detail`
           },
           {
-            title: '工作流',
+            title: 'Workflow',
             url: `/v1/projects/detail/${this.projectName}/pipelines`
           },
           {
@@ -438,21 +438,21 @@ export default {
         this.payload = jsyaml.load(this.yaml)
       }
       if (!this.payload.name) {
-        this.$message.error(' 请填写工作流名称')
+        this.$message.error(' Please fill in the workflow name')
         return
       }
       if (this.payload.stages.length === 0) {
-        this.$message.error(' 请至少填写一个阶段')
+        this.$message.error(' Please fill in at least one stage')
         return
       }
       this.payload.stages.forEach(item => {
         if (item.jobs.length === 0) {
-          this.$message.error(`请填写 ${item.name} 中的任务`)
+          this.$message.error(`Please Fill Out ${item.name} Tasks In`)
           throw Error()
         }
       })
       if (this.isShowFooter) {
-        this.$message.error('请先保存任务配置')
+        this.$message.error('Please save the task configuration first')
         return
       }
       this.saveWorkflow()
@@ -515,7 +515,7 @@ export default {
       if (this.$route.fullPath.includes('edit')) {
         updateCustomWorkflowAPI(workflowName, yamlParams, this.projectName)
           .then(res => {
-            this.$message.success('编辑成功')
+            this.$message.success('Edited Successfully')
             this.getWorkflowDetail(this.payload.name)
             this.$router.push(
               `/v1/projects/detail/${this.projectName}/pipelines/custom/${this.payload.name}`
@@ -527,7 +527,7 @@ export default {
       } else {
         addCustomWorkflowAPI(yamlParams, this.projectName)
           .then(res => {
-            this.$message.success('新建成功')
+            this.$message.success('Created Successfully')
             this.getWorkflowDetail(this.payload.name)
             this.$router.push(
               `/v1/projects/detail/${this.projectName}/pipelines/custom/${this.payload.name}`
@@ -628,11 +628,11 @@ export default {
         this.payload.stages.length !== 0 &&
         this.stage.jobs.length === 0
       ) {
-        this.$message.error('请至少创建一个任务')
+        this.$message.error('Please create at least one task')
         return
       }
       if (this.isShowFooter) {
-        this.$message.error('请先保存上一个任务配置')
+        this.$message.error('Please save the last task configuration first')
       } else {
         this.isShowStageOperateDialog = true
       }
@@ -671,9 +671,9 @@ export default {
       })
     },
     delStage (index, item) {
-      this.$confirm(`确定删除阶段 [${item.name}]？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Determining the deletion phase [${item.name}]？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(res => {
         const stages = this.payload.stages.filter(
@@ -708,7 +708,7 @@ export default {
               reject()
             } else if (this.job.type === jobType.build) {
               if (this.$refs.serviceAndbuild.getData().length === 0) {
-                this.$message.error('请至少选择一个服务组件')
+                this.$message.error('Please select at least one service component')
                 return
               }
               this.$refs.serviceAndbuild.validate().then(valid => {
@@ -726,14 +726,14 @@ export default {
               this.$refs[this.beInitCompRef]
                 .validate()
                 .then(job => {
-                  delete this.job.isCreate // 去除新建状态
+                  delete this.job.isCreate // Remove New State
                   this.$set(
                     this.payload.stages[this.curStageIndex].jobs,
                     this.curJobIndex,
                     job
                   )
                   this.$store.dispatch('setIsShowFooter', false)
-                  this.curJobIndex = -2 // 为了反复切换同一个构建不能初始化
+                  this.curJobIndex = -2 // Cannot initialize in order to switch the same build repeatedly
                   resolve()
                 })
                 .catch(err => {
@@ -840,7 +840,7 @@ export default {
     },
     curJobIndex (val) {
       if (val !== -2) {
-        // 保存构建后设置为-2，什么都不执行，目的是为了两次点击同一个stage，能触发这个函数（有初始化动作 没有地方能看到触发的）
+        // After saving the build set to-2，Do Nothing，The purpose is to click the same two timesstage，Trigger This Function（There is an initialization action, nowhere to see the trigger）
         this.setJob()
       }
     },

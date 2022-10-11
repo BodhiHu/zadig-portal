@@ -2,10 +2,10 @@
   <section class="policy-content">
     <div class="top">
       <el-form ref="roleRef" :rules="rules" :model="collaborationData" label-width="120px" label-position="left">
-        <el-form-item label="选择参与成员" prop="members">
+        <el-form-item label="Select participating members" prop="members">
           <el-select
             v-model="collaborationData.members"
-            placeholder="可搜寻选择用户"
+            placeholder="Searchable Select Users"
             multiple
             clearable
             filterable
@@ -20,10 +20,10 @@
             <el-option disabled value="NEWUSER">
               <router-link :to="`/v1/projects/detail/${projectName}/rbac?addRole=true`" class="env-link">
                 <i class="el-icon-circle-plus-outline" style="margin-right: 3px;"></i>
-                添加项目成员
+                Add Project Members
               </router-link>
             </el-option>
-            <el-option v-if="hasAllUser" label="所有用户" value="*"></el-option>
+            <el-option v-if="hasAllUser" label="All Users" value="*"></el-option>
             <el-option v-for="user in currentUsers" :key="user.uid" :label="user.username" :value="user.uid">
               <i class="iconfont iconsystem option-icon"></i>
               {{user.username}} ({{user.account}})
@@ -33,16 +33,16 @@
       </el-form>
     </div>
 
-    <div class="primary-title">配置协作规则</div>
+    <div class="primary-title">Configure Collaboration Rules</div>
 
-    <div class="secondary-title">工作流</div>
+    <div class="secondary-title">Workflow</div>
     <el-form ref="workflowRef" :model="collaborationData" label-width="120px" label-position="left">
       <el-table :data="collaborationData.workflows" style="width: 100%;">
-        <el-table-column label="基准工作流">
+        <el-table-column label="Benchmark Workflow">
           <template slot-scope="{ row, $index }">
             <el-form-item class="base-item" :prop="`workflows[${$index}].name`" label-width="0px" required>
               <el-tooltip effect="dark" :content="row.name" placement="top" :popper-class="row.name ? '' : 'hidden-base-tooltip'">
-                <el-select v-model="row.name" placeholder="请选择基准工作流" filterable size="small" :disabled="!row.add">
+                <el-select v-model="row.name" placeholder="Please select a baseline workflow" filterable size="small" :disabled="!row.add">
                   <el-option v-if="row.name" :label="row.name" :value="row.name"></el-option>
                   <el-option v-for="workflow in lastBaseWorkflows" :key="workflow" :label="workflow" :value="workflow"></el-option>
                 </el-select>
@@ -50,19 +50,19 @@
             </el-form-item>
           </template>
         </el-table-column>
-        <el-table-column label="配置">
+        <el-table-column label="Configure">
           <template slot-scope="{ row }">
             <el-radio-group v-model="row.collaboration_type" @change="updateCollaborationType($event, 'workflow', row)">
-              <el-tooltip effect="dark" content="成员基于此基准工作流新建一个工作流" placement="top" v-if="showUniqueConfig">
-                <el-radio label="new">独享</el-radio>
+              <el-tooltip effect="dark" content="Members create a new workflow based on this baseline workflow" placement="top" v-if="showUniqueConfig">
+                <el-radio label="new">Exclusive</el-radio>
               </el-tooltip>
-              <el-tooltip effect="dark" content="成员共享一个基准工作流" placement="top">
-                <el-radio label="share">共享</el-radio>
+              <el-tooltip effect="dark" content="Members share a baseline workflow" placement="top">
+                <el-radio label="share">Shared</el-radio>
               </el-tooltip>
             </el-radio-group>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="Operate">
           <template slot-scope="{ row }">
             <el-popover ref="workflowPopoverRef" placement="right" trigger="click">
               <div class="auth-list">
@@ -71,7 +71,7 @@
                     :indeterminate="isIndeterminate(row, 'workflow')"
                     :value="checkAll(row, 'workflow')"
                     @change="handleCheckAllChange($event, row, 'workflow')"
-                  ></el-checkbox>所有权限
+                  ></el-checkbox>All Permissions
                 </div>
                 <el-checkbox-group v-model="row.verbs">
                   <el-checkbox
@@ -85,7 +85,7 @@
                   </el-checkbox>
                 </el-checkbox-group>
               </div>
-              <el-button type="primary" slot="reference" size="mini" plain>权限</el-button>
+              <el-button type="primary" slot="reference" size="mini" plain>Permission</el-button>
             </el-popover>
           </template>
         </el-table-column>
@@ -97,19 +97,19 @@
         </el-table-column>
         <div slot="empty">
           <el-button type="primary" icon="el-icon-plus" size="small" plain @click="addWorkflow"></el-button>
-          <el-tag effect="dark">删除工作流将影响参与成员操作权限</el-tag>
+          <el-tag effect="dark">Deleting a workflow will affect the participating members' operation permissions</el-tag>
         </div>
       </el-table>
     </el-form>
 
-    <div class="secondary-title">环境</div>
+    <div class="secondary-title">Surroundings</div>
     <el-form ref="environmentRef" :model="collaborationData" label-width="120px" label-position="left">
       <el-table :data="collaborationData.products" style="width: 100%;">
-        <el-table-column label="基准环境">
+        <el-table-column label="Baseline Environment">
           <template slot-scope="{ row, $index }">
             <el-form-item class="base-item" :prop="`products[${$index}].name`" label-width="0px" required>
               <el-tooltip effect="dark" :content="row.name" placement="top" :popper-class="row.name ? '' : 'hidden-base-tooltip'">
-                <el-select v-model="row.name" placeholder="请选择基准环境" filterable size="small" :disabled="!row.add">
+                <el-select v-model="row.name" placeholder="Please select a base environment" filterable size="small" :disabled="!row.add">
                   <el-option v-if="row.name" :label="row.name" :value="row.name"></el-option>
                   <el-option v-for="env in lastBaseEnvironments" :key="env" :label="env" :value="env"></el-option>
                 </el-select>
@@ -117,19 +117,19 @@
             </el-form-item>
           </template>
         </el-table-column>
-        <el-table-column label="配置">
+        <el-table-column label="Configure">
           <template slot-scope="{ row }">
             <el-radio-group v-model="row.collaboration_type" @change="updateCollaborationType($event, 'environment', row)">
-              <el-tooltip effect="dark" content="成员基于此基准环境新建一个环境" placement="top" v-if="showUniqueConfig">
-                <el-radio label="new">独享</el-radio>
+              <el-tooltip effect="dark" content="Members create a new environment based on this baseline environment" placement="top" v-if="showUniqueConfig">
+                <el-radio label="new">Exclusive</el-radio>
               </el-tooltip>
-              <el-tooltip effect="dark" content="成员共享一个基准环境" placement="top">
-                <el-radio label="share">共享</el-radio>
+              <el-tooltip effect="dark" content="Members share a baseline environment" placement="top">
+                <el-radio label="share">Shared</el-radio>
               </el-tooltip>
             </el-radio-group>
           </template>
         </el-table-column>
-        <el-table-column prop="prop" label="操作">
+        <el-table-column prop="prop" label="Operate">
           <template slot-scope="{ row }">
             <el-popover ref="envPopoverRef" placement="right" trigger="click">
               <div class="auth-list">
@@ -140,7 +140,7 @@
                     @change="handleCheckAllChange($event, row, 'environment')"
                   ></el-checkbox>
                   <i></i>
-                  所有权限
+                  All Permissions
                 </div>
                 <el-checkbox-group v-model="row.verbs">
                   <el-checkbox
@@ -154,7 +154,7 @@
                   </el-checkbox>
                 </el-checkbox-group>
               </div>
-              <el-button type="primary" slot="reference" size="mini" plain style="margin-right: 10px;">权限</el-button>
+              <el-button type="primary" slot="reference" size="mini" plain style="margin-right: 10px;">Permission</el-button>
             </el-popover>
           </template>
         </el-table-column>
@@ -166,23 +166,23 @@
         </el-table-column>
         <div slot="empty">
           <el-button type="primary" icon="el-icon-plus" size="small" plain @click="addEnvironment"></el-button>
-          <el-tag effect="dark">删除环境将影响参与成员操作权限</el-tag>
+          <el-tag effect="dark">Deleting the environment will affect the participating members' operation permissions</el-tag>
         </div>
       </el-table>
     </el-form>
 
     <div class="recycle-resources">
       <span class="primary-title recycle-title">
-        资源回收策略
-        <el-tooltip effect="dark" content="如果成员在一段时间内（配置的资源回收时间）没有访问项目，那么该成员的资源将会被回收，默认 0 天表示不回收。成员重新访问项目将会再次获得资源。" placement="top">
+        Resource recovery strategy
+        <el-tooltip effect="dark" content="If the member is within a certain period of time（Configured resource recycling time）No Access Item，Then the member's resources will be recycled，Default 0 Day Means No Recycling。Members revisiting the project will get the resource again。" placement="top">
           <i class="el-icon-question"></i>
         </el-tooltip>
       </span>
-      <el-input-number v-model="collaborationData.recycle_day" size="small" :min="0"></el-input-number>天
+      <el-input-number v-model="collaborationData.recycle_day" size="small" :min="0"></el-input-number>Sky
     </div>
 
     <div class="bottom">
-      <el-button type="primary" @click="handleCollaboration" :disabled="saveDisabled">保存</el-button>
+      <el-button type="primary" @click="handleCollaboration" :disabled="saveDisabled">Save</el-button>
     </div>
     <PolicyDialog
       :changedInfo="changedInfo"
@@ -215,7 +215,7 @@ export default {
       members: {
         required: true,
         type: 'array',
-        message: '请选择参与成员',
+        message: 'Please select participating members',
         trigger: ['blur', 'change']
       }
     }
@@ -373,7 +373,7 @@ export default {
       if (!this.collaborationData.name) {
         this.$message({
           type: 'error',
-          message: '请输入协作模式的名称!'
+          message: 'Please enter a name for the collaboration mode!'
         })
         return
       }
@@ -382,7 +382,7 @@ export default {
         if (!data.workflows.length && !data.products.length) {
           this.$message({
             type: 'info',
-            message: '请选择将要赋予用户的权限!'
+            message: 'Please select the permissions that will be given to the user!'
           })
           return
         }
@@ -420,7 +420,7 @@ export default {
         this.changedInfo = {
           added: {
             members: isAllMemberCurr
-              ? ['所有用户']
+              ? ['All Users']
               : this.transformUidToName(current.members),
             workflows: cloneDeep(current.workflows),
             products: cloneDeep(current.products)
@@ -431,7 +431,7 @@ export default {
         this.changedInfo = {
           deleted: {
             members: isAllMemberInit
-              ? ['所有用户']
+              ? ['All Users']
               : this.transformUidToName(initial.members),
             workflows: cloneDeep(initial.workflows),
             products: cloneDeep(initial.products)
@@ -443,13 +443,13 @@ export default {
         if (isAllMemberCurr && isAllMemberInit) {
           changedInfo = {
             updated: {
-              members: ['所有用户']
+              members: ['All Users']
             }
           }
         } else if (isAllMemberCurr) {
           changedInfo = {
             added: {
-              members: ['所有用户']
+              members: ['All Users']
             },
             updated: {
               members: []
@@ -458,7 +458,7 @@ export default {
         } else if (isAllMemberInit) {
           changedInfo = {
             deleted: {
-              members: ['所有用户']
+              members: ['All Users']
             },
             updated: {
               members: []
@@ -523,7 +523,7 @@ export default {
       ) {
         this.visible = true
       } else {
-        this.$message.info('协作模式信息无变动！')
+        this.$message.info('No change in collaboration mode information！')
       }
     },
     transformUidToName (userIds) {

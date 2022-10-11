@@ -1,11 +1,11 @@
 <template>
   <div class="cooperation-container">
-    <el-alert type="warning" :closable="false" title="管理项目各个角色协作过程中使用功能模块和权限"></el-alert>
+    <el-alert type="warning" :closable="false" title="Manage the use of function modules and permissions in the collaborative process of various roles in the project"></el-alert>
     <el-tabs type="card" v-model="activeName">
       <el-tab-pane v-for="mode in allCollaboration" :key="mode.initName" :name="mode.initName">
         <span slot="label" class="policy-title">
           <span v-if="activeName !== mode.initName || mode.initName === mode.name" class="mode-name">{{ mode.name }}</span>
-          <el-input v-else v-model="mode.name" placeholder="协作模式名称" size="small"></el-input>
+          <el-input v-else v-model="mode.name" placeholder="Collaboration Mode Name" size="small"></el-input>
 
           <i class="el-icon-delete icon" @click.stop="deleteMode(mode.initName)"></i>
         </span>
@@ -236,13 +236,13 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '协作模式', url: '' }
+        { title: 'Collaborative Mode', url: '' }
       ]
     })
   }

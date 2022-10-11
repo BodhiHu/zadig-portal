@@ -1,7 +1,7 @@
 <template>
   <div class="workflow-build-rows">
     <el-table :data="repoList" v-if="type!=='plugin'&&repoList.length>0">
-      <el-table-column label="代码库">
+      <el-table-column label="Code Library">
         <template slot-scope="scope">
           <el-row v-for="build of scope.row.spec.repos" class="build-row" :key="build.code_host_id">
             <template>
@@ -22,7 +22,7 @@
                   clearable
                   size="small"
                   value-key="id"
-                  :placeholder="build.source==='other'?'请输入分支或标签':'请选择分支或标签'"
+                  :placeholder="build.source==='other'?'Please enter a branch or tag':'Please select a branch or tag'"
                   @change="changeBranchOrTag(build)"
                 >
                   <el-option-group v-for="group in build.branchAndTagList" :key="group.label" :label="group.label">
@@ -35,7 +35,7 @@
                   v-if="!$utils.isEmpty(build.branchPRsMap)"
                   v-model.number="build[build.prNumberPropName]"
                   size="small"
-                  placeholder="请选择 PR"
+                  placeholder="Please Choose PR"
                   filterable
                   clearable
                   :disabled="build.branchOrTag && build.branchOrTag.type === 'tag'"
@@ -47,23 +47,23 @@
                     popper-class="gray-popper"
                   >
                     <div slot="content">
-                      {{`创建人: ${$utils.tailCut(item.authorUsername,10)}`}}
+                      {{`Founder: ${$utils.tailCut(item.authorUsername,10)}`}}
                       <br />
-                      {{`时间: ${$utils.convertTimestamp(item.createdAt)}`}}
+                      {{`Time: ${$utils.convertTimestamp(item.createdAt)}`}}
                       <br />
-                      {{`源分支: ${item.sourceBranch}`}}
+                      {{`Source Branch: ${item.sourceBranch}`}}
                       <br />
-                      {{`目标分支: ${item.targetBranch}`}}
+                      {{`Target Branch: ${item.targetBranch}`}}
                     </div>
                     <el-option :label="`#${item[build.prNumberPropName]} ${item.title}`" :value="item[build.prNumberPropName]"></el-option>
                   </el-tooltip>
                 </el-select>
-                <el-tooltip v-else content="PR 不存在，支持手动输入 PR 号" placement="top" popper-class="gray-popper">
+                <el-tooltip v-else content="PR Does Not Exist，Support Manual Input PR No" placement="top" popper-class="gray-popper">
                   <el-input
                     v-model.number="build[build.prNumberPropName]"
                     class="short-input"
                     size="small"
-                    placeholder="请填写 PR 号"
+                    placeholder="Please Fill Out PR No"
                     :disabled="build.branchOrTag && build.branchOrTag.type === 'tag'"
                   ></el-input>
                 </el-tooltip>
@@ -82,14 +82,14 @@
     <el-table
       :data="type === 'plugin' ? job.spec.plugin.inputs.filter(item=>item.isShow) : job.spec.properties.envs.filter(item=>item.isShow)"
     >
-      <el-table-column label="键" :prop="type === 'plugin'?'name':'key'">
+      <el-table-column label="Key" :prop="type === 'plugin'?'name':'key'">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.description" placement="top-start">
             <span>{{type === 'plugin'?scope.row.name:scope.row.key}}</span>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="值">
+      <el-table-column label="Value">
         <template slot-scope="scope">
           <el-select v-model="scope.row.value" v-if="scope.row.type === 'choice'" size="small" style="width: 220px;">
             <el-option v-for="(item,index) in scope.row.choice_option" :key="index" :value="item" :label="item">{{item}}</el-option>

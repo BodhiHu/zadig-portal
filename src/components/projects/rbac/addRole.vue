@@ -1,10 +1,10 @@
 <template>
-  <el-dialog class="form" title="添加角色" :visible.sync="dialogRoleAddFormVisible">
+  <el-dialog class="form" title="Add Role" :visible.sync="dialogRoleAddFormVisible">
     <el-form ref="form" :model="form" :rules="formRules" >
-      <el-form-item label="角色名称" prop="name" label-width="100px">
-        <el-input size="small" :disabled="isEdit" v-model="form.name"  placeholder="请输入角色名称"></el-input>
+      <el-form-item label="Role Name" prop="name" label-width="100px">
+        <el-input size="small" :disabled="isEdit" v-model="form.name"  placeholder="Please Enter A Role Name"></el-input>
       </el-form-item>
-      <el-form-item label="权限列表" prop="permissions" label-width="100px">
+      <el-form-item label="List Of Permissions" prop="permissions" label-width="100px">
         <div class="permissions-group" v-for="(group,group_index) in permissionGroups" :key="group_index">
           <el-checkbox
             :label="group.resource"
@@ -29,8 +29,8 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button size="small" @click="dialogRoleAddFormVisible = false">取 消</el-button>
-      <el-button size="small" type="primary" @click="submit">确 定</el-button>
+      <el-button size="small" @click="dialogRoleAddFormVisible = false">Cancel</el-button>
+      <el-button size="small" type="primary" @click="submit">Sure</el-button>
     </div>
   </el-dialog>
 </template>
@@ -75,10 +75,10 @@ export default {
           { trigger: ['blur', 'change'], validator: this.validateFileName }
         ],
         isPublic: [
-          { required: true, message: '请选择项目类型', trigger: 'blur' }
+          { required: true, message: 'Please select a project type', trigger: 'blur' }
         ],
         permissions: [
-          { type: 'array', required: true, message: '请选择至少一个权限', trigger: 'change' }
+          { type: 'array', required: true, message: 'Please select at least one permission', trigger: 'change' }
 
         ]
       }
@@ -87,10 +87,10 @@ export default {
   methods: {
     validateFileName (rule, value, callback) {
       if (typeof value === 'undefined' || value === '') {
-        callback(new Error('填写角色名称'))
+        callback(new Error('Fill In The Role Name'))
       } else {
         if (!/^[a-z0-9-]+$/.test(value)) {
-          callback(new Error('角色名称只支持小写字母和数字，特殊字符只支持中划线'))
+          callback(new Error('Character names only support lowercase letters and numbers，Special characters only support underscores'))
         } else {
           callback()
         }
@@ -206,7 +206,7 @@ export default {
             result = await updateRoleAPI({ name: this.form.name, rules: rules, projectName: projectName }, projectName).catch(error => console.log(error))
           }
           if (result) {
-            this.$message.success('修改成功')
+            this.$message.success('Successfully Modified')
             this.dialogRoleAddFormVisible = false
             this.getRoles()
           }
@@ -218,7 +218,7 @@ export default {
             result = await addRoleAPI({ name: this.form.name, rules: rules, projectName: projectName }, projectName).catch(error => console.log(error))
           }
           if (result) {
-            this.$message.success('添加成功')
+            this.$message.success('Added Successfully')
             this.dialogRoleAddFormVisible = false
             this.getRoles()
           }

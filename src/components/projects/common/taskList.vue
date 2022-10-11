@@ -15,7 +15,7 @@
       </el-table-column>
       <el-table-column min-width="100"
                        prop="status"
-                       label="运行状态">
+                       label="Operating Status">
         <template slot-scope="scope">
           <span :class="[`status-${$utils.taskElTagType(scope.row.status)}`]">
             <!-- <i class="el-icon-orange"></i> -->
@@ -25,7 +25,7 @@
         </template>
       </el-table-column>
        <el-table-column min-width="120"
-                       label="持续时间">
+                       label="Duration">
         <template slot-scope="scope">
           <el-icon name="time"></el-icon>
           <span v-if="scope.row.status!=='running'"
@@ -37,7 +37,7 @@
             {{ taskDuration(scope.row.task_id,scope.row.start_time) +
               $utils.timeFormatEn(durationSet[scope.row.task_id]) }}
             <el-tooltip v-if="durationSet[scope.row.task_id]<0"
-                        content="本地系统时间和服务端可能存在不一致，请同步。"
+                        content="There may be inconsistencies between the local system time and the server，Please Sync。"
                         placement="top">
               <i class="el-icon-warning"
                  style="color: red;"></i>
@@ -45,7 +45,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="执行人" min-width="120">
+      <el-table-column label="Executor" min-width="120">
         <template slot-scope="{ row }">
           <div class="common-column">{{ row.task_creator }}</div>
           <div class="common-column column-gray">{{ convertTimestamp(row.create_time) }}</div>
@@ -53,7 +53,7 @@
       </el-table-column>
       <el-table-column v-if="showServiceNames"
                        min-width="180"
-                       label="服务名称">
+                       label="Service Name">
         <template slot-scope="{ row }">
           <template v-if="row.service_modules && row.service_modules.length > 0">
             <div v-for="(item,index) in row.service_modules" :key="index" class="common-column hover-color">
@@ -65,7 +65,7 @@
           <div v-else class="common-column">N/A</div>
         </template>
       </el-table-column>
-      <el-table-column min-width="280" label="代码信息" v-if="showServiceNames && workflowType === 'buildv2'">
+      <el-table-column min-width="280" label="Code Information" v-if="showServiceNames && workflowType === 'buildv2'">
         <template slot-scope="{ row }">
           <div v-for="(item,index) in row.service_modules" :key="index" class="common-column repo-list">
             <div v-if="item.code_info.length > 0" effect="light"  :open-delay="250" placement="right">
@@ -98,7 +98,7 @@
       </el-table-column>
       <el-table-column v-if="showEnv"
                        min-width="100"
-                       label="环境">
+                       label="Surroundings">
         <template slot-scope="scope">
           <span v-if="scope.row.namespace">
             {{ scope.row.namespace}}
@@ -106,7 +106,7 @@
         </template>
       </el-table-column>
       <el-table-column v-if="showTestReport"
-                       label="测试结果"
+                       label="Test Results"
                        min-width="100">
         <template slot-scope="scope">
           <template v-if="scope.row.test_reports">
@@ -116,10 +116,10 @@
               <el-popover v-if="item.type==='function'"
                           trigger="hover"
                           placement="top">
-                <p><span>测试名称：{{item.name}}</span></p>
-                <p><span>总测试用例：{{item.total}}</span></p>
-                <p><span>成功用例：{{item.success}}</span></p>
-                <p><span>测试用时：{{$utils.timeFormat(parseInt(item.time))}}</span></p>
+                <p><span>Test Name：{{item.name}}</span></p>
+                <p><span>Total Test Cases：{{item.total}}</span></p>
+                <p><span>Successful Use Case：{{item.success}}</span></p>
+                <p><span>Test Time：{{$utils.timeFormat(parseInt(item.time))}}</span></p>
                 <span slot="reference">
                   <router-link :to="`${functionTestBaseUrl}/${scope.row.task_id}/test/${workflowName}-${scope.row.task_id}-test?is_workflow=1&service_name=${item.name}&test_type=${item.type}`">
                     <span class="report-link"><i class="iconfont iconzidong"></i>
@@ -131,12 +131,12 @@
                            style="display: block;"
                            :to="`${functionTestBaseUrl}/${scope.row.task_id}/test/${workflowName}-${scope.row.task_id}-test?is_workflow=1&service_name=${item.name}&test_type=${item.type}`">
                 <span class="report-link">
-                  <i class="iconfont iconxingneng"></i> 性能</span>
+                  <i class="iconfont iconxingneng"></i> Performance</span>
               </router-link>
               <router-link v-else-if="item.type==='security'"
                            style="display: block;"
                            :to="`${securityTestBaseUrl}/${scope.row.task_id}?imageId=${item.img_id}`">
-                <span class="report-link"><i class="iconfont iconanquan"></i> 安全</span>
+                <span class="report-link"><i class="iconfont iconanquan"></i> Safety</span>
               </router-link>
             </div>
           </template>
@@ -145,7 +145,7 @@
       </el-table-column>
       <el-table-column v-if="showOperation"
                        width="90"
-                       label="操作"
+                       label="Operate"
                        align="center">
         <template slot-scope="scope">
             <el-button v-hasPermi="{projectName: projectName, action: 'run_workflow',resource:{name:workflowName,type:'workflow'},isBtn:true}"
@@ -154,7 +154,7 @@
                        icon="el-icon-copy-document"
                        size="mini"
                        class="common-font">
-              克隆
+              Clone
             </el-button>
         </template>
       </el-table-column>

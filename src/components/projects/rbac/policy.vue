@@ -1,18 +1,18 @@
 <template>
   <div class="rbac-policy">
-    <el-alert type="info" :closable="false" description="用户与策略关联后，即可获得策略描述的权限"></el-alert>
+    <el-alert type="info" :closable="false" description="After the user is associated with the policy，You can get the permissions described by the policy"></el-alert>
 
     <el-table :data="policies" style="width: 100%; margin-top: 15px;">
-      <el-table-column prop="name" label="策略名称"></el-table-column>
-      <el-table-column prop="description" label="描述信息"></el-table-column>
-      <el-table-column prop="prop" label="修改时间">
+      <el-table-column prop="name" label="Policy Name"></el-table-column>
+      <el-table-column prop="description" label="Description"></el-table-column>
+      <el-table-column prop="prop" label="Change The Time">
         <template slot-scope="{ row }">
           <span>{{ $utils.convertTimestamp(row.update_time) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="Operate">
         <template slot-scope="{ $index }">
-          <el-button type="primary" size="small" plain @click="viewPolicy($index)">查看</el-button>
+          <el-button type="primary" size="small" plain @click="viewPolicy($index)">Check</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,14 +74,14 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '权限管理', url: '' },
-        { title: '策略管理', url: '' }
+        { title: 'Authority Management', url: '' },
+        { title: 'Policy Management', url: '' }
       ]
     })
   }

@@ -6,7 +6,7 @@
                 class="text-right">
           <div style="line-height: 32px;">
             <el-tooltip effect="dark"
-                        content="创建模板"
+                        content="Create A Template"
                         placement="top">
               <el-button v-hasPermi="{type: 'system', action: 'create_template'}"
                          size="mini"
@@ -82,7 +82,7 @@
                       ref="serviceNamedRef"
                       @blur="inputFileNameDoneWhenBlur"
                       @keyup.enter.native="inputFileNameDoneWhenBlur"
-                      placeholder="请输入模板名称"></el-input>
+                      placeholder="Please enter a template name"></el-input>
           </el-form-item>
 
         </el-form>
@@ -91,7 +91,7 @@
     <div
          class="search-container">
 
-      <el-input placeholder="搜索模板"
+      <el-input placeholder="Search Template"
                 size="small"
                 clearable
                 suffix-icon="el-icon-search"
@@ -140,12 +140,12 @@ export default {
   methods: {
     validateFileName (rule, value, callback) {
       if (value === '') {
-        callback(new Error('请输入模板名称'))
+        callback(new Error('Please enter a template name'))
       } else if (this.selectFiles.map(ser => ser.name).includes(value)) {
-        callback(new Error('模板名称与现有名称重复'))
+        callback(new Error('Template name duplicates existing name'))
       } else {
         // if (!/^[a-z0-9-]+$/.test(value)) {
-        //   callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+        //   callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
         // } else {
         callback()
         // }
@@ -210,15 +210,15 @@ export default {
         this.files.splice(index, 1)
       } else {
         let deleteText = ''
-        const title = '确认'
-        deleteText = `确定要删除 ${data.name} 这个模板吗？`
+        const title = 'Confirm'
+        deleteText = `Sure You Want To Delete ${data.name} Is This Template？`
         this.$confirm(`${deleteText}`, `${title}`, {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           deleteKubernetesTemplateAPI(data.id).then(() => {
-            this.$message.success('删除成功')
+            this.$message.success('Successfully Deleted')
             this.$emit('onRefreshFile')
             const parent = node.parent
             const children = parent.data.children || parent.data
@@ -229,10 +229,10 @@ export default {
       }
     },
     askSaveYamlConfig (switchNode = false) {
-      return this.$confirm('服务配置未保存，是否保存？', '提示', {
+      return this.$confirm('Service configuration not saved，Whether To Save？', 'Hint', {
         distinguishCancelAndClose: true,
-        confirmButtonText: '保存',
-        cancelButtonText: '放弃',
+        confirmButtonText: 'Save',
+        cancelButtonText: 'Give Up',
         type: 'warning'
       }).then(() => {
         this.$emit('updateFile', switchNode)
@@ -240,9 +240,9 @@ export default {
     },
     selectFile (data, node, current) {
       const levelOneNodeLabel = node.level === 1 ? node.label : node.parent.label
-      // 切换 node 且 yaml 变化时
+      // Toggle node And yaml When Changing
       if (this.previousNodeKey && this.previousNodeKey !== levelOneNodeLabel && this.fileContentChange) {
-        // 把当前 node 切换回来
+        // Put The Current node Switch Back
         this.setFileSelected(this.previousNodeKey)
         this.askSaveYamlConfig(true).then(() => {
           this.justStoreSwitchNode = { data, node, levelOneNodeLabel }
@@ -251,7 +251,7 @@ export default {
             this.justStoreSwitchNode = { data, node, levelOneNodeLabel }
             this.selectAndSwitchTreeNode()
           } else if (action === 'close') {
-            console.log('关闭')
+            console.log('Closure')
           }
         })
       } else {

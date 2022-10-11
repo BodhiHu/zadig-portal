@@ -4,21 +4,21 @@
       <router-link :to="`/v1/projects/detail/${projectName}/scanner/detail/${scannerInfo.name}?id=${scannerInfo.id}`">{{ scannerInfo.name }}</router-link>
     </section>
     <section class="statistics">
-      <div class="gray-desc">执行次数</div>
+      <div class="gray-desc">Number Of Executions</div>
       <div class="value">{{ scannerInfo.statistics.times_run || 'N/A' }}</div>
     </section>
     <section class="statistics">
-      <div class="gray-desc">平均耗时</div>
+      <div class="gray-desc">Average Time</div>
       <div class="value">{{ scannerInfo.statistics.run_time_average + 's' || 'N/A' }}</div>
     </section>
     <section class="operations">
       <el-button v-hasPermi="{projectName:projectName, action: 'run_scan',isBtn:true}" type="primary" class="button-exec" @click="runCodeScanner(scannerInfo)">
-        <span class="iconfont iconzhixing">&nbsp;执行</span>
+        <span class="iconfont iconzhixing">&nbsp;Implement</span>
       </el-button>
       <router-link v-if="checkPermissionSyncMixin({projectName: projectName, action: 'edit_scan'})" :to="`/v1/projects/detail/${projectName}/scanner/edit/${scannerInfo.name}?id=${scannerInfo.id}`">
         <span class="menu-item iconfont icondeploy"></span>
       </router-link>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <span class="permission-disabled menu-item iconfont icondeploy"></span>
       </el-tooltip>
       <el-dropdown v-hasPermi="{projectName: projectName, operator: 'or', actions: ['delete_scan'],isBtn: true}">
@@ -27,7 +27,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item v-hasPermi="{projectName: projectName, operator: 'or', actions: ['delete_scan'],isBtn: true}" @click.native="removeCodeScanner(scannerInfo)">
-            <span>删除</span>
+            <span>Delete</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

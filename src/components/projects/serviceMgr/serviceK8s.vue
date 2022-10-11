@@ -1,16 +1,16 @@
 <template>
     <div class="projects-service-mgr">
-      <el-drawer title="代码源集成"
+      <el-drawer title="Code Source Integration"
                  :visible.sync="integrationCodeDrawer"
                  direction="rtl">
         <IntegrationCode @cancel="integrationCodeDrawer = false"/>
       </el-drawer>
-      <el-dialog title="是否更新对应环境？"
+      <el-dialog title="Whether to update the corresponding environment？"
                  custom-class="dialog-upgrade-env"
                  :visible.sync="updateEnvDialogVisible"
                  width="40%">
         <div class="title">
-          <el-alert title="勾选需要更新的环境，点击确定之后，该服务将自动在对应的环境中进行更新"
+          <el-alert title="Check the environment that needs to be updated，After Clicking OK，The service will automatically be updated in the corresponding environment"
                     :closable="false"
                     type="warning">
           </el-alert>
@@ -19,19 +19,19 @@
                          :key="index"
                          :label="env">{{env.name}}</el-checkbox>
           </el-checkbox-group>
-          <div v-show="checkedEnvList.find(env => env.is_existed)" class="tip-desc">Zadig 中定义的服务将覆盖所选命名空间中的同名服务，请谨慎操作！</div>
+          <div v-show="checkedEnvList.find(env => env.is_existed)" class="tip-desc">Zadig Services defined in will override services of the same name in the selected namespace，Please proceed with caution！</div>
         </div>
         <span slot="footer"
               class="dialog-footer">
           <el-button size="small"
                      type="primary"
-                     @click="autoUpgradeEnv">确 定</el-button>
+                     @click="autoUpgradeEnv">Sure</el-button>
           <el-button size="small"
-                     @click="updateEnvDialogVisible=false">跳过</el-button>
+                     @click="updateEnvDialogVisible=false">Jump Over</el-button>
 
         </span>
       </el-dialog>
-      <el-dialog :title="`选择 ${service.service_name} 需要加入的环境？`"
+      <el-dialog :title="`Choose ${service.service_name} Environment To Join？`"
                  custom-class="dialog-upgrade-env"
                  :visible.sync="joinToEnvDialogVisible"
                  width="40%">
@@ -43,23 +43,23 @@
           </el-checkbox-group>
         </div>
         <div v-if="checkedEnvList.length > 0 && checkedEnvList[0] && checkedEnvList[0].vars &&checkedEnvList[0].vars.length > 0" class="env-tabs">
-          <span class="desc">该服务有使用变量，请确认该服务在不同环境中对应的变量值</span>
+          <span class="desc">The service has usage variables，Please confirm the corresponding variable values of the service in different environments</span>
           <el-tabs v-model="activeEnvTabName" type="card">
             <el-tab-pane v-for="(env,index) in checkedEnvList"  :key="index" :label="env.name" :name="env.name">
               <el-table :data="env.vars" style="width: 100%;">
-                  <el-table-column label="键">
+                  <el-table-column label="Key">
                     <template slot-scope="scope">
                       <span>{{ scope.row.key }}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column label="值">
+                  <el-table-column label="Value">
                     <template slot-scope="scope">
                       <el-input
                         size="small"
                         v-model="scope.row.value"
                         type="textarea"
                         :autosize="{ minRows: 1, maxRows: 4}"
-                        placeholder="请输入内容"
+                        placeholder="Please Enter Content"
                       ></el-input>
                     </template>
                   </el-table-column>
@@ -70,10 +70,10 @@
         <span slot="footer"
               class="dialog-footer">
           <el-button size="small"
-                     @click="joinToEnvDialogVisible = false">取消</el-button>
+                     @click="joinToEnvDialogVisible = false">Cancel</el-button>
           <el-button size="small"
                      type="primary"
-                     @click="joinToEnv">确定</el-button>
+                     @click="joinToEnv">Sure</el-button>
 
         </span>
       </el-dialog>
@@ -135,14 +135,14 @@
                  class="no-content">
               <img src="@assets/icons/illustration/editorNoService.svg"
                    alt="">
-              <p v-if="services.length === 0">暂无服务，点击 <el-button size="mini"
+              <p v-if="services.length === 0">No Service，Click <el-button size="mini"
                            icon="el-icon-plus"
                            @click="createService()"
                            plain
                            circle>
-                </el-button> 创建服务</p>
-              <p v-else-if="service.service_name==='服务列表' && services.length >0">请在左侧选择需要编辑的服务</p>
-              <p v-else-if="!service.service_name && services.length >0">请在左侧选择需要编辑的服务</p>
+                </el-button> Create Service</p>
+              <p v-else-if="service.service_name==='Service List' && services.length >0">Please select the service you want to edit on the left</p>
+              <p v-else-if="!service.service_name && services.length >0">Please select the service you want to edit on the left</p>
             </div>
           </Multipane>
         </div>
@@ -151,7 +151,7 @@
           <div class="controls__right">
             <el-button type="primary"
                        size="small"
-                       @click="showOnboardingNext">下一步</el-button>
+                       @click="showOnboardingNext">Next Step</el-button>
           </div>
       </div>
     </div>
@@ -198,7 +198,7 @@ export default {
   methods: {
     addCodeSource () {
       if (!this.$utils.roleCheck('admin')) {
-        this.$message('私有镜像仓库未集成，请联系系统管理员前往「系统设置 -> 镜像仓库」进行集成！')
+        this.$message('Private image repositories are not integrated，Please contact your system administrator to go to「System Settings -> Mirror Repository」To Integrate！')
       } else {
         this.integrationCodeDrawer = true
       }
@@ -317,7 +317,7 @@ export default {
       autoUpgradeEnvAPI(projectName, payload, force).then((res) => {
         this.joinToEnvDialogVisible = false
         this.$message({
-          message: '更新环境成功',
+          message: 'Update environment succeeded',
           type: 'success'
         })
       }).catch(error => {
@@ -344,7 +344,7 @@ export default {
       autoUpgradeEnvAPI(projectName, payload, force).then((res) => {
         this.updateEnvDialogVisible = false
         this.$message({
-          message: '更新环境成功',
+          message: 'Update environment succeeded',
           type: 'success'
         })
       }).catch(error => {
@@ -361,9 +361,9 @@ export default {
       const value = message[key].map(item => {
         return item.name
       })
-      this.$confirm(`您的更新操作将覆盖环境中 ${key} 的 ${value} 服务变更，确认继续?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Your update operation will overwrite the environment in ${key} Of ${value} Service Change，Confirm To Continue?`, 'Hint', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         const force = true
@@ -371,7 +371,7 @@ export default {
           this.updateEnvDialogVisible = false
           this.joinToEnvDialogVisible = false
           this.$message({
-            message: '更新环境成功',
+            message: 'Update environment succeeded',
             type: 'success'
           })
         })

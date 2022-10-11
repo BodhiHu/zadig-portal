@@ -7,28 +7,28 @@
               class="header">
         <el-col :span="2">
           <div class="index">
-            序号
+            Serial Number
           </div>
         </el-col>
         <el-col :span="9">
           <div class="service">
-            服务
+            Serve
           </div>
         </el-col>
 
         <el-col :span="9">
           <div class="deploy">
-            部署
+            Deploy
           </div>
         </el-col>
 
         <el-col :span="4">
           <div class="view">
-            是否显示
-            <el-tooltip effect="dark" content="执行工作流任务时是否在服务列表中显示，供用户选择。" placement="top">
+            Whether To Display
+            <el-tooltip effect="dark" content="Whether to show in the service list when the workflow task is executed，For Users To Choose。" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
-            <el-tooltip effect="dark" :content="hiddenAllDisplay ? '全部显示' : '全部隐藏'" placement="top">
+            <el-tooltip effect="dark" :content="hiddenAllDisplay ? 'Show All' : 'Hide All'" placement="top">
               <i class="iconfont icon"
                  :class="{'iconview-off1': hiddenAllDisplay, iconview: !hiddenAllDisplay}"
                  :style="{ color: hiddenAllDisplay ? '#99a9bf' : '#0066ff' }"
@@ -47,12 +47,12 @@
         </div>
         <div class="description">
 
-          <p> 该项目不存在可构建的服务组件，请前往 项目->服务 中创建服务</p>
+          <p> No buildable service components exist for this project，Please Go To The Project->Create a service in a service</p>
           <router-link :to="`/v1/projects/detail/${product_tmpl_name}/services`">
             <el-button type="primary"
                        size="small"
                        round
-                       plain>服务配置</el-button>
+                       plain>Service Configuration</el-button>
           </router-link>
         </div>
       </div>

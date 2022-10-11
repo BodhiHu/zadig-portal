@@ -1,13 +1,13 @@
 <template>
   <div v-loading="loading" class="version-detail-container">
-    <el-dialog :visible.sync="exportModal.visible" width="65%" title="服务配置查看" class="export-dialog">
-      <span v-if="exportModal.textObjects.length === 0" class="nothing">{{'没有找到数据'}}</span>
+    <el-dialog :visible.sync="exportModal.visible" width="65%" title="Service configuration view" class="export-dialog">
+      <span v-if="exportModal.textObjects.length === 0" class="nothing">{{'No Data Found'}}</span>
       <template v-else>
         <div v-for="(obj, i) of exportModal.textObjects" :key="obj.originalText" class="config-viewer">
           <div>
             <div :class="{'op-row': true, expanded: obj.expanded}">
-              <el-button @click="toggleYAML(obj)" type="text" icon="el-icon-caret-bottom">{{ obj.expanded ? '收起' : '展开' }}</el-button>
-              <el-button @click="copyYAML(obj, i)" type="primary" plain size="small" class="at-right">复制</el-button>
+              <el-button @click="toggleYAML(obj)" type="text" icon="el-icon-caret-bottom">{{ obj.expanded ? 'Put Away' : 'Expand' }}</el-button>
+              <el-button @click="copyYAML(obj, i)" type="primary" plain size="small" class="at-right">Copy</el-button>
             </div>
             <Editor
               v-show="obj.expanded"
@@ -24,7 +24,7 @@
       </template>
     </el-dialog>
     <el-dialog
-      :title="`版本发布 ${workflowToRun.version}`"
+      :title="`Version Release ${workflowToRun.version}`"
       :visible.sync="runWorkflowFromVersionDialogVisible"
       custom-class="run-workflow"
       width="60%"
@@ -39,24 +39,24 @@
       </div>
     </el-dialog>
     <el-tabs type="border-card">
-      <el-tab-pane label="版本信息">
+      <el-tab-pane label="Version Information">
         <div class="el-card box-card task-process is-always-shadow">
           <div class="el-card__header">
             <div class="clearfix">
-              <span>基本信息</span>
+              <span>Basic Information</span>
             </div>
           </div>
           <div class="el-card__body">
             <div class="text item">
               <div class="el-row">
                 <div class="el-col el-col-6">
-                  <div class="item-title">版本</div>
+                  <div class="item-title">Version</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">{{currentVersionDetail.versionInfo.version}}</div>
                 </div>
                 <div class="el-col el-col-6">
-                  <div class="item-title">所属项目</div>
+                  <div class="item-title">Its Not Played</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">
@@ -66,7 +66,7 @@
               </div>
               <div class="el-row">
                 <div class="el-col el-col-6">
-                  <div class="item-title">工作流详情</div>
+                  <div class="item-title">Workflow Details</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">
@@ -81,7 +81,7 @@
                   </div>
                 </div>
                 <div class="el-col el-col-6">
-                  <div class="item-title">描述</div>
+                  <div class="item-title">Describe</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">{{currentVersionDetail.versionInfo.desc}}</div>
@@ -89,13 +89,13 @@
               </div>
               <div class="el-row">
                 <div class="el-col el-col-6">
-                  <div class="item-title">创建人</div>
+                  <div class="item-title">Founder</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">{{currentVersionDetail.versionInfo.createdBy}}</div>
                 </div>
                 <div class="el-col el-col-6">
-                  <div class="item-title">创建时间</div>
+                  <div class="item-title">Creation Time</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">{{$utils.convertTimestamp(currentVersionDetail.versionInfo.created_at)}}</div>
@@ -103,7 +103,7 @@
               </div>
               <div class="el-row">
                 <div class="el-col el-col-6">
-                  <div class="item-title">标签</div>
+                  <div class="item-title">Label</div>
                 </div>
                 <div class="el-col el-col-6">
                   <div class="item-desc">
@@ -119,18 +119,18 @@
         <div class="el-card box-card task-process is-always-shadow">
           <div class="el-card__header">
             <div class="clearfix">
-              <span>交付内容</span>
+              <span>Deliverables</span>
             </div>
           </div>
           <div v-if="jiraIssues.length > 0" class="el-card__body">
             <div class="text item">
-              <div class="section-head">Jira 问题关联</div>
+              <div class="section-head">Jira Problem Association</div>
               <el-table :data="jiraIssues" style="width: 100%;">
-                <el-table-column label="服务名">
+                <el-table-column label="Service Name">
                   <template slot-scope="scope">{{scope.row.service_name}}</template>
                 </el-table-column>
 
-                <el-table-column label="关联问题">
+                <el-table-column label="Association Problem">
                   <template slot-scope="scope">
                     <el-popover
                       v-for="(issue,index) in scope.row.issues"
@@ -139,9 +139,9 @@
                       placement="top"
                       popper-class="issue-popper"
                     >
-                      <p>报告人: {{issue.reporter?issue.reporter:'*'}}</p>
-                      <p>分配给: {{issue.assignee?issue.assignee:'*'}}</p>
-                      <p>优先级: {{issue.priority?issue.priority:'*'}}</p>
+                      <p>Reporter: {{issue.reporter?issue.reporter:'*'}}</p>
+                      <p>Assigned To: {{issue.assignee?issue.assignee:'*'}}</p>
+                      <p>Priority: {{issue.priority?issue.priority:'*'}}</p>
                       <span slot="reference" class="issue-name-wrapper text-center">
                         <a :href="issue.url" target="_blank">{{`${issue.key} ${issue.summary}`}}</a>
                       </span>
@@ -153,21 +153,21 @@
           </div>
           <div v-if="imagesAndConfigs.length > 0" class="el-card__body">
             <div class="text item">
-              <div class="section-head">镜像和配置信息</div>
+              <div class="section-head">Image and configuration information</div>
               <el-table :data="imagesAndConfigs" style="width: 100%;">
-                <el-table-column label="服务组件(服务名称)">
+                <el-table-column label="Service Component(Service Name)">
                   <template slot-scope="scope">{{$utils.showServiceName(scope.row.containerName)}}</template>
                 </el-table-column>
-                <el-table-column label="镜像">
+                <el-table-column label="Mirror">
                   <template slot-scope="scope">
                     <router-link :to="`/v1/delivery/artifacts?image=${scope.row.registryName}`">
                       <span class="img-link">{{scope.row.registryName}}</span>
                     </router-link>
                   </template>
                 </el-table-column>
-                <el-table-column label="服务配置" width="130px">
+                <el-table-column label="Service Configuration" width="130px">
                   <template slot-scope="scope">
-                    <el-button type="text" @click="showConfig(scope.row.yamlContents)">查看</el-button>
+                    <el-button type="text" @click="showConfig(scope.row.yamlContents)">Check</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -176,12 +176,12 @@
 
           <div v-if="packages.length > 0" class="el-card__body">
             <div class="text item">
-              <div class="section-head">包信息</div>
+              <div class="section-head">Package Information</div>
               <el-table :data="packages" style="width: 100%;">
-                <el-table-column label="服务名">
+                <el-table-column label="Service Name">
                   <template slot-scope="scope">{{scope.row.serviceName}}</template>
                 </el-table-column>
-                <el-table-column label="包文件名">
+                <el-table-column label="Package Filename">
                   <template slot-scope="scope">{{scope.row.packageFile}}</template>
                 </el-table-column>
               </el-table>
@@ -189,12 +189,12 @@
           </div>
           <div v-if="orderedServices.length > 0" class="el-card__body">
             <div class="text item">
-              <div class="section-head">服务启动顺序</div>
+              <div class="section-head">Service Startup Sequence</div>
               <el-table :data="orderedServices" style="width: 100%;">
-                <el-table-column label="启动顺序">
+                <el-table-column label="Boot Sequence">
                   <template slot-scope="scope">{{scope.$index}}</template>
                 </el-table-column>
-                <el-table-column label="服务名">
+                <el-table-column label="Service Name">
                   <template slot-scope="scope">{{scope.row.join(' , ')}}</template>
                 </el-table-column>
               </el-table>
@@ -202,29 +202,29 @@
           </div>
         </div>
       </el-tab-pane>
-      <!-- <el-tab-pane label="交付清单">
+      <!-- <el-tab-pane label="Delivery List">
         <div class="el-card box-card task-process is-always-shadow">
           <div class="el-card__header">
-            <div class="clearfix"><span>交付清单</span>
+            <div class="clearfix"><span>Delivery List</span>
             </div>
           </div>
           <div v-if="codeLists.length > 0"
                class="el-card__body">
             <div class="section-head">
-              代码更新列表
+              Code Update List
             </div>
             <el-table :data="codeLists"
                       style="width: 100%;">
-              <el-table-column label="名称"
+              <el-table-column label="Name"
                                prop="repo_name">
               </el-table-column>
-              <el-table-column label="分支"
+              <el-table-column label="Branch"
                                prop="branch">
               </el-table-column>
               <el-table-column label="Commit ID"
                                prop="commit_id">
                 <template slot-scope="scope">
-                  <el-tooltip :content="`在 ${scope.row.source} 上查看 Commit`"
+                  <el-tooltip :content="`Exist ${scope.row.source} View On Commit`"
                               placement="top"
                               effect="dark">
                     <span v-if="scope.row.commit_id"
@@ -242,28 +242,28 @@
           <div v-if="systemTests.length > 0"
                class="el-card__body">
             <div class="section-head">
-              系统测试
+              System Test
             </div>
             <el-table :data="systemTests"
                       style="width: 100%;">
-              <el-table-column label="名称"
+              <el-table-column label="Name"
                                prop="testName">
               </el-table-column>
               <el-table-column label="">
                 <template slot-scope="scope">
-                  {{`总数:${scope.row.tests + scope.row.skips}
-                  执行:${scope.row.tests - scope.row.skips}
-                  成功:${scope.row.tests -
+                  {{`Total:${scope.row.tests + scope.row.skips}
+                  Implement:${scope.row.tests - scope.row.skips}
+                  Success:${scope.row.tests -
                   scope.row.failures - scope.row.errors}
-                  失败:${scope.row.failures}`}}
+                  Fail:${scope.row.failures}`}}
                 </template>
               </el-table-column>
-              <el-table-column label="测试报告">
+              <el-table-column label="Testing Report">
                 <template slot-scope="scope">
                   <span class="test-report-link">
                     <router-link
                                  :to="`/v1/projects/detail/${currentVersionDetail.versionInfo.projectName}/pipelines/multi/testcase/${scope.row.workflowName}/${scope.row.taskId}/test/${scope.row.workflowName}-${scope.row.taskId}-test?is_workflow=1&service_name=${scope.row.testName}&test_type=function`">
-                      查看</router-link>
+                      Check</router-link>
                   </span>
 
                 </template>
@@ -274,11 +274,11 @@
           <div v-if="performanceTests.length > 0"
                class="el-card__body">
             <div class="section-head">
-              性能测试
+              Performance Testing
             </div>
             <el-table :data="performanceTests"
                       style="width: 100%;">
-              <el-table-column label="名称"
+              <el-table-column label="Name"
                                prop="testName">
               </el-table-column>
               <el-table-column label="">
@@ -286,12 +286,12 @@
                   {{`Average:${scope.row.average} Max:${scope.row.max} Min:${scope.row.min}`}}
                 </template>
               </el-table-column>
-              <el-table-column label="测试报告">
+              <el-table-column label="Testing Report">
                 <template slot-scope="scope">
                   <span class="test-report-link">
                     <router-link
                                  :to="`/v1/projects/detail/${currentVersionDetail.versionInfo.projectName}/pipelines/multi/testcase/${scope.row.workflowName}/${scope.row.taskId}/test/${scope.row.workflowName}-${scope.row.taskId}-test?is_workflow=1&service_name=${scope.row.testName}&test_type=performance`">
-                      查看</router-link>
+                      Check</router-link>
                   </span>
 
                 </template>
@@ -302,28 +302,28 @@
           <div v-if="currentVersionDetail.securityStatsInfo && currentVersionDetail.securityStatsInfo.length > 0"
                class="el-card__body">
             <div class="section-head">
-              镜像安全扫描
+              Mirror Security Scan
             </div>
             <el-table :data="currentVersionDetail.securityStatsInfo"
                       style="width: 100%;">
-              <el-table-column label="镜像名称"
+              <el-table-column label="Image Name"
                                prop="imageName">
               </el-table-column>
-              <el-table-column label="扫描结果">
+              <el-table-column label="Scan Result">
                 <template slot-scope="scope">
-                  {{`漏洞总数:${scope.row.deliverySecurityStatsInfo.total}
-                  最高危:${scope.row.deliverySecurityStatsInfo.critical}
-                  高危:${scope.row.deliverySecurityStatsInfo.high}
-                  中危:${scope.row.deliverySecurityStatsInfo.medium}
-                  低危:${scope.row.deliverySecurityStatsInfo.low}`}}
+                  {{`Total number of vulnerabilities:${scope.row.deliverySecurityStatsInfo.total}
+                  Highest Risk:${scope.row.deliverySecurityStatsInfo.critical}
+                  High Risk:${scope.row.deliverySecurityStatsInfo.high}
+                  Medium Risk:${scope.row.deliverySecurityStatsInfo.medium}
+                  Low Risk:${scope.row.deliverySecurityStatsInfo.low}`}}
                 </template>
               </el-table-column>
-              <el-table-column label="扫描报告">
+              <el-table-column label="Scan Report">
                 <template slot-scope="scope">
                   <span class="test-report-link">
                     <router-link
                                  :to="`/v1/projects/detail/${currentVersionDetail.versionInfo.projectName}/pipelines/security/${currentVersionDetail.versionInfo.workflowName}/${currentVersionDetail.versionInfo.taskId}?imageId=${scope.row.imageId}`">
-                      查看</router-link>
+                      Check</router-link>
                   </span>
 
                 </template>
@@ -334,7 +334,7 @@
         </div>
       </el-tab-pane>-->
       <el-tab-pane v-if="showArtifactDeployBtn" disabled>
-        <el-button v-hasPermi="{projectName: projectName, action: 'run_workflow',isBtn:true}" icon="el-icon-upload2" @click="runWorkflowFromVersion"  slot="label" size="mini" type="text">版本发布</el-button>
+        <el-button v-hasPermi="{projectName: projectName, action: 'run_workflow',isBtn:true}" icon="el-icon-upload2" @click="runWorkflowFromVersion"  slot="label" size="mini" type="text">Version Release</el-button>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -502,9 +502,9 @@ export default {
       e.focus()
       e.selectAll()
       if (document.execCommand('copy')) {
-        this.$message.success('复制成功')
+        this.$message.success('Copy Successfully')
       } else {
-        this.$message.error('复制失败')
+        this.$message.error('Replication Failed')
       }
       e.setValue(obj.readableText)
     },
@@ -521,9 +521,9 @@ export default {
       textArea.select()
 
       if (document.execCommand('copy')) {
-        this.$message.success('复制成功')
+        this.$message.success('Copy Successfully')
       } else {
-        this.$message.error('复制失败')
+        this.$message.error('Replication Failed')
       }
 
       document.body.removeChild(textArea)

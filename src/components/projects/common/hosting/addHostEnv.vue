@@ -1,11 +1,11 @@
 <template>
   <div class="common-parcel-block form-content">
     <el-form :model="form" :rules="rules" ref="form" label-width="120px" class="primary-form" label-position="left" inline-message>
-      <el-form-item prop="env_name" label="环境名称">
-        <el-input v-model="form.env_name" placeholder="请输入环境名称" size="small"></el-input>
+      <el-form-item prop="env_name" label="Environment Name">
+        <el-input v-model="form.env_name" placeholder="Please enter an environment name" size="small"></el-input>
       </el-form-item>
-      <el-form-item label="关联镜像仓库">
-        <el-select class="select" v-model.trim="form.registry_id" placeholder="请选择关联的镜像仓库" size="small">
+      <el-form-item label="Associated mirror repositories">
+        <el-select class="select" v-model.trim="form.registry_id" placeholder="Please select the associated mirror repository" size="small">
             <el-option
               v-for="registry in imageRegistry"
               :key="registry.id"
@@ -14,22 +14,22 @@
             ></el-option>
           </el-select>
       </el-form-item>
-      <el-form-item label="K8s 集群">
-        <el-select filterable v-model="form.cluster_id" placeholder="请选择集群" @change="changeCluster" size="small">
+      <el-form-item label="K8s Cluster">
+        <el-select filterable v-model="form.cluster_id" placeholder="Please Select A Cluster" @change="changeCluster" size="small">
           <el-option v-for="cluster in allCluster" :key="cluster.id" :label="$utils.showClusterName(cluster)" :value="cluster.id"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="K8s 命名空间">
-        <el-select filterable v-model="form.namespace" placeholder="请选择命名空间" @change="changeNamespace" size="small">
+      <el-form-item label="K8s Namespaces">
+        <el-select filterable v-model="form.namespace" placeholder="Please select a namespace" @change="changeNamespace" size="small">
           <el-option v-for="(ns,index) in hostingNamespace" :key="index" :label="ns.name" :value="ns.name"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
-    <div class="primary-title not-first-child">选择服务</div>
+    <div class="primary-title not-first-child">Select Service</div>
     <el-transfer
-      filter-placeholder="请输入服务名称"
+      filter-placeholder="Please enter a service name"
       v-model="selectService"
-      :titles="['服务列表', '已选服务']"
+      :titles="['Service List', 'Selected Service']"
       :data="serviceList"
       :render-content="renderFunc"
       :filterable="true"
@@ -59,14 +59,14 @@ export default {
       },
       rules: {
         env_name: [
-          { required: true, message: '请输入环境名称', trigger: 'blur' }
+          { required: true, message: 'Please enter an environment name', trigger: 'blur' }
         ]
       },
       serviceList: [],
       selectService: [],
       renderFunc (h, option) {
         if (option.env_name) {
-          const content = `使用项目：${option.product_name}；使用环境：${option.env_name}`
+          const content = `Use Item：${option.product_name}；Use Environment：${option.env_name}`
           return (
             <el-tooltip content={content} placement="top">
               <span>{option.label}</span>
@@ -148,7 +148,7 @@ export default {
         if (this.selectService.length) {
           return true
         } else {
-          this.$message.error('请选择服务')
+          this.$message.error('Please Select A Service')
         }
       }
     },

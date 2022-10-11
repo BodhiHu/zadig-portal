@@ -1,25 +1,25 @@
 <template>
   <div class="chart-repo-container">
     <el-form ref="chartRepoForm" :model="chartForm.createFrom" label-width="140px">
-      <el-form-item label="选择 Chart 仓库" prop="chartRepoName" :rules="{
+      <el-form-item label="Choose Chart Storehouse" prop="chartRepoName" :rules="{
               required: true,
-              message: '请选择 Chart 仓库',
+              message: 'Please Choose Chart Storehouse',
               trigger: 'change',
             }">
-        <el-select v-model="chartForm.createFrom.chartRepoName"  @change="getHelmRepoChart" placeholder="选择 Chart 仓库"  :disabled="isUpdate" size="small">
+        <el-select v-model="chartForm.createFrom.chartRepoName"  @change="getHelmRepoChart" placeholder="Choose Chart Storehouse"  :disabled="isUpdate" size="small">
           <el-option v-for="(repo,index) in repos" :key="index" :label="repo.repo_name" :value="repo.repo_name"></el-option>
         </el-select>
       </el-form-item>
-        <el-form-item label="选择 Chart"  prop="chartName" class="chart-select" :rules="{
+        <el-form-item label="Choose Chart"  prop="chartName" class="chart-select" :rules="{
               required: true,
-              message: '请选择 Chart ',
+              message: 'Please Choose Chart ',
               trigger: 'change',
             }">
             <el-tooltip :disabled="chartForm.createFrom.chartName.length < 10" effect="dark" :content="chartForm.createFrom.chartName" placement="top-start">
               <el-select
                 v-model="chartForm.createFrom.chartName"
                 @change="getHelmChartVersion"
-                placeholder="请选择 Chart"
+                placeholder="Please Choose Chart"
                 :disabled="isUpdate"
                 size="small"
               >
@@ -29,16 +29,16 @@
         </el-form-item>
         <el-form-item prop="chartVersion" class="chart-select last" :rules="{
               required: true,
-              message: '请选择版本',
+              message: 'Please Select A Version',
               trigger: 'change',
             }">
-            <el-select v-model="chartForm.createFrom.chartVersion" placeholder="选择版本"   size="small">
+            <el-select v-model="chartForm.createFrom.chartVersion" placeholder="Select Version"   size="small">
               <el-option v-for="(versionItem,index) in currentRepoVersions" :key="index" :label="versionItem.version" :value="versionItem.version"></el-option>
             </el-select>
         </el-form-item>
         <div class="footer">
-          <el-button size="small" @click="$store.commit('SERVICE_DIALOG_VISIBLE', false)" plain>取消</el-button>
-          <el-button size="small" type="primary" :loading="importLoading"  @click="importChartRepo">{{ isUpdate?'更新':'新建' }}</el-button>
+          <el-button size="small" @click="$store.commit('SERVICE_DIALOG_VISIBLE', false)" plain>Cancel</el-button>
+          <el-button size="small" type="primary" :loading="importLoading"  @click="importChartRepo">{{ isUpdate?'Renew':'New' }}</el-button>
         </div>
 
     </el-form>
@@ -136,7 +136,7 @@ export default {
           this.importLoading = false
           if (res.successServices.length) {
             this.$message.success(
-              `${this.isUpdate ? '更新' : '新建'}服务 ${payload.createFrom.chartName} 成功`
+              `${this.isUpdate ? 'Renew' : 'New'}Serve ${payload.createFrom.chartName} Success`
             )
           } else {
             this.$message.error(res.failedServices[0].error)

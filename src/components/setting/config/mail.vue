@@ -1,24 +1,24 @@
 <template>
   <div class="intergration-mail-container">
     <!--start of edit mail dialog-->
-    <el-dialog title="邮件配置-修改"
+    <el-dialog title="Mail Configuration-Revise"
                :close-on-click-modal="false"
                custom-class="edit-form-dialog"
                :visible.sync="dialogMailEditFormVisible">
-      <h3>邮件服务器</h3>
+      <h3>Mail Server</h3>
       <el-form :model="mailHostEdit"
                @submit.native.prevent
                :rules="mailRules"
                ref="mailHostForm">
-        <el-form-item label="主机"
+        <el-form-item label="Host"
                       label-width="100px"
                       prop="name">
           <el-input v-model="mailHostEdit.name"
-                    placeholder="主机"
+                    placeholder="Host"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="端口"
+        <el-form-item label="Port"
                       label-width="100px"
                       prop="port">
           <el-input-number v-model="mailHostEdit.port"
@@ -26,19 +26,19 @@
                            :min="0"
                            :max="65535"></el-input-number>
         </el-form-item>
-        <el-form-item label="用户名"
+        <el-form-item label="Username"
                       label-width="100px"
                       prop="username">
           <el-input v-model="mailHostEdit.username"
-                    placeholder="用户名"
+                    placeholder="Username"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码"
+        <el-form-item label="Password"
                       label-width="100px"
                       prop="password">
           <el-input v-model="mailHostEdit.password"
-                    placeholder="请输入新密码"
+                    placeholder="Please enter a new password"
                     autofocus
                     show-password
                     type="password"
@@ -47,26 +47,26 @@
         <el-form-item label="TLS"
                       label-width="100px"
                       prop="isTLS">
-          <el-checkbox v-model="mailHostEdit.isTLS">启用</el-checkbox>
+          <el-checkbox v-model="mailHostEdit.isTLS">Enable</el-checkbox>
         </el-form-item>
       </el-form>
-      <h3>邮件发送</h3>
+      <h3>Mail Sending</h3>
       <el-form :model="mailServiceEdit"
                :rules="mailRules"
                ref="mailServiceForm">
-        <el-form-item label="发信地址"
+        <el-form-item label="Mailing Address"
                       label-width="100px"
                       prop="address">
           <el-input v-model="mailServiceEdit.address"
-                    placeholder="发信地址"
+                    placeholder="Mailing Address"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="显示名称"
+        <el-form-item label="Show Name"
                       label-width="100px"
                       prop="display_name">
           <el-input v-model="mailServiceEdit.display_name"
-                    placeholder="显示名称"
+                    placeholder="Show Name"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
@@ -78,34 +78,34 @@
                    native-type="submit"
                    size="small"
                    @click="updateMailConfig()"
-                   class="start-create">确定</el-button>
+                   class="start-create">Sure</el-button>
         <el-button plain
                    native-type="submit"
                    size="small"
-                   @click="handleMailCancel()">取消</el-button>
+                   @click="handleMailCancel()">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of edit mail dialog-->
 
     <!--start of add mail dialog-->
-    <el-dialog title="邮件配置-新增"
+    <el-dialog title="Mail Configuration-New"
                :close-on-click-modal="false"
                custom-class="edit-form-dialog"
                :visible.sync="dialogMailAddFormVisible">
-      <h3>邮件服务器</h3>
+      <h3>Mail Server</h3>
       <el-form :model="mailHostAdd"
                @submit.native.prevent
                :rules="mailRules"
                ref="mailHostForm">
-        <el-form-item label="主机"
+        <el-form-item label="Host"
                       label-width="100px"
                       prop="name">
           <el-input v-model="mailHostAdd.name"
-                    placeholder="主机"
+                    placeholder="Host"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="端口"
+        <el-form-item label="Port"
                       label-width="100px"
                       prop="port">
           <el-input-number v-model="mailHostAdd.port"
@@ -113,19 +113,19 @@
                            :min="0"
                            :max="65535"></el-input-number>
         </el-form-item>
-        <el-form-item label="用户名"
+        <el-form-item label="Username"
                       label-width="100px"
                       prop="username">
           <el-input v-model="mailHostAdd.username"
-                    placeholder="用户名"
+                    placeholder="Username"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码"
+        <el-form-item label="Password"
                       label-width="100px"
                       prop="password">
           <el-input v-model="mailHostAdd.password"
-                    placeholder="密码"
+                    placeholder="Password"
                     autofocus
                     show-password
                     type="password"
@@ -134,26 +134,26 @@
         <el-form-item label="TLS"
                       label-width="100px"
                       prop="isTLS">
-          <el-checkbox v-model="mailHostAdd.isTLS">启用</el-checkbox>
+          <el-checkbox v-model="mailHostAdd.isTLS">Enable</el-checkbox>
         </el-form-item>
       </el-form>
-      <h3>邮件发送</h3>
+      <h3>Mail Sending</h3>
       <el-form :model="mailServiceAdd"
                :rules="mailRules"
                ref="mailServiceForm">
-        <el-form-item label="发信地址"
+        <el-form-item label="Mailing Address"
                       label-width="100px"
                       prop="address">
           <el-input v-model="mailServiceAdd.address"
-                    placeholder="发信地址"
+                    placeholder="Mailing Address"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="显示名称"
+        <el-form-item label="Show Name"
                       label-width="100px"
                       prop="display_name">
           <el-input v-model="mailServiceAdd.display_name"
-                    placeholder="显示名称"
+                    placeholder="Show Name"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
@@ -164,21 +164,21 @@
                    native-type="submit"
                    size="small"
                    @click="createMailConfig()"
-                   class="start-create">确定</el-button>
+                   class="start-create">Sure</el-button>
         <el-button plain
                    native-type="submit"
                    size="small"
-                   @click="handleMailCancel()">取消</el-button>
+                   @click="handleMailCancel()">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of add mail dialog-->
           <el-alert type="info" :closable="false">
-            <template>支持配置系统邮件，用于消息通知和账号密码找回，详情可参考
+            <template>Support for configuring system mail，Used for message notification and account password retrieval，For details, please refer to
               <el-link style="font-size: 14px; vertical-align: baseline;"
                 type="primary"
                 :href="`https://docs.koderover.com/zadig/settings/system-settings/#%E9%82%AE%E4%BB%B6%E9%85%8D%E7%BD%AE`"
                 :underline="false"
-                target="_blank">帮助文档</el-link>
+                target="_blank">Help Documentation</el-link>
             </template>
           </el-alert>
           <div v-if="mailHosts.length === 0" class="sync-container">
@@ -186,42 +186,42 @@
                        size="small"
                        type="primary"
                        plain
-                       @click="handleMailAdd">添加</el-button>
+                       @click="handleMailAdd">Add To</el-button>
           </div>
           <div class="mail-container">
           <el-table :data="mailHosts"
                     style="width: 100%;">
-            <el-table-column label="主机">
+            <el-table-column label="Host">
               <template slot-scope="scope">
                 {{scope.row.name}}
               </template>
             </el-table-column>
-            <el-table-column label="端口">
+            <el-table-column label="Port">
               <template slot-scope="scope">
                 {{scope.row.port}}
               </template>
             </el-table-column>
-            <el-table-column label="用户名">
+            <el-table-column label="Username">
               <template slot-scope="scope">
                 {{scope.row.username}}
               </template>
             </el-table-column>
-            <el-table-column label="开启 TLS">
+            <el-table-column label="Turn On TLS">
               <template slot-scope="scope">
-                {{scope.row.isTLS?'是':'否'}}
+                {{scope.row.isTLS?'Yes':'No'}}
               </template>
             </el-table-column>
-            <el-table-column label="操作"
+            <el-table-column label="Operate"
                              width="160">
               <template>
                 <el-button type="primary"
                            size="mini"
                            plain
-                           @click="handleMailEdit">编辑</el-button>
+                           @click="handleMailEdit">Edit</el-button>
                 <el-button type="danger"
                            size="mini"
                            @click="handleMailDelete"
-                           plain>删除</el-button>
+                           plain>Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -265,37 +265,37 @@ export default {
       mailRules: {
         name: {
           required: true,
-          message: '请填写主机名',
+          message: 'Please fill in the hostname',
           trigger: ['blur', 'change']
         },
         address: {
           required: true,
-          message: '请填写发信地址',
+          message: 'Please fill in the mailing address',
           trigger: ['blur', 'change']
         },
         port: {
           required: true,
-          message: '请填写端口',
+          message: 'Please Fill In The Port',
           trigger: ['blur', 'change']
         },
         username: {
           required: true,
-          message: '请填写用户名',
+          message: 'Please enter your username',
           trigger: ['blur', 'change']
         },
         password: {
           required: true,
-          message: '请填写密码',
+          message: 'Please fill in the password',
           trigger: ['blur', 'change']
         },
         theme: {
           required: true,
-          message: '请填写主题',
+          message: 'Please fill in the subject',
           trigger: ['blur', 'change']
         },
         display_name: {
           required: true,
-          message: '请填写显示名称',
+          message: 'Please enter a display name',
           trigger: ['blur', 'change']
         }
       },
@@ -322,9 +322,9 @@ export default {
       this.$refs.mailServiceForm.resetFields()
     },
     handleMailDelete () {
-      this.$confirm('确定要删除这个邮件配置吗？', '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to delete this mail configuration？', 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         Promise.all([deleteEmailHostAPI(), deleteEmailServiceAPI()]).then(
@@ -334,7 +334,7 @@ export default {
             this.getMailHostConfig()
             this.getMailServiceConfig()
             this.$message({
-              message: '邮件配置删除成功',
+              message: 'Email configuration deleted successfully',
               type: 'success'
             })
           }
@@ -368,7 +368,7 @@ export default {
             this.getMailServiceConfig()
             this.handleMailCancel()
             this.$message({
-              message: '邮件配置新增成功',
+              message: 'Email configuration added successfully',
               type: 'success'
             })
           }
@@ -386,7 +386,7 @@ export default {
             this.getMailServiceConfig()
             this.handleMailCancel()
             this.$message({
-              message: '邮件配置修改成功',
+              message: 'Email configuration modified successfully',
               type: 'success'
             })
           }

@@ -14,10 +14,10 @@
 
     <el-table :data="filteredTestCases"
               style="width: 100%;">
-      <el-table-column label="测试用例描述">
+      <el-table-column label="Test Case Description">
         <template slot-scope="scope">
 
-          <el-button v-if="checkStatus(scope.row)==='失败'"
+          <el-button v-if="checkStatus(scope.row)==='Fail'"
                      @click="showFailureMeta(scope.$index)"
                      class="case-desc failure"
                      type="text">
@@ -25,20 +25,20 @@
           </el-button>
           <span v-else>{{ scope.row.tc_name }}</span>
 
-          <div v-if="checkStatus(scope.row)==='失败' && showFailureMetaFlag[scope.$index]"
+          <div v-if="checkStatus(scope.row)==='Fail' && showFailureMetaFlag[scope.$index]"
                class="fail-meta">{{scope.row.mergedOutput}}</div>
-          <div v-if="checkStatus(scope.row)==='错误' && showFailureMetaFlag[scope.$index]"
+          <div v-if="checkStatus(scope.row)==='Mistake' && showFailureMetaFlag[scope.$index]"
                class="fail-meta">{{scope.row.mergedOutput}}</div>
         </template>
       </el-table-column>
       <el-table-column prop="scope.row"
                        label-class-name="filter-header"
-                       label="测试结果"
+                       label="Test Results"
                        width="100"
                        align="left">
         <template slot-scope="scope">
 
-          <el-button v-if="checkStatus(scope.row)==='失败'"
+          <el-button v-if="checkStatus(scope.row)==='Fail'"
                      type="text"
                      class="fail-btn"
                      @click="showFailureMeta(scope.$index)">
@@ -48,7 +48,7 @@
             <span
                   :class="`el-icon-caret-${showFailureMetaFlag[scope.$index] ? 'top' : 'bottom'} icon`"></span>
           </el-button>
-          <el-button v-else-if="checkStatus(scope.row)==='错误'"
+          <el-button v-else-if="checkStatus(scope.row)==='Mistake'"
                      type="text"
                      class="error-btn"
                      @click="showFailureMeta(scope.$index)">
@@ -64,7 +64,7 @@
 
         </template>
       </el-table-column>
-      <el-table-column label="运行时间(s)"
+      <el-table-column label="Operation Hours(s)"
                        width="110"
                        align="center">
         <template slot-scope="scope">
@@ -84,19 +84,19 @@ export default {
       filteredLabels: [],
       testResultLabels: [
         {
-          text: '失败',
+          text: 'Fail',
           value: 'failure'
         },
         {
-          text: '成功',
+          text: 'Success',
           value: 'succeeded'
         },
         {
-          text: '错误',
+          text: 'Mistake',
           value: 'error'
         },
         {
-          text: '未执行',
+          text: 'Not Performed',
           value: 'skipped'
         }
       ]
@@ -105,15 +105,15 @@ export default {
   methods: {
     checkStatus (obj) {
       if (obj.failure !== null) {
-        return '失败'
+        return 'Fail'
       } else if (typeof obj.failure === 'string') {
-        return '失败'
+        return 'Fail'
       } else if (obj.skipped !== null) {
-        return '未执行'
+        return 'Not Performed'
       } else if (obj.error) {
-        return '错误'
+        return 'Mistake'
       } else {
-        return '成功'
+        return 'Success'
       }
     },
     showFailureMeta (index) {

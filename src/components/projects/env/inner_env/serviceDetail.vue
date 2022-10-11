@@ -1,39 +1,39 @@
 <template>
   <div class="service-details-container">
-    <el-dialog :visible.sync="ephemeralContainersDialog.visible" title="启动调试容器" width="600px" :close-on-click-modal="false" class="ephemeralContainers-dialog" :show-close="false" append-to-body>
-      <el-alert style="background: #fff;" title="调试容器正常启动后，点击「调试」按钮可对服务进行诊断" type="info" :closable="false"></el-alert>
+    <el-dialog :visible.sync="ephemeralContainersDialog.visible" title="Start the debug container" width="600px" :close-on-click-modal="false" class="ephemeralContainers-dialog" :show-close="false" append-to-body>
+      <el-alert style="background: #fff;" title="After the debug container starts normally，Click「Debugging」Button to diagnose the service" type="info" :closable="false"></el-alert>
       <el-form ref="ephemeralContainerForm" :model="ephemeralContainersDialog" label-width="90px">
-        <el-form-item label="镜像来源">
-          <el-select style="width: 100%;" v-model="ephemeralContainersDialog.source" size="small" placeholder="请选择镜像来源">
-            <el-option label="使用内置镜像" value="builtin"> </el-option>
-            <el-option label="使用自定义镜像" value="custom"> </el-option>
+        <el-form-item label="Mirror Source">
+          <el-select style="width: 100%;" v-model="ephemeralContainersDialog.source" size="small" placeholder="Please select a mirror source">
+            <el-option label="Use Built In Mirror" value="builtin"> </el-option>
+            <el-option label="Use A Custom Image" value="custom"> </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="ephemeralContainersDialog.source === 'custom'" prop="image" :rules="{required: true, message: '镜像名称不能为空', trigger: ['blur', 'change']}" label="镜像名称">
-          <el-input size="small" v-model="ephemeralContainersDialog.image" placeholder="请输入调试容器使用的镜像名称"></el-input>
+        <el-form-item v-if="ephemeralContainersDialog.source === 'custom'" prop="image" :rules="{required: true, message: 'Image name cannot be empty', trigger: ['blur', 'change']}" label="Image Name">
+          <el-input size="small" v-model="ephemeralContainersDialog.image" placeholder="Please enter the image name used by the debug container"></el-input>
         </el-form-item>
       </el-form>
       <el-alert  v-if="ephemeralContainersDialog.source === 'builtin'" :closable="false" type="warning">
         <span slot="title">
-          <span>内置镜像包含以下诊断工具：</span><br>
+          <span>The built-in image contains the following diagnostic tools：</span><br>
           <span>curl、wget、iputils-ping、telnet、dnsutils、tcpdump、net-tools、procps、sysstat</span>
         </span>
       </el-alert>
       <div slot="footer">
-        <el-button @click="ephemeralContainersDialog.visible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="startEphemeralContainersDebug" size="small">确 定</el-button>
+        <el-button @click="ephemeralContainersDialog.visible = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="startEphemeralContainersDebug" size="small">Sure</el-button>
       </div>
     </el-dialog>
     <div class="info-card">
       <div class="info-header">
-        <span>基本信息</span>
+        <span>Basic Information</span>
       </div>
       <el-row :gutter="0"
               class="info-body">
         <el-col :span="12"
                 class="WAN">
           <div class="addr-title title">
-            外网访问
+            Internet Access
           </div>
           <div class="addr-content">
             <template v-if="allHosts.length > 0">
@@ -43,13 +43,13 @@
                    target="_blank">{{ host.host }}</a>
               </div>
             </template>
-            <div v-else>无</div>
+            <div v-else>None</div>
           </div>
         </el-col>
         <el-col :span="12"
                 class="LAN">
           <div class="addr-title title">
-            内网访问
+            Intranet Access
           </div>
           <div class="addr-content">
             <template v-if="allEndpoints.length > 0">
@@ -60,7 +60,7 @@
                             placement="bottom"
                             popper-class="ns-pop"
                             trigger="hover">
-                  <span class="title">同 NS 访问：</span>
+                  <span class="title">Same NS Access：</span>
                   <div v-for="(sameNs,indexSame) in allEndpoints"
                        :key="indexSame+'same'">
                     <span class="addr">{{ `${sameNs.service_name}:${sameNs.service_port}` }}</span>
@@ -70,7 +70,7 @@
                           class="copy-btn el-icon-copy-document">
                     </span>
                   </div>
-                  <span class="title">跨 NS 访问：</span>
+                  <span class="title">Cross NS Access：</span>
                   <div v-for="(crossNs,indexCross) in allEndpoints"
                        :key="indexCross+'cross'">
                     <span
@@ -85,7 +85,7 @@
                 </el-popover>
               </div>
             </template>
-            <div v-else>无</div>
+            <div v-else>None</div>
           </div>
         </el-col>
       </el-row>
@@ -94,7 +94,7 @@
 
     <div class="info-card" v-if="envSource ==='' || envSource === 'spock'">
       <div class="info-header">
-        <span>基本操作</span>
+        <span>Basic Operation</span>
       </div>
       <div class="info-body fundamental-ops">
         <template>
@@ -104,16 +104,16 @@
                        type="primary"
                        size="small"
                        plain>
-              配置管理
+              Configuration Management
             </el-button>
           </router-link>
-          <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+          <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
             <el-button icon="iconfont iconshare1"
                        class="permission-disabled"
                        type="primary"
                        size="small"
                        plain>
-              配置管理
+              Configuration Management
             </el-button>
           </el-tooltip>
           <el-button v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:get_environment':'get_environment',resource:{name:envName,type:'env'}})" @click="showExport"
@@ -121,15 +121,15 @@
                      type="primary"
                      size="small"
                      plain>
-            Yaml 导出
+            Yaml Export
           </el-button>
-          <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+          <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
             <el-button icon="iconfont iconcloud icon-bold"
                        class="permission-disabled"
                        type="primary"
                        size="small"
                        plain>
-               Yaml 导出
+               Yaml Export
             </el-button>
           </el-tooltip>
           <router-link v-if="checkPermissionSyncMixin({projectName: projectName, action: 'get_service'})"
@@ -138,16 +138,16 @@
                        type="primary"
                        size="small"
                        plain>
-              服务管理
+              Service Management
             </el-button>
           </router-link>
-          <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+          <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
             <el-button icon="iconfont iconlink1 icon-bold"
                        class="permission-disabled"
                        type="primary"
                        size="small"
                        plain>
-              服务管理
+              Service Management
             </el-button>
           </el-tooltip>
         </template>
@@ -155,7 +155,7 @@
     </div>
     <div class="info-card">
       <div class="info-header display-flex">
-        <span>服务实例</span>
+        <span>Service Instance</span>
         <el-popover placement="top"
                     trigger="hover"
                     class="middle">
@@ -167,8 +167,8 @@
           <i class="el-icon-question pointer middle"
              slot="reference"></i>
         </el-popover>
-        <el-tooltip effect="dark" content="刷新服务实例" placement="top">
-          <el-button icon="el-icon-refresh" type="text" @click="fetchServiceData">刷新</el-button>
+        <el-tooltip effect="dark" content="Refresh Service Instance" placement="top">
+          <el-button icon="el-icon-refresh" type="text" @click="fetchServiceData">Refresh</el-button>
         </el-tooltip>
       </div>
       <div class="info-body" v-loading="servicesLoading">
@@ -180,13 +180,13 @@
                     style="width: 100%;">
             <el-table-column width="140"
                              prop="name"
-                             label="名称">
+                             label="Name">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="images"
-                             label="镜像">
+                             label="Mirror">
               <template slot-scope="scope">
                 <div v-for="(item,index) of scope.row.images"
                      :key="index"
@@ -212,7 +212,7 @@
                                size="medium"
                                allow-create
                                filterable
-                               placeholder="请选择版本"
+                               placeholder="Please Select A Version"
                                class="select-image">
                       <el-option v-for="(image,index) in imgBucket[item.image_name]"
                                  :value="image.host+'/'+image.owner+'/'+image.name+':'+image.tag"
@@ -222,14 +222,14 @@
                     </el-select>
                     <div>
                       <span>
-                        <i title="取消"
+                        <i title="Cancel"
                            @click="cancelEditImage(item)"
-                           class="el-icon-circle-close icon-color icon-color-cancel operation">取消</i>
+                           class="el-icon-circle-close icon-color icon-color-cancel operation">Cancel</i>
                       </span>
                       <span>
-                        <i title="保存"
+                        <i title="Save"
                            @click="saveImage(item,scope.row.name,scope.row.type)"
-                           class="el-icon-circle-check icon-color icon-color-confirm operation">保存</i>
+                           class="el-icon-circle-check icon-color icon-color-confirm operation">Save</i>
                       </span>
                     </div>
                   </template>
@@ -239,7 +239,7 @@
             </el-table-column>
             <el-table-column props="replicas"
                              width="125px"
-                             label="副本数量">
+                             label="Number Of Copies">
               <template slot-scope="scope">
                 <el-input-number v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'}})" size="mini"
                                  :min="0"
@@ -251,16 +251,16 @@
                                  v-model="scope.row.replicas"></el-input-number>
               </template>
             </el-table-column>
-            <el-table-column  label="操作"
+            <el-table-column  label="Operate"
                              width="220px">
               <template slot-scope="scope">
                 <el-button v-hasPermi="{projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'},isBtn:true}" @click="restartService(scope.row.name,scope.row.type)"
-                           size="mini">重启实例</el-button>
+                           size="mini">Restart The Instance</el-button>
                 <el-button v-hasPermi="{projectName: projectName, action: isProd?'production:get_environment':'get_environment',resource:{name:envName,type:'env'},isBtn:true}" @click="showScaleEvents(scope.row.name,scope.row.type)"
-                           size="mini">查看事件</el-button>
+                           size="mini">View Events</el-button>
               </template>
             </el-table-column>
-            <el-table-column label="详情"
+            <el-table-column label="Details"
                              props="pods"
                              type="expand"
                              width="80px">
@@ -282,15 +282,15 @@
                               ref="pod-row">
                         <el-col :span="12">
                           <div>
-                            <span class="title">实例名称：</span>
+                            <span class="title">Instance Name：</span>
                             <span class="content">{{ activePod[scope.$index].name }}</span>
                           </div>
                           <div>
-                            <span class="title">实例 IP：</span>
+                            <span class="title">Example IP：</span>
                             <span class="content">{{ activePod[scope.$index].ip }}</span>
                           </div>
                           <div>
-                            <span class="title">健康探测：</span>
+                            <span class="title">Health Detection：</span>
                             <span
                               class="content"
                               :style="{ color: activePod[scope.$index].containers_ready ? 'inherit' : 'red' }"
@@ -305,19 +305,19 @@
                           </div>
                         </el-col>
                         <el-col :span="6">
-                          <span class="title">运行时长：</span>
+                          <span class="title">Runtime：</span>
                           <span class="content">{{ activePod[scope.$index].age }}</span>
                           <div>
-                            <span class="title">节点信息：</span>
+                            <span class="title">Node Information：</span>
                             <span class="content">{{ activePod[scope.$index].host_ip }}( {{activePod[scope.$index].node_name}} )</span>
                           </div>
                         </el-col>
                         <el-col :span="6"
                                 class="op-buttons">
-                          <el-tooltip v-if="!ephemeralContainersEnabled" effect="dark" content="实例所在的集群不支持 EphemeralContainers 功能，启动调试容器不可用" placement="top">
+                          <el-tooltip v-if="!ephemeralContainersEnabled" effect="dark" content="The cluster where the instance resides is not supported EphemeralContainers Function，Start debug container unavailable" placement="top">
                             <span style="margin-left: auto;">
                               <el-badge value="alpha" class="ephemeral-badge">
-                                <el-button :disabled="!ephemeralContainersEnabled" size="small">启动调试容器</el-button>
+                                <el-button :disabled="!ephemeralContainersEnabled" size="small">Start the debug container</el-button>
                               </el-badge>
                             </span>
                           </el-tooltip>
@@ -325,13 +325,13 @@
                           <el-button @click="openEphemeralContainersDialog(activePod[scope.$index].name)"
                                      v-hasPermi="{projectName: projectName, action: isProd?'production:debug_pod':'debug_pod',resource:{name:envName,type:'env'},isBtn:true, disabled: activePod[scope.$index].enable_debug_container || !activePod[scope.$index].canOperate}"
                                      :disabled="activePod[scope.$index].enable_debug_container || !activePod[scope.$index].canOperate"
-                                     size="small">启动调试容器</el-button>
+                                     size="small">Start the debug container</el-button>
                           </el-badge>
                           <el-button style="margin-left: 40px;" v-hasPermi="{projectName: projectName, action: isProd?'production:manage_environment':'manage_environment',resource:{name:envName,type:'env'}}" @click="restartPod(activePod[scope.$index])"
                                      :disabled="!activePod[scope.$index].canOperate"
-                                     size="small">重启</el-button>
+                                     size="small">Reboot</el-button>
                           <el-button v-hasPermi="{projectName: projectName, action: isProd?'production:get_environment':'get_environment',resource:{name:envName,type:'env'}}" @click="showPodEvents(activePod[scope.$index])"
-                                     size="small">查看事件</el-button>
+                                     size="small">View Events</el-button>
                         </el-col>
                       </el-row>
                       <el-row v-for="container of activePod[scope.$index].containers"
@@ -339,23 +339,23 @@
                               :class="['container-row', container.__color || activePod[scope.$index].__color]">
                         <el-col :span="12">
                           <div>
-                            <span class="title">容器名称：</span>
+                            <span class="title">Container Name：</span>
                             <span class="content">{{ container.name }}</span>
                           </div>
                           <div>
-                            <span class="title">当前镜像：</span>
+                            <span class="title">Current Mirror：</span>
                             <span class="content">{{ container.imageShort }}</span>
                           </div>
                           <div v-if="container.message">
-                            <span class="title">错误信息：</span>
+                            <span class="title">Error Message：</span>
                             <span class="content">{{ container.message }}</span>
                           </div>
                         </el-col>
                         <el-col :span="7">
                           <div>
-                            <span class="title">状态：</span>
+                            <span class="title">State：</span>
                             <span class="content">{{ container.status }}</span>
-                            <el-tooltip effect="dark" content="未通过健康探测" placement="top">
+                            <el-tooltip effect="dark" content="Failed Health Detection" placement="top">
                               <i
                                 v-show="!container.ready"
                                 class="el-icon-warning-outline"
@@ -364,7 +364,7 @@
                             </el-tooltip>
                           </div>
                           <div v-if="container.startedAtReadable">
-                            <span class="title">启动时间：</span>
+                            <span class="title">Start Time：</span>
                             <span class="content">{{ container.startedAtReadable }}</span>
                           </div>
                         </el-col>
@@ -373,11 +373,11 @@
                           <el-button v-hasPermi="{projectName: projectName, action: isProd?'production:debug_pod':'debug_pod',resource:{name:envName,type:'env'},isBtn:true}" @click="showContainerExec(activePod[scope.$index].name,container.name)"
                                      :disabled="!activePod[scope.$index].canOperate"
                                      icon="iconfont iconTerminal"
-                                     size="small"> 调试</el-button>
+                                     size="small"> Debugging</el-button>
                           <el-button v-hasPermi="{projectName: projectName, action: isProd?'production:get_environment':'get_environment',resource:{name:envName,type:'env'},isBtn:true}" @click="showContainerLog(activePod[scope.$index].name,container.name)"
                                      :disabled="!activePod[scope.$index].canOperate"
                                      icon="el-icon-document"
-                                     size="small">实时日志</el-button>
+                                     size="small">Real Time Log</el-button>
                         </el-col>
                       </el-row>
                     </div>
@@ -394,13 +394,13 @@
     <el-dialog :visible.sync="logModal.visible"
                :close-on-click-modal="false"
                width="70%"
-               title="容器日志"
+               title="Container Log"
                class="log-dialog">
       <span slot="title"
             class="modal-title">
-        <span class="unimportant">Pod 名称:</span>
+        <span class="unimportant">Pod Name:</span>
         {{logModal.podName}}
-        <span class="unimportant">容器:</span>
+        <span class="unimportant">Container:</span>
         {{logModal.containerName}}
         <i class="el-icon-full-screen screen"
            @click="fullScreen('logModal')"></i>
@@ -414,13 +414,13 @@
     <el-dialog :visible.sync="execModal.visible"
                width="70%"
                :close-on-click-modal="false"
-               title="Pod 调试"
+               title="Pod Debugging"
                class="log-dialog">
       <span slot="title"
             class="modal-title">
-        <span class="unimportant">Pod 名称:</span>
+        <span class="unimportant">Pod Name:</span>
         {{execModal.podName}}
-        <span class="unimportant">容器:</span>
+        <span class="unimportant">Container:</span>
         {{execModal.containerName}}
         <i class="el-icon-full-screen screen"
            @click="fullScreen(execModal.podName +'-debug')"></i>
@@ -436,14 +436,14 @@
                    :visible="execModal.visible"
                    ref="debug"/>
       <div class="download-content">
-        <el-input v-model="downloadFilePath" placeholder="输入文件在容器中的绝对路径"></el-input>
-        <el-button type="primary" @click="downloadFile(execModal.podName, execModal.containerName)" :disabled="!downloadFilePath" plain>下载</el-button>
+        <el-input v-model="downloadFilePath" placeholder="The absolute path of the input file in the container"></el-input>
+        <el-button type="primary" @click="downloadFile(execModal.podName, execModal.containerName)" :disabled="!downloadFilePath" plain>Download</el-button>
       </div>
     </el-dialog>
 
     <el-dialog :visible.sync="exportModal.visible"
                width="70%"
-               title="YAML 配置导出"
+               title="YAML Configuration Export"
                class="export-dialog">
       <h1 v-if="exportModal.textObjects.length === 0"
           v-loading="exportModal.loading"
@@ -456,7 +456,7 @@
                      plain
                      type="primary"
                      size="medium"
-                     class="at-right">复制全部</el-button>
+                     class="at-right">Copy All</el-button>
         </div>
         <div v-for="(obj, i) of exportModal.textObjects"
              :key="obj.originalText"
@@ -466,13 +466,13 @@
               <el-button @click="toggleYAML(obj)"
                          type="text"
                          icon="el-icon-caret-bottom">
-                {{ obj.expanded ? '收起' : '展开' }}
+                {{ obj.expanded ? 'Put Away' : 'Expand' }}
               </el-button>
               <el-button @click="copyYAML(obj, i)"
                          type="primary"
                          plain
                          size="small"
-                         class="at-right">复制</el-button>
+                         class="at-right">Copy</el-button>
             </div>
             <Editor v-show="obj.expanded"
                     :value="obj.readableText"
@@ -489,33 +489,33 @@
 
     <el-dialog :visible.sync="eventsModal.visible"
                width="70%"
-               title="查看事件"
+               title="View Events"
                class="events-dialog">
       <span slot="title"
             class="modal-title">
-        <span class="unimportant">实例名称:</span>
+        <span class="unimportant">Instance Name:</span>
         {{ eventsModal.name }}
       </span>
 
       <div v-if="eventsModal.data.length === 0"
            class="events-no-data">
-        <span class="el-table__empty-text">暂时没有事件</span>
+        <span class="el-table__empty-text">No Events For Now</span>
       </div>
       <el-table :data="eventsModal.data"
                 v-else>
         <el-table-column prop="message"
-                         label="消息"></el-table-column>
+                         label="Information"></el-table-column>
         <el-table-column prop="reason"
-                         label="状态"
+                         label="State"
                          width="240"></el-table-column>
         <el-table-column prop="count"
-                         label="总数"
+                         label="Total"
                          width="70"></el-table-column>
         <el-table-column prop="firstSeenReadable"
-                         label="最早出现于"
+                         label="First Appeared In"
                          width="160"></el-table-column>
         <el-table-column prop="lastSeenReadable"
-                         label="最近出现于"
+                         label="Recently Appeared In"
                          width="160"></el-table-column>
       </el-table>
 
@@ -645,7 +645,7 @@ export default {
       return this.$route.query.isProd === 'true'
     },
     notSupportYaml () {
-      return '没有找到数据'
+      return 'No Data Found'
     },
     namespace () {
       return this.$route.query.namespace
@@ -673,13 +673,13 @@ export default {
     },
     copyCommandSuccess (event) {
       this.$message({
-        message: '地址已成功复制到剪贴板',
+        message: 'Address successfully copied to clipboard',
         type: 'success'
       })
     },
     copyCommandError (event) {
       this.$message({
-        message: '地址复制失败',
+        message: 'Address Copy Failed',
         type: 'error'
       })
     },
@@ -760,7 +760,7 @@ export default {
       const type = typeUppercase.toLowerCase()
       item.edit = false
       this.$message({
-        message: '正在更新镜像',
+        message: 'Updating Mirror',
         duration: 3500
       })
       const payload = {
@@ -776,15 +776,15 @@ export default {
       updateServiceImageAPI(payload, type, projectName, envName, envType).then((res) => {
         this.fetchServiceData()
         this.$message({
-          message: '镜像更新成功',
+          message: 'Image Update Succeeded',
           type: 'success'
         })
       })
     },
     restartService (scaleName, type) {
-      this.$confirm('确定重启实例吗?', '重启', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to restart the instance??', 'Reboot', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         const projectName = this.projectName
@@ -794,14 +794,14 @@ export default {
         restartServiceAPI(projectName, serviceName, envName, scaleName, type, envType).then((res) => {
           this.fetchServiceData()
           this.$message({
-            message: '重启实例成功',
+            message: 'The instance restarted successfully',
             type: 'success'
           })
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消重启'
+          message: 'Reboot Cancelled'
         })
       })
     },
@@ -813,7 +813,7 @@ export default {
       scaleServiceAPI(projectName, serviceName, envName, scaleName, scaleNumber, type, envType).then((res) => {
         this.fetchServiceData()
         this.$message({
-          message: '伸缩服务成功',
+          message: 'The scaling service succeeded',
           type: 'success'
         })
       })
@@ -830,9 +830,9 @@ export default {
           { top: ${this.$refs[target.name][0].offsetTop + 30}px!important; }`, len + 1)
     },
     restartPod (pod) {
-      this.$confirm('确定重启吗?', '重启', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are You Sure To Reboot?', 'Reboot', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         const ownerQuery = this.envName ? `&envName=${this.envName}` : ''
@@ -843,14 +843,14 @@ export default {
         restartPodAPI(podName, projectName, envName, envType).then((res) => {
           this.fetchServiceData()
           this.$message({
-            message: '重启成功',
+            message: 'Restarted Successfully',
             type: 'success'
           })
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消重启'
+          message: 'Reboot Cancelled'
         })
       })
     },
@@ -891,9 +891,9 @@ export default {
       e.focus()
       e.selectAll()
       if (document.execCommand('copy')) {
-        this.$message.success('复制成功')
+        this.$message.success('Copy Successfully')
       } else {
-        this.$message.error('复制失败')
+        this.$message.error('Replication Failed')
       }
       e.setValue(obj.readableText)
     },
@@ -910,9 +910,9 @@ export default {
       textArea.select()
 
       if (document.execCommand('copy')) {
-        this.$message.success('复制成功')
+        this.$message.success('Copy Successfully')
       } else {
-        this.$message.error('复制失败')
+        this.$message.error('Replication Failed')
       }
       document.body.removeChild(textArea)
     },
@@ -968,7 +968,7 @@ export default {
       this.$refs.ephemeralContainerForm.validate((valid) => {
         if (valid) {
           startEphemeralContainersDebugAPI(payload).then(res => {
-            this.$message.success('创建成功')
+            this.$message.success('Created Successfully')
             this.fetchServiceData()
             this.ephemeralContainersDialog = {
               visible: false,
@@ -996,9 +996,9 @@ export default {
       {
         title: '',
         breadcrumb: [
-          { title: '项目', url: '/v1/projects' },
+          { title: 'Project', url: '/v1/projects' },
           { title: this.projectName, isProjectName: true, url: `/v1/projects/detail/${this.projectName}/detail` },
-          { title: '环境', url: `/v1/projects/detail/${this.projectName}/envs/detail` },
+          { title: 'Surroundings', url: `/v1/projects/detail/${this.projectName}/envs/detail` },
           { title: this.envName, url: `/v1/projects/detail/${this.projectName}/envs/detail?envName=${this.envName}` },
           { title: this.serviceName, url: '' }
         ]

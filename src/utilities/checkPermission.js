@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 
 export function checkPermissionSync (opts) {
   let globalPermission = store.getters.globalPermission
-  // 不存在时获取数据
+  // Get data when it doesn't exist
   if (isEmpty(globalPermission)) {
     store.dispatch('getGlobalPermission')
     globalPermission = store.getters.globalPermission
@@ -11,14 +11,14 @@ export function checkPermissionSync (opts) {
   const isSystemAdmin = globalPermission.is_system_admin
   const projectAdminList = globalPermission.project_admin_list ? globalPermission.project_admin_list : []
   const { type, projectName, action, actions, resource, operator } = opts
-  // 系统管理员放行
+  // System administrator release
   if (isSystemAdmin) {
     return true
   }
   if (projectAdminList.includes(projectName)) {
     return true
   }
-  // 系统角色权限判断
+  // System role permission judgment
   if (type === 'system' && (action || actions)) {
     const systemVerbs = globalPermission.system_verbs ? globalPermission.system_verbs : []
     if (systemVerbs.length > 0) {
@@ -43,7 +43,7 @@ export function checkPermissionSync (opts) {
     } else {
       return false
     }
-    // 项目角色权限判断
+    // Project role permission judgment
   } else if (type === 'project' || projectName) {
     const currentProjectPermissions = store.getters.projectPermissions[projectName] ? store.getters.projectPermissions[projectName] : {}
     const projectCollaborativeModeCheckingResult = () => {
@@ -96,7 +96,7 @@ export function checkPermissionSync (opts) {
 
 export async function permissionCheckingLogic (opts) {
   let globalPermission = store.getters.globalPermission
-  // 不存在时获取数据
+  // Get data when it doesn't exist
   if (isEmpty(globalPermission)) {
     await store.dispatch('getGlobalPermission')
     globalPermission = store.getters.globalPermission
@@ -104,14 +104,14 @@ export async function permissionCheckingLogic (opts) {
   const isSystemAdmin = globalPermission.is_system_admin
   const projectAdminList = globalPermission.project_admin_list ? globalPermission.project_admin_list : []
   const { type, projectName, action, actions, resource, operator } = opts
-  // 系统管理员放行
+  // System administrator release
   if (isSystemAdmin) {
     return true
   }
   if (projectAdminList.includes(projectName)) {
     return true
   }
-  // 系统角色权限判断
+  // System role permission judgment
   if (type === 'system' && (action || actions)) {
     const systemVerbs = globalPermission.system_verbs ? globalPermission.system_verbs : []
     if (systemVerbs.length > 0) {
@@ -136,7 +136,7 @@ export async function permissionCheckingLogic (opts) {
     } else {
       return false
     }
-    // 项目角色权限判断
+    // Project role permission judgment
   } else if (type === 'project' || projectName) {
     const currentProjectPermissions = store.getters.projectPermissions[projectName] ? store.getters.projectPermissions[projectName] : {}
     const projectCollaborativeModeCheckingResult = () => {

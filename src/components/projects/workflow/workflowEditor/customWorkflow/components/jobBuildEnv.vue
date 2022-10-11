@@ -1,9 +1,9 @@
 <template>
   <div class="build-env">
     <el-form :label-width="formLabelWidth" :model="form" ref="ruleForm">
-      <el-form-item label="环境" required>
+      <el-form-item label="Surroundings" required>
         <el-form-item prop="env" v-if="!form.envType ||form.envType === 'runtime'" class="form-item">
-          <el-select v-model="form.env" placeholder="请选择" size="small">
+          <el-select v-model="form.env" placeholder="Please Choose" size="small">
             <el-option v-for="item in envList" :key="item.id" :label="item.name" :value="item.name"></el-option>
           </el-select>
         </el-form-item>
@@ -12,9 +12,9 @@
           required
           v-if="form.envType === 'fixed'"
           class="form-item"
-          :rules="{required: true, message: '请选择环境', trigger: ['blur', 'change']}"
+          :rules="{required: true, message: 'Please select an environment', trigger: ['blur', 'change']}"
         >
-          <el-select v-model="form.env" placeholder="请选择" size="small">
+          <el-select v-model="form.env" placeholder="Please Choose" size="small">
             <el-option v-for="item in envList" :key="item.id" :label="item.name" :value="item.name"></el-option>
           </el-select>
         </el-form-item>
@@ -23,15 +23,15 @@
           required
           v-if="form.envType === 'other'"
           class="form-item"
-          :rules="{required: true, message: '请选择环境', trigger: ['blur', 'change']}"
+          :rules="{required: true, message: 'Please select an environment', trigger: ['blur', 'change']}"
         >
-          <el-select v-model="form.env" placeholder="请选择" filterable size="small">
+          <el-select v-model="form.env" placeholder="Please Choose" filterable size="small">
             <el-option v-for="(item,index) in globalEnv" :key="index" :label="item" :value="item">{{item}}</el-option>
           </el-select>
         </el-form-item>
         <EnvTypeSelect v-model="form.envType" isFixed isRuntime isOther style="display: inline-block;" />
       </el-form-item>
-      <el-form-item label="服务" required>
+      <el-form-item label="Serve" required>
         <el-form-item
           prop="service_and_images"
           v-if="!form.serviceType || form.serviceType === 'runtime'"
@@ -51,18 +51,18 @@
           v-if="form.serviceType === 'other'"
           required
           class="form-item"
-          :rules="{required: true, message: '请选择服务', trigger: ['blur', 'change']}"
+          :rules="{required: true, message: 'Please Select A Service', trigger: ['blur', 'change']}"
         >
-          <el-select v-model="form.job_name" placeholder="请选择" size="small">
+          <el-select v-model="form.job_name" placeholder="Please Choose" size="small">
             <el-option v-for="(item,index) in allJobList" :key="index" :label="item.name" :value="item.name">{{item.name}}</el-option>
           </el-select>
         </el-form-item>
         <EnvTypeSelect v-model="form.serviceType" isRuntime isOther isService style="display: inline-block;" />
       </el-form-item>
-      <el-form-item label="服务状态检测" class="status-check">
+      <el-form-item label="Service Status Detection" class="status-check">
           <span slot="label" >
-            服务状态检测
-          <el-tooltip effect="dark" content="开启后，部署任务会轮询服务运行状态，待服务正常运行，任务状态才为成功。" placement="top">
+            Service Status Detection
+          <el-tooltip effect="dark" content="After Opening，The deployment task polls the service running status，Waiting for the service to run normally，Task status is successful。" placement="top">
               <i class="el-icon-question" style="cursor: pointer;"></i>
           </el-tooltip>
         </span>

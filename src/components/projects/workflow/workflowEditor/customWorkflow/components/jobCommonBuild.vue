@@ -8,7 +8,7 @@
         <RepoSelect ref="repoSelectRef" :config="steps.git" :validObj="validObj" class="build-secondary-form" :showFirstLine="isCreate"></RepoSelect>
       </div>
       <section>
-        <div class="primary-title not-first-child">变量</div>
+        <div class="primary-title not-first-child">Variable</div>
         <EnvVariable :preEnvs="value.spec.properties" :validObj="validObj" :fromWhere="fromWhere" :envs="globalEnv"></EnvVariable>
       </section>
     </section>
@@ -19,7 +19,7 @@
       <section>
         <div style="margin-bottom: 8px;">
           <el-button type="primary" size="small" plain @click="advanced_setting_modified = !advanced_setting_modified">
-            高级配置
+            Advanced Configuration
             <i :class="[advanced_setting_modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
           </el-button>
         </div>

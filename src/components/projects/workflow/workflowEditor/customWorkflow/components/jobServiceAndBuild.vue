@@ -1,9 +1,9 @@
 <template>
   <div class="service-build-val">
     <el-row :gutter="24" class="mg-b16">
-      <el-col :span="6" class="title">服务组件</el-col>
-      <el-col :span="6" class="title">构建名称</el-col>
-      <el-col :span="6" class="title">构建配置</el-col>
+      <el-col :span="6" class="title">Service Component</el-col>
+      <el-col :span="6" class="title">Build Name</el-col>
+      <el-col :span="6" class="title">Build Configuration</el-col>
     </el-row>
     <div v-for="(item,index) in serviceAndBuilds" :key="index">
       <el-form :model="item" :ref="`ruleForm${index}`" size="small">
@@ -12,7 +12,7 @@
             <div>{{item.service_name}}/{{item.service_module}}</div>
           </el-col>
           <el-col :span="6">
-            <el-form-item prop="build_name" :rules="{required: true, message: '构建不能为空', trigger: ['blur','change']}">
+            <el-form-item prop="build_name" :rules="{required: true, message: 'Build Cannot Be Empty', trigger: ['blur','change']}">
               <el-select v-model="item.build_name" size="small" @change="handleBuildChange(item)" style="width: 200px;">
                 <el-option v-for="build in item.module_builds" :key="build.name" :label="build.name" :value="build.name">{{build.name}}</el-option>
               </el-select>
@@ -20,12 +20,12 @@
           </el-col>
           <el-col :span="6">
             <el-button type="text" @click="toggleIsShowVals(item,index)">
-              <span>设置</span>
+              <span>Set Up</span>
               <span :class="{'el-icon-caret-bottom':item.isShowVals,'el-icon-caret-top': !item.isShowVals}"></span>
             </el-button>
           </el-col>
           <el-col :span="4">
-            <el-button type="danger" size="mini" plain @click="delServiceAndBuild(index)">删除</el-button>
+            <el-button type="danger" size="mini" plain @click="delServiceAndBuild(index)">Delete</el-button>
           </el-col>
         </el-row>
         <el-row>
@@ -40,11 +40,11 @@
               >{{tab.label}}</span>
             </div>
             <el-table :data="item.key_vals" size="small" v-if="item.currentTab===`env`">
-              <el-table-column prop="key" label="键"></el-table-column>
-              <el-table-column label="类型">
-                <template slot-scope="scope">{{scope.row.type === 'string' ? '字符串' : '枚举'}}</template>
+              <el-table-column prop="key" label="Key"></el-table-column>
+              <el-table-column label="Type">
+                <template slot-scope="scope">{{scope.row.type === 'string' ? 'String' : 'Enumerate'}}</template>
               </el-table-column>
-              <el-table-column label="值" width="400">
+              <el-table-column label="Value" width="400">
                 <template slot-scope="scope">
                   <el-select
                     size="small"
@@ -65,7 +65,7 @@
                   ></el-input>
                   <el-select
                     v-model="scope.row.value"
-                    placeholder="请选择"
+                    placeholder="Please Choose"
                     filterable
                     size="small"
                     required
@@ -80,8 +80,8 @@
             </el-table>
             <div v-if="item.currentTab==='branch'">
               <el-table :data="item.repos" size="small">
-                <el-table-column prop="repo_name" label="代码库" width="200px"></el-table-column>
-                <el-table-column prop="branch" label="默认分支">
+                <el-table-column prop="repo_name" label="Code Library" width="200px"></el-table-column>
+                <el-table-column prop="branch" label="Default Branch">
                   <template slot-scope="scope">
                     <el-select size="small" v-model="scope.row.branch" filterable style="width: 220px;">
                       <el-option
@@ -93,14 +93,14 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="100px">
+                <el-table-column label="Operate" width="100px">
                   <template slot-scope="scope">
-                    <el-button @click="delRepo(item,scope.row)" type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                    <el-button @click="delRepo(item,scope.row)" type="danger" icon="el-icon-delete" size="mini">Delete</el-button>
                   </template>
                 </el-table-column>
               </el-table>
               <div class="mg-t16">
-                <el-select v-model="item.curRepo" value-key="repo_name" filterable size="small" placeholder="请选择代码库">
+                <el-select v-model="item.curRepo" value-key="repo_name" filterable size="small" placeholder="Please select a repository">
                   <el-option v-for="repo of item.originRepos" :key="repo.repo_name" :label="repo.repo_name" :value="repo"></el-option>
                 </el-select>
                 <el-button
@@ -110,7 +110,7 @@
                   size="mini"
                   plain
                   icon="el-icon-plus"
-                >添加</el-button>
+                >Add To</el-button>
               </div>
             </div>
           </el-card>

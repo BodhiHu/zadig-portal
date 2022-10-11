@@ -2,15 +2,15 @@
   <div
     v-loading="loading"
     class="artifacts-container"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconvery-delitracking"
   >
     <div class="operation">
-      <el-select style="width: 160px; margin-right: 16px;" size="medium" v-model="filterKey" @change="changeKey" placeholder="请选择">
-        <el-option label="服务名称" width="180px" value="name"></el-option>
-        <el-option label="交付物类型" width="80px" value="type"></el-option>
-        <el-option label="镜像名称" value="image_tag"></el-option>
-        <el-option label="代码仓库" value="repo_name"></el-option>
+      <el-select style="width: 160px; margin-right: 16px;" size="medium" v-model="filterKey" @change="changeKey" placeholder="Please Choose">
+        <el-option label="Service Name" width="180px" value="name"></el-option>
+        <el-option label="Deliverable Type" width="80px" value="type"></el-option>
+        <el-option label="Image Name" value="image_tag"></el-option>
+        <el-option label="Code Repository" value="repo_name"></el-option>
       </el-select>
 
       <el-select
@@ -20,7 +20,7 @@
         v-model="filterKeyword"
         @change="searchKeyword()"
         clearable
-        placeholder="请选择交付物类型"
+        placeholder="Please select deliverable type"
       >
         <el-option v-for="(item,index) in availableItems['type']" :key="index" :label="item" :value="item"></el-option>
       </el-select>
@@ -32,7 +32,7 @@
           clearable
           @clear="clearRepoName"
           @input="searchKeyword()"
-          placeholder="请输入代码库"
+          placeholder="Please Enter Codebase"
         ></el-input>
         <el-input
           size="medium"
@@ -41,7 +41,7 @@
           clearable
           @clear="clearBranch"
           @input="searchKeyword()"
-          placeholder="请输入分支"
+          placeholder="Please Enter Branch"
         ></el-input>
       </template>
       <el-input
@@ -53,11 +53,11 @@
         clearable
         @clear="clearKeyword"
         @input="searchKeyword()"
-        placeholder="请输入关键字"
+        placeholder="Please Enter Key Words"
       ></el-input>
     </div>
     <el-table :data="filteredArtifacts" v-show="artifacts.length > 0" style="width: 100%;">
-      <el-table-column label="名称">
+      <el-table-column label="Name">
         <template slot-scope="scope">
           <el-tooltip :content="scope.row.image" placement="top" effect="dark">
             <router-link class="artifact-link" :to="`/v1/delivery/artifacts/detail/${scope.row.id}?name=${scope.row.name}`">
@@ -67,12 +67,12 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column width="120px" label="交付类型">
+      <el-table-column width="120px" label="Delivery Type">
         <template slot-scope="scope">
           <span>{{scope.row.type}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="代码库" width="380px">
+      <el-table-column label="Code Library" width="380px">
         <template slot-scope="scope">
           <ul v-if="scope.row.commits &&  scope.row.commits.length >0" class="repo">
             <el-popover
@@ -80,7 +80,7 @@
               :key="index"
               popper-class="commit-popper"
               placement="top"
-              title="Commit 信息"
+              title="Commit Information"
               width="400"
               trigger="hover"
             >
@@ -95,13 +95,13 @@
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column label="镜像大小" width="120px">
+      <el-table-column label="Image Size" width="120px">
         <template slot-scope="scope">
           <span v-if="scope.row.type==='image' && scope.row.image_size">{{$utils.formatBytes(scope.row.image_size)}}</span>
           <span v-else-if="scope.row.type==='file'||!scope.row.image_size">-</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" width="150px">
+      <el-table-column label="Creation Time" width="150px">
         <template slot-scope="scope">
           <span>{{ $utils.convertTimestamp(scope.row.created_time)}}</span>
         </template>
@@ -119,7 +119,7 @@
     </div>
     <div v-if="artifacts.length === 0 && !loading" class="no-artifacts">
       <img src="@assets/icons/illustration/deliveryCenter.svg" alt />
-      <p>暂无交付物，请选择需要筛选的交付物</p>
+      <p>No Delivery Yet，Please select the deliverables to be screened</p>
     </div>
   </div>
 </template>
@@ -316,8 +316,8 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '交付中心', url: `/v1/delivery` },
-        { title: '交付物追踪', url: `` }
+        { title: 'Delivery Center', url: `/v1/delivery` },
+        { title: 'Delivery Tracking', url: `` }
       ]
     })
     if (this.$route.query.image) {

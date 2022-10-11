@@ -3,13 +3,13 @@
     <div class="step-detail">
       <div class="guide-title">
         <h4>
-          项目初始化向导
+          Project initialization wizard
         </h4>
       </div>
       <OnboardingSteps :active="activeStep" class="steps-container" align-center simple finish-status="success">
-            <OnboardingStep title="配置环境托管" description></OnboardingStep>
-            <OnboardingStep title="配置服务构建" description></OnboardingStep>
-            <OnboardingStep title="运行工作流" description></OnboardingStep>
+            <OnboardingStep title="Configure environment hosting" description></OnboardingStep>
+            <OnboardingStep title="Configure Service Build" description></OnboardingStep>
+            <OnboardingStep title="Run The Workflow" description></OnboardingStep>
       </OnboardingSteps>
     </div>
     <div class="title-container">
@@ -27,14 +27,14 @@ export default {
   data () {
     return {
       stepMap: [{
-        title: '第一步',
-        description: '托管已有 K8s 集群资源，选择服务在 Zadig 中进行管理'
+        title: 'First Step',
+        description: 'Hosting Already K8s Cluster Resources，Select Service In Zadig Manage In'
       }, {
-        title: '第二步',
-        description: '添加构建并配置相关脚本，后续可在工作流中自动更新服务'
+        title: 'Second Step',
+        description: 'Add build and configure related scripts，The service can be automatically updated later in the workflow'
       }, {
-        title: '第三步',
-        description: '运行工作流触发服务的自动化交付'
+        title: 'Third Step',
+        description: 'Run workflows to trigger automated delivery of services'
       }]
     }
   },

@@ -2,103 +2,103 @@
   <div>
     <el-alert type="warning" :closable="false">
       <template>
-        主机资源用于主机服务资源配置
-        <br />指定的主机端口用于主机 TCP 探活和 SSH 登录
-        <br />详细配置可参考
+        Host resources are used for host service resource configuration
+        <br />The specified host port is used for the host TCP Exploration And SSH Log In
+        <br />For detailed configuration, please refer to
         <el-link
           style="font-size: 14px; vertical-align: baseline;"
           type="primary"
           :href="`https://docs.koderover.com/zadig/settings/vm-management/`"
           :underline="false"
           target="_blank"
-        >帮助文档</el-link>
+        >Help Documentation</el-link>
       </template>
     </el-alert>
     <el-form ref="host" :rules="rules" label-width="120px" label-position="left" :model="host" class="host-form">
-      <el-form-item label="主机名称" prop="name">
-        <el-input size="small" v-model="host.name" placeholder="请输入主机名称"></el-input>
+      <el-form-item label="Hostname" prop="name">
+        <el-input size="small" v-model="host.name" placeholder="Please Enter A Hostname"></el-input>
       </el-form-item>
-      <el-form-item label="主机提供商" prop="provider">
-        <el-select v-model="host.provider" style="width: 100%;" size="small" placeholder="请选择主机提供商">
-          <el-option :value="1" label="阿里云">
+      <el-form-item label="Hosting Provider" prop="provider">
+        <el-select v-model="host.provider" style="width: 100%;" size="small" placeholder="Please select a hosting provider">
+          <el-option :value="1" label="Ali Cloud">
             <i class="iconfont iconaliyun"></i>
-            <span>阿里云</span>
+            <span>Ali Cloud</span>
           </el-option>
 
-          <el-option :value="2" label="腾讯云">
+          <el-option :value="2" label="Tencent Cloud">
             <i class="iconfont icontengxunyun"></i>
-            <span>腾讯云</span>
+            <span>Tencent Cloud</span>
           </el-option>
-          <el-option :value="3" label="华为云">
+          <el-option :value="3" label="HUAWEI CLOUD">
             <i class="iconfont iconhuawei"></i>
-            <span>华为云</span>
+            <span>HUAWEI CLOUD</span>
           </el-option>
-          <el-option :value="0" label="其他">
+          <el-option :value="0" label="Other">
             <i class="iconfont iconwuliji"></i>
-            <span>其他</span>
+            <span>Other</span>
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="用户名" prop="user_name">
-        <el-input size="small" v-model="host.user_name" placeholder="请输入用户名"></el-input>
+      <el-form-item label="Username" prop="user_name">
+        <el-input size="small" v-model="host.user_name" placeholder="Please Enter User Name"></el-input>
       </el-form-item>
-      <el-form-item label="主机地址" prop="ip">
+      <el-form-item label="Host Address" prop="ip">
         <el-row :gutter="10" style="margin-left: 0;" class="ip-host-row">
           <el-col :span="16" style="padding-left: 0;">
             <el-form-item prop="ip" required>
-              <el-input size="small" v-model.trim="host.ip" placeholder="请输入主机地址"></el-input>
+              <el-input size="small" v-model.trim="host.ip" placeholder="Please enter host address"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="1" style="text-align: center;">:</el-col>
           <el-col :span="7">
             <el-form-item prop="port">
-              <el-input size="small" v-model.number="host.port" placeholder="请输入端口"></el-input>
+              <el-input size="small" v-model.number="host.port" placeholder="Please Enter The Port"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="标签" prop="label">
-        <el-input size="small" v-model="host.label" placeholder="请输入标签"></el-input>
+      <el-form-item label="Label" prop="label">
+        <el-input size="small" v-model="host.label" placeholder="Please Enter A Label"></el-input>
       </el-form-item>
-      <el-form-item label="是否生产" prop="is_prod">
+      <el-form-item label="Whether To Produce" prop="is_prod">
         <el-radio-group v-model="host.is_prod">
-          <el-radio :label="true">是</el-radio>
-          <el-radio :label="false">否</el-radio>
+          <el-radio :label="true">Yes</el-radio>
+          <el-radio :label="false">No</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="私钥" prop="private_key">
-        <el-input size="small" type="textarea" v-model="host.private_key" placeholder="请输入私钥"></el-input>
+      <el-form-item label="Private Key" prop="private_key">
+        <el-input size="small" type="textarea" v-model="host.private_key" placeholder="Please Enter Private Key"></el-input>
       </el-form-item>
       <div>
         <el-button type="text" @click="showAdvanced = !showAdvanced">
-          高级设置
+          Advanced Settings
           <i :class="[showAdvanced ? 'el-icon-arrow-down' : 'el-icon-arrow-right']"></i>
         </el-button>
       </div>
       <div v-show="showAdvanced" class="advanced-config-content">
-        <div class="advanced-title">主机探活</div>
-        <el-form-item label="协议">
-          <el-select v-model="host.probe.probe_type" placeholder="选择协议" size="small">
+        <div class="advanced-title">Host Detection</div>
+        <el-form-item label="Protocol">
+          <el-select v-model="host.probe.probe_type" placeholder="Choose An Agreement" size="small">
             <el-option label="TCP" value="tcp"></el-option>
             <el-option label="HTTP" value="http"></el-option>
             <el-option label="HTTPS" value="https"></el-option>
           </el-select>
-          <span v-if="host.probe.probe_type === 'tcp'">默认使用配置的主机地址作为探活地址</span>
+          <span v-if="host.probe.probe_type === 'tcp'">By default, the configured host address is used as the probe address.</span>
         </el-form-item>
         <div v-show="host.probe.probe_type !== 'tcp'">
-          <el-form-item label="端口" prop="probe.http_probe.port">
+          <el-form-item label="Port" prop="probe.http_probe.port">
             <el-input v-model.number="host.probe.http_probe.port" size="small" placeholder="1 ~ 65535"></el-input>
           </el-form-item>
-          <el-form-item label="路径">
+          <el-form-item label="Path">
             <el-input v-model="host.probe.http_probe.path" placeholder="example.com/healthz" size="small"></el-input>
           </el-form-item>
-          <el-form-item label="请求头部">
+          <el-form-item label="Request Header">
             <el-button
               v-if="!host.probe.http_probe.http_headers.length"
               type="text"
               icon="el-icon-plus"
               @click="actionHttpHeaders('add')"
-            >添加</el-button>
+            >Add To</el-button>
             <div v-for="(header, index) in host.probe.http_probe.http_headers" :key="index">
               <el-input v-model="header.name" size="small" placeholder="Header Name"></el-input>
               <el-input v-model="header.value" size="small" placeholder="Header Value"></el-input>
@@ -111,25 +111,25 @@
               ></el-button>
             </div>
           </el-form-item>
-          <el-form-item label="响应超时" prop="probe.http_probe.timeout_second">
-            <el-input v-model.number="host.probe.http_probe.timeout_second" size="small" style="margin-right: 5px;"></el-input>秒
+          <el-form-item label="Response Timed Out" prop="probe.http_probe.timeout_second">
+            <el-input v-model.number="host.probe.http_probe.timeout_second" size="small" style="margin-right: 5px;"></el-input>Second
           </el-form-item>
-          <el-form-item label="主机在线条件">
+          <el-form-item label="Host Online Conditions">
             <div>
               <el-checkbox :value="true" disabled></el-checkbox>
-              <span style="display: inline-block; margin-left: 5px;">返回码为 2xx</span>
+              <span style="display: inline-block; margin-left: 5px;">The Return Code Is 2xx</span>
             </div>
             <div>
               <el-checkbox
                 v-model="host.probe.http_probe.response_flag"
                 @change="(value) => { if(!value){host.probe.http_probe.response_success_flag = ''}}"
               ></el-checkbox>
-              <span style="display: inline-block; margin-left: 5px;">响应结构体包含</span>
+              <span style="display: inline-block; margin-left: 5px;">The response structure contains</span>
               <el-input
                 v-model="host.probe.http_probe.response_success_flag"
                 size="small"
                 :disabled="!host.probe.http_probe.response_flag"
-                placeholder="字符串"
+                placeholder="String"
               ></el-input>
             </div>
           </el-form-item>
@@ -247,13 +247,13 @@ export default {
   data () {
     const validateKey = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入主机名称'))
+        callback(new Error('Please Enter A Hostname'))
       } else if (shellKeywords.includes(value)) {
-        callback(new Error('主机名称不支持 bash 关键字'))
+        callback(new Error('Hostname Not Supported bash Keywords'))
       } else if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(value)) {
         callback(
           new Error(
-            '主机名称仅支持英文字母、数字、下划线且首个字符不以数字开头'
+            'The host name only supports English letters、Number、Underscore and the first character does not start with a digit'
           )
         )
       } else {
@@ -272,13 +272,13 @@ export default {
           }
         ],
         provider: [
-          { required: true, message: '请选择提供商', trigger: 'blur' }
+          { required: true, message: 'Please Select A Provider', trigger: 'blur' }
         ],
         label: [
           {
             type: 'string',
             required: false,
-            message: '请输入主机标签',
+            message: 'Please Enter Host Tag',
             trigger: 'change'
           }
         ],
@@ -286,37 +286,37 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入用户名'
+            message: 'Please Enter User Name'
           }
         ],
         ip: [
           {
             type: 'string',
             required: true,
-            message: '请输入主机地址'
+            message: 'Please enter host address'
           }
         ],
         port: [
           {
             type: 'number',
             required: true,
-            message: '请输入端口'
+            message: 'Please Enter The Port'
           }
         ],
         private_key: [
           {
             type: 'string',
             required: true,
-            message: '请输入私钥'
+            message: 'Please Enter Private Key'
           }
         ],
         'probe.http_probe.port': {
           required: true,
           validator: (rule, value, callback) => {
             if (!value) {
-              callback(new Error('请输入端口'))
+              callback(new Error('Please Enter The Port'))
             } else if (isNaN(value) || value > 65535 || value < 1) {
-              callback(new Error('端口范围 1 ~ 65535'))
+              callback(new Error('Port Range 1 ~ 65535'))
             } else {
               callback()
             }
@@ -326,9 +326,9 @@ export default {
           required: true,
           validator: (rule, value, callback) => {
             if (!value) {
-              callback(new Error('请输入超时时间'))
+              callback(new Error('Please Enter A Timeout'))
             } else if (isNaN(value) || value > 10 || value < 1) {
-              callback(new Error('超时时间 1 ~ 10s'))
+              callback(new Error('Overtime Time 1 ~ 10s'))
             } else {
               callback()
             }
@@ -375,7 +375,7 @@ export default {
         if (res) {
           this.$message({
             type: 'success',
-            message: '新增主机信息成功'
+            message: 'Add host information successfully'
           })
           this.resetFields()
         } else {
@@ -414,7 +414,7 @@ export default {
         if (res) {
           this.$message({
             type: 'success',
-            message: '更新主机信息成功'
+            message: 'Update host information successfully'
           })
           this.resetFields()
         } else {

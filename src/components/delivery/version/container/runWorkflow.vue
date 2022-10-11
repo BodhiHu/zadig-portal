@@ -2,21 +2,21 @@
   <el-form class="run-workflow"
            label-width="90px">
     <el-form-item prop="productName"
-                  label="环境">
+                  label="Surroundings">
       <el-select v-model="runner.envAndNamespace"
                  size="small"
                  :disabled="specificEnv"
                  class="full-width">
         <el-option v-for="pro of matchedProducts"
                    :key="`${pro.projectName}/${pro.name}`"
-                   :label="`${pro.projectName}/${pro.name}${pro.is_prod?'（生产）':''}`"
+                   :label="`${pro.projectName}/${pro.name}${pro.is_prod?'（Production）':''}`"
                    :value="`${pro.projectName}/${pro.name}`">
           <span>{{`${pro.projectName} / ${pro.name}`}}
             <el-tag v-if="pro.is_prod"
                     type="danger"
                     size="mini"
                     effect="light">
-              生产
+              Production
             </el-tag>
           </span>
         </el-option>
@@ -25,13 +25,13 @@
                    value="">
           <router-link style="color: #909399;"
                        :to="`/v1/projects/detail/${projectName}/envs/create`">
-            {{`(环境不存在或者没有权限，点击创建环境)`}}
+            {{`(The environment does not exist or does not have permissions，Click to create an environment)`}}
           </router-link>
         </el-option>
       </el-select>
       <el-tooltip v-if="specificEnv"
                   effect="dark"
-                  content="该工作流已指定环境运行，可通过修改 工作流->基本信息 来解除指定环境绑定"
+                  content="The workflow has a specified environment to run，Workflow can be modified by->Basic information to unbind the specified environment"
                   placement="top">
         <span><i style="color: #909399;"
              class="el-icon-question"></i></span>
@@ -39,14 +39,14 @@
     </el-form-item>
     <el-table v-if="imageConfigs.length > 0"
               :data="imageConfigs"
-              empty-text="无"
+              empty-text="None"
               class="service-deploy-table">
       <el-table-column prop="serviceName"
-                       label="服务组件(服务名称)"
+                       label="Service Component(Service Name)"
                        width="150px">
         <template slot-scope="scope">{{$utils.showServiceName(scope.row.containerName)}}</template>
       </el-table-column>
-      <el-table-column label="镜像名称">
+      <el-table-column label="Image Name">
         <template slot-scope="scope">
           <div class="workflow-build-rows">
             <el-row class="build-row">
@@ -63,7 +63,7 @@
                  :loading="startTaskLoading"
                  type="primary"
                  size="small">
-        {{ startTaskLoading?'启动中':'启动任务' }}
+        {{ startTaskLoading?'Starting':'Start Task' }}
       </el-button>
 
     </div>
@@ -141,7 +141,7 @@ export default {
       runWorkflowAPI(projectName, clone, artifactDeployEnabled).then(res => {
         const taskId = res.task_id
         const pipelineName = res.pipeline_name
-        this.$message.success('创建成功')
+        this.$message.success('Created Successfully')
         this.$emit('success')
         this.$router.push(`/v1/projects/detail/${projectName}/pipelines/multi/${pipelineName}/${taskId}?status=running`)
       }).catch(error => {
@@ -151,7 +151,7 @@ export default {
           const envName = error.response.data.extra.envName
           const serviceName = error.response.data.extra.serviceName
           this.$message({
-            message: `检测到 ${projectName} 中 ${envName} 环境下的 ${serviceName} 服务未启动 <br> 请检查后再运行工作流`,
+            message: `Detected ${projectName} Middle ${envName} Environment ${serviceName} Service Not Started <br> Please check before running the workflow`,
             type: 'warning',
             dangerouslyUseHTMLString: true,
             duration: 5000
@@ -164,7 +164,7 @@ export default {
     },
     checkInput () {
       if (!this.runner.envAndNamespace) {
-        this.$message.error('请选择环境')
+        this.$message.error('Please select an environment')
         return false
       } else {
         return true

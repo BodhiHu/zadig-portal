@@ -10,20 +10,20 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item prop="name"
-                            label="工作流名称">
+                            label="Workflow Name">
                 <el-input v-model="workflowInfo.name"
                           :disabled="editMode"
                           style="width: 80%;"
-                          placeholder="请输入工作流名称"></el-input>
+                          placeholder="Please enter a workflow name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item prop="product_tmpl_name"
-                            label="选择项目">
+                            label="Select Item">
                 <el-select v-model="workflowInfo.product_tmpl_name"
                            style="width: 80%;"
                            @change="getEnvServices(workflowInfo.product_tmpl_name)"
-                           placeholder="请选择项目"
+                           placeholder="Please Select An Item"
                            :disabled="editMode || !!$route.query.projectName"
                            filterable>
                     <el-option v-for="pro in projects" :key="pro.value" :label="pro.label"
@@ -35,16 +35,16 @@
             <el-col :span="8">
               <el-form-item prop="env_name">
                 <template slot="label">
-                  <span>指定环境</span>
+                  <span>Specify The Environment</span>
                   <el-tooltip effect="dark"
-                              content="支持工作流默认部署到某个环境"
+                              content="Supports workflows to be deployed to an environment by default"
                               placement="top">
                     <i class="pointer el-icon-question"></i>
                   </el-tooltip>
                 </template>
                 <el-select v-model="workflowInfo.env_name"
                            style="width: 80%;"
-                           placeholder="请选择环境"
+                           placeholder="Please select an environment"
                            clearable
                            filterable>
                     <el-option :label="env.name" v-for="(env,index) in filteredEnvs" :key="index"
@@ -55,20 +55,20 @@
                                value="">
                       <router-link style="color: #909399;"
                                    :to="`/v1/projects/detail/${workflowInfo.product_tmpl_name}/envs/create`">
-                        {{`(环境不存在，点击创建环境)`}}
+                        {{`(Environment does not exist，Click to create an environment)`}}
                       </router-link>
                     </el-option>
                 </el-select>
               </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item label="描述">
+          <el-form-item label="Describe">
             <el-input type="input"
                       style="width: 100%;"
                       v-model="workflowInfo.description"></el-input>
           </el-form-item>
         </el-form>
-        <div class="policy-title">运行策略</div>
+        <div class="policy-title">Run Strategy</div>
         <el-form :model="workflowInfo"
                  :rules="rules"
                  ref="workflowInfoPolicy"
@@ -76,9 +76,9 @@
                  label-width="120px">
           <el-form-item prop="is_parallel" class="label-icon">
             <template slot="label">
-              <span>并发运行 </span>
+              <span>Run Concurrently </span>
               <el-tooltip effect="dark"
-                          content="当同时更新多个不同服务时，产生的多个任务将会并发执行，以提升工作流运行效率"
+                          content="When updating multiple different services at the same time，The resulting multiple tasks will be executed concurrently，To improve workflow efficiency"
                           placement="top">
                 <i class="pointer el-icon-question"></i>
               </el-tooltip>
@@ -87,16 +87,16 @@
           </el-form-item>
           <el-form-item prop="reset_image" class="label-icon" v-if="!isExternal">
             <template slot="label">
-              <span>镜像版本回退 </span>
+              <span>Mirror Version Rollback </span>
               <el-tooltip effect="dark"
-                          content="当任务运行状态和测试结果满足回退策略的设定，镜像版本将自动回退到上一个版本"
+                          content="When the task running status and test results meet the fallback policy settings，The mirror version will automatically roll back to the previous version"
                           placement="top">
                 <i class="pointer el-icon-question"></i>
               </el-tooltip>
             </template>
             <el-switch v-model="workflowInfo.reset_image" @change="workflowInfo.reset_image_policy = ''"></el-switch>
           </el-form-item>
-          <el-form-item prop="reset_image_policy" label="设置回退策略" v-if="workflowInfo.reset_image">
+          <el-form-item prop="reset_image_policy" label="Set Fallback Policy" v-if="workflowInfo.reset_image">
             <el-radio-group v-model="workflowInfo.reset_image_policy">
               <el-radio v-for="policy in resetPolicy" :key="policy.label" :label="policy.label">{{ policy.text }}</el-radio>
             </el-radio-group>
@@ -116,13 +116,13 @@ export default {
     return {
       resetPolicy: [{
         label: 'taskCompleted',
-        text: '任务执行完成'
+        text: 'Task Execution Completed'
       }, {
         label: 'deployFailed',
-        text: '部署结果失败'
+        text: 'Deployment Result Failed'
       }, {
         label: 'testFailed',
-        text: '测试结果失败'
+        text: 'Test Result Failed'
       }],
       projects: [],
       projectList: [],
@@ -140,14 +140,14 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请选择项目',
+            message: 'Please Select An Item',
             trigger: 'blur'
           }
         ],
         reset_image_policy: {
           type: 'string',
           required: true,
-          message: '请选择回退策略',
+          message: 'Please select a fallback strategy',
           trigger: 'blur'
         }
       }

@@ -2,20 +2,20 @@
   <div class="template-repo-container">
     <el-form ref="tempForm" :model="tempData" label-width="140px" :rules="rules">
       <h4 class="flex-center" style="padding-left: 40px;">
-        <el-button type="text" @click="triggerSubstantial(substantial)" :disabled="isUpdate">{{substantial ? '关闭批量创建' : '批量创建'}}</el-button>
+        <el-button type="text" @click="triggerSubstantial(substantial)" :disabled="isUpdate">{{substantial ? 'Turn Off Batch Creation' : 'Bulk Creation'}}</el-button>
       </h4>
-      <el-form-item label="服务名称" prop="serviceName" v-if="!substantial">
-        <el-input v-model="tempData.serviceName" placeholder="请输入服务名称" size="small" :disabled="isUpdate"></el-input>
+      <el-form-item label="Service Name" prop="serviceName" v-if="!substantial">
+        <el-input v-model="tempData.serviceName" placeholder="Please enter a service name" size="small" :disabled="isUpdate"></el-input>
       </el-form-item>
-      <el-form-item v-else label="服务名称">
-        <span style="line-height: 41px;">批量创建的服务名称为 values 文件名称</span>
+      <el-form-item v-else label="Service Name">
+        <span style="line-height: 41px;">The name of the service created in batch is values File Name</span>
       </el-form-item>
-      <el-form-item label="选择模板" prop="moduleName">
-        <el-select v-model="tempData.moduleName" placeholder="请选择模板" size="small" :disabled="isUpdate" @change="getHelmTemplateVariable">
+      <el-form-item label="Choose A Template" prop="moduleName">
+        <el-select v-model="tempData.moduleName" placeholder="Please Select A Template" size="small" :disabled="isUpdate" @change="getHelmTemplateVariable">
           <el-option disabled value="NEWMODULE">
             <router-link to="/v1/template/charts" class="module-link">
               <i class="el-icon-circle-plus-outline" style="margin-right: 3px;"></i>
-              新建模板
+              New Template
             </router-link>
           </el-option>
           <el-option :label="chart.name" :value="chart.name" v-for="chart in tempCharts" :key="chart.name"></el-option>
@@ -23,7 +23,7 @@
       </el-form-item>
       <div v-if="!substantial" style="padding-left: 40px;">
         <div class="custom-variable" v-if="!substantial && variables.length">
-          <h4 class="var-title">变量</h4>
+          <h4 class="var-title">Variable</h4>
           <div class="variable-row" v-for="vars in variables" :key="vars.key">
             <div class="row-left">{{ vars.key }}</div>
             <div class="row-right">
@@ -31,22 +31,22 @@
             </div>
           </div>
         </div>
-        <el-button v-if="importRepoInfo.yamlSource === 'default'" type="text" @click="importRepoInfo.yamlSource = 'freeEdit'">高级设置</el-button>
+        <el-button v-if="importRepoInfo.yamlSource === 'default'" type="text" @click="importRepoInfo.yamlSource = 'freeEdit'">Advanced Settings</el-button>
         <CommonImportValues v-else ref="importValues" :importRepoInfo.sync="importRepoInfo" showDelete></CommonImportValues>
       </div>
       <ImportValues v-else ref="importValues" :importRepoInfo.sync="importRepoInfo"></ImportValues>
       <el-form-item prop="auto_sync">
         <span slot="label">
-          <span>自动同步</span>
-           <el-tooltip effect="dark" content="开启后，对模板库操作应用到服务时，该服务配置将自动基于模板内容同步。" placement="top">
+          <span>Auto Sync</span>
+           <el-tooltip effect="dark" content="After Opening，When applying a template library operation to a service，The service configuration will be automatically synchronized based on the template content。" placement="top">
               <i class="pointer el-icon-question"></i>
            </el-tooltip>
         </span>
         <el-switch v-model="tempData.auto_sync" />
       </el-form-item>
       <el-form-item style="text-align: right;">
-        <el-button size="small" @click="commitDialogVisible(false)">取消</el-button>
-        <el-button type="primary" size="small" @click="importTempRepo" :loading="importLoading">导入</el-button>
+        <el-button size="small" @click="commitDialogVisible(false)">Cancel</el-button>
+        <el-button type="primary" size="small" @click="importTempRepo" :loading="importLoading">Import</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -65,8 +65,8 @@ import {
 import { mapState } from 'vuex'
 
 const rules = {
-  serviceName: [{ required: true, message: '请输入服务名称', trigger: 'blur' }],
-  moduleName: [{ required: true, message: '请选择模板', trigger: ['blur', 'change'] }]
+  serviceName: [{ required: true, message: 'Please enter a service name', trigger: 'blur' }],
+  moduleName: [{ required: true, message: 'Please Select A Template', trigger: ['blur', 'change'] }]
 }
 
 // const createTemplateForm = {
@@ -74,7 +74,7 @@ const rules = {
 //   name: '',
 //   createFrom: {
 //     templateName: '',
-//     valuesYAML: '',  // 后端传输字段，这里使用的是 overrideYaml
+//     valuesYAML: '',  // Backend Transport Field，Used Here Is overrideYaml
 //     valuesPaths: [],
 //     codehostID: null,
 //     owner: '',
@@ -234,7 +234,7 @@ export default {
       if (res) {
         if (res.successServices.length) {
           this.$message.success(
-            `${this.isUpdate ? '更新' : '新建'}服务 ${payload.name} 成功`
+            `${this.isUpdate ? 'Renew' : 'New'}Serve ${payload.name} Success`
           )
         } else {
           this.$message.error(res.failedServices[0].error)
@@ -268,7 +268,7 @@ export default {
         payload.valuesData.autoSync = this.importRepoInfo.gitRepoConfig.autoSync
       }
       const sId = setTimeout(() => {
-        this.$message.info('服务过多，请耐心等待！')
+        this.$message.info('Too Much Service，Please Wait Patiently！')
       }, 5000)
       const res = await createTemplateMultiServiceAPI(
         projectName,
@@ -293,7 +293,7 @@ export default {
         }))
 
         if (res.failedServices.length) {
-          this.$message.success(`创建部分服务成功`)
+          this.$message.success(`Successfully created some services`)
           let message = ``
           res.failedServices.forEach(fail => {
             message += `<div style="margin-bottom: 10px;"><span style="color: #e6a23c;">${fail.path}</span>: ${fail.error}</div>`
@@ -302,10 +302,10 @@ export default {
             dangerouslyUseHTMLString: true,
             message,
             duration: 0,
-            title: '批量创建失败服务列表'
+            title: 'Create a list of failed services in batches'
           })
         } else {
-          this.$message.success(`创建服务成功`)
+          this.$message.success(`Create service successfully`)
         }
       }
     },

@@ -1,12 +1,12 @@
 <template>
   <div class="module-use">
-    <header>模板引用</header>
+    <header>Template Reference</header>
     <section>
-      <div class="desc">当前模板版本：{{ info.version }}</div>
+      <div class="desc">Current Template Version：{{ info.version }}</div>
       <el-table :data="info.used" style="width: 100%;">
-        <el-table-column prop="project_name" label="项目"></el-table-column>
-        <el-table-column prop="service_name" label="服务"></el-table-column>
-        <el-table-column prop="version" label="模板版本"></el-table-column>
+        <el-table-column prop="project_name" label="Project"></el-table-column>
+        <el-table-column prop="service_name" label="Serve"></el-table-column>
+        <el-table-column prop="version" label="Template Version"></el-table-column>
       </el-table>
     </section>
   </div>

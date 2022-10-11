@@ -1,13 +1,13 @@
 <template>
   <div class="host-select">
-    <el-input placeholder="搜索主机名称或主机 IP" v-model="keyword" size="small" class="search" @input="getHosts">
+    <el-input placeholder="Search for hostname or host IP" v-model="keyword" size="small" class="search" @input="getHosts">
       <el-button slot="append" icon="el-icon-search"></el-button>
     </el-input>
     <el-table :data="allHost" @select="handleSelectionChange" @select-all="handleSelectionChange" ref="multipleTable">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="name" label="主机名称"></el-table-column>
-      <el-table-column prop="ip" label="主机 IP"></el-table-column>
-      <el-table-column prop="label" label="标签" width="100" :filters="filtersList" :filter-method="filterTag" filter-placement="bottom-end">
+      <el-table-column prop="name" label="Hostname"></el-table-column>
+      <el-table-column prop="ip" label="Host IP"></el-table-column>
+      <el-table-column prop="label" label="Label" width="100" :filters="filtersList" :filter-method="filterTag" filter-placement="bottom-end">
         <template slot-scope="scope" v-if="scope.row.label">
           <el-tag size="small" disable-transitions>{{scope.row.label}}</el-tag>
         </template>

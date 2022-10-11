@@ -31,11 +31,11 @@
           <div v-else class="no-content">
             <img src="@assets/icons/illustration/editorNoService.svg" alt />
             <p v-if="templates.length === 0">
-              暂无模板，点击
-              <el-button v-hasPermi="{type: 'system', action: 'create_template'}" size="mini" icon="el-icon-plus" @click="createFile()" plain circle></el-button>创建模板
+              No Template Yet，Click
+              <el-button v-hasPermi="{type: 'system', action: 'create_template'}" size="mini" icon="el-icon-plus" @click="createFile()" plain circle></el-button>Create A Template
             </p>
-            <p v-else-if="file.name==='模板列表' && templates.length >0">请在左侧选择需要编辑的模板</p>
-            <p v-else-if="!file.name && templates.length >0">请在左侧选择需要编辑的模板</p>
+            <p v-else-if="file.name==='Template List' && templates.length >0">Please select the template you want to edit on the left</p>
+            <p v-else-if="!file.name && templates.length >0">Please select the template you want to edit on the left</p>
           </div>
         </multipane>
       </div>
@@ -146,8 +146,8 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '模板库', url: '/v1/template' },
-        { title: '构建模板', url: '' }
+        { title: 'Template Library', url: '/v1/template' },
+        { title: 'Build Template', url: '' }
       ]
     })
   },

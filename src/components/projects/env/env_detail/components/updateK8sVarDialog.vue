@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="更新环境变量"
+    title="Update environment variables"
     :visible.sync="updateK8sEnvVarDialogVisible"
     width="60%"
     class="update-env-variable"
@@ -11,15 +11,15 @@
         class="search-input"
         clearable
         v-model="varSearch"
-        placeholder="搜索全局变量"
+        placeholder="Search for global variables"
       >
         <i class="el-icon-search el-input__icon" slot="prefix"></i>
       </el-input>
     </div>
-    <div>全局变量列表
+    <div>List Of Global Variables
       <el-tooltip
         effect="dark"
-        content="环境所用的变量，您可以修改原有 Value，也可以保持原样"
+        content="Variables used in the environment，You can modify the original Value，Can Also Be Left As Is"
         placement="top"
       >
         <span class="el-icon-question"></span>
@@ -38,7 +38,7 @@
             <VariableEditor :varKey="scope.row.key" :value.sync="scope.row.value" />
           </template>
         </el-table-column>
-        <el-table-column label="关联服务" :filters="serviceFilters" :filter-method="filterMethods">
+        <el-table-column label="Associated Services" :filters="serviceFilters" :filter-method="filterMethods">
           <template slot-scope="scope">
             <span>{{
               scope.row.services ? scope.row.services.join(',') : '-'
@@ -48,17 +48,17 @@
       </el-table>
     </div>
     <span slot="footer" class="dialog-footer">
-      <span class="update-desc">确认更新后，修改的变量关联的服务会重启</span>
+      <span class="update-desc">After confirming the update，The service associated with the modified variable will be restarted</span>
       <el-button
         size="small"
         type="primary"
         :disabled="remainingVars.length === 0"
         :loading="updateK8sEnvVarLoading"
         @click="updateK8sEnvVar"
-        >更新</el-button
+        >Renew</el-button
       >
       <el-button size="small" @click="updateK8sEnvVarDialogVisible = false"
-        >取 消</el-button
+        >Cancel</el-button
       >
     </span>
   </el-dialog>
@@ -114,7 +114,7 @@ export default {
           this.updateK8sEnvVarDialogVisible = false
           this.fetchAllData()
           this.$message({
-            message: '更新环境变量成功，请等待服务升级',
+            message: 'Successfully updated environment variables，Please wait for service upgrade',
             type: 'success'
           })
         }).catch(error => {
@@ -127,9 +127,9 @@ export default {
     },
     updateEnv (res) {
       const message = JSON.parse(res.match(/{.+}/g)[0])
-      this.$confirm(`您的更新操作将覆盖环境中${message.name}服务变更，确认继续?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Your update operation will overwrite the environment in${message.name}Service Change，Confirm To Continue?`, 'Hint', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         const projectName = this.productInfo.product_name
@@ -143,7 +143,7 @@ export default {
             this.updateK8sEnvVarLoading = false
             this.updateK8sEnvVarDialogVisible = false
             this.$message({
-              message: '更新环境成功，请等待服务升级',
+              message: 'Update environment succeeded，Please wait for service upgrade',
               type: 'success'
             })
           })

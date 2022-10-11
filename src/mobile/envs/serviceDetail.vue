@@ -7,12 +7,12 @@
         <span>{{`${envName} ${serviceName}`}}</span>
       </template>
     </van-nav-bar>
-    <van-divider content-position="left">基本信息</van-divider>
+    <van-divider content-position="left">Basic Information</van-divider>
     <div class="service-info">
       <van-row>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">外网访问</h2>
+            <h2 class="mobile-block-title">Internet Access</h2>
             <div class="mobile-block-desc">
               <template v-if="allHosts.length > 0">
                 <div v-for="host of allHosts"
@@ -22,13 +22,13 @@
                      target="_blank">{{ host.host }}</a>
                 </div>
               </template>
-              <div v-else>无</div>
+              <div v-else>None</div>
             </div>
           </div>
         </van-col>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">内网访问</h2>
+            <h2 class="mobile-block-title">Intranet Access</h2>
             <div class="mobile-block-desc">
               <template v-if="allEndpoints.length > 0">
               <div v-for="(ep,index) in allEndpoints"
@@ -38,7 +38,7 @@
                             placement="bottom"
                             popper-class="ns-pop"
                             trigger="hover">
-                  <span class="title">同 NS 访问：</span>
+                  <span class="title">Same NS Access：</span>
                   <div v-for="(sameNs,indexSame) in allEndpoints"
                        :key="indexSame+'same'">
                     <span class="addr">{{ `${sameNs.service_name}:${sameNs.service_port}` }}</span>
@@ -48,7 +48,7 @@
                           class="copy-btn el-icon-copy-document">
                     </span>
                   </div>
-                  <span class="title">跨 NS 访问：</span>
+                  <span class="title">Cross NS Access：</span>
                   <div v-for="(crossNs,indexCross) in allEndpoints"
                        :key="indexCross+'cross'">
                     <span
@@ -63,13 +63,13 @@
                 </el-popover>
               </div>
               </template>
-              <div v-else>无</div>
+              <div v-else>None</div>
             </div>
           </div>
         </van-col>
       </van-row>
     </div>
-    <van-divider content-position="left">服务实例</van-divider>
+    <van-divider content-position="left">Service Instance</van-divider>
     <div class="container-info">
       <van-collapse v-model="activeContainers">
         <van-collapse-item v-for="(item,index) in currentService.scales"
@@ -103,13 +103,13 @@
                   <van-row :class="['pod-row', activePod[index].__color]"
                            ref="pod-row">
                     <van-col :span="24">
-                      <span class="title">实例名称：</span>
+                      <span class="title">Instance Name：</span>
                       <span class="content">{{ activePod[index].name }}</span>
                     </van-col>
                   </van-row>
                   <van-row>
                     <van-col :span="24">
-                      <span class="title">运行时长：</span>
+                      <span class="title">Runtime：</span>
                       <span class="content">{{ activePod[index].age }}</span>
                     </van-col>
                   </van-row>
@@ -117,23 +117,23 @@
                            :key="container.name"
                            :class="['container-row', container.__color]">
                     <div>
-                      <span class="title">容器名称：</span>
+                      <span class="title">Container Name：</span>
                       <span class="content">{{ container.name }}</span>
                     </div>
                     <div>
-                      <span class="title">当前镜像：</span>
+                      <span class="title">Current Mirror：</span>
                       <span class="content">{{ container.imageShort }}</span>
                     </div>
                     <div v-if="container.message">
-                      <span class="title">错误信息：</span>
+                      <span class="title">Error Message：</span>
                       <span class="content">{{ container.message }}</span>
                     </div>
                     <div>
-                      <span class="title">状态：</span>
+                      <span class="title">State：</span>
                       <span class="content">{{ container.status }}</span>
                     </div>
                     <div v-if="container.startedAtReadable">
-                      <span class="title">启动时间：</span>
+                      <span class="title">Start Time：</span>
                       <span class="content">{{ container.startedAtReadable }}</span>
                     </div>
                     <van-divider dashed></van-divider>
@@ -144,7 +144,7 @@
                       <van-button plain
                                   size="small"
                                   @click="showPodEvents(activePod[index])"
-                                  type="info">查看事件</van-button>
+                                  type="info">View Events</van-button>
                     </van-col>
                   </van-row>
                 </div>
@@ -162,7 +162,7 @@
                position="bottom"
                :style="{ height: '40%' }">
       <van-empty v-if="eventsModal.data.length === 0"
-                 description="暂时没有事件" />
+                 description="No Events For Now" />
       <el-table :data="eventsModal.data"
                 v-else>
         <el-table-column prop="message"
@@ -270,13 +270,13 @@ export default {
   methods: {
     copyCommandSuccess (event) {
       this.$message({
-        message: '地址已成功复制到剪贴板',
+        message: 'Address successfully copied to clipboard',
         type: 'success'
       })
     },
     copyCommandError (event) {
       this.$message({
-        message: '地址复制失败',
+        message: 'Address Copy Failed',
         type: 'error'
       })
     },

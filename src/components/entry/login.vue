@@ -10,26 +10,26 @@
               </header>
               <section>
                 <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" hide-required-asterisk>
-                  <el-form-item label="用户名" prop="account">
-                    <el-input v-model="loginForm.account" placeholder="请输入用户名" autocomplete="off"></el-input>
+                  <el-form-item label="Username" prop="account">
+                    <el-input v-model="loginForm.account" placeholder="Please Enter User Name" autocomplete="off"></el-input>
                   </el-form-item>
-                  <el-form-item label="密码" prop="password">
+                  <el-form-item label="Password" prop="password">
                     <el-input
                       type="password"
                       @keyup.enter.native="login"
                       v-model="loginForm.password"
                       autocomplete="off"
-                      placeholder="请输入密码"
+                      placeholder="Please Enter Password"
                       show-password
                     ></el-input>
                   </el-form-item>
                 </el-form>
-                <el-button type="submit" @click="login" v-loading="loading" class="btn-md btn-theme btn-block login-btn">登录</el-button>
+                <el-button type="submit" @click="login" v-loading="loading" class="btn-md btn-theme btn-block login-btn">Log In</el-button>
               </section>
               <div class="bottom">
-                <a @click="showForgotPassword = true">找回密码</a>
+                <a @click="showForgotPassword = true">Retrieve Password</a>
                 <span v-if="showRegistration" class="divide">|</span>
-                <a v-if="showRegistration" @click="showSignUp = true">注册</a>
+                <a v-if="showRegistration" @click="showSignUp = true">Register</a>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
     </div>
     <footer>
       <div class="copyright">
-        筑栈（上海）信息技术有限公司 KodeRover ©{{moment().format('YYYY')}}
+        Build A Stack（Shanghai）Information Technology Co., Ltd KodeRover ©{{moment().format('YYYY')}}
         <el-tooltip>
           <div slot="content">
             <span v-if="processEnv.VERSION">Version: {{processEnv.VERSION}}</span>
@@ -92,16 +92,16 @@ export default {
       },
       rules: {
         account: [
-          { required: true, message: '请输入用户名', trigger: 'change' }
+          { required: true, message: 'Please Enter User Name', trigger: 'change' }
         ],
-        password: [{ required: true, message: '请输入密码', trigger: 'change' }]
+        password: [{ required: true, message: 'Please Enter Password', trigger: 'change' }]
       },
       moment,
       copywriting: {
         common: {
-          title: '高效研发从现在开始',
+          title: 'Efficient R D Starts Now',
           content:
-            '面向开发者设计的高可用 CI/CD：Zadig 强大的云原生多环境能力，轻松实现本地联调、微服务并行构建、集成测试和持续部署。'
+            'High Availability Designed for Developers CI/CD：Zadig Powerful cloud-native multi-environment capabilities，Easy local joint debugging、Microservices are built in parallel、Integration testing and continuous deployment。'
         }
       }
     }
@@ -167,13 +167,13 @@ export default {
   },
   async mounted () {
     const token = this.$route.query.token
-    // 邮箱通过 Token 设置新密码接收参数
+    // Email Via Token Set new password receiving parameters
     const retrieveToken = this.$route.query.idtoken
-    // Dex 找回密码接收参数
+    // Dex Retrieve password and receive parameters
     const findPassword = this.$route.query.findPassword
-    // Dex 注册接收参数
+    // Dex Register to receive parameters
     const signUp = this.$route.query.signUp
-    // 注册检测
+    // Registration Detection
     const registrationCheck = await checkRegistrationAPI()
     if (registrationCheck && registrationCheck.enabled) {
       this.showRegistration = true

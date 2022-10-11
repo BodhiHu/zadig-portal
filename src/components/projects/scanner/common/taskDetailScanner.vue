@@ -2,10 +2,10 @@
   <div class="task-detail-scanner">
     <el-card v-if="!$utils.isEmpty(task)" class="box-card task-process" :body-style="{ padding: '0px', margin: '15px 0 0 0' }">
       <div class="error-wrapper">
-        <el-alert v-if="task.error" title="错误信息" :description="task.error" type="error" close-text="知道了"></el-alert>
+        <el-alert v-if="task.error" title="Error Message" :description="task.error" type="error" close-text="Understood"></el-alert>
       </div>
       <div slot="header" class="clearfix subtask-header">
-        <span>代码扫描</span>
+        <span>Code Scan</span>
         <div v-if="task.status==='running'" class="loader">
           <div class="ball-scale-multiple">
             <div></div>
@@ -18,7 +18,7 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconzhuangtai"></i> 任务状态
+              <i class="iconfont iconzhuangtai"></i> Task Status
             </div>
           </el-col>
           <el-col :span="6">
@@ -26,12 +26,12 @@
               <a
                 href="#scanner-task-log"
                 :class="$translate.calcTaskStatusColor(task.status,'pipeline','task')"
-              >{{task.status?$translate.translateTaskStatus(task.status):"未运行"}}</a>
+              >{{task.status?$translate.translateTaskStatus(task.status):"Not Running"}}</a>
             </div>
           </el-col>
           <el-col v-if="task.status!=='running' && task.status!=='prepare'" :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconshijian"></i> 持续时间
+              <i class="iconfont iconshijian"></i> Duration
             </div>
           </el-col>
           <el-col v-if="task.status!=='running' && task.status!=='prepare'" :span="6">
@@ -45,7 +45,7 @@
           <el-col :span="6">
             <div class="grid-content item-title">
               <i class="iconfont icondaima"></i>
-              代码库({{repo.source}})
+              Code Library({{repo.source}})
             </div>
           </el-col>
           <el-col :span="6">
@@ -53,7 +53,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconinfo"></i> 代码信息
+              <i class="iconfont iconinfo"></i> Code Information
             </div>
           </el-col>
           <el-col :span="6">
@@ -139,7 +139,7 @@ export default {
             sse.onError(e => {
               console.error('lost connection; giving up!', e)
               this.$message({
-                message: `代码扫描日志获取失败`,
+                message: `Failed to get code scan log`,
                 type: 'error'
               })
               sse.close()

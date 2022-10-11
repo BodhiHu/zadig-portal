@@ -1,14 +1,14 @@
 <template>
   <div class="key-value-container">
-    <div class="secondary-title" style="margin-bottom: 10px;">指定需要覆盖的键值对</div>
+    <div class="secondary-title" style="margin-bottom: 10px;">Specify the key-value pair to be overwritten</div>
     <el-form ref="form" :model="keyValueForm">
       <el-table :data="keyValues">
-        <el-table-column label="键">
+        <el-table-column label="Key">
           <template slot-scope="{ $index }">
             <el-form-item
               :prop="`keyValues[${$index}].key`"
               :rules="[{
-                  required: true, message: '请输入 key 值', trigger: 'blur'
+                  required: true, message: 'Please Enter key Value', trigger: 'blur'
               }, {
                   validator: validateKey, trigger: 'change'
               }]"
@@ -18,7 +18,7 @@
                 filterable
                 allow-create
                 clearable
-                placeholder="键"
+                placeholder="Key"
                 size="small"
                 @change="selectKey($event, $index)"
                 @visible-change="firstEstimatedValues"
@@ -29,19 +29,19 @@
             </el-form-item>
           </template>
         </el-table-column>
-        <el-table-column label="值">
+        <el-table-column label="Value">
           <template slot-scope="{ $index }">
             <el-form-item
               :prop="`keyValues[${$index}].value`"
               :rules="{
-                  required: true, message: '请输入 value 值', trigger: 'blur'
+                  required: true, message: 'Please Enter value Value', trigger: 'blur'
               }"
             >
-              <el-input v-model="keyValueForm.keyValues[$index].value" placeholder="值" size="small"></el-input>
+              <el-input v-model="keyValueForm.keyValues[$index].value" placeholder="Value" size="small"></el-input>
             </el-form-item>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="120px">
+        <el-table-column label="Operate" width="120px">
           <template slot-scope="{ $index }">
             <span class="operate" @click="keyValues.splice($index, 1)">
               <i class="el-icon-close"></i>
@@ -53,7 +53,7 @@
         </el-table-column>
       </el-table>
     </el-form>
-    <el-button type="text" @click="addKeyValue" icon="el-icon-circle-plus-outline" class="gray-color">添加</el-button>
+    <el-button type="text" @click="addKeyValue" icon="el-icon-circle-plus-outline" class="gray-color">Add To</el-button>
   </div>
 </template>
 
@@ -63,9 +63,9 @@ export default {
     this.validateKey = (rule, value, callback) => {
       const keys = this.keyValues.map(value => value.key)
       if (value === '') {
-        callback(new Error('请输入 key 值'))
+        callback(new Error('Please Enter key Value'))
       } else if (keys.indexOf(value) !== keys.lastIndexOf(value)) {
-        callback(new Error('key 值重复'))
+        callback(new Error('key Value Repeats'))
       } else {
         callback()
       }

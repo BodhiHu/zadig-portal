@@ -2,7 +2,7 @@
   <div class="projects-pm-service-container">
     <UpdateEnv ref="updateEnv"/>
     <div class="policy">
-      <el-button type="primary" size="small" @click="showPolicyDrawer = true" plain>策略</el-button>
+      <el-button type="primary" size="small" @click="showPolicyDrawer = true" plain>Strategy</el-button>
     </div>
     <div class="config-container-pm">
       <ServiceList
@@ -21,22 +21,22 @@
       <div v-else class="no-content">
             <img src="@assets/icons/illustration/editorNoService.svg"
                  alt="">
-            <p style="color: #909399;">暂无服务，创建服务请在左侧栏点击&nbsp;<el-button size="mini"
+            <p style="color: #909399;">No Service，To create a service, click on the left column&nbsp;<el-button size="mini"
                            icon="el-icon-plus"
                            @click="$refs.serviceList.newService()"
                            plain
                            circle>
-                </el-button>&nbsp;创建服务</p>
+                </el-button>&nbsp;Create Service</p>
       </div>
     </div>
     <div class="controls__wrap">
       <div class="controls__right">
         <el-button v-hasPermi="{projectName: projectName, actions: ['manage_environment','production:manage_environment'],operator:'or',isBtn:true}" type="primary" size="small" @click="openDialog" :disabled="updateEnvDisabled">
-          更新环境
+          Update Environment
         </el-button>
       </div>
     </div>
-    <el-drawer title="策略" custom-class="policy-drawer" :visible.sync="showPolicyDrawer" direction="rtl" size="600px" destroy-on-close>
+    <el-drawer title="Strategy" custom-class="policy-drawer" :visible.sync="showPolicyDrawer" direction="rtl" size="600px" destroy-on-close>
       <Policy />
     </el-drawer>
   </div>

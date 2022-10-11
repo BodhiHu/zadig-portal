@@ -24,11 +24,11 @@
         class="button-exec"
         @click="startCustomWorkflowBuild(workflow)"
       >
-        <span class="iconfont iconzhixing">&nbsp;执行</span>
+        <span class="iconfont iconzhixing">&nbsp;Implement</span>
       </el-button>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <el-button type="primary" class="button-exec permission-disabled">
-          <span class="iconfont iconzhixing">&nbsp;执行</span>
+          <span class="iconfont iconzhixing">&nbsp;Implement</span>
         </el-button>
       </el-tooltip>
       <router-link
@@ -37,7 +37,7 @@
       >
         <span class="menu-item iconfont icondeploy"></span>
       </router-link>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <span class="permission-disabled menu-item iconfont icondeploy"></span>
       </el-tooltip>
       <el-dropdown v-hasPermi="{projectName: workflow.projectName, action:'delete_workflow', resource:{type:'workflow',name:workflow.name}, isBtn: true}">
@@ -45,7 +45,7 @@
           <i class="iconfont iconmorelist more-operation"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="deleteCommonWorkflow(workflow)">删除</el-dropdown-item>
+          <el-dropdown-item @click.native="deleteCommonWorkflow(workflow)">Delete</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </template>
@@ -56,11 +56,11 @@
         class="button-exec"
         @click="startProductWorkflowBuild(workflow)"
       >
-        <span class="iconfont iconzhixing">&nbsp;执行</span>
+        <span class="iconfont iconzhixing">&nbsp;Implement</span>
       </el-button>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <el-button type="primary" class="button-exec permission-disabled">
-          <span class="iconfont iconzhixing">&nbsp;执行</span>
+          <span class="iconfont iconzhixing">&nbsp;Implement</span>
         </el-button>
       </el-tooltip>
       <router-link
@@ -69,7 +69,7 @@
       >
         <span class="menu-item iconfont icondeploy"></span>
       </router-link>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <span class="permission-disabled menu-item iconfont icondeploy"></span>
       </el-tooltip>
       <el-dropdown
@@ -83,19 +83,19 @@
             v-hasPermi="{projectName: workflow.projectName, action: 'edit_workflow',resource:{type:'workflow',name:workflow.name},isBtn:true}"
             @click.native="changeSchedule(workflow.projectName)"
           >
-            <span>{{workflow.schedulerEnabled ? '关闭': '打开'}}定时器</span>
+            <span>{{workflow.schedulerEnabled ? 'Closure': 'Open'}}Timer</span>
           </el-dropdown-item>
           <el-dropdown-item
             v-hasPermi="{projectName: workflow.projectName, action: 'create_workflow',resource:{type:'workflow',name:workflow.name},isBtn:true}"
             @click.native="copyWorkflow(workflow)"
           >
-            <span>复制</span>
+            <span>Copy</span>
           </el-dropdown-item>
           <el-dropdown-item
             v-hasPermi="{projectName: workflow.projectName, action: 'delete_workflow',resource:{type:'workflow',name:workflow.name},isBtn:true}"
             @click.native="deleteProductWorkflow(workflow)"
           >
-            <span>删除</span>
+            <span>Delete</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -206,9 +206,9 @@ export default {
       )
       if (res) {
         if (workflowInfo.schedule_enabled) {
-          this.$message.success('定时器开启成功')
+          this.$message.success('Timer started successfully')
         } else {
-          this.$message.success('定时器关闭成功')
+          this.$message.success('Timer closed successfully')
         }
         this.refreshWorkflow(projectName)
       }

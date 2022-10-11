@@ -7,18 +7,18 @@
         <span>{{workflowName}}</span>
       </template>
     </van-nav-bar>
-    <van-divider content-position="left">基本信息</van-divider>
+    <van-divider content-position="left">Basic Information</van-divider>
     <div class="task-info">
       <van-row>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">创建者</h2>
+            <h2 class="mobile-block-title">Creator</h2>
             <div class="mobile-block-desc">{{ workflow.update_by }}</div>
           </div>
         </van-col>
         <van-col span="12">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">更新时间</h2>
+            <h2 class="mobile-block-title">Update Time</h2>
             <div class="mobile-block-desc">
               {{ $utils.convertTimestamp(workflow.update_time) }}
             </div>
@@ -28,7 +28,7 @@
       <van-row v-if="workflow.description">
         <van-col span="24">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">描述</h2>
+            <h2 class="mobile-block-title">Describe</h2>
             <div class="mobile-block-desc"> {{workflow.description}}
             </div>
           </div>
@@ -37,14 +37,14 @@
       <van-row>
         <van-col span="24">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">包含流程</h2>
+            <h2 class="mobile-block-title">Include Process</h2>
             <div class="mobile-block-desc">
               <van-tag v-if="!$utils.isEmpty(workflow.build_stage) && workflow.build_stage.enabled"
-                       type="primary">构建部署</van-tag>
+                       type="primary">Build And Deploy</van-tag>
               <van-tag v-if="!$utils.isEmpty(workflow.artifact_stage) && workflow.artifact_stage.enabled"
-                       type="primary">交付物部署</van-tag>
+                       type="primary">Deliverables Deployment</van-tag>
               <van-tag v-if="!$utils.isEmpty(workflow.distribute_stage) &&  workflow.distribute_stage.enabled"
-                       type="primary">分发部署</van-tag>
+                       type="primary">Distribution Deployment</van-tag>
             </div>
           </div>
         </van-col>
@@ -52,21 +52,21 @@
       <van-row>
         <van-col span="24">
           <div class="mobile-block">
-            <h2 class="mobile-block-title">操作</h2>
+            <h2 class="mobile-block-title">Operate</h2>
             <van-cell is-link
-                      title="操作"
+                      title="Operate"
                       @click="showAction = true" />
             <van-action-sheet close-on-click-action
                               v-model="showAction"
                               :actions="actions"
-                              cancel-text="取消"
+                              cancel-text="Cancel"
                               @select="onSelectAction"
                               @cancel="onCancel" />
           </div>
         </van-col>
       </van-row>
     </div>
-    <van-divider content-position="left">历史任务</van-divider>
+    <van-divider content-position="left">Historical Mission</van-divider>
     <div>
       <van-cell v-for="task in workflowTasks"
                 :to="`/mobile/pipelines/project/${projectName}/multi/${task.pipeline_name}/${task.task_id}?status=${task.status}`"
@@ -104,7 +104,7 @@
                       :items-per-page="pageSize"
                       :total-items="total" />
       <el-dialog :visible.sync="taskDialogVisible"
-                 title="运行 产品-工作流"
+                 title="Run The Product-Workflow"
                  custom-class="run-workflow"
                  width="100%"
                  class="dialog">
@@ -153,7 +153,7 @@ export default {
       workflow: {},
       workflowTasks: [],
       actions: [
-        { name: '启动' }
+        { name: 'Start Up' }
       ],
       total: 0,
       pageSize: 10,
@@ -169,7 +169,7 @@ export default {
   },
   methods: {
     onSelectAction (action) {
-      if (action.name === '启动') {
+      if (action.name === 'Start Up') {
         this.runTask()
       }
       this.showAction = false

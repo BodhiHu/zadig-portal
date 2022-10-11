@@ -11,7 +11,7 @@
           @click="handleBuildConfig"
           :disabled="saveDisabled"
           :loading="saveLoading"
-        >保存</el-button>
+        >Save</el-button>
       </footer>
     </slot>
   </div>
@@ -75,7 +75,7 @@ export default {
                   })
                 this.$message({
                   type: 'success',
-                  message: '保存构建成功'
+                  message: 'Save Build Successful'
                 })
                 this.getCurrentBuild(id)
               })
@@ -95,7 +95,7 @@ export default {
                   })
                 this.$message({
                   type: 'success',
-                  message: '新建构建成功'
+                  message: 'New Build Succeeded'
                 })
                 this.$emit('onRefreshTemplates')
               })

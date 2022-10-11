@@ -125,12 +125,12 @@ export default {
     },
     removeTemplate (obj) {
       let deleteText = ''
-      let title = '确认'
-      title = `确定要删除 ${obj.service_name} 这个服务吗？`
-      deleteText = `删除操作只会删除系统中服务的定义，如需物理删除，请登录服务器做服务清理`
+      let title = 'Confirm'
+      title = `Sure You Want To Delete ${obj.service_name} Is This Service？`
+      deleteText = `The delete operation only deletes the definition of the service in the system，For Physical Removal，Please log in to the server to do service cleanup`
       this.$confirm(`${deleteText}`, `${title}`, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteServiceTemplateAPI(
@@ -144,7 +144,7 @@ export default {
           }
           this.$message({
             type: 'success',
-            message: '删除成功'
+            message: 'Successfully Deleted'
           })
           this.getServiceTemplates()
         })

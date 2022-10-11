@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="(isEdit ? '编辑': '新增') + ' Sonar 配置'"
+    :title="(isEdit ? 'Edit': 'New') + ' Sonar Configure'"
     custom-class="edit-form-dialog"
     :visible.sync="dialogVisible"
     center
@@ -21,11 +21,11 @@
       label-position="left"
       label-width="100px"
     >
-      <el-form-item label="服务地址" prop="server_address">
+      <el-form-item label="Service Address" prop="server_address">
         <el-input
           v-model="addForm.server_address"
           @change="validate(checkPassword)"
-          placeholder="Sonar 服务地址"
+          placeholder="Sonar Service Address"
         ></el-input>
       </el-form-item>
       <el-form-item label="Token" prop="token">
@@ -41,7 +41,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" :disabled="checkRes!=='pass'" size="small" @click="validate(save)">保存</el-button>
+        <el-button type="primary" :disabled="checkRes!=='pass'" size="small" @click="validate(save)">Save</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -68,12 +68,12 @@ export default {
           {
             required: true,
             type: 'url',
-            message: '请输入正确的 URL，包含协议',
+            message: 'Please Enter The Correct URL，Include Agreement',
             trigger: ['blur']
           }
         ],
         token: [
-          { required: true, message: 'Token 不能为空', trigger: 'blur' }
+          { required: true, message: 'Token Can Not Be Empty', trigger: 'blur' }
         ]
       }
     }
@@ -97,7 +97,7 @@ export default {
           console.log(error)
         )
         if (res && res.message === 'success') {
-          this.$message.success('新增成功')
+          this.$message.success('Added Successfully')
           this.dialogVisible = false
           this.getSonar()
         }
@@ -108,7 +108,7 @@ export default {
         console.log(error)
       )
       if (res && res.message === 'success') {
-        this.$message.success('保存成功')
+        this.$message.success('Successfully Saved')
         this.dialogVisible = false
         this.getSonar()
       }

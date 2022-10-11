@@ -7,13 +7,13 @@
           <el-tooltip effect="dark" :content="name" placement="top">
             <span class="name-span">{{ name }}</span>
           </el-tooltip>
-          <el-tag v-if="workflowInfo.workflow_type === 'common_workflow'" size="mini" class="custom">自定义</el-tag>
+          <el-tag v-if="workflowInfo.workflow_type === 'common_workflow'" size="mini" class="custom">Customize</el-tag>
         </router-link>
-        <!-- <el-tag v-if="type === 'common'" size="mini">通用</el-tag> -->
+        <!-- <el-tag v-if="type === 'common'" size="mini">Universal</el-tag> -->
       </div>
       <div class="gray-desc" style="margin-top: 4px;">
         <span style="display: inline-block; margin-right: 10px;">
-          最近成功
+          Recent Success
           <router-link v-if="recentSuccessID" :to="recentSuccessLink" class="passed">
             <!-- <i class="icon el-icon-success"></i> -->
             {{ recentSuccessID }}
@@ -21,7 +21,7 @@
           <span v-else class="passed">*</span>
         </span>
         <span>
-          最近失败
+          Failed Recently
           <router-link v-if="recentFailID" :to="recentFailLink" class="failed">
             <!-- <i class="icon el-icon-warning"></i> -->
             {{ recentFailID }}
@@ -38,11 +38,11 @@
     </section>
     <section class="desc">{{ description }}</section>
     <section class="time-rate">
-      <div class="gray-desc">平均执行时间</div>
+      <div class="gray-desc">Average Execution Time</div>
       <div class="value">{{ avgRuntime || '*' }}</div>
     </section>
     <section class="time-rate">
-      <div class="gray-desc">成功率</div>
+      <div class="gray-desc">Success Rate</div>
       <div class="value">{{ avgSuccessRate || '*' }}</div>
     </section>
     <section class="operations" @click.stop>
@@ -139,7 +139,7 @@ export default {
   methods: {
     setFavorite (projectName, workflowName, type) {
       if (type === 'common_workflow') {
-        this.$message.info('通用工作流暂不支持收藏！')
+        this.$message.info('Common workflows do not support favorites yet！')
         return
       }
       const payload = {
@@ -155,7 +155,7 @@ export default {
           }
           this.$message({
             type: 'success',
-            message: '取消收藏成功'
+            message: 'Unfavorite Successful'
           })
         })
       } else {
@@ -166,7 +166,7 @@ export default {
           }
           this.$message({
             type: 'success',
-            message: '添加收藏成功'
+            message: 'Add Favorites Successfully'
           })
         })
       }

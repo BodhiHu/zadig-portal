@@ -80,7 +80,7 @@ function displayError (error) {
     })
     return
   }
-  let msg = `${error.response.status} API 请求错误`
+  let msg = `${error.response.status} API Request Error`
   if (error.response.data.errorMsg) {
     msg = `${error.response.status} : ${error.response.data.errorMsg}`
   } else if (error.response.data.message) {
@@ -128,22 +128,22 @@ http.interceptors.response.use(
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
       console.log(error.response)
-      if (document.title !== '登录') {
+      if (document.title !== 'Log In') {
         // unauthorized 401
         if (error.response.status === 401) {
           const redirectPath = window.location.pathname + window.location.search
-          Element.Message.error('登录信息失效, 请返回重新登录')
+          Element.Message.error('Login information is invalid, Please go back and log in again')
           Store.dispatch('LOGINOUT')
           window.location.href = `/signin?redirect=${redirectPath}`
         } else if (error.response.status === 403) {
-          Element.Message.error('暂无权限')
+          Element.Message.error('No Permission Yet')
         }
         if (error.response.data && (error.response.data.code === 6168 || error.response.data.code === 6094 || error.response.data.description.includes(ignoreErrResponse))) {
           return Promise.reject(error)
         } else {
           displayError(error)
         }
-      } else if (document.title === '登录') {
+      } else if (document.title === 'Log In') {
         displayError(error)
       }
     } else {
@@ -879,17 +879,17 @@ export function deleteSystemRoleBindingsAPI (name) {
   return http.delete(`/api/v1/system-rolebindings/${name}`)
 }
 
-// 获取角色定义列表
+// Get a list of role definitions
 export function getRolePolicyListAPI (role) {
   return http.get(`/api/v1/policy-definitions?scope=${role}`)
 }
 
-// 获取角色列表
+// Get A List Of Roles
 export function getRoleListAPI () {
   return http.get(`/api/v1/system-roles`)
 }
 
-// 新增角色
+// Add Role
 export function addSystemRoleAPI (payload) {
   return http.post(`/api/v1/system-roles `, payload)
 }

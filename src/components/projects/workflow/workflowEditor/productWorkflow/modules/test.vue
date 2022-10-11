@@ -2,7 +2,7 @@
   <div class="product-test">
     <el-card class="box-card">
       <div class="section-head">
-        自动化测试
+        Automated Test
         <el-switch v-model="testEnabled">
         </el-switch>
 
@@ -10,19 +10,19 @@
       <template v-if="testEnabled">
         <el-table :data="testConfigs">
           <el-table-column prop="name"
-                           label="测试名称"></el-table-column>
+                           label="Test Name"></el-table-column>
           <el-table-column prop="product_name"
-                           label="项目名称"></el-table-column>
+                           label="Project Name"></el-table-column>
           <el-table-column prop="desc"
-                           label="描述"></el-table-column>
-          <el-table-column label="变量">
+                           label="Describe"></el-table-column>
+          <el-table-column label="Variable">
             <template slot-scope="{ row }">
               <el-popover placement="left"
                           width="450"
                           trigger="click">
                 <template slot="reference">
                   <el-button type="text"
-                             style="padding-left: 5px;">设置</el-button>
+                             style="padding-left: 5px;">Set Up</el-button>
                 </template>
                 <el-table :data="row.envs">
                   <el-table-column prop="key"
@@ -33,7 +33,7 @@
                         style="width: 100%;"
                         v-if="row.type==='choice'"
                         v-model="row.value"
-                        placeholder="默认值"
+                        placeholder="Defaults"
                         size="small"
                       >
                         <el-option v-for="option in row.choice_option" :key="option" :label="option" :value="option"></el-option>
@@ -45,13 +45,13 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column label="操作"
+          <el-table-column label="Operate"
                            width="100px">
             <template slot-scope="scope">
               <el-button @click="removeTest(scope.$index)"
                          type="danger"
                          icon="el-icon-delete"
-                         size="mini">删除</el-button>
+                         size="mini">Delete</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -68,7 +68,7 @@
           <el-button @click="addTestConfig"
                      type="default"
                      size="small"
-                     icon="el-icon-plus">添加测试</el-button>
+                     icon="el-icon-plus">Add Test</el-button>
         </div>
 
       </template>
@@ -103,7 +103,7 @@ export default {
     testNames () {
       return (this.test_stage && this.test_stage.tests && this.test_stage.tests.map(t => { return t.test_name })) || []
     },
-    // NOTE: testConfigs 只用于显示，要修改，修改 testNames
+    // NOTE: testConfigs For Display Only，To Modify，Revise testNames
     testConfigs () {
       const test = []
       this.testNames.forEach(name => {
@@ -116,7 +116,7 @@ export default {
   },
   watch: {
     product_tmpl_name (newVal, oldVal) {
-      // 项目变动时，更新测试列表、清空配置、重置 testToAdd 属性
+      // When The Project Changes，Update Test List、Clear Configuration、Reset testToAdd Attributes
       testDetailAPI(newVal).then(res => {
         if (this.test_stage && this.test_stage.tests && this.test_stage.tests.length > 0) {
           const resTests = this.$utils.arrayToMap(res, 'name')
@@ -126,8 +126,8 @@ export default {
               return
             }
             if (t.envs.length > 0) {
-              // 如果有 Envs 内容，修改返回值的内容
-              // 这里会因为增删 Key需要作出改变
+              // If There Is Envs Content，Modify the content of the return value
+              // Here will be because of additions and deletions KeyChanges Are Required
               const envObjs = this.$utils.arrayToMap(t.envs, 'key')
               resTests[t.test_name].envs.forEach(env => {
                 env.value = (envObjs[env.key] && envObjs[env.key].value) || env.value
@@ -144,7 +144,7 @@ export default {
         this.unConfiguredTest = this.testList.filter(item => { return !this.testNames.includes(item.name) })
         this.testToAdd = ''
       })
-      // 修改前是空就不清，否则编辑时加载出来的数据会被错误地清空
+      // It is not clear if it is empty before modification，Otherwise, the data loaded during editing will be emptied by mistake
       if (oldVal) {
         this.$set(this.test_stage, 'tests', [])
       }

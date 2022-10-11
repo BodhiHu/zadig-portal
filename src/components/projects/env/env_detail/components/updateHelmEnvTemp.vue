@@ -2,7 +2,7 @@
   <div class="common-parcel-block update-template-container">
     <div class="template-block">
       <div class="primary-title template-title" @click="showGlobalVariable = !showGlobalVariable">
-        全局服务变量
+        Global Service Variable
         <i :class="[showGlobalVariable ?  'el-icon-arrow-up' : 'el-icon-arrow-down' ]"></i>
       </div>
       <EnvValues
@@ -15,7 +15,7 @@
     </div>
     <div class="template-block">
       <div class="primary-title not-first-child template-title" @click="showServiceVariable = !showServiceVariable">
-        服务变量
+        Service Variable
         <i :class="[showServiceVariable ?  'el-icon-arrow-up' : 'el-icon-arrow-down' ]"></i>
       </div>
       <ChartValues
@@ -57,14 +57,14 @@ export default {
       default: () => []
     },
     handledEnv: {
-      // 正在处理的环境名称
+      // The environment name being processed
       type: String,
       required: false,
       default: ''
     },
     showEnvTabs: {
       /**
-       * 是否展示具体服务信息的环境tab
+       * Whether to display the environment for specific service informationtab
        */
       default: false,
       type: Boolean

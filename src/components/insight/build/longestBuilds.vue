@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%; height: 250px;">
     <el-table :data="tableData" v-loading="loading" :show-header="true" class="build-table">
-      <el-table-column prop="taskId" label="任务号">
+      <el-table-column prop="taskId" label="Task Number">
         <template slot-scope="scope">
           <router-link
             class="task-link"
@@ -9,15 +9,15 @@
           >{{scope.row.pipelineName}}#{{scope.row.taskId}}</router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="maxDuration" width="100px" label="时长">
+      <el-table-column prop="maxDuration" width="100px" label="Duration">
         <template slot-scope="scope">{{ $utils.timeFormat(scope.row.maxDuration) }}</template>
       </el-table-column>
-      <el-table-column prop="createTime" label="日期">
+      <el-table-column prop="createTime" label="Date">
         <template slot-scope="scope">
           <span class="date-info">{{ $utils.convertTimestamp(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" width="60px" label="状态">
+      <el-table-column prop="status" width="60px" label="State">
         <template slot-scope="scope">
           <el-tag
             effect="dark"

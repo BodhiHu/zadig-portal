@@ -30,17 +30,17 @@
           </el-tooltip>
         </span>
         <span class="chart-right">
-          <el-tooltip v-if="chart.updatable" effect="dark" content="服务配置有变更" placement="top">
+          <el-tooltip v-if="chart.updatable" effect="dark" content="Service configuration has changed" placement="top">
             <i class="el-icon-question common-icon"></i>
           </el-tooltip>
-          <el-tooltip v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment'})" effect="dark" content="更新服务" placement="top">
+          <el-tooltip v-if="checkPermissionSyncMixin({projectName: projectName, action: isProd?'production:manage_environment':'manage_environment'})" effect="dark" content="Update Service" placement="top">
             <i
               class="iconfont icongengxin common-icon pointer"
               :class="[chart.status === 'pending' ? 'disabled' : '']"
               @click="updateChartService(chart, 'update', chart.status === 'pending')"
             ></i>
           </el-tooltip>
-          <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+          <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
             <i class="iconfont icongengxin common-icon pointer disabled"></i>
           </el-tooltip>
           <i class="el-icon-document common-icon pointer" @click="updateChartService(chart, 'value')"></i>
@@ -51,7 +51,7 @@
       <i :class="[leftShow ? 'el-icon-arrow-left' : 'el-icon-arrow-right']"></i>
     </div>
     <el-dialog
-      :title="`更新服务 - ${currentChart.serviceName}`"
+      :title="`Update Service - ${currentChart.serviceName}`"
       :visible.sync="updateDialogVisible"
       width="60%"
       :before-close="dialogBeforeClose"
@@ -66,16 +66,16 @@
         :envScene="`updateRenderSet`"
       />
       <div v-if="currentChart.showSync" style="margin: 12px 20px;">
-        <el-checkbox v-model="currentChart.updateServiceTmpl">同时更新服务配置</el-checkbox>
+        <el-checkbox v-model="currentChart.updateServiceTmpl">Also update service configuration</el-checkbox>
       </div>
       <div slot="footer">
-        <el-button size="small" @click="dialogBeforeClose()">取 消</el-button>
-        <el-button type="primary" size="small" @click="updateChart()">确 定</el-button>
+        <el-button size="small" @click="dialogBeforeClose()">Cancel</el-button>
+        <el-button type="primary" size="small" @click="updateChart()">Sure</el-button>
       </div>
     </el-dialog>
 
     <el-dialog
-      :title="`Values 文件 - ${currentChart.serviceName}`"
+      :title="`Values Document - ${currentChart.serviceName}`"
       :visible.sync="valuesDialogVisible"
       width="60"
       :before-close="dialogBeforeClose"
@@ -84,7 +84,7 @@
         <Codemirror class="value-codemirror" ref="codemirror" :value="currentChart.valuesYaml" :cmOption="cmOption"></Codemirror>
       </div>
       <div slot="footer">
-        <el-button size="small" @click="dialogBeforeClose()">取 消</el-button>
+        <el-button size="small" @click="dialogBeforeClose()">Cancel</el-button>
       </div>
     </el-dialog>
   </div>
@@ -118,19 +118,19 @@ export default {
       filteredItems: [
         {
           value: 'serviceName',
-          text: 'Chart 名称'
+          text: 'Chart Name'
         },
         {
           value: 'status',
-          text: '部署状态'
+          text: 'Deployment Status'
         }
       ],
       defaultFilterList: {
         status: [
-          { text: '部署成功', value: 'deployed' },
-          { text: '部署失败', value: 'failed' },
-          { text: '部署中', value: 'pending' },
-          { text: '尚未部署', value: 'notDeployed' }
+          { text: 'Deployment was successful', value: 'deployed' },
+          { text: 'Deployment Failed', value: 'failed' },
+          { text: 'Under Deployment', value: 'pending' },
+          { text: 'Not Yet Deployed', value: 'notDeployed' }
         ]
       },
       chartNames: [],
@@ -274,7 +274,7 @@ export default {
       }
       updateHelmServiceVarAPI(this.projectName, this.envName, payload).then(
         () => {
-          this.$message.success(`${this.currentChart.serviceName} 更新成功！`)
+          this.$message.success(`${this.currentChart.serviceName} Update Completed！`)
           this.fetchAllData()
           this.dialogBeforeClose()
         }

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="`设置 ${currentEnv} 环境变量`" :visible.sync="dialogVisible" width="850px">
+  <el-dialog :title="`Set Up ${currentEnv} Environment Variable`" :visible.sync="dialogVisible" width="850px">
     <div>
       <VarList :variables="variables" v-if="deployType === 'k8s'" class="var-list-container"></VarList>
       <HelmEnvTemplate
@@ -13,7 +13,7 @@
       ></HelmEnvTemplate>
     </div>
     <div slot="footer">
-      <el-button size="small" type="primary" @click="getEnvInfo">确 定</el-button>
+      <el-button size="small" type="primary" @click="getEnvInfo">Sure</el-button>
     </div>
   </el-dialog>
 </template>

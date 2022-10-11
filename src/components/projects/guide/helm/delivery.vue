@@ -1,20 +1,20 @@
 <template>
   <div class="projects-delivery-container">
     <div class="guide-container">
-      <Step :activeStep="3" :stepThreeTitle="`配置环境`"/>
+      <Step :activeStep="3" :stepThreeTitle="`Configuration Environment`"/>
       <div class="current-step-container">
         <div class="title-container">
-          <span class="first">第四步</span>
-          <span class="second">运行工作流触发服务的自动化交付</span>
+          <span class="first">The Fourth Step</span>
+          <span class="second">Run workflows to trigger automated delivery of services</span>
         </div>
         <div class="block-list">
           <el-table v-loading="loading" :data="mapWorkflows" style="width: 100%;">
-            <el-table-column label="工作流名称">
+            <el-table-column label="Workflow Name">
               <template slot-scope="scope">
                 <span style="margin-left: 10px;">{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column width="200px" label="环境信息">
+            <el-table-column width="200px" label="Environmental information">
               <template slot-scope="scope">
                 <a
                   v-if="scope.row.env_name"
@@ -23,7 +23,7 @@
                   target="_blank">{{ `${scope.row.projectName}-env-${scope.row.env_name}` }}</a>
               </template>
             </el-table-column>
-            <el-table-column label="服务入口">
+            <el-table-column label="Service Entrance">
               <template slot-scope="scope">
                 <div v-for="(ingress,ingress_index) in scope.row.ingress_infos" :key="ingress_index">
                   <div v-for="(item,host_index) in scope.row.ingress_infos[ingress_index]['host_info']" :key="host_index">
@@ -32,7 +32,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column width="200px" label="包含步骤">
+            <el-table-column width="200px" label="Contains Steps">
               <template slot-scope="scope">
                 <span>
                   <span v-for="(stage,index) in scope.row.enabledStages" :key="index" class="stage-tag">
@@ -41,13 +41,13 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column width="150px" label="更新信息（时间/操作人）">
+            <el-table-column width="150px" label="Update Information（Time/Operator）">
               <template slot-scope="scope">{{$utils.convertTimestamp(scope.row.updateTime)}}</template>
             </el-table-column>
-            <el-table-column width="120px" label="操作">
+            <el-table-column width="120px" label="Operate">
               <template slot-scope="scope">
-                <span v-if="pipeStatus.status !== 'success'">准备中，请稍后...</span>
-                <el-button v-else type="primary" size="mini" round @click="runCurrentTask(scope.row)" plain>点击运行</el-button>
+                <span v-if="pipeStatus.status !== 'success'">Preparing，Please Wait...</span>
+                <el-button v-else type="primary" size="mini" round @click="runCurrentTask(scope.row)" plain>Click To Run</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -55,23 +55,23 @@
       </div>
       <div class="help-links-container">
         <h3 class="links-header">
-          您可能还需要：
+          You May Also Need：
         </h3>
         <ul class="links-list">
           <li class="list-item"><a target="_blank"
                href="https://docs.koderover.com/zadig/project/workflow/#git-webhook"
                class="list-item-link"><i class="icon el-icon-link"></i>
               <span class="list-item-link-text">
-                配置 Git Webhook 自动触发服务升级</span></a></li>
+                Configure Git Webhook Automatically trigger service upgrades</span></a></li>
         </ul>
       </div>
     </div>
     <div class="controls__wrap">
       <div class="controls__right">
-        <el-button type="primary" size="small"  :disabled="loading" @click="onboardingFinish">完成</el-button>
+        <el-button type="primary" size="small"  :disabled="loading" @click="onboardingFinish">Finish</el-button>
       </div>
     </div>
-    <el-dialog :visible.sync="taskDialogVisible" title="运行 产品-工作流" custom-class="run-workflow" width="60%" class="dialog">
+    <el-dialog :visible.sync="taskDialogVisible" title="Run The Product-Workflow" custom-class="run-workflow" width="60%" class="dialog">
       <RunWorkflow
         v-if="taskDialogVisible"
         :workflowName="workflow.name"
@@ -180,7 +180,7 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         { title: this.projectName, isProjectName: true, url: '' }
       ]
     })

@@ -1,24 +1,24 @@
 <template>
   <div class="extension-container">
-    <div class="primary-title not-first-child">扩展</div>
+    <div class="primary-title not-first-child">Expand</div>
     <el-alert
       v-if="extensionStage.error"
-      title="错误信息"
+      title="Error Message"
       :description="extensionStage.error"
       type="error"
-      close-text="知道了"
+      close-text="Understood"
       style="margin: 8px 0;"
     ></el-alert>
     <el-row :gutter="0" class="extension-content">
       <el-col :span="6">
-        <i class="iconfont iconzhuangtai"></i> 状态
+        <i class="iconfont iconzhuangtai"></i> State
       </el-col>
       <el-col
         :span="6"
         :class="colorTranslation(extensionStage.status, 'pipeline', 'task')"
-      >{{ extensionStage.status ? myTranslate(extensionStage.status) : "未运行" }}</el-col>
+      >{{ extensionStage.status ? myTranslate(extensionStage.status) : "Not Running" }}</el-col>
       <el-col v-if="extensionStage.status!=='running'" :span="6">
-        <i class="iconfont iconshijian"></i> 持续时间
+        <i class="iconfont iconshijian"></i> Duration
       </el-col>
       <el-col v-if="extensionStage.status!=='running'" :span="6">{{ extensionStage.duration }}</el-col>
     </el-row>
@@ -41,7 +41,7 @@
             <span style="display: inline-block; margin-bottom: 10px; color: #000; font-size: 16px;">Request Payload:</span>
             <VueJsonPretty  style="padding: 10px 5px; border: 1px solid #ebeef5; border-radius: 6px;" :data="JSON.parse(extensionStage.payload)" />
           </div>
-          <span slot="reference" class="btn">查看</span>
+          <span slot="reference" class="btn">Check</span>
         </el-popover>
       </el-col>
       <el-col :span="6">
@@ -66,7 +66,7 @@
             <VueJsonPretty style="padding: 10px; border: 1px solid #ebeef5; border-radius: 6px;" v-if="checkJSON(extensionStage.response_body)" :data="JSON.parse(extensionStage.response_body)" />
             <pre v-else style="max-height: 400px; padding: 10px 5px; overflow: auto; border: 1px solid #ebeef5; border-radius: 6px;">{{extensionStage.response_body}}</pre>
           </div>
-          <span slot="reference" class="btn">查看</span>
+          <span slot="reference" class="btn">Check</span>
         </el-popover>
       </el-col>
     </el-row>

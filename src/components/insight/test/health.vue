@@ -22,7 +22,7 @@ export default {
         legend: {
           orient: 'vertical',
           x: 'left',
-          //   data: ['失败', '成功'],
+          //   data: ['Fail', 'Success'],
           formatter: name => {
             const data = this.option.series[0].data
             if (name && data.length && data[0]) {
@@ -44,7 +44,7 @@ export default {
         },
         series: [
           {
-            name: '任务状态',
+            name: 'Task Status',
             type: 'pie',
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
@@ -84,8 +84,8 @@ export default {
               }
             },
             data: [
-              { value: 0, name: '失败' },
-              { value: 0, name: '成功' }
+              { value: 0, name: 'Fail' },
+              { value: 0, name: 'Success' }
             ]
           }
         ]
@@ -105,9 +105,9 @@ export default {
         this.option.series[0].data = [
           {
             value: res.totalFailure,
-            name: '失败'
+            name: 'Fail'
           },
-          { value: res.totalSuccess, name: '成功' }
+          { value: res.totalSuccess, name: 'Success' }
         ]
       })
     }

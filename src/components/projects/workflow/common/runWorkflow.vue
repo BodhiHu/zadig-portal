@@ -2,7 +2,7 @@
   <el-form class="run-workflow"
            label-width="90px">
     <el-form-item prop="productName"
-                  label="环境">
+                  label="Surroundings">
       <el-select :value="runner.product_tmpl_name && runner.namespace ? `${runner.product_tmpl_name} / ${runner.namespace}` : ''"
                  @change="getPresetInfo"
                  size="medium"
@@ -10,14 +10,14 @@
                  class="full-width">
         <el-option v-for="pro of currentProjectEnvs"
                    :key="`${pro.projectName} / ${pro.name}`"
-                   :label="`${pro.projectName} / ${pro.name}${pro.production?'（生产）':''}`"
+                   :label="`${pro.projectName} / ${pro.name}${pro.production?'（Production）':''}`"
                    :value="`${pro.projectName} / ${pro.name}`">
           <span>{{`${pro.projectName} / ${pro.name}`}}
             <el-tag v-if="pro.production"
                     type="danger"
                     size="mini"
                     effect="light">
-              生产
+              Production
             </el-tag>
           </span>
         </el-option>
@@ -26,24 +26,24 @@
                    value="">
           <router-link style="color: #909399;"
                        :to="`/v1/projects/detail/${targetProject}/envs/create`">
-            {{`(环境不存在或者没有权限，点击创建环境)`}}
+            {{`(The environment does not exist or does not have permissions，Click to create an environment)`}}
           </router-link>
         </el-option>
       </el-select>
       <el-tooltip v-if="specificEnv"
                   effect="dark"
-                  content="该工作流已指定环境运行，可通过修改 工作流->基本信息 来解除指定环境绑定"
+                  content="The workflow has a specified environment to run，Workflow can be modified by->Basic information to unbind the specified environment"
                   placement="top">
         <span><i style="color: #909399;"
              class="el-icon-question"></i></span>
       </el-tooltip>
-      <div v-if="imageRegistryByEnv" class="show-image-info">镜像仓库：{{imageRegistryByEnv}}</div>
+      <div v-if="imageRegistryByEnv" class="show-image-info">Mirror Repository：{{imageRegistryByEnv}}</div>
     </el-form-item>
 
     <div v-if="buildDeployEnabled"
          v-loading="precreateLoading">
       <el-form-item v-if="quickSelectEnabled"
-                    label="构建">
+                    label="Construct">
         <el-select v-model="pickedBuildTarget"
                    filterable
                    clearable
@@ -60,7 +60,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="服务">
+      <el-form-item label="Serve">
         <el-select v-model="pickedBuildTargetNames"
                    filterable
                    multiple
@@ -77,7 +77,7 @@
             <span v-if="!service.has_build">
               <router-link style="color: #ccc;"
                            :to="`/v1/projects/detail/${runner.product_tmpl_name}/builds/create?service_name=${service.name}`">
-                {{`${service.name}(${service.service_name}) (服务不存在构建，点击添加构建)`}}
+                {{`${service.name}(${service.service_name}) (Service does not exist build，Click Add Build)`}}
               </router-link>
             </span>
             <span v-else>
@@ -88,10 +88,10 @@
         <template v-if="!quickSelectEnabled">
           <el-button size="small"
                      @click="quickSelectEnabled=!quickSelectEnabled"
-                     type="text">快捷选服务
+                     type="text">Quick Selection Service
           </el-button>
           <el-tooltip effect="dark"
-                      content="通过指定构建配置间接选择出需要的服务"
+                      content="Indirectly select the required service by specifying the build configuration"
                       placement="top">
             <span><i style="color: #909399;"
                  class="el-icon-question"></i></span>
@@ -134,20 +134,20 @@
     <div v-if="buildDeployEnabled"
          class="advanced-setting">
       <el-collapse>
-        <el-collapse-item title="高级设置"
+        <el-collapse-item title="Advanced Settings"
                           name="advanced">
-          <el-checkbox v-model="runner.reset_cache">不使用工作空间缓存
+          <el-checkbox v-model="runner.reset_cache">Do not use workspace cache
             <el-tooltip effect="dark"
-                        content="可能会增加任务时长。如果构建中不使用工作空间缓存，该设置会被忽略"
+                        content="May increase task duration。If the build does not use the workspace cache，This setting will be ignored"
                         placement="top">
               <span><i style="color: #909399;"
                    class="el-icon-question"></i></span>
             </el-tooltip>
           </el-checkbox>
           <br>
-          <el-checkbox v-model="runner.ignore_cache">不使用 Docker 缓存
+          <el-checkbox v-model="runner.ignore_cache">Do Not Use Docker Cache
             <el-tooltip effect="dark"
-                        content="只对配置了镜像构建步骤的构建生效"
+                        content="Only takes effect for builds configured with an image build step"
                         placement="top">
               <span><i style="color: #909399;"
                    class="el-icon-question"></i></span>
@@ -162,7 +162,7 @@
                  :loading="startTaskLoading"
                  type="primary"
                  size="small">
-        {{ startTaskLoading?'启动中':'启动任务' }}
+        {{ startTaskLoading?'Starting':'Start Task' }}
       </el-button>
     </div>
   </el-form>
@@ -459,13 +459,13 @@ export default {
             deploy: element.deploy
           })
         })
-        // 处理 K8s 交付物部署版本信息
+        // Deal With K8s Deliverable Deployment Version Information
         if (this.k8sArtifactDeployData.versionInfo.enabled) {
           if (this.k8sArtifactDeployData.versionInfo.labelStr !== '') {
             this.k8sArtifactDeployData.versionInfo.labels = this.k8sArtifactDeployData.versionInfo.labelStr.trim().split(';')
           }
           payload.version_args = cloneDeep(this.k8sArtifactDeployData.versionInfo)
-        }// 处理物理机交付物部署信息
+        }// Process physical machine deliverable deployment information
       } else if (this.artifactDeployEnabled && this.isPm) {
         payload.storage_id = this.pmArtifactDeployData.pickedStorage
         payload.artifact_args = []
@@ -521,7 +521,7 @@ export default {
       runWorkflowAPI(projectName, payload, this.artifactDeployEnabled).then(res => {
         const taskId = res.task_id
         const workflowName = res.pipeline_name
-        this.$message.success('创建成功')
+        this.$message.success('Created Successfully')
         this.$emit('success')
         this.$router.push(`/v1/projects/detail/${projectName}/pipelines/multi/${workflowName}/${taskId}?status=running`)
       }).catch(error => {
@@ -532,7 +532,7 @@ export default {
           const envName = error.response.data.extra.envName
           const serviceName = error.response.data.extra.serviceName
           this.$message({
-            message: `检测到 ${projectName} 中 ${envName} 环境下的 ${serviceName} 服务未启动 <br> 请检查后再运行工作流`,
+            message: `Detected ${projectName} Middle ${envName} Environment ${serviceName} Service Not Started <br> Please check before running the workflow`,
             type: 'warning',
             dangerouslyUseHTMLString: true,
             duration: 5000
@@ -546,7 +546,7 @@ export default {
     checkInput (payload) {
       // Checking environment
       if (!payload.product_tmpl_name || !payload.namespace) {
-        this.$message.error('请选择环境')
+        this.$message.error('Please select an environment')
         return false
       }
       // Checking K8s artifact deploy
@@ -559,26 +559,26 @@ export default {
         })
         if (this.k8sArtifactDeployData.services.length === 0) {
           this.$message({
-            message: '请选择需要部署的服务',
+            message: 'Please select the service to deploy',
             type: 'error'
           })
           return false
         } else {
           if (this.k8sArtifactDeployData.services.length > 0 && this.k8sArtifactDeployData.pickedRegistry === '') {
             this.$message({
-              message: '请选择镜像仓库',
+              message: 'Please select a mirror repository',
               type: 'error'
             })
             return false
           } else if (invalidService.length > 0) {
             this.$message({
-              message: invalidService.join(',') + ' 服务尚未选择镜像',
+              message: invalidService.join(',') + ' The service has not selected a mirror',
               type: 'error'
             })
             return false
           } else if (this.k8sArtifactDeployData.versionInfo.enabled && this.k8sArtifactDeployData.versionInfo.version === '') {
             this.$message({
-              message: '请填写版本名称',
+              message: 'Please fill in the version name',
               type: 'error'
             })
             return false
@@ -595,20 +595,20 @@ export default {
         })
         if (this.pmArtifactDeployData.services.length === 0) {
           this.$message({
-            message: '请选择需要部署的服务',
+            message: 'Please select the service to deploy',
             type: 'error'
           })
           return false
         } else {
           if (this.pmArtifactDeployData.services.length > 0 && this.pmArtifactDeployData.pickedStorage === '') {
             this.$message({
-              message: '请选择对象存储',
+              message: 'Please select Object Storage',
               type: 'error'
             })
             return false
           } else if (invalidService.length > 0) {
             this.$message({
-              message: invalidService.join(',') + ' 服务尚未选择交付物',
+              message: invalidService.join(',') + ' The service has not selected a deliverable yet',
               type: 'error'
             })
             return false
@@ -619,7 +619,7 @@ export default {
       } else {
         if (payload.tests.length === 0 && payload.targets.length === 0) {
           this.$message({
-            message: '请选择需要构建的服务',
+            message: 'Please select the service to build',
             type: 'error'
           })
           return
@@ -637,7 +637,7 @@ export default {
           return true
         } else {
           this.$message({
-            message: invalidRepo.map((item) => { return item.repo_name }).join(',') + ' 代码库尚未选择构建信息',
+            message: invalidRepo.map((item) => { return item.repo_name }).join(',') + ' The codebase has not yet selected build information',
             type: 'error'
           })
           return false

@@ -10,12 +10,12 @@
       class="value-repo-form"
       :class="{'hidden-label': hiddenLabel}"
     >
-      <el-form-item prop="codehostID" label="代码源" :show-message="false">
+      <el-form-item prop="codehostID" label="Code Source" :show-message="false">
         <el-select
           v-model="source.codehostID"
           size="small"
           style="width: 100%;"
-          placeholder="请选择代码源"
+          placeholder="Please select a code source"
           @change="queryRepoOwnerById(source.codehostID)"
           filterable
           clearable
@@ -29,20 +29,20 @@
           >{{ host.address + '('+host.alias+')'}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="owner" label="组织名/用户名" :show-message="false">
+      <el-form-item prop="owner" label="Organization Name/Username" :show-message="false">
         <el-select
           v-model="source.owner"
           size="small"
           style="width: 100%;"
           @change="getRepoNameById(source.codehostID, source.owner)"
-          placeholder="请选择组织名/用户名"
+          placeholder="Please select an organization name/Username"
           filterable
           clearable
         >
           <el-option v-for="(repo, index) in codeInfo['repoOwners']" :key="index" :label="repo.path" :value="repo.path"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="repo" label="代码库" :show-message="false">
+      <el-form-item prop="repo" label="Code Library" :show-message="false">
         <el-select
           @change="
                   getBranchInfoById(
@@ -58,14 +58,14 @@
           allow-create
           clearable
           size="small"
-          placeholder="请选择代码库"
+          placeholder="Please select a repository"
           filterable
         >
           <el-option v-for="(repo, index) in codeInfo['repos']" :key="index" :label="repo.name" :value="repo.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="branch" label="分支" :show-message="false">
-        <el-select v-model.trim="source.branch" placeholder="请选择分支" style="width: 100%;" size="small" filterable allow-create clearable>
+      <el-form-item prop="branch" label="Branch" :show-message="false">
+        <el-select v-model.trim="source.branch" placeholder="Please Select A Branch" style="width: 100%;" size="small" filterable allow-create clearable>
           <el-option v-for="(branch, branch_index) in codeInfo['branches']" :key="branch_index" :label="branch.name" :value="branch.name"></el-option>
         </el-select>
       </el-form-item>
@@ -73,13 +73,13 @@
       <el-form-item prop="valuesPaths">
         <template slot="label">
           <template v-if="fileType === 'valuesYaml'">
-            <el-tooltip v-if="!substantial" effect="dark" content="按照覆盖顺序依次选择 values 文件，后选的文件会覆盖先选的文件。" placement="top">
-              <span>文件路径</span>
+            <el-tooltip v-if="!substantial" effect="dark" content="Select in order of coverage values Document，The file selected later will overwrite the file selected earlier。" placement="top">
+              <span>File Path</span>
             </el-tooltip>
-            <span v-else>文件路径</span>
+            <span v-else>File Path</span>
           </template>
           <template v-else-if="fileType === 'k8sYaml'">
-            <span>选择文件</span>
+            <span>Select The File</span>
           </template>
         </template>
         <div v-show="source.valuesPaths.length" class="overflow-auto">
@@ -97,14 +97,14 @@
           size="mini"
           @click="showFileSelectDialog = true"
         >
-          <span v-if="fileType === 'valuesYaml'">选择 values 文件</span>
+          <span v-if="fileType === 'valuesYaml'">Choose values Document</span>
           <i v-else-if="fileType === 'k8sYaml'" class="el-icon-plus"></i>
         </el-button>
       </el-form-item>
-      <el-form-item v-if="showAutoSync" prop="autoSync" label="自动同步" :show-message="false">
+      <el-form-item v-if="showAutoSync" prop="autoSync" label="Auto Sync" :show-message="false">
         <span slot="label">
-          <span>自动同步</span>
-          <el-tooltip effect="dark" content="开启后，Zadig 会定时从代码库拉取配置文件并将其自动更新到环境中，目前只支持 GitHub/GitLab" placement="top">
+          <span>Auto Sync</span>
+          <el-tooltip effect="dark" content="After Opening，Zadig The configuration files are regularly pulled from the codebase and automatically updated to the environment，Currently Only Supported GitHub/GitLab" placement="top">
             <i class="pointer el-icon-question"></i>
           </el-tooltip>
         </span>
@@ -152,11 +152,11 @@ export default {
       showFileSelectDialog: false,
       typeObject: {
         valuesYaml: {
-          dialogTitle: '请选择服务的 values 文件',
+          dialogTitle: 'Please select the service values Document',
           fileType: '.yaml'
         },
         k8sYaml: {
-          dialogTitle: '请选择要同步的文件',
+          dialogTitle: 'Please select files to sync',
           fileType: '.yaml'
         }
       }

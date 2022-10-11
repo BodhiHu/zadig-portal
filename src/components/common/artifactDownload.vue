@@ -5,7 +5,7 @@
     <el-table :data="fileList.file_names"
               height="300"
               style="width: 100%;">
-      <el-table-column label="文件列表">
+      <el-table-column label="File List">
         <template slot-scope="scope">
           <span>{{ scope.row }}</span>
         </template>
@@ -18,7 +18,7 @@
           <el-button size="small"
                      type="primary"
                      :disabled="fileList.file_names.length===0"
-                     plain>下载</el-button>
+                     plain>Download</el-button>
         </a>
 
       </span>

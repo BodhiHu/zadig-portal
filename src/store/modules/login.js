@@ -22,12 +22,12 @@ const getters = {
 }
 
 const actions = {
-  OTHERLOGIN (context, token) { // 第三方登录
+  OTHERLOGIN (context, token) { // Worth Mentioning
     const info = parseJwt(token)
     const res = { ...info, token: token }
     store.set('userInfo', res)
     Message({
-      message: '登录成功，欢迎 ' + res.name,
+      message: 'Login Successful，Welcome ' + res.name,
       type: 'success'
     })
     return Promise.resolve(true)
@@ -35,7 +35,7 @@ const actions = {
   async LOGIN (context, args) {
     const userInfo = await userLoginAPI(args).catch(error => console.log(error))
     if (userInfo) {
-      store.set('userInfo', userInfo) // 存储用户信息，包括 Token
+      store.set('userInfo', userInfo) // Store User Information，Include Token
       context.dispatch('GETUSERROLE')
     }
     return Promise.resolve(userInfo)
@@ -45,7 +45,7 @@ const actions = {
     store.remove('role')
 
     Message({
-      message: '登出成功',
+      message: 'Logout Succeeded',
       type: 'success'
     })
     return Promise.resolve(true)

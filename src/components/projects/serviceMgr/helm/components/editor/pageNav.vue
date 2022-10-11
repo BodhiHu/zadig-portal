@@ -23,10 +23,10 @@ export default {
   methods: {
     closeCurrentPage (item, index) {
       if (item.isUpdate) {
-        this.$confirm('检测到未保存的内容，是否在离开页面前保存修改？或者使用command+s保存修改', '提示', {
+        this.$confirm('Unsaved Content Detected，Whether to save changes before leaving the page？Or Usecommand+sSave Changes', 'Hint', {
           distinguishCancelAndClose: true,
-          confirmButtonText: '保存',
-          cancelButtonText: '放弃修改',
+          confirmButtonText: 'Save',
+          cancelButtonText: 'Give Up Modification',
           type: 'warning'
         }).then(() => {
           this.saveFile()

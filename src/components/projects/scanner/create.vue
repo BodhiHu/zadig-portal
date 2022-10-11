@@ -10,40 +10,40 @@
         label-position="left"
         inline-message
       >
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="scannerConfig.name" placeholder="请输入代码扫描名称" autofocus size="small" :disabled="isEdit" auto-complete="off"></el-input>
+        <el-form-item label="Name" prop="name">
+          <el-input v-model="scannerConfig.name" placeholder="Please enter code scan name" autofocus size="small" :disabled="isEdit" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述信息">
-          <el-input v-model="scannerConfig.description" placeholder="请输入描述信息" autofocus size="small" auto-complete="off"></el-input>
+        <el-form-item label="Description">
+          <el-input v-model="scannerConfig.description" placeholder="Please enter a description" autofocus size="small" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="扫描工具">
-          <el-select v-model="scannerConfig.scanner_type" placeholder="选择扫描工具" size="small" @change="getImageList">
+        <el-form-item label="Scan Tool">
+          <el-select v-model="scannerConfig.scanner_type" placeholder="Select Scanning Tool" size="small" @change="getImageList">
             <el-option label="SonarQube" value="sonarQube"></el-option>
-            <el-option label="其他" value="other"></el-option>
+            <el-option label="Other" value="other"></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="扫描环境" prop="image_id">
-          <el-select v-model="scannerConfig.image_id" placeholder="选择扫描环境" size="small">
+        <el-form-item label="Scan The Environment" prop="image_id">
+          <el-select v-model="scannerConfig.image_id" placeholder="Select Scanning Environment" size="small">
             <el-option v-for="(sys,index) in systems" :key="index" :label="sys.label" :value="sys.id">
               {{sys.label}}
             </el-option>
             <el-option disabled value="NEWCUSTOM" v-if="scannerConfig.scanner_type !== 'sonarQube'">
               <router-link to="/v1/system/imgs" class="env-link">
                 <i class="el-icon-circle-plus-outline" style="margin-right: 3px;"></i>
-                新建扫描环境
+                Create a new scan environment
               </router-link>
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Sonar 地址" v-if="scannerConfig.scanner_type === 'sonarQube'" prop="sonar_id">
-          <el-select v-model="scannerConfig.sonar_id" placeholder="选择 Sonar 地址" size="small">
+        <el-form-item label="Sonar Address" v-if="scannerConfig.scanner_type === 'sonarQube'" prop="sonar_id">
+          <el-select v-model="scannerConfig.sonar_id" placeholder="Choose Sonar Address" size="small">
             <el-option v-for="(item, index) in sonarList" :key="index" :label="item.server_address" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
 
-      <!-- 仅支持一个代码库 -->
+      <!-- Only supports one codebase -->
       <div class="section">
         <RepoSelect
           ref="repoSelectRef"
@@ -57,8 +57,8 @@
 
       <section v-if="scannerConfig.scanner_type === 'sonarQube'">
         <div class="primary-title not-first-child">
-          <span>参数配置</span>
-          <el-tooltip effect="dark" content="sonar 地址和 token 在执行时自动注入" placement="right">
+          <span>Parameter Configuration</span>
+          <el-tooltip effect="dark" content="sonar Address And token Automatically inject at execution time" placement="right">
             <i class="el-icon-warning"></i>
           </el-tooltip>
         </div>
@@ -70,7 +70,7 @@
       </section>
 
       <section v-else-if="scannerConfig.scanner_type === 'other'">
-        <div class="primary-title not-first-child">扫描脚本</div>
+        <div class="primary-title not-first-child">Scan Script</div>
         <div class="deploy-script">
           <Resize :resize="'both'">
             <Editor v-model="scannerConfig.script"></Editor>
@@ -87,7 +87,7 @@
           plain
           @click="scannerConfig.advanced_setting_modified = !scannerConfig.advanced_setting_modified"
         >
-          高级配置
+          Advanced Configuration
           <i :class="[scannerConfig.advanced_setting_modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
         </el-button>
       </div>
@@ -105,9 +105,9 @@
 
     <footer class="create-footer">
       <router-link :to="`/v1/projects/detail/${projectName}/scanner`">
-        <el-button style="margin-right: 15px;" type="primary" :disabled="saveLoading" plain>取消</el-button>
+        <el-button style="margin-right: 15px;" type="primary" :disabled="saveLoading" plain>Cancel</el-button>
       </router-link>
-      <el-button v-hasPermi="{projectName: projectName, action: isEdit?'edit_scan':'create_scan',isBtn:true}" @click="saveScanner" type="primary" :loading="saveLoading">{{ isEdit ? '确认修改' : '立即新建' }}</el-button>
+      <el-button v-hasPermi="{projectName: projectName, action: isEdit?'edit_scan':'create_scan',isBtn:true}" @click="saveScanner" type="primary" :loading="saveLoading">{{ isEdit ? 'Confirm The Changes' : 'Create Now' }}</el-button>
     </footer>
   </div>
 </template>
@@ -134,10 +134,10 @@ import { cloneDeep } from 'lodash'
 
 const validateName = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入代码扫描名称'))
+    callback(new Error('Please enter code scan name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('The name only supports lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -159,12 +159,12 @@ export default {
         ],
         image_id: {
           required: true,
-          message: '扫描环境不能为空',
+          message: 'Scanning environment cannot be empty',
           trigger: ['blur', 'change']
         },
         sonar_id: {
           required: true,
-          message: 'Sonar 地址不能为空',
+          message: 'Sonar Address Cannot Be Empty',
           trigger: ['blur', 'change']
         }
       },
@@ -176,7 +176,7 @@ export default {
         image_id: '', // scanner environment
         sonar_id: '',
         repos: [],
-        parameter: '# Sonar 参数\n', // sonar parameters
+        parameter: '# Sonar Parameter\n', // sonar parameters
         script: '#!/bin/bash\nset -e', // for other type
         advanced_settings: {
           timeout: 60,
@@ -251,7 +251,7 @@ export default {
         this.saveLoading = false
         if (res) {
           this.$message.success(
-            `${this.isEdit ? '更新' : '新建'} ${payload.name} 成功！`
+            `${this.isEdit ? 'Renew' : 'New'} ${payload.name} Success！`
           )
           this.$router.push(`/v1/projects/detail/${this.projectName}/scanner`)
         }
@@ -291,18 +291,18 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: `/v1/projects` },
+        { title: 'Project', url: `/v1/projects` },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}`
         },
         {
-          title: '代码扫描',
+          title: 'Code Scan',
           url: `/v1/projects/detail/${this.projectName}/scanner`
         },
         {
-          title: this.isEdit ? this.$route.params.scanner_name : '添加',
+          title: this.isEdit ? this.$route.params.scanner_name : 'Add To',
           url: ''
         }
       ]

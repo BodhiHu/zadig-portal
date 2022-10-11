@@ -3,23 +3,23 @@
     <el-row class="mg-b48">
       <el-form :model="source" label-position="left" ref="sourceForm" label-width="130px" inline class="form">
         <el-col :span="2">
-          <span style="font-size: 14px;">来源</span>
+          <span style="font-size: 14px;">Source</span>
           <el-link
             style="font-size: 14px; vertical-align: baseline;"
             type="primary"
             :href="`https://docs.koderover.com/zadig/settings/custom-task/`"
             :underline="false"
             target="_blank"
-          >帮助</el-link>
+          >Help</el-link>
         </el-col>
-        <el-button type="primary" plain size="small" v-if="plugins.length===0&&!isShowOperateForm" @click="isShowOperateForm=true">+ 添加</el-button>
+        <el-button type="primary" plain size="small" v-if="plugins.length===0&&!isShowOperateForm" @click="isShowOperateForm=true">+ Add To</el-button>
         <div v-else>
           <el-col :span="3">
-            <el-form-item prop="codehost_id" :rules="{required: true, message: '代码源不能为空', trigger: ['blur', 'change']}">
+            <el-form-item prop="codehost_id" :rules="{required: true, message: 'Code source cannot be empty', trigger: ['blur', 'change']}">
               <el-select
                 v-model="source.codehost_id"
                 size="small"
-                placeholder="请选择代码源"
+                placeholder="Please select a code source"
                 :disabled="plugins.length>0&&isSaved"
                 @change="getRepoOwnerById(source.codehost_id)"
                 filterable
@@ -34,7 +34,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="3">
-            <el-form-item prop="repo_owner" :rules="{required: true, message: '组织名/用户名不能为空', trigger: ['blur','change']}">
+            <el-form-item prop="repo_owner" :rules="{required: true, message: 'Organization Name/Username can not be empty', trigger: ['blur','change']}">
               <el-select
                 v-model="source.repo_owner"
                 size="small"
@@ -44,7 +44,7 @@
                 :loading="searchRepoOwnerLoading"
                 allow-create
                 clearable
-                placeholder="请选择组织名/用户名"
+                placeholder="Please select an organization name/Username"
                 filterable
               >
                 <el-option v-for="(repo,index) in codeInfo['repoOwners']" :key="index" :label="repo.name" :value="repo.name"></el-option>
@@ -52,7 +52,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="3">
-            <el-form-item prop="repo_name" :rules="{required: true, message: '代码库不能为空', trigger: ['blur','change']}">
+            <el-form-item prop="repo_name" :rules="{required: true, message: 'Codebase Cannot Be Empty', trigger: ['blur','change']}">
               <el-select
                 @change="getBranchInfoById(source.codehost_id,source.repo_owner,source.repo_name,source)"
                 @clear="clearRepoName"
@@ -64,7 +64,7 @@
                 :disabled="plugins.length>0&&isSaved"
                 clearable
                 size="small"
-                placeholder="请选择代码库"
+                placeholder="Please select a repository"
                 filterable
               >
                 <el-option v-for="(repo,index) in codeInfo['repos']" :key="index" :label="repo.name" :value="repo.name"></el-option>
@@ -72,11 +72,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="3">
-            <el-form-item prop="branch" :rules="{required: true, message: '分支不能为空', trigger: ['blur','change']}">
+            <el-form-item prop="branch" :rules="{required: true, message: 'Branch Cannot Be Empty', trigger: ['blur','change']}">
               <el-select
                 v-model.trim="source.branch"
                 :disabled="plugins.length>0&&isSaved"
-                placeholder="请选择分支"
+                placeholder="Please Select A Branch"
                 size="small"
                 filterable
                 allow-create
@@ -92,20 +92,20 @@
             </el-form-item>
           </el-col>
           <el-col :span="6" class="mg-t4">
-            <el-button type="primary" plain size="small" v-if="!isSaved" @click="submit('save')">保存</el-button>
-            <el-button type="primary" plain size="small" v-if="isSaved" @click="isSaved=false">编辑</el-button>
-            <el-button type="success" plain size="small" :disabled="!isSaved" @click="submit('sync')">同步</el-button>
-            <el-button type="danger" plain size="small" v-if="plugins.length>0" @click="del">删除</el-button>
+            <el-button type="primary" plain size="small" v-if="!isSaved" @click="submit('save')">Save</el-button>
+            <el-button type="primary" plain size="small" v-if="isSaved" @click="isSaved=false">Edit</el-button>
+            <el-button type="success" plain size="small" :disabled="!isSaved" @click="submit('sync')">Synchronize</el-button>
+            <el-button type="danger" plain size="small" v-if="plugins.length>0" @click="del">Delete</el-button>
           </el-col>
         </div>
       </el-form>
     </el-row>
     <div class="tip">
-      <span>最新更新时间：</span>
+      <span>Last Update Time：</span>
       <span>{{$utils.convertTimestamp(source.update_time)}}</span>
     </div>
     <div class="tip" v-if="source.error">
-      <span>错误信息：</span>
+      <span>Error Message：</span>
       <span>{{source.error}}</span>
     </div>
   </div>
@@ -344,15 +344,15 @@ export default {
       }
     },
     del () {
-      this.$confirm(`是否删除该插件源`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Whether to delete the plugin source`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         delPlugin(this.source.id).then(res => {
           this.$message({
             type: 'success',
-            message: '删除成功'
+            message: 'Successfully Deleted'
           })
           this.getPlugins()
           this.isShowOperateForm = false
@@ -384,7 +384,7 @@ export default {
           }
           updatePlugin(payload).then(res => {
             this.loading = false
-            this.$message.success('操作完成')
+            this.$message.success('Operation Complete')
             this.getPlugins()
           })
         }

@@ -1,26 +1,26 @@
 <template>
   <el-dialog title :visible.sync="dialogVisible" width="700px" custom-class="manage-service-dialog" :close-on-click-modal="false">
-    <div slot="title">{{ productInfo.env_name }} 环境 - {{ opeDesc }}服务</div>
+    <div slot="title">{{ productInfo.env_name }} Surroundings - {{ opeDesc }}Serve</div>
     <div class="manage-services-container">
       <el-form ref="serviceFormRef" class="primary-form" :model="updateServices" label-width="100px" label-position="left">
         <el-form-item
-          label="服务选择"
+          label="Service Selection"
           props="service_names"
-          :rules="{ required: true, type: 'array', message: '请选择服务名称', trigger: ['blur', 'change']}"
+          :rules="{ required: true, type: 'array', message: 'Please select a service name', trigger: ['blur', 'change']}"
         >
-          <el-select v-model="updateServices.service_names" placeholder="请选择服务" size="small" filterable multiple clearable collapse-tags>
+          <el-select v-model="updateServices.service_names" placeholder="Please Select A Service" size="small" filterable multiple clearable collapse-tags>
             <el-option v-for="service in currentAllInfo.services" :key="service" :label="service" :value="service"></el-option>
           </el-select>
-          <el-button type="primary" size="mini" plain @click="updateServices.service_names = currentAllInfo.services">全选</el-button>
+          <el-button type="primary" size="mini" plain @click="updateServices.service_names = currentAllInfo.services">Select All</el-button>
         </el-form-item>
       </el-form>
       <template v-if="opeType !== 'delete'">
-        <div class="var-title">所选服务有使用环境变量，请确认对应变量值
+        <div class="var-title">The selected service has environment variables used，Please confirm the corresponding variable value
           <VariablePreviewEditor :services="previewServices" :projectName="productInfo.product_name" :envName="productInfo.env_name" :variables="currentVars" />
         </div>
         <el-table :data="currentVars" style="width: 100%;">
-          <el-table-column prop="key" label="键"></el-table-column>
-          <el-table-column label="值">
+          <el-table-column prop="key" label="Key"></el-table-column>
+          <el-table-column label="Value">
             <template slot-scope="{ row }">
               <VariableEditor :varKey="row.key" :value.sync="row.value" />
             </template>
@@ -29,8 +29,8 @@
       </template>
     </div>
     <div slot="footer">
-      <el-button @click="closeDialog" size="small" :disabled="loading">取 消</el-button>
-      <el-button type="primary" size="small" @click="updateEnvironment" :loading="loading">确 定</el-button>
+      <el-button @click="closeDialog" size="small" :disabled="loading">Cancel</el-button>
+      <el-button type="primary" size="small" @click="updateEnvironment" :loading="loading">Sure</el-button>
     </div>
   </el-dialog>
 </template>
@@ -77,9 +77,9 @@ export default {
     },
     opeDesc () {
       const typeEnum = {
-        add: '添加',
-        update: '更新',
-        delete: '删除'
+        add: 'Add To',
+        update: 'Renew',
+        delete: 'Delete'
       }
       return typeEnum[this.opeType] || ''
     },
@@ -111,7 +111,7 @@ export default {
       this.loading = true
       if (this.opeType === 'delete') {
         deleteEnvServicesAPI(this.projectName, this.productInfo.env_name, payload).then(() => {
-          this.$message.success(`${this.opeDesc}服务成功！`)
+          this.$message.success(`${this.opeDesc}Service Success！`)
           this.closeDialog()
           this.fetchAllData()
         }).catch(error => {
@@ -121,10 +121,10 @@ export default {
             for (const service in error.response.data.extra) {
               if (Object.hasOwnProperty.call(error.response.data.extra, service)) {
                 const envNames = error.response.data.extra[service]
-                HtmlStrings.push(`服务 ${service} 存在于子环境 ${envNames.join(',')} 中`)
+                HtmlStrings.push(`Serve ${service} Exists in the sub-environment ${envNames.join(',')} Middle`)
               }
             }
-            const HtmlTemplate = `<p>待删除服务存在于子环境中，请先删除引用后再进行${this.opeDesc}操作！</p><br><p>${HtmlStrings.join('<br>')}</p>`
+            const HtmlTemplate = `<p>The service to be deleted exists in the subenvironment，Please remove the reference before proceeding${this.opeDesc}Operate！</p><br><p>${HtmlStrings.join('<br>')}</p>`
             this.$message({
               message: HtmlTemplate,
               type: 'warning',
@@ -137,7 +137,7 @@ export default {
         })
       } else if (this.opeType === 'add' || this.opeType === 'update') {
         autoUpgradeEnvAPI(this.projectName, payload, false).then(() => {
-          this.$message.success(`${this.opeDesc}服务成功！`)
+          this.$message.success(`${this.opeDesc}Service Success！`)
           this.closeDialog()
           this.fetchAllData()
         }).catch(error => {
@@ -157,9 +157,9 @@ export default {
       const value = message[key].map(item => {
         return item.name
       })
-      this.$confirm(`您的更新操作将覆盖环境中 ${key} 的 ${value} 服务变更，确认继续?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Your update operation will overwrite the environment in ${key} Of ${value} Service Change，Confirm To Continue?`, 'Hint', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         const force = true
@@ -167,7 +167,7 @@ export default {
           this.closeDialog()
           this.fetchAllData()
           this.$message({
-            message: '更新环境成功',
+            message: 'Update environment succeeded',
             type: 'success'
           })
         })

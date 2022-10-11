@@ -18,20 +18,20 @@
                        clearable
                        allow-create
                        size="small"
-                       placeholder="请选择分支">
+                       placeholder="Please Select A Branch">
               <el-option v-for="branch of build.branchNames"
                          :key="branch"
                          :label="branch"
                          :value="branch"></el-option>
             </el-select>
             <el-tooltip v-else
-                        content="请求分支失败，请手动输入分支"
+                        content="Request Branch Failed，Please enter the branch manually"
                         placement="top"
                         popper-class="gray-popper">
               <el-input v-model="build.branch"
                         class="short-input"
                         size="small"
-                        placeholder="请填写分支"></el-input>
+                        placeholder="Please fill in the branch"></el-input>
             </el-tooltip>
           </el-col>
         </template>
@@ -41,7 +41,7 @@
             <el-select v-if="build.tags && build.tags.length > 0"
                        v-model="build.tag"
                        size="small"
-                       placeholder="请选择标签"
+                       placeholder="Please Select A Label"
                        filterable
                        clearable>
               <el-option v-for="(item,index) in build.tags"
@@ -51,13 +51,13 @@
               </el-option>
             </el-select>
             <el-tooltip v-else
-                        content="请求 Release Tag 失败，支持手动输入 Release Tag"
+                        content="Ask Release Tag Fail，Support Manual Input Release Tag"
                         placement="top"
                         popper-class="gray-popper">
               <el-input v-model="build.tag"
                         class="short-input"
                         size="small"
-                        placeholder="请填写 Tag"></el-input>
+                        placeholder="Please Fill Out Tag"></el-input>
             </el-tooltip>
           </el-col>
         </template>
@@ -67,8 +67,8 @@
           <el-switch v-if="build.showSwitch"
                      v-model="build.releaseMethod"
                      @change="changeReleaseMethod(build)"
-                     active-text="分支"
-                     inactive-text="标签"
+                     active-text="Branch"
+                     inactive-text="Label"
                      active-value="branch"
                      inactive-value="tag"
                      active-color="#dcdfe6"
@@ -81,7 +81,7 @@
             <el-select v-if="!$utils.isEmpty(build.branchPRsMap)"
                        v-model.number="build[build.prNumberPropName]"
                        size="small"
-                       placeholder="请选择 PR"
+                       placeholder="Please Choose PR"
                        filterable
                        clearable>
 
@@ -90,10 +90,10 @@
                           placement="left"
                           popper-class="gray-popper">
 
-                <div slot="content">{{`创建人: ${$utils.tailCut(item.authorUsername,10)}`}}
-                  <br />{{`时间: ${$utils.convertTimestamp(item.createdAt)}`}}
-                  <br />{{`源分支: ${item.sourceBranch}`}}
-                  <br />{{`目标分支: ${item.targetBranch}`}}
+                <div slot="content">{{`Founder: ${$utils.tailCut(item.authorUsername,10)}`}}
+                  <br />{{`Time: ${$utils.convertTimestamp(item.createdAt)}`}}
+                  <br />{{`Source Branch: ${item.sourceBranch}`}}
+                  <br />{{`Target Branch: ${item.targetBranch}`}}
                 </div>
                 <el-option :label="`#${item[build.prNumberPropName]} ${item.title}`"
                            :value="item[build.prNumberPropName]">
@@ -101,13 +101,13 @@
               </el-tooltip>
             </el-select>
             <el-tooltip v-else
-                        content="PR 不存在，支持手动输入 PR 号"
+                        content="PR Does Not Exist，Support Manual Input PR No"
                         placement="top"
                         popper-class="gray-popper">
               <el-input v-model.number="build[build.prNumberPropName]"
                         class="short-input"
                         size="small"
-                        placeholder="请填写 PR 号"></el-input>
+                        placeholder="Please Fill Out PR No"></el-input>
             </el-tooltip>
           </el-col>
         </template>

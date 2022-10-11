@@ -5,14 +5,14 @@
         <el-row :gutter="10">
           <el-col :span="8">
             <el-form-item prop="url">
-              <el-select v-model="extensionStage.url" placeholder="选择外部系统" size="small" clearable>
+              <el-select v-model="extensionStage.url" placeholder="Choose an external system" size="small" clearable>
                 <el-option v-for="external in externalList" :key="external.id" :label="external.server" :value="external.server"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item prop="path">
-              <el-input v-model="extensionStage.path" placeholder="输入访问路径" size="small"></el-input>
+              <el-input v-model="extensionStage.path" placeholder="Enter The Access Path" size="small"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -29,31 +29,31 @@
               <el-input v-model="row.value" placeholder="Header Value" size="small"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="value" label="操作" width="100px">
+          <el-table-column prop="value" label="Operate" width="100px">
             <template slot-scope="{$index}">
               <el-button style="font-size: 20px;" type="text" icon="el-icon-remove-outline" @click="deleteHeader($index)"></el-button>
               <el-button style="font-size: 20px;" type="text" icon="el-icon-circle-plus-outline" @click="addHeader"></el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="text" @click="addHeader" class="add-header">添加</el-button>
+        <el-button type="text" @click="addHeader" class="add-header">Add To</el-button>
       </el-form-item>
-      <el-form-item label="是否回调">
+      <el-form-item label="Whether To Call Back">
         <el-switch v-model="extensionStage.is_callback"></el-switch>
         <div v-show="extensionStage.is_callback">
-          请根据
+          Please Follow
           <el-link
             style="font-size: 14px; vertical-align: baseline;"
             type="primary"
-            :href="`https://docs.koderover.com/zadig/project/workflow/#扩展`"
+            :href="`https://docs.koderover.com/zadig/project/workflow/#Expand`"
             :underline="false"
             target="_blank"
-          >帮助文档</el-link>
-          调用接口：{{`${origin}/api/callback`}}
+          >Help Documentation</el-link>
+          Call Interface：{{`${origin}/api/callback`}}
         </div>
       </el-form-item>
-      <el-form-item label="超时时间" v-show="extensionStage.is_callback">
-        <el-input-number v-model="extensionStage.timeout" :min="1" :max="100" size="small"></el-input-number>分钟
+      <el-form-item label="Overtime Time" v-show="extensionStage.is_callback">
+        <el-input-number v-model="extensionStage.timeout" :min="1" :max="100" size="small"></el-input-number>Minute
       </el-form-item>
     </el-form>
   </el-card>
@@ -67,12 +67,12 @@ export default {
     this.rules = {
       url: {
         required: true,
-        message: '请选择外部系统',
+        message: 'Please select an external system',
         trigger: 'blur'
       },
       path: {
         required: true,
-        message: '请输入访问路径',
+        message: 'Please enter the access path',
         trigger: 'blur'
       }
     }

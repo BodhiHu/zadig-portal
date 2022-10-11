@@ -1,14 +1,14 @@
 <template>
   <div class="projects-runtime-container">
     <div class="guide-container">
-      <Step :activeStep="2" :stepThreeTitle="`配置环境`"/>
+      <Step :activeStep="2" :stepThreeTitle="`Configuration Environment`"/>
       <div class="current-step-container">
         <div class="title-container">
-          <span class="first">第三步</span>
-          <span class="second">配置变量，按需创建环境，后续可在项目中调整。</span>
+          <span class="first">Third Step</span>
+          <span class="second">Configuration Variable，Create environments on demand，Can be adjusted later in the project。</span>
         </div>
         <div class="account-integrations block-list">
-          <div class="second">配置以下几套环境：</div>
+          <div class="second">Configure the following environments：</div>
           <el-tabs v-model="activeName" type="card" @edit="handleTabsEdit">
             <el-tab-pane
               v-for="env in envInfos"
@@ -29,17 +29,17 @@
               </span>
             </el-tab-pane>
             <el-tab-pane name="addNew" v-if="canHandle">
-              <span slot="label" @click="handleTabsEdit('', 'add')">创建环境</span>
+              <span slot="label" @click="handleTabsEdit('', 'add')">Create An Environment</span>
             </el-tab-pane>
           </el-tabs>
           <el-form label-width="100px" ref="createEnvRef" :model="currentInfo" :rules="rules" label-position="left" inline>
-            <el-form-item label="集群" prop="clusterID">
-              <el-select class="select" filterable v-model="currentInfo.clusterID" size="small" placeholder="请选择集群">
+            <el-form-item label="Cluster" prop="clusterID">
+              <el-select class="select" filterable v-model="currentInfo.clusterID" size="small" placeholder="Please Select A Cluster">
                 <el-option v-for="cluster in allCluster" :key="cluster.id" :label="$utils.showClusterName(cluster)" :value="cluster.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="镜像仓库">
-              <el-select class="select" v-model.trim="currentInfo.registry_id" placeholder="请选择镜像仓库" size="small">
+            <el-form-item label="Mirror Repository">
+              <el-select class="select" v-model.trim="currentInfo.registry_id" placeholder="Please select a mirror repository" size="small">
                 <el-option
                   v-for="registry in imageRegistry"
                   :key="registry.id"
@@ -57,7 +57,7 @@
             :envScene="`createEnv`"
           />
           <div class="ai-bottom">
-            <el-button type="primary" size="small" @click="createHelmProductEnv" :loading="isCreating" :disabled="!cantNext">创建环境</el-button>
+            <el-button type="primary" size="small" @click="createHelmProductEnv" :loading="isCreating" :disabled="!cantNext">Create An Environment</el-button>
             <div v-for="(env, index) in createRes" :key="index" class="ai-status">
               <span class="env-name">{{env.name}}:</span>
               <span>{{getStatusDesc(env)}}</span>
@@ -69,7 +69,7 @@
     <div class="controls__wrap">
       <div class="controls__right">
         <router-link :to="`/v1/projects/create/${projectName}/helm/delivery`">
-          <el-button type="primary" size="small" :disabled="cantNext">下一步</el-button>
+          <el-button type="primary" size="small" :disabled="cantNext">Next Step</el-button>
         </router-link>
       </div>
     </div>
@@ -88,7 +88,7 @@ import {
 export default {
   data () {
     this.rules = {
-      clusterID: [{ required: true, trigger: 'change', message: '请选择集群' }]
+      clusterID: [{ required: true, trigger: 'change', message: 'Please Select A Cluster' }]
     }
     return {
       envInfos: [
@@ -145,16 +145,16 @@ export default {
       let res = ''
       switch (envInfo.status) {
         case 'creating':
-          res = '环境创建中...'
+          res = 'Environment being created...'
           break
         case 'success':
-          res = '环境创建成功'
+          res = 'Environment created successfully'
           break
         case 'failed':
-          res = `环境创建失败：${envInfo.error}`
+          res = `Environment creation failed：${envInfo.error}`
           break
         case 'Unstable':
-          res = '环境创建成功（运行不稳定）'
+          res = 'Environment created successfully（Unstable Operation）'
           break
         default:
           res = status
@@ -280,7 +280,7 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         { title: this.projectName, isProjectName: true, url: '' }
       ]
     })

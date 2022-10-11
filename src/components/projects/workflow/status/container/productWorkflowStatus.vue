@@ -13,7 +13,7 @@
           <div class="info-view">
             <span class="spec">
               <span>
-                <label>产品工作流 {{`#${task.task_id}`}}</label>
+                <label>Product Workflow {{`#${task.task_id}`}}</label>
                 <br>
                 <router-link
                              :to="`/v1/projects/detail/${task.product_name}/pipelines/multi/${task.pipeline_name}/${task.task_id}?status=${task.status}`">
@@ -35,7 +35,7 @@
             <el-tooltip v-if="!taskDetailExpand[task.task_id]"
                         class="item"
                         effect="dark"
-                        content="查看任务流程"
+                        content="View Task Flow"
                         placement="top">
               <span @click="showTaskDetail(task.task_id)"
                     class="icon el-icon-data-board view-detail"></span>
@@ -43,14 +43,14 @@
             <el-tooltip v-if="taskDetailExpand[task.task_id]"
                         class="item"
                         effect="dark"
-                        content="收起任务流程"
+                        content="Collapse Task Flow"
                         placement="top">
               <span @click="closeTaskDetail(task.task_id)"
                     class="icon el-icon-arrow-up view-detail"></span>
             </el-tooltip>
             <el-tooltip class="item"
                         effect="dark"
-                        content="删除任务"
+                        content="Delete Task"
                         placement="top">
               <span @click="taskOperate('running','cancel',task.task_id,task.pipeline_name)"
                     class="icon el-icon-delete delete"></span>
@@ -68,7 +68,7 @@
           <div class="stage-header stage-header-empty-status">
             <div class="stage-header-col stage-header-title ">
               <h3 class="stage-title">
-                构建
+                Construct
               </h3>
               <i class="icon el-icon-right"></i>
             </div>
@@ -78,13 +78,13 @@
                 class="cf-steps-list-item">
               <el-popover ref="ut"
                           placement="right"
-                          title="单元测试"
+                          title="Unit Test"
                           width="400"
                           trigger="click">
                 <el-table :data="buildSubtaskInfo(task.stages).utRepos">
                   <el-table-column property="name"
-                                   label="代码库"></el-table-column>
-                  <el-table-column label="覆盖率">
+                                   label="Code Library"></el-table-column>
+                  <el-table-column label="Coverage">
                     <template slot-scope="scope">
                       <i class="el-icon-data-analysis"></i>
                       <span v-if="scope.row.no_stmt !== 0">{{
@@ -100,7 +100,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      单元测试
+                      Unit Test
                     </span>
 
                     <span class="step-type"></span>
@@ -113,14 +113,14 @@
             <li class="cf-steps-list-item">
               <el-popover ref="script"
                           placement="right"
-                          title="构建信息"
+                          title="Build Info"
                           width="400"
                           trigger="click">
                 <el-table :data="buildSubtaskInfo(task.stages).buildRepos">
                   <el-table-column property="repo_name"
-                                   label="代码库"></el-table-column>
+                                   label="Code Library"></el-table-column>
                   <el-table-column property="branch"
-                                   label="分支"></el-table-column>
+                                   label="Branch"></el-table-column>
                   <el-table-column label="PR">
                     <template slot-scope="scope">
                       <span>{{scope.row.pr?scope.row.pr:'-'}}</span>
@@ -133,7 +133,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      脚本构建
+                      Script Build
                     </span>
 
                     <span class="step-type"></span>
@@ -146,7 +146,7 @@
             <li class="cf-steps-list-item">
               <el-popover ref="build_image"
                           placement="right"
-                          title="镜像信息"
+                          title="Mirror Information"
                           width="650"
                           trigger="click">
                 <el-table :data="buildSubtaskInfo(task.stages).buildImage">
@@ -161,7 +161,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      构建镜像
+                      Build Image
                     </span>
 
                     <span class="step-type"></span>
@@ -179,7 +179,7 @@
           <div class="stage-header stage-header-empty-status">
             <div class="stage-header-col stage-header-title ">
               <h3 class="stage-title">
-                部署
+                Deploy
               </h3>
               <i class="icon el-icon-right"></i>
             </div>
@@ -188,16 +188,16 @@
             <li class="cf-steps-list-item">
               <el-popover ref="deploy_env"
                           placement="right"
-                          title="环境更新"
+                          title="Environment Update"
                           width="550"
                           trigger="click">
                 <el-table :data="deploySubtaskInfo(task.stages).serviceLists">
                   <el-table-column property="service_name"
-                                   label="服务列表"></el-table-column>
+                                   label="Service List"></el-table-column>
                   <el-table-column property="namespace"
-                                   label="环境"></el-table-column>
+                                   label="Surroundings"></el-table-column>
                   <el-table-column property="image"
-                                   label="镜像"></el-table-column>
+                                   label="Mirror"></el-table-column>
                 </el-table>
                 <div slot="reference"
                      class="step step-status"
@@ -205,7 +205,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      环境更新
+                      Environment Update
                     </span>
 
                     <span class="step-type"></span>
@@ -224,7 +224,7 @@
           <div class="stage-header stage-header-empty-status">
             <div class="stage-header-col stage-header-title ">
               <h3 class="stage-title">
-                测试
+                Test
               </h3>
               <i class="icon el-icon-right"></i>
             </div>
@@ -233,14 +233,14 @@
             <li class="cf-steps-list-item">
               <el-popover ref="function_test"
                           placement="right"
-                          title="测试-代码信息"
+                          title="Test-Code Information"
                           width="400"
                           trigger="click">
                 <el-table :data="testSubtaskInfo(task).integration_test.builds">
                   <el-table-column property="repo_name"
-                                   label="代码库"></el-table-column>
+                                   label="Code Library"></el-table-column>
                   <el-table-column property="branch"
-                                   label="分支"></el-table-column>
+                                   label="Branch"></el-table-column>
                   <el-table-column label="PR">
                     <template slot-scope="scope">
                       <span>{{scope.row.pr?scope.row.pr:'-'}}</span>
@@ -250,7 +250,7 @@
                 <div style="margin-top: 10px; margin-right: 15px; text-align: right;">
                   <el-link v-if="testSubtaskInfo(task).integration_test.report_ready"
                            :href="testSubtaskInfo(task).integration_test.report_url"
-                           type="primary">测试报告</el-link>
+                           type="primary">Testing Report</el-link>
                 </div>
                 <div slot="reference"
                      class="step step-status"
@@ -258,7 +258,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      测试
+                      Test
                     </span>
 
                     <span class="step-type"></span>
@@ -271,14 +271,14 @@
             <li class="cf-steps-list-item">
               <el-popover ref="performance_test"
                           placement="right"
-                          title="性能测试-代码信息"
+                          title="Performance Testing-Code Information"
                           width="400"
                           trigger="click">
                 <el-table :data="testSubtaskInfo(task).performance_test.builds">
                   <el-table-column property="repo_name"
-                                   label="代码库"></el-table-column>
+                                   label="Code Library"></el-table-column>
                   <el-table-column property="branch"
-                                   label="分支"></el-table-column>
+                                   label="Branch"></el-table-column>
                   <el-table-column label="PR">
                     <template slot-scope="scope">
                       <span>{{scope.row.pr?scope.row.pr:'-'}}</span>
@@ -288,7 +288,7 @@
                 <div style="margin-top: 10px; margin-right: 15px; text-align: right;">
                   <el-link v-if="testSubtaskInfo(task).performance_test.report_ready"
                            :href="testSubtaskInfo(task).performance_test.report_url"
-                           type="primary">测试报告</el-link>
+                           type="primary">Testing Report</el-link>
                 </div>
 
                 <div slot="reference"
@@ -297,7 +297,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      性能测试
+                      Performance Testing
                     </span>
 
                     <span class="step-type"></span>
@@ -316,7 +316,7 @@
           <div class="stage-header stage-header-empty-status">
             <div class="stage-header-col stage-header-title ">
               <h3 class="stage-title">
-                分发
+                Distribution
               </h3>
               <i class="icon el-icon-right"></i>
             </div>
@@ -325,14 +325,14 @@
             <li class="cf-steps-list-item">
               <el-popover ref="release_image"
                           placement="right"
-                          title="镜像分发"
+                          title="Mirror Distribution"
                           width="550"
                           trigger="click">
                 <el-table :data="distributeSubtaskInfo(task.stages).releaseImages">
                   <el-table-column property="image_repo"
-                                   label="镜像仓库"></el-table-column>
+                                   label="Mirror Repository"></el-table-column>
                   <el-table-column property="image_test"
-                                   label="镜像名称"></el-table-column>
+                                   label="Image Name"></el-table-column>
                 </el-table>
                 <div slot="reference"
                      class="step step-status"
@@ -340,7 +340,7 @@
                   <div class="step-data">
                     <i class="el-icon-cloudy"></i>
                     <span class="step-description">
-                      镜像分发
+                      Mirror Distribution
                     </span>
 
                     <span class="step-type"></span>
@@ -360,13 +360,13 @@
       <div class="progress-header-view">
         <div class="status-view">
           <div class="status pending">
-            队列中
+            In Queue
           </div>
         </div>
         <div class="info-view">
           <span class="spec">
             <span>
-              <label>工作流 {{`#${task.task_id}`}}</label>
+              <label>Workflow {{`#${task.task_id}`}}</label>
               <br>
               <router-link
                            :to="`/v1/projects/detail/${task.product_name}/pipelines/multi/${task.pipeline_name}/${task.task_id}?status=${task.status}`">
@@ -389,7 +389,7 @@
                 class="icon el-icon-data-board view-detail"></span>
           <el-tooltip class="item"
                       effect="dark"
-                      content="删除任务"
+                      content="Delete Task"
                       placement="top">
             <span @click="taskOperate('queue','cancel',task.task_id,task.pipeline_name)"
                   class="icon el-icon-delete delete"></span>
@@ -423,11 +423,11 @@ export default {
   },
   methods: {
     /*
-  任务操作
-  * @param  {string}           task_type 任务类型（running，queue）
-  * @param  {string}           operation 操作 （cancel，restart，delete）
-  * @param  {number}           id 任务 id
-  * @param  {string}           pipeline_name 流水线名
+  Task Operation
+  * @param  {string}           task_type Task Type（running，queue）
+  * @param  {string}           operation Operate （cancel，restart，delete）
+  * @param  {number}           id Task id
+  * @param  {string}           pipeline_name Pipeline Name
   * @return {}
   */
     taskOperate (task_type, operation, id, pipeline_name) {
@@ -436,8 +436,8 @@ export default {
           case 'cancel':
             cancelWorkflowAPI(this.projectName, pipeline_name, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '运行任务取消成功',
+                title: 'Success',
+                message: 'Running task canceled successfully',
                 type: 'success',
                 offset: 50
               })
@@ -455,8 +455,8 @@ export default {
           case 'cancel':
             cancelWorkflowAPI(this.projectName, pipeline_name, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '队列任务取消成功',
+                title: 'Success',
+                message: 'Queue task canceled successfully',
                 type: 'success',
                 offset: 50
               })
@@ -489,19 +489,19 @@ export default {
       }
       const stageNames = []
       if (stages.find(item => item.type === 'buildv2')) {
-        stageNames.push('构建')
+        stageNames.push('Construct')
       }
       if (stages.find(item => item.type === 'deploy')) {
-        stageNames.push('部署')
+        stageNames.push('Deploy')
       }
       if (stages.find(item => item.type === 'artifact')) {
-        stageNames.push('交付物部署')
+        stageNames.push('Deliverables Deployment')
       }
       if (stages.find(item => item.type === 'testingv2')) {
-        stageNames.push('测试')
+        stageNames.push('Test')
       }
       if (stages.find(item => item.type === 'release_image')) {
-        stageNames.push('分发')
+        stageNames.push('Distribution')
       }
       return stageNames
     },

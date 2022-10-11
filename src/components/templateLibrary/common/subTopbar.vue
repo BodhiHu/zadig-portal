@@ -43,7 +43,7 @@ export default {
           url: `/v1/template/dockerfiles`
         },
         {
-          name: '构建',
+          name: 'Construct',
           icon: 'iconfont iconvery-build',
           url: `/v1/template/builds`
         }

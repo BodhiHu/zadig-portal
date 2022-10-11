@@ -1,17 +1,17 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconvery-build"
     class="buildConfig-container"
   >
     <section v-if="buildConfigs.length > 0" class="tab-container">
       <div class="build-search-container">
-        <el-input v-model.lazy="searchBuildConfig" placeholder="请输入构建名称" class="search-test" autofocus prefix-icon="el-icon-search"></el-input>
+        <el-input v-model.lazy="searchBuildConfig" placeholder="Please enter a build name" class="search-test" autofocus prefix-icon="el-icon-search"></el-input>
       </div>
       <el-table :data="filteredBuildConfigs">
-        <el-table-column label="名称" prop="name" min-width="180"></el-table-column>
-        <el-table-column prop="services" label="服务组件" min-width="180">
+        <el-table-column label="Name" prop="name" min-width="180"></el-table-column>
+        <el-table-column prop="services" label="Service Component" min-width="180">
           <template slot-scope="scope">
             <div class="service-container">
               <div v-if="scope.row.targets.length > 0" class="service-left">
@@ -24,20 +24,20 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="更新时间" width="180">
+        <el-table-column label="Update Time" width="180">
           <template slot-scope="scope">{{ $utils.convertTimestamp(scope.row.update_time) }}</template>
         </el-table-column>
-        <el-table-column label="最后修改" prop="update_by" width="180"></el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column label="Last Review" prop="update_by" width="180"></el-table-column>
+        <el-table-column label="Operate" width="180">
           <template slot-scope="scope">
             <router-link
               v-if="checkPermissionSyncMixin({projectName: projectName, action: 'edit_build'})"
               :to="`/v1/projects/detail/${scope.row.productName}/builds/detail/${scope.row.name}`"
             >
-              <el-button type="primary" size="mini" plain>编辑</el-button>
+              <el-button type="primary" size="mini" plain>Edit</el-button>
             </router-link>
-            <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
-              <el-button type="primary" class="permission-disabled" size="mini" plain>编辑</el-button>
+            <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
+              <el-button type="primary" class="permission-disabled" size="mini" plain>Edit</el-button>
             </el-tooltip>
             <el-button
               v-if="checkPermissionSyncMixin({projectName: projectName, action: 'delete_build'})"
@@ -45,9 +45,9 @@
               type="danger"
               size="mini"
               plain
-            >删除</el-button>
-            <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
-              <el-button type="primary" class="permission-disabled" size="mini" plain>删除</el-button>
+            >Delete</el-button>
+            <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
+              <el-button type="primary" class="permission-disabled" size="mini" plain>Delete</el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -55,7 +55,7 @@
     </section>
     <div v-if="buildConfigs.length === 0 && !loading" class="build-not-available">
       <img src="@assets/icons/illustration/build.svg" alt />
-      <p>暂无可展示的构建，请手动新建构建</p>
+      <p>No Builds To Show Yet，Please create a new build manually</p>
     </div>
   </div>
 </template>
@@ -77,15 +77,15 @@ export default {
       const projectName = this.projectName
       const str =
         obj.pipelines.length > 0
-          ? `该配置在 ${obj.pipelines} 存在引用，确定要删除 ${obj.name} 吗？`
-          : `确定要删除 ${obj.name} 吗？`
-      this.$confirm(str, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+          ? `The Configuration Is In ${obj.pipelines} Citations Exist，Sure You Want To Delete ${obj.name} Do You？`
+          : `Sure You Want To Delete ${obj.name} Do You？`
+      this.$confirm(str, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteBuildConfigAPI(obj.name, obj.version, projectName).then(() => {
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
           this.getBuildConfig()
         })
       })
@@ -137,13 +137,13 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '构建', url: '' }
+        { title: 'Construct', url: '' }
       ]
     })
   }

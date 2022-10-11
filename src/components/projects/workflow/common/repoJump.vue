@@ -1,7 +1,7 @@
 <template>
   <div class="repo-jump-container">
     <slot></slot>
-    <el-tooltip :content="build.source==='gerrit' ?`暂不支持在该类型上查看 Release`:`在 ${build.source} 上查看 Release`" placement="top" effect="dark">
+    <el-tooltip :content="build.source==='gerrit' ?`Viewing on this type is not currently supported Release`:`Exist ${build.source} View On Release`" placement="top" effect="dark">
       <span v-if="build.tag && build.source!=='other'" class="link">
         <i v-if="showIcon && build.tag" class="iconfont icontag1 repo-icon"></i>
         <a
@@ -26,7 +26,7 @@
       <span class="normal" v-if="build.source ==='other'">{{showIcon ? '' : "Branch-" }}{{build.branch}}</span>
     </span>
     <el-tooltip
-      :content="build.source==='gerrit'||build.source==='codehub'?`暂不支持在该类型上查看 Branch`:`在 ${build.source} 上查看 Branch`"
+      :content="build.source==='gerrit'||build.source==='codehub'?`Viewing on this type is not currently supported Branch`:`Exist ${build.source} View On Branch`"
       placement="top"
       effect="dark"
     >
@@ -50,7 +50,7 @@
         <span v-else-if="build.source ==='codehub'">{{showIcon ? '' : "Branch-" }}{{ build.branch}}</span>
       </span>
     </el-tooltip>
-    <el-tooltip :content="`在 ${build.source} 上查看 PR`" placement="top" effect="dark">
+    <el-tooltip :content="`Exist ${build.source} View On PR`" placement="top" effect="dark">
       <span v-if="build.pr && build.pr>0" class="link">
         <a
           v-if="build.source==='github'"
@@ -76,7 +76,7 @@
     </el-tooltip>
     <i v-if="showIcon && build.commit_id" class="iconfont iconicon_git-commit repo-icon"></i>
     <el-tooltip
-      :content="(build.source==='gerrit'&& (!build.pr || build.pr===0))||build.source==='codehub'?`暂不支持在该类型上查看 Commit`:`在 ${build.source} 上查看 Commit`"
+      :content="(build.source==='gerrit'&& (!build.pr || build.pr===0))||build.source==='codehub'?`Viewing on this type is not currently supported Commit`:`Exist ${build.source} View On Commit`"
       placement="top"
       effect="dark"
     >

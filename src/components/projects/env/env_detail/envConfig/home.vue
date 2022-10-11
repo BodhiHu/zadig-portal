@@ -9,8 +9,8 @@
     <el-dialog :visible.sync="dialogVisible" width="60%" custom-class="env-config-dialog" append-to-body>
       <ImportConfig :importRepoInfo="repoConfig" :cmOption="cmOption" :placeholder="placeholder"></ImportConfig>
       <div slot="footer">
-        <el-button size="small" :disabled="dialogBtnLoading" @click="dialogVisible = false" v-show="repoConfig.actionType !== 'view'">取 消</el-button>
-        <el-button size="small" type="primary" :loading="dialogBtnLoading" @click="handleConfig">确 定</el-button>
+        <el-button size="small" :disabled="dialogBtnLoading" @click="dialogVisible = false" v-show="repoConfig.actionType !== 'view'">Cancel</el-button>
+        <el-button size="small" type="primary" :loading="dialogBtnLoading" @click="handleConfig">Sure</el-button>
       </div>
     </el-dialog>
     <VersionHistory ref="versionRef" @actionConfig="actionConfig"></VersionHistory>
@@ -60,10 +60,10 @@ export default {
           showParams: {
             title:
               evt.actionType === 'add'
-                ? '添加环境配置'
-                : `${evt.actionType === 'view' ? '查看' : '编辑'} ${
+                ? 'Add environment configuration'
+                : `${evt.actionType === 'view' ? 'Check' : 'Edit'} ${
                   evt.name
-                } 配置`,
+                } Configure`,
 
             showImport: evt.showImport || false,
             checkAssociated:
@@ -132,7 +132,7 @@ export default {
       return this.$route.params.env_name
     },
     placeholder () {
-      return `可直接粘贴 ${this.currentConfig} 类型的 K8s YAML 文件`
+      return `Can Be Directly Pasted ${this.currentConfig} Type Of K8s YAML Document`
     }
   },
   created () {
@@ -140,18 +140,18 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '环境', url: '' },
+        { title: 'Surroundings', url: '' },
         {
           title: this.envName,
           url: `/v1/projects/detail/${this.projectName}/envs/detail?envName=${this.envName}`
         },
-        { title: '配置', url: '' }
+        { title: 'Configure', url: '' }
       ]
     })
   },

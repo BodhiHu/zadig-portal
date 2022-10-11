@@ -1,23 +1,23 @@
 <template>
   <div>
     <div>
-      <h1 class="title">用户注册</h1>
-      <h2 class="subtitle">请输入新用户信息</h2>
+      <h1 class="title">User Registration</h1>
+      <h2 class="subtitle">Please enter new user information</h2>
       <el-form :model="signUpForm" ref="signUpForm" :rules="rules" label-position="left" label-width="80px">
-        <el-form-item label="用户名" prop="account">
-          <el-input v-model="signUpForm.account" placeholder="请输入用户名"></el-input>
+        <el-form-item label="Username" prop="account">
+          <el-input v-model="signUpForm.account" placeholder="Please Enter User Name"></el-input>
         </el-form-item>
-        <el-form-item label="昵称" prop="name">
-          <el-input v-model="signUpForm.name" placeholder="请输入昵称"></el-input>
+        <el-form-item label="Nick Name" prop="name">
+          <el-input v-model="signUpForm.name" placeholder="Please Enter A Nickname"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input type="email" v-model="signUpForm.email" placeholder="请输入邮箱"></el-input>
+        <el-form-item label="Mail" prop="email">
+          <el-input type="email" v-model="signUpForm.email" placeholder="Please Input Your Email"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="signUpForm.password" placeholder="请输入密码"></el-input>
+        <el-form-item label="Password" prop="password">
+          <el-input v-model="signUpForm.password" placeholder="Please Enter Password"></el-input>
         </el-form-item>
       </el-form>
-      <el-button type="submit" @click="submit" class="btn-md btn-theme btn-block login-btn">注册</el-button>
+      <el-button type="submit" @click="submit" class="btn-md btn-theme btn-block login-btn">Register</el-button>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入用户名',
+            message: 'Please Enter User Name',
             trigger: 'blur'
           }
         ],
@@ -51,12 +51,12 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入邮箱',
+            message: 'Please Input Your Email',
             trigger: 'blur'
           },
           {
             type: 'email',
-            message: '请输入正确的邮箱地址',
+            message: 'Please input the correct email address',
             trigger: ['blur', 'change']
           }
         ],
@@ -64,7 +64,7 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入昵称',
+            message: 'Please Enter A Nickname',
             trigger: 'blur'
           }
         ],
@@ -72,7 +72,7 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请输入密码',
+            message: 'Please Enter Password',
             trigger: 'blur'
           }
         ]
@@ -88,7 +88,7 @@ export default {
             console.log(error)
           )
           if (res) {
-            this.$message.success('用户注册成功')
+            this.$message.success('User registration is successful')
             this.openLogin()
           }
         }

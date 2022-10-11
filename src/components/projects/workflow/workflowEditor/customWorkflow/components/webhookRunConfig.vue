@@ -2,12 +2,12 @@
   <div class="custom-workflow">
     <el-form label-width="120px" size="small">
       <el-collapse v-model="activeName">
-        <el-collapse-item title="工作流变量" name="env" class="mg-l8" v-if="payload.params && payload.params.length>0&&isShowParams">
+        <el-collapse-item title="Workflow Variables" name="env" class="mg-l8" v-if="payload.params && payload.params.length>0&&isShowParams">
           <el-table :data="payload.params.filter(item=>item.isShow)">
-            <el-table-column label="键">
+            <el-table-column label="Key">
               <template slot-scope="scope">{{scope.row.name}}</template>
             </el-table-column>
-            <el-table-column label="值">
+            <el-table-column label="Value">
               <template slot-scope="scope">
                 <el-select v-model="scope.row.value" v-if="scope.row.type === 'choice'" size="small" style="width: 220px;">
                   <el-option v-for="(item,index) in scope.row.choice_option" :key="index" :value="item" :label="item">{{item}}</el-option>
@@ -46,7 +46,7 @@
               <span class="mg-l8">{{job.name}}</span>
             </template>
             <div v-if="job.type === 'zadig-build'">
-              <el-form-item label="服务组件">
+              <el-form-item label="Service Component">
                 <el-select
                   v-model="job.pickedTargets"
                   filterable
@@ -69,8 +69,8 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="镜像仓库" prop="docker_registry_id">
-                <el-select v-model="job.spec.docker_registry_id" placeholder="请选择镜像" size="small" style="width: 220px;">
+              <el-form-item label="Mirror Repository" prop="docker_registry_id">
+                <el-select v-model="job.spec.docker_registry_id" placeholder="Please Select A Mirror" size="small" style="width: 220px;">
                   <el-option v-for="item in dockerList" :key="item.id" :label="`${item.reg_addr}/${item.namespace}`" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
@@ -79,27 +79,27 @@
               </div>
             </div>
             <div v-if="job.type === 'zadig-deploy'">
-              <el-form-item prop="productName" label="环境" v-if="!(job.spec.env.includes('fixed')||job.spec.env.includes('{{'))">
+              <el-form-item prop="productName" label="Surroundings" v-if="!(job.spec.env.includes('fixed')||job.spec.env.includes('{{'))">
                 <el-select v-model="job.spec.env" size="small" @change="getRegistryId(job.spec.env)" style="width: 220px;">
                   <el-option
                     v-for="pro of currentProjectEnvs"
                     :key="`${pro.projectName} / ${pro.name}`"
-                    :label="`${pro.projectName} / ${pro.name}${pro.production?'（生产）':''}`"
+                    :label="`${pro.projectName} / ${pro.name}${pro.production?'（Production）':''}`"
                     :value="`${pro.name}`"
                   >
                     <span>
                       {{`${pro.projectName} / ${pro.name}`}}
-                      <el-tag v-if="pro.production" type="danger" size="mini" effect="light">生产</el-tag>
+                      <el-tag v-if="pro.production" type="danger" size="mini" effect="light">Production</el-tag>
                     </span>
                   </el-option>
                 </el-select>
-                <el-tooltip v-if="specificEnv" effect="dark" content="该工作流已指定环境运行，可通过修改 工作流->基本信息 来解除指定环境绑定" placement="top">
+                <el-tooltip v-if="specificEnv" effect="dark" content="The workflow has a specified environment to run，Workflow can be modified by->Basic information to unbind the specified environment" placement="top">
                   <span>
                     <i style="color: #909399;" class="el-icon-question"></i>
                   </span>
                 </el-tooltip>
               </el-form-item>
-              <el-form-item label="服务组件" v-if="job.spec.source === 'runtime'">
+              <el-form-item label="Service Component" v-if="job.spec.source === 'runtime'">
                 <el-select
                   v-model="job.pickedTargets"
                   filterable
@@ -132,7 +132,7 @@
                     value-key="value"
                     size="small"
                     style="width: 220px;"
-                    placeholder="请选择镜像"
+                    placeholder="Please Select A Mirror"
                   >
                     <el-option
                       v-for="(image,index) of item.images"

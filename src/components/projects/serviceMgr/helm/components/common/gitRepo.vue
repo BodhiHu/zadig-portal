@@ -1,19 +1,19 @@
 <template>
   <div class="git-repo-container" v-loading="loading" element-loading-spinner="*" element-loading-background="rgba(255, 255, 255, 0.2)">
     <div v-if="!controlParam.hiddenRepoSelect" class="repo-attr">
-      <span>仓库属性</span>
+      <span>Warehouse Properties</span>
       <el-radio-group v-model="gitName" :disabled="isUpdate">
-        <el-radio label="private">私有库</el-radio>
-        <el-radio label="public">公开库</el-radio>
+        <el-radio label="private">Private Library</el-radio>
+        <el-radio label="public">Public Library</el-radio>
       </el-radio-group>
     </div>
     <el-form v-if="gitName === 'private'" :model="source" :rules="sourceRules" ref="sourceForm" label-width="140px">
       <el-form-item
-        label="代码源"
+        label="Code Source"
         prop="codehostId"
         :rules="{
               required: true,
-              message: '代码源不能为空',
+              message: 'Code source cannot be empty',
               trigger: 'change',
             }"
       >
@@ -21,7 +21,7 @@
           v-model="source.codehostId"
           size="small"
           style="width: 100%;"
-          placeholder="请选择代码源"
+          placeholder="Please select a code source"
           @change="queryRepoOwnerById(source.codehostId)"
           filterable
           :disabled="isUpdate"
@@ -39,11 +39,11 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="组织名/用户名"
+        label="Organization Name/Username"
         prop="repoOwner"
         :rules="{
               required: true,
-              message: '组织名/用户名不能为空',
+              message: 'Organization Name/Username can not be empty',
               trigger: 'change',
             }"
       >
@@ -52,7 +52,7 @@
           size="small"
           style="width: 100%;"
           @change="getRepoNameById(source.codehostId, source.repoOwner)"
-          placeholder="请选择组织名/用户名"
+          placeholder="Please select an organization name/Username"
           filterable
           :disabled="isUpdate"
         >
@@ -61,11 +61,11 @@
       </el-form-item>
       <template>
         <el-form-item
-          label="名称"
+          label="Name"
           prop="repoName"
           :rules="{
                 required: true,
-                message: '名称不能为空',
+                message: 'Name Is Required',
                 trigger: 'change',
               }"
         >
@@ -85,7 +85,7 @@
             allow-create
             clearable
             size="small"
-            placeholder="请选择代码库"
+            placeholder="Please select a repository"
             filterable
             :disabled="isUpdate"
           >
@@ -93,17 +93,17 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          label="分支"
+          label="Branch"
           prop="branchName"
           :rules="{
                 required: true,
-                message: '分支不能为空',
+                message: 'Branch Cannot Be Empty',
                 trigger: 'change',
               }"
         >
           <el-select
             v-model.trim="source.branchName"
-            placeholder="请选择分支"
+            placeholder="Please Select A Branch"
             style="width: 100%;"
             size="small"
             filterable
@@ -115,10 +115,10 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          label="选择文件夹："
+          label="Select Folder："
           :rules="{
                 required: true,
-                message: '请选择目录',
+                message: 'Please select a directory',
                 trigger: 'change',
               }"
         >
@@ -127,26 +127,26 @@
         </el-form-item>
       </template>
       <el-form-item v-if="!controlParam.hiddenCreateButton" style="text-align: right;">
-        <el-button size="small" type="primary" :loading="loading" :disabled="selectPath.length === 0" @click="submit">加载</el-button>
+        <el-button size="small" type="primary" :loading="loading" :disabled="selectPath.length === 0" @click="submit">Load</el-button>
       </el-form-item>
     </el-form>
     <el-form v-if="gitName === 'public'" :model="source" :rules="sourceRules" ref="sourceForm" label-width="140px">
-      <el-form-item prop="url" label="仓库地址">
+      <el-form-item prop="url" label="Warehouse Address">
         <el-input v-model="source.url" placeholder="https://github.com/owner/repo" size="small" :disabled="isUpdate"></el-input>
       </el-form-item>
-      <el-form-item prop="path" label="文件目录">
+      <el-form-item prop="path" label="File Directory">
         <span :key="item" v-for="item in selectPath">[{{ item }}]&nbsp;</span>
         <el-button @click="openFileTree" :disabled="!source.url || isUpdate" type="primary" plain size="mini" icon="el-icon-plus" circle></el-button>
       </el-form-item>
       <el-form-item  style="text-align: right;">
-        <el-button size="small" :loading="loading" type="primary" @click="submit">加载</el-button>
+        <el-button size="small" :loading="loading" type="primary" @click="submit">Load</el-button>
       </el-form-item>
     </el-form>
 
     <el-dialog v-if="codehostSource === 'gerrit' || codehostSource === 'gitee'" :append-to-body="true"
                :visible.sync="workSpaceModalVisible"
                width="60%"
-               title="请选择要同步的文件或文件目录"
+               title="Please select a file or directory of files to sync"
                class="fileTree-dialog">
       <GerritFileTree ref="worktree"
                     :codehostId="source.codehostId"
@@ -160,7 +160,7 @@
                     @getPreloadServices="getPreloadServices"
                     :showTree="workSpaceModalVisible"/>
     </el-dialog>
-    <el-dialog v-else :append-to-body="true" :visible.sync="workSpaceModalVisible" width="60%" title="请选择要同步的文件目录" class="fileTree-dialog">
+    <el-dialog v-else :append-to-body="true" :visible.sync="workSpaceModalVisible" width="60%" title="Please select a file directory to sync" class="fileTree-dialog">
       <GitFileTree
         v-if="source.codehostId || source.url"
         :codehostId="source.codehostId"
@@ -241,12 +241,12 @@ export default {
         url: [
           {
             required: true,
-            message: '请输入 URL 地址',
+            message: 'Please Enter URL Address',
             trigger: 'blur'
           },
           {
             type: 'url',
-            message: '请输入正确的 URL，包含协议',
+            message: 'Please Enter The Correct URL，Include Agreement',
             trigger: ['blur', 'change']
           }
         ]
@@ -471,7 +471,7 @@ export default {
             }
             this.selectPath = [createFrom.load_path]
           } else {
-            // 老数据
+            // Old Data
             if (value.src_path) {
               this.gitName = 'public'
             } else {

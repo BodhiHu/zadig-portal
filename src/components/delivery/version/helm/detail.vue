@@ -1,37 +1,37 @@
 <template>
   <div class="helm-version-detail">
     <el-tabs type="border-card">
-      <el-tab-pane label="版本信息">
+      <el-tab-pane label="Version Information">
         <div v-loading="loading">
-          <div class="version-title">基本信息</div>
+          <div class="version-title">Basic Information</div>
           <div class="basic-info">
             <el-row :gutter="10">
               <el-col :span="10">
-                版本：
+                Version：
                 <span class="dark-color">{{versionInfo.version}}</span>
               </el-col>
               <el-col :span="10">
-                标签：
+                Label：
                 <el-tag size="mini" v-for="(label,index) in versionInfo.labels" :key="index" style="margin-right: 5px;">{{label}}</el-tag>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="10">
-                创建人：
+                Founder：
                 <span class="dark-color">{{versionInfo.createdBy}}</span>
               </el-col>
               <el-col :span="10">
-                创建时间：
+                Creation Time：
                 <span class="dark-color">{{$utils.convertTimestamp(versionInfo.created_at)}}</span>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="10">
-                描述：
+                Describe：
                 <span class="dark-color">{{versionInfo.desc}}</span>
               </el-col>
               <el-col :span="10">
-                状态：
+                State：
                 <span
                   class="dark-color"
                   :style="{color: uploadProgressList(versionInfo.status).color}"
@@ -40,33 +40,33 @@
             </el-row>
           </div>
           <div class="version-title">
-            交付内容
+            Deliverables
             <el-popover placement="right" trigger="hover">
               <div>
                 <div>
-                  进度详情
-                  <el-button v-if="versionInfo.status !== 'success'" type="text" class="little-btn" @click="retryCreate">重试</el-button>
+                  Progress Details
+                  <el-button v-if="versionInfo.status !== 'success'" type="text" class="little-btn" @click="retryCreate">Retry</el-button>
                 </div>
                 <div style="width: 250px; padding: 0 5px; font-size: 13px;">
-                  <p>上传 Chart 和镜像：{{versionInfo.progress.successChartCount}}/{{versionInfo.progress.totalChartCount}}</p>
+                  <p>Upload Chart And Mirroring：{{versionInfo.progress.successChartCount}}/{{versionInfo.progress.totalChartCount}}</p>
                   <!-- <p>
-                    上传离线包：
+                    Upload Offline Package：
                     <span :style="{color: uploadProgress.color}">{{uploadProgress.desc}}</span>
                   </p> -->
-                  <p v-if="versionInfo.progress.error">错误信息：{{versionInfo.progress.error}}</p>
+                  <p v-if="versionInfo.progress.error">Error Message：{{versionInfo.progress.error}}</p>
                 </div>
               </div>
-              <el-button slot="reference" type="text" class="little-btn">进度详情</el-button>
+              <el-button slot="reference" type="text" class="little-btn">Progress Details</el-button>
             </el-popover>
           </div>
           <div class="push-info">
-            <div class="push-title">Chart 信息</div>
+            <div class="push-title">Chart Information</div>
             <el-table :data="distributeChart" style="width: 100%;">
               <el-table-column type="expand" width="50px">
                 <template slot-scope="{row}">
                   <el-table :data="row.subDistributes" style="width: 100%;">
-                    <el-table-column prop="serviceName" label="组件名称"></el-table-column>
-                    <el-table-column label="镜像名称">
+                    <el-table-column prop="serviceName" label="Component Name"></el-table-column>
+                    <el-table-column label="Image Name">
                       <template slot-scope="{row}">
                         <router-link :to="`/v1/delivery/artifacts?image=${row.registryName}`">{{row.registryName}}</router-link>
                       </template>
@@ -74,23 +74,23 @@
                   </el-table>
                 </template>
               </el-table-column>
-              <el-table-column prop="chartName" label="Chart 名称"></el-table-column>
-              <el-table-column prop="chartRepoName" label="Chart 仓库"></el-table-column>
-              <el-table-column prop="chartVersion" label="版本库"></el-table-column>
-              <el-table-column label="操作">
+              <el-table-column prop="chartName" label="Chart Name"></el-table-column>
+              <el-table-column prop="chartRepoName" label="Chart Storehouse"></el-table-column>
+              <el-table-column prop="chartVersion" label="Repository"></el-table-column>
+              <el-table-column label="Operate">
                 <template slot-scope="{row}">
-                  <!-- <el-button type="text">预览</el-button> -->
+                  <!-- <el-button type="text">Preview</el-button> -->
                   <a :download="`${row.chartName}-${row.chartVersion}`" :href="downloadChartUrl(row)">
-                    <el-button type="text">下载</el-button>
+                    <el-button type="text">Download</el-button>
                   </a>
                 </template>
               </el-table-column>
             </el-table>
             <div v-if="packageFile">
-              <div class="push-title">离线包信息</div>
+              <div class="push-title">Offline package information</div>
               <el-table :data="packageFile" style="width: 100%;">
-                <el-table-column prop="packageFile" label="离线包名称"></el-table-column>
-                <el-table-column label="对象存储">
+                <el-table-column prop="packageFile" label="Offline Package Name"></el-table-column>
+                <el-table-column label="Object Storage">
                   <template slot-scope="{row}">{{row.storageUrl}}/{{row.storageBucket}}</template>
                 </el-table-column>
               </el-table>
@@ -100,7 +100,7 @@
       </el-tab-pane>
       <!-- <el-tab-pane disabled>
         <span slot="label" class="version-push" @click="upgradeVersion">
-          <i class="el-icon-upload2"></i> 版本升级
+          <i class="el-icon-upload2"></i> Version Upgrade
         </span>
       </el-tab-pane> -->
     </el-tabs>
@@ -136,33 +136,33 @@ export default {
     uploadProgressList (status) {
       const statusEnum = {
         success: {
-          desc: '成功',
+          desc: 'Success',
           color: '#67c23a'
         },
         failed: {
-          desc: '失败',
+          desc: 'Fail',
           color: '#f56c6c'
         },
 
         waiting: {
-          desc: '等待上传',
+          desc: 'Waiting For Upload',
           color: '#0066ff'
         },
         uploading: {
-          desc: '上传中',
+          desc: 'Uploading',
           color: '#e6a23c'
         },
 
         creating: {
-          desc: '创建中',
+          desc: 'Under Creation',
           color: '#e6a23c'
         },
         retrying: {
-          desc: '重试中',
+          desc: 'Retrying',
           color: '#0066ff'
         },
         undefine: {
-          desc: '未知',
+          desc: 'Unknown',
           color: '#909399'
         }
       }
@@ -176,12 +176,12 @@ export default {
       }
       this.loading = true
       createHelmVersionAPI(this.projectName, payload).then(() => {
-        this.$message.success(`重试成功！`)
+        this.$message.success(`Successful Retry！`)
         this.getVersionDetail()
       })
     },
     upgradeVersion () {
-      this.$message.info('敬请期待！')
+      this.$message.info('Stay Tuned！')
     },
     getVersionDetail () {
       this.loading = true

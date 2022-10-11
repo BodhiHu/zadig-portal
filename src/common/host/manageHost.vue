@@ -1,7 +1,7 @@
 <template>
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    element-loading-text="Loading..."
     element-loading-spinner="iconfont iconfont-loading iconzhuji"
     class="setting-host-container"
   >
@@ -9,8 +9,8 @@
     <el-dialog :title="title" :visible.sync="dialogHostFormVisible" custom-class="dialog-style" :close-on-click-modal="false" width="45%">
       <AddHost ref="add-host" :host="host"></AddHost>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogHostFormVisible = false">取 消</el-button>
-        <el-button :plain="true" size="small" type="success" @click="hostOperation">保存</el-button>
+        <el-button size="small" @click="dialogHostFormVisible = false">Cancel</el-button>
+        <el-button :plain="true" size="small" type="success" @click="hostOperation">Save</el-button>
       </div>
     </el-dialog>
     <!--Host-edit-dialog-->
@@ -19,8 +19,8 @@
     <el-dialog :title="title" :visible.sync="dialogImportHostVisible" custom-class="dialog-style" :close-on-click-modal="false" width="35%">
       <ImportHosts ref="import-hosts" :originHosts="allHost" :type="type"></ImportHosts>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogImportHostVisible = false">取 消</el-button>
-        <el-button :plain="true" size="small" type="success" @click="hostOperation">保存</el-button>
+        <el-button size="small" @click="dialogImportHostVisible = false">Cancel</el-button>
+        <el-button :plain="true" size="small" type="success" @click="hostOperation">Save</el-button>
       </div>
     </el-dialog>
     <!--Host-import-dialog-->
@@ -28,39 +28,39 @@
     <div class="section">
       <el-alert type="info" :closable="false">
         <template>
-          支持阿里云 ECS、腾讯云 CVM、华为云 ECS 等主机的接入和使用，详情可参考
+          Support Alibaba Cloud ECS、Tencent Cloud CVM、HUAWEI CLOUD ECS Waiting for the access and use of the host，For details, please refer to
           <el-link
             style="font-size: 14px; vertical-align: baseline;"
             type="primary"
             :href="`https://docs.koderover.com/zadig/settings/vm-management/`"
             :underline="false"
             target="_blank"
-          >帮助文档</el-link>
+          >Help Documentation</el-link>
         </template>
       </el-alert>
       <div class="sync-container">
-        <el-button size="small" :plain="true" @click="hostOperation('add')" type="success">新建</el-button>
-        <el-button size="small" :plain="true" @click="hostOperation('import')" type="success">导入</el-button>
+        <el-button size="small" :plain="true" @click="hostOperation('add')" type="success">New</el-button>
+        <el-button size="small" :plain="true" @click="hostOperation('import')" type="success">Import</el-button>
       </div>
       <div class="host-list">
         <template>
           <el-table :data="allHost" style="width: 100%;">
-            <el-table-column label="主机名称">
+            <el-table-column label="Hostname">
               <template slot-scope="scope">
                 <i :class="getProviderMap(scope.row.provider,'icon')"></i>
                 <span>{{scope.row.name}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="状态">
+            <el-table-column label="State">
               <template slot-scope="{ row }">
                 <el-tag
                   size="small"
                   effect="dark"
                   :type="row.status === 'normal' ? 'success' : 'danger'"
-                >{{row.status === 'normal' ? '在线' : '离线'}}</el-tag>
+                >{{row.status === 'normal' ? 'Online' : 'Offline'}}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="标签">
+            <el-table-column label="Label">
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.label" size="small">{{scope.row.label}}</el-tag>
               </template>
@@ -70,15 +70,15 @@
                 <span>{{scope.row.ip}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="用户名">
+            <el-table-column label="Username">
               <template slot-scope="scope">
                 <span>{{scope.row.user_name}}</span>
               </template>
             </el-table-column>
-            <el-table-column width="240" label="操作">
+            <el-table-column width="240" label="Operate">
               <template slot-scope="scope">
-                <el-button @click="hostOperation('update',scope.row)" size="mini" type="primary" plain>编辑</el-button>
-                <el-button @click="hostOperation('delete',scope.row)" size="mini" type="danger" plain>删除</el-button>
+                <el-button @click="hostOperation('update',scope.row)" size="mini" type="primary" plain>Edit</el-button>
+                <el-button @click="hostOperation('delete',scope.row)" size="mini" type="danger" plain>Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -129,20 +129,20 @@ export default {
       providerMap: {
         0: {
           icon: 'iconfont logo iconwuliji',
-          name: '其他'
+          name: 'Other'
         },
 
         1: {
           icon: 'iconfont logo iconaliyun ',
-          name: '阿里云 OSS'
+          name: 'Ali Cloud OSS'
         },
         2: {
           icon: 'iconfont logo icontengxunyun',
-          name: '腾讯云 COS'
+          name: 'Tencent Cloud COS'
         },
         3: {
           icon: 'iconfont logo iconhuawei',
-          name: '华为云 OBS'
+          name: 'HUAWEI CLOUD OBS'
         }
       },
       dialogHostFormVisible: false,
@@ -163,11 +163,11 @@ export default {
     },
     title () {
       if (this.operate === 'add') {
-        return '创建主机资源'
+        return 'Create A Host Resource'
       } else if (this.operate === 'update') {
-        return '修改主机资源'
+        return 'Modify Host Resources'
       } else if (this.operate === 'import') {
-        return '导入主机资源'
+        return 'Import Host Resources'
       } else {
         return ''
       }
@@ -188,16 +188,16 @@ export default {
         operate === 'update' && (this.host = this.$utils.cloneObj(current_host))
       } else if (operate === 'delete') {
         const id = current_host.id
-        this.$confirm(`确定要删除 ${current_host.name} ?`, '确认', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(`Sure You Want To Delete ${current_host.name} ?`, 'Confirm', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(({ value }) => {
           if (this.type === 'project') {
             deleteProjectHostAPI(id, this.projectName).then(res => {
               this.getHost()
               this.$message({
-                message: '删除主机成功',
+                message: 'Delete Host Successfully',
                 type: 'success'
               })
             })
@@ -205,7 +205,7 @@ export default {
             deleteHostAPI(id).then(res => {
               this.getHost()
               this.$message({
-                message: '删除主机成功',
+                message: 'Delete Host Successfully',
                 type: 'success'
               })
             })

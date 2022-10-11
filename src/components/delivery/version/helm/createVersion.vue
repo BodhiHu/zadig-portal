@@ -1,11 +1,11 @@
 <template>
   <div class="create-helm-version">
-    <h4>创建版本</h4>
+    <h4>Create Version</h4>
 
     <el-steps :active="activeStep" finish-status="success" align-center>
-      <el-step title="填写基本信息"></el-step>
-      <el-step title="检查配置"></el-step>
-      <el-step title="推送仓库"></el-step>
+      <el-step title="Fill in the basic information"></el-step>
+      <el-step title="Check Configuration"></el-step>
+      <el-step title="Push Repository"></el-step>
     </el-steps>
 
     <keep-alive>
@@ -13,9 +13,9 @@
     </keep-alive>
 
     <footer class="footer">
-      <el-button size="small" v-show="activeStep !== 0" @click="activeStep -= 1" :disabled="createLoading">上一步</el-button>
-      <el-button size="small" type="primary" @click="nextStep" :loading="createLoading">{{activeStep - 2 ? '下一步' : '完成' }}</el-button>
-      <el-button size="small" type="text" @click="cancel">取 消</el-button>
+      <el-button size="small" v-show="activeStep !== 0" @click="activeStep -= 1" :disabled="createLoading">Previous</el-button>
+      <el-button size="small" type="primary" @click="nextStep" :loading="createLoading">{{activeStep - 2 ? 'Next Step' : 'Finish' }}</el-button>
+      <el-button size="small" type="text" @click="cancel">Cancel</el-button>
     </footer>
   </div>
 </template>
@@ -96,7 +96,7 @@ export default {
       this.createLoading = false
       if (res) {
         this.$message.success(
-          `${this.deliveryRelease.productName} 创建版本 ${this.deliveryRelease.version} 成功！`
+          `${this.deliveryRelease.productName} Create Version ${this.deliveryRelease.version} Success！`
         )
         this.activeStep = 0
         this.cancel()
@@ -113,16 +113,16 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: `/v1/projects` },
+        { title: 'Project', url: `/v1/projects` },
         {
           title: projectName,
           url: `/v1/projects/detail/${projectName}/detail`
         },
         {
-          title: '版本管理',
+          title: 'Version Management',
           url: `/v1/projects/detail/${projectName}/version`
         },
-        { title: '创建版本', url: `` }
+        { title: 'Create Version', url: `` }
       ]
     })
   },

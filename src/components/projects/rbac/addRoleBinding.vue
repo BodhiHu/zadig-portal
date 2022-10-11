@@ -1,10 +1,10 @@
 <template>
-  <el-dialog class="form" title="添加成员" width="550px" :visible.sync="addUserFormVisible">
+  <el-dialog class="form" title="Add Members" width="550px" :visible.sync="addUserFormVisible">
     <el-form :model="form" ref="form" :rules="formRules" label-width="100px">
-      <el-form-item label="用户名称" prop="uids">
-        <el-select class="select" v-model="form.uids" filterable multiple remote :remote-method="remoteMethod" :loading="userSearchLoading" size="small" placeholder="请输入用户名称进行搜索">
-          <el-option label="所有用户" value="*">
-            <span>所有用户</span>
+      <el-form-item label="User Name" prop="uids">
+        <el-select class="select" v-model="form.uids" filterable multiple remote :remote-method="remoteMethod" :loading="userSearchLoading" size="small" placeholder="Please enter username to search">
+          <el-option label="All Users" value="*">
+            <span>All Users</span>
           </el-option>
           <el-option
             v-for="user in users"
@@ -19,20 +19,20 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="角色名称" prop="name">
-        <el-select class="select" v-model="form.name" filterable size="small" placeholder="请输入角色名称进行搜索">
+      <el-form-item label="Role Name" prop="name">
+        <el-select class="select" v-model="form.name" filterable size="small" placeholder="Please enter the character name to search">
           <el-option
             v-for="item in rolesFiltered"
             :key="item.name"
             :label="item.name"
             :value="item.name"
-          >{{item.name}} {{item.isPublic ? '(系统内置)': ''}}</el-option>
+          >{{item.name}} {{item.isPublic ? '(System Built In)': ''}}</el-option>
         </el-select>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button size="small" @click="addUserFormVisible = false">取 消</el-button>
-      <el-button size="small" @click="submit()" type="primary">确 定</el-button>
+      <el-button size="small" @click="addUserFormVisible = false">Cancel</el-button>
+      <el-button size="small" @click="submit()" type="primary">Sure</el-button>
     </div>
   </el-dialog>
 </template>
@@ -59,7 +59,7 @@ export default {
           {
             type: 'array',
             required: true,
-            message: '请选择用户',
+            message: 'Please Select A User',
             trigger: 'change'
           }
         ],
@@ -67,7 +67,7 @@ export default {
           {
             type: 'string',
             required: true,
-            message: '请选择角色',
+            message: 'Please Select A Role',
             trigger: 'change'
           }
         ]
@@ -125,7 +125,7 @@ export default {
       ).catch(error => cosnole.log(error))
       if (res) {
         this.$message({
-          message: '添加成员成功',
+          message: 'Added member successfully',
           type: 'success'
         })
         await this.getMembers()

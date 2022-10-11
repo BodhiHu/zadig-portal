@@ -2,16 +2,16 @@
   <div class="mobile-status">
     <van-nav-bar>
       <template #title>
-        运行状态
+        Operating Status
       </template>
     </van-nav-bar>
     <van-tabs v-model="activeTab"
               sticky>
-      <van-tab :title="`正在运行 ${tasksCount.running?tasksCount.running:''}`"
+      <van-tab :title="`Running ${tasksCount.running?tasksCount.running:''}`"
                name="running">
         <van-empty v-if="tasksCount.running===0"
                    image="search"
-                   description="暂无正在运行任务" />
+                   description="No Running Tasks Yet" />
         <div v-else
              v-for="task in runningTasks"
              :key="task.task_id"
@@ -32,18 +32,18 @@
                 <van-button round
                             @click.stop="taskOperation('cancel',task.task_id,task.pipeline_name)"
                             size="small"
-                            type="danger">取消</van-button>
+                            type="danger">Cancel</van-button>
               </template>
             </van-cell>
           </van-cell-group>
         </div>
 
       </van-tab>
-      <van-tab :title="`队列中 ${tasksCount.pending?tasksCount.pending:''}`"
+      <van-tab :title="`In Queue ${tasksCount.pending?tasksCount.pending:''}`"
                name="pending">
         <van-empty v-if="tasksCount.pending===0"
                    image="search"
-                   description="暂无队列中任务" />
+                   description="There are no tasks in the queue" />
         <div v-else
              v-for="task in pendingTasks"
              :key="task.task_id"
@@ -63,7 +63,7 @@
                 <van-button round
                             @click.stop="taskOperation('cancel',task.task_id,task.pipeline_name)"
                             size="small"
-                            type="danger">取消</van-button>
+                            type="danger">Cancel</van-button>
               </template>
             </van-cell>
           </van-cell-group>
@@ -128,17 +128,17 @@ export default {
       }
     },
     /*
-    任务操作
-    * @param  {string}           operation 操作 （cancel）
-    * @param  {number}           id 任务 id
-    * @param  {string}           pipeline_name 流水线名
+    Task Operation
+    * @param  {string}           operation Operate （cancel）
+    * @param  {number}           id Task id
+    * @param  {string}           pipeline_name Pipeline Name
     * @return {}
     */
     taskOperation (operation, id, pipeline_name) {
       switch (operation) {
         case 'cancel':
           cancelWorkflowAPI(this.projectName, pipeline_name, id).then(res => {
-            Notify({ type: 'success', message: '任务取消成功' })
+            Notify({ type: 'success', message: 'The task was canceled successfully' })
           })
           break
         default:

@@ -17,16 +17,16 @@
                       size="small"
                       prefix-icon="el-icon-search"
                       clearable
-                      placeholder="请输入关键词搜索日志"></el-input>
+                      placeholder="Please enter keywords to search logs"></el-input>
           </div>
           <template v-if="realtimeLog.status==='connected'">
             <el-button @click="showRealTimeLog('','','close')"
                        size="small"
                        icon="icon iconfont iconstop"
                        type="primary">
-              停止连接
+              Stop Connection
             </el-button>
-            <span class="tip">接收中</span>
+            <span class="tip">Receiving</span>
             <i class="el-icon-loading"></i>
           </template>
           <el-button v-else
@@ -34,9 +34,9 @@
                      size="small"
                      icon="el-icon-refresh"
                      type="primary">
-            刷新日志
+            Refresh Log
           </el-button>
-          <el-tooltip content="去底部"
+          <el-tooltip content="Go To The Bottom"
                       effect="light"
                       placement="top">
             <el-button @click="scrollToBottom"
@@ -45,7 +45,7 @@
                        icon="fs-24 iconfont iconArrowDown1-24px">
             </el-button>
           </el-tooltip>
-          <el-tooltip content="去顶部"
+          <el-tooltip content="Go To The Top"
                       effect="light"
                       placement="top">
             <el-button @click="scrollToTop"
@@ -56,7 +56,7 @@
           </el-tooltip>
           <!-- Temporarily not showing kodespace in 1.10.0 --->
           <!-- <div class="log-tip">
-            <span>日志量较大时会出现加载过慢的情况，建议使用 CLI 工具查看</span>
+            <span>When the log volume is large, the loading will be too slow，It Is Recommended To Use CLI Tool View</span>
             <a href="https://docs.koderover.com/zadig/cli/search-logs/"
                target="_blank">
               <i class="icon el-icon-question"></i></a>

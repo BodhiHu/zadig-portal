@@ -2,11 +2,11 @@
   <div class="common-task">
     <header class="mg-b8">
       <el-col :span="6">
-        <span class="type">通用任务</span>
+        <span class="type">General Task</span>
         <span>{{commonInfo.name}}</span>
       </el-col>
       <el-col :span="2">
-        <a :class="buildOverallColor" href="#buildv4-log">{{commonInfo.status?buildOverallStatusZh:"未运行"}}</a>
+        <a :class="buildOverallColor" href="#buildv4-log">{{commonInfo.status?buildOverallStatusZh:"Not Running"}}</a>
       </el-col>
       <el-col :span="2">
         <span>{{commonInfo.interval}}</span>
@@ -20,17 +20,17 @@
     <main>
       <section>
         <div class="error-wrapper">
-          <el-alert v-if="commonInfo.error" title="错误信息" :description="commonInfo.error" type="error" close-text="知道了"></el-alert>
+          <el-alert v-if="commonInfo.error" title="Error Message" :description="commonInfo.error" type="error" close-text="Understood"></el-alert>
         </div>
         <el-row class="text item mg-t8" :gutter="0" v-for="(build,index) in commonInfo.spec.repos" :key="index">
           <el-col :span="4">
-            <div class="grid-content item-title">代码库({{build.source}})</div>
+            <div class="grid-content item-title">Code Library({{build.source}})</div>
           </el-col>
           <el-col :span="8">
             <div>{{build.repo_name}}</div>
           </el-col>
           <el-col :span="4">
-            <div class="item-title">代码信息</div>
+            <div class="item-title">Code Information</div>
           </el-col>
           <el-col :span="8">
             <RepoJump :build="build" showIcon />

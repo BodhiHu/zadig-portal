@@ -6,7 +6,7 @@
       <div class="progress-header-view">
         <div class="status-view">
           <div class="status running">
-            正在运行
+            Running
           </div>
         </div>
         <div class="info-view">
@@ -25,7 +25,7 @@
             <el-tag v-if="showStage(task.stages,'testingv2')"
                     size=small
                     class="stage"
-                    type="primary">测试</el-tag>
+                    type="primary">Test</el-tag>
           </span>
           <section class="basic-info">
             <p class="author"><i class="el-icon-user"></i> {{task.task_creator}}</p>
@@ -38,7 +38,7 @@
                 class="icon el-icon-data-board view-detail"></span>
           <el-tooltip class="item"
                       effect="dark"
-                      content="删除任务"
+                      content="Delete Task"
                       placement="top">
             <span @click="testOperate('running','cancel',task.product_name,task.test_args.test_name+'-job',task.task_id)"
                   class="icon el-icon-delete delete"></span>
@@ -59,13 +59,13 @@ export default {
   },
   methods: {
     /*
-    任务操作
-    * @param  {string}           task_type 任务类型（running，queue）
-    * @param  {string}           operation 操作 （cancel，restart，delete）
-    * @param  {string}           project_name 项目名称
-    * @param  {string}           test_name 测试 job 名称
-    * @param  {number}           id 任务 id
-    * @param  {string}           test_name 测试 job 名称
+    Task Operation
+    * @param  {string}           task_type Task Type（running，queue）
+    * @param  {string}           operation Operate （cancel，restart，delete）
+    * @param  {string}           project_name Project Name
+    * @param  {string}           test_name Test job Name
+    * @param  {number}           id Task id
+    * @param  {string}           test_name Test job Name
     * @return {}
     */
     testOperate (task_type, operation, project_name, test_name, id) {
@@ -74,8 +74,8 @@ export default {
           case 'cancel':
             cancelTestTaskAPI(project_name, test_name, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '运行任务取消成功',
+                title: 'Success',
+                message: 'Running task canceled successfully',
                 type: 'success',
                 offset: 50
               })
@@ -93,8 +93,8 @@ export default {
           case 'cancel':
             cancelTestTaskAPI(project_name, test_name, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '队列任务取消成功',
+                title: 'Success',
+                message: 'Queue task canceled successfully',
                 type: 'success',
                 offset: 50
               })

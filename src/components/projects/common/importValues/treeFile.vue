@@ -1,7 +1,7 @@
 
 <template>
   <el-card class="repository-container" v-loading="loading">
-    <el-alert type="warning" :closable="false" v-if="!checkOne">提示：一份 values 文件会被定义成一个服务，服务名称即为 values 文件名称。</el-alert>
+    <el-alert type="warning" :closable="false" v-if="!checkOne">Hint：One Serving values The file will be defined as a service，The Service Name Is values File Name。</el-alert>
     <el-tree
       ref="tree"
       :props="defaultProps"
@@ -19,7 +19,7 @@
         <span>{{node.label}}</span>
       </span>
     </el-tree>
-    <el-button style="margin-top: 0.5rem;" type="primary" plain size="mini" @click="emitCheckedPath">确定</el-button>
+    <el-button style="margin-top: 0.5rem;" type="primary" plain size="mini" @click="emitCheckedPath">Sure</el-button>
   </el-card>
 </template>
 

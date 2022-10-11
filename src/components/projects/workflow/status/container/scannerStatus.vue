@@ -3,12 +3,12 @@
     <div v-for="task in scannerTasks.running" :key="task.task_id" class="progress-header">
       <div class="progress-header-view">
         <div class="status-view">
-          <div class="status running">正在运行</div>
+          <div class="status running">Running</div>
         </div>
         <div class="info-view">
           <span class="spec">
             <span>
-              <label>代码扫描 {{`#${task.task_id}`}}</label>
+              <label>Code Scan {{`#${task.task_id}`}}</label>
               <br />
               <router-link :to="getTaskUrl(task)">
                 <span class="workflow-name">
@@ -19,7 +19,7 @@
             </span>
           </span>
           <span class="stages-tag">
-            <el-tag v-if="showStage(task.stages,'scanning')" size="small" class="stage" type="primary">代码扫描</el-tag>
+            <el-tag v-if="showStage(task.stages,'scanning')" size="small" class="stage" type="primary">Code Scan</el-tag>
           </span>
           <section class="basic-info">
             <p class="author">
@@ -34,7 +34,7 @@
         </div>
         <div class="operation-view">
           <span style="visibility: hidden;" class="icon el-icon-data-board view-detail"></span>
-          <!-- <el-tooltip class="item" effect="dark" content="删除任务" placement="top">
+          <!-- <el-tooltip class="item" effect="dark" content="Delete Task" placement="top">
             <span
               @click="taskOperation('pending','cancel',task.product_name,task.test_args.test_name+'-job',task.task_id)"
               class="icon el-icon-delete delete"
@@ -46,12 +46,12 @@
     <div v-for="task in scannerTasks.pending" :key="task.task_id" class="progress-header">
       <div class="progress-header-view">
         <div class="status-view">
-          <div class="status pending">队列中</div>
+          <div class="status pending">In Queue</div>
         </div>
         <div class="info-view">
           <span class="spec">
             <span>
-              <label>代码扫描 {{`#${task.task_id}`}}</label>
+              <label>Code Scan {{`#${task.task_id}`}}</label>
               <br />
               <router-link :to="getTaskUrl(task)">
                 <span class="workflow-name">
@@ -62,7 +62,7 @@
             </span>
           </span>
           <span class="stages-tag">
-            <el-tag v-if="showStage(task.stages,'scanning')" size="small" class="stage" type="primary">代码扫描</el-tag>
+            <el-tag v-if="showStage(task.stages,'scanning')" size="small" class="stage" type="primary">Code Scan</el-tag>
           </span>
           <section class="basic-info">
             <p class="author">
@@ -77,7 +77,7 @@
         </div>
         <div class="operation-view">
           <span style="visibility: hidden;" class="icon el-icon-data-board view-detail"></span>
-          <!-- <el-tooltip class="item" effect="dark" content="删除任务" placement="top">
+          <!-- <el-tooltip class="item" effect="dark" content="Delete Task" placement="top">
             <span
               @click="taskOperation('running','cancel',task.product_name,task.test_args.test_name+'-job',task.task_id)"
               class="icon el-icon-delete delete"
@@ -96,11 +96,11 @@ export default {
   },
   methods: {
     /*
-    任务操作
-    * @param  {string}           taskType 任务类型（running，queue）
-    * @param  {string}           operation 操作 （cancel，restart，delete）
-    * @param  {string}           projectName 项目名称
-    * @param  {number}           id 任务 id
+    Task Operation
+    * @param  {string}           taskType Task Type（running，queue）
+    * @param  {string}           operation Operate （cancel，restart，delete）
+    * @param  {string}           projectName Project Name
+    * @param  {number}           id Task id
     * @return {}
     */
     taskOperation (taskType, operation, projectName, id) {
@@ -109,8 +109,8 @@ export default {
           case 'cancel':
             cancelScannerTaskAPI(projectName, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '运行任务取消成功',
+                title: 'Success',
+                message: 'Running task canceled successfully',
                 type: 'success',
                 offset: 50
               })
@@ -128,8 +128,8 @@ export default {
           case 'cancel':
             cancelScannerTaskAPI(projectName, id).then(res => {
               this.$notify({
-                title: '成功',
-                message: '队列任务取消成功',
+                title: 'Success',
+                message: 'Queue task canceled successfully',
                 type: 'success',
                 offset: 50
               })

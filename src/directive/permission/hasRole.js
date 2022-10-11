@@ -17,7 +17,7 @@ export default {
       if (templates.length === 0) {
         hasPermissions = true
       } else {
-        const projectTemplate = templates.find((item) => item.product_name === projectName) // 使用唯一字段product_name，project_name是alias，不唯一
+        const projectTemplate = templates.find((item) => item.product_name === projectName) // Use Unique Fieldsproduct_name，project_nameYesalias，Not Unique
         if (projectTemplate) {
           if (projectTemplate.role === 'admin') {
             hasPermissions = true

@@ -2,27 +2,27 @@
   <div class="config-home">
     <div class="tab-container">
       <el-tabs v-model="activeTab" type="card">
-        <el-tab-pane name="quota" label="任务配置">
+        <el-tab-pane name="quota" label="Task Configuration">
           <keep-alive >
             <Quota v-if="activeTab === 'quota'" />
           </keep-alive>
         </el-tab-pane>
-        <el-tab-pane name="proxy" label="代理配置">
+        <el-tab-pane name="proxy" label="Proxy Configuration">
           <keep-alive >
             <Proxy v-if="activeTab === 'proxy'" />
           </keep-alive>
         </el-tab-pane>
-        <el-tab-pane name="cache" label="缓存清理">
+        <el-tab-pane name="cache" label="Cache Cleaning">
           <keep-alive >
             <Cache v-if="activeTab === 'cache'" />
           </keep-alive>
         </el-tab-pane>
-        <el-tab-pane name="link" label="快捷链接">
+        <el-tab-pane name="link" label="Quick Link">
           <keep-alive >
             <Link v-if="activeTab === 'link'" />
           </keep-alive>
         </el-tab-pane>
-        <el-tab-pane name="mail" label="邮件配置">
+        <el-tab-pane name="mail" label="Mail Configuration">
           <keep-alive >
             <Mail v-if="activeTab === 'mail'" />
           </keep-alive>
@@ -54,7 +54,7 @@ export default {
     }
   },
   mounted () {
-    bus.$emit('set-topbar-title', { title: '系统配置', breadcrumb: [] })
+    bus.$emit('set-topbar-title', { title: 'System Configuration', breadcrumb: [] })
   }
 }
 </script>

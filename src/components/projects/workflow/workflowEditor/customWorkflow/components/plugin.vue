@@ -1,21 +1,21 @@
 <template>
   <section class="plugin">
     <section class="common-parcel-block">
-      <span class="title">变量</span>
+      <span class="title">Variable</span>
       <el-table :data="value.spec.plugin.inputs" class="mg-t8">
-        <el-table-column label="键">
+        <el-table-column label="Key">
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" :content="scope.row.description" placement="top-start">
               <span>{{scope.row.name}}</span>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="类型">
+        <el-table-column label="Type">
           <template slot-scope="scope">
-            <span>{{scope.row.type === 'string' ? '字符串':scope.row.type==='text'?'多行文本':'枚举'}}</span>
+            <span>{{scope.row.type === 'string' ? 'String':scope.row.type==='text'?'Multiline Text':'Enumerate'}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="值">
+        <el-table-column label="Value">
           <template slot-scope="scope">
             <el-select
               v-model="scope.row.value"
@@ -46,7 +46,7 @@
               v-if="scope.row.command === 'other'"
               style="display: inline-block; width: 220px;"
               v-model="scope.row.value"
-              placeholder="请选择"
+              placeholder="Please Choose"
               filterable
               size="small"
             >
@@ -55,7 +55,7 @@
             <EnvTypeSelect v-model="scope.row.command" isFixed isRuntime isOther style="display: inline-block;" />
           </template>
         </el-table-column>
-        <el-table-column label="敏感信息">
+        <el-table-column label="Sensitive Information">
           <template slot-scope="scope">
             <el-checkbox v-model="scope.row.is_credential" :disabled="scope.row.type === 'text'"></el-checkbox>
           </template>
@@ -66,7 +66,7 @@
       <section>
         <div style="margin-bottom: 8px;">
           <el-button type="primary" size="small" plain @click="advanced_setting_modified = !advanced_setting_modified">
-            高级配置
+            Advanced Configuration
             <i :class="[advanced_setting_modified ? 'el-icon-arrow-up' : 'el-icon-arrow-down']" style="margin-left: 8px;"></i>
           </el-button>
         </div>

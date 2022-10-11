@@ -5,12 +5,12 @@
       :closable="false"
     >
       <template>
-        支持集成 Sonar Server，配置后使用 SonarQube 进行代码扫描后可以上传结果到集成的地址，详情可参考
+        Support Integration Sonar Server，Use After Configuration SonarQube After scanning the code, you can upload the result to the integrated address，For details, please refer to
         <el-link style="font-size: 14px; vertical-align: baseline;"
                  type="primary"
                  :href="`https://docs.koderover.com/zadig/settings/sonar/`"
                  :underline="false"
-                 target="_blank">帮助文档</el-link> 。
+                 target="_blank">Help Documentation</el-link> 。
       </template>
     </el-alert>
     <div class="btn">
@@ -20,7 +20,7 @@
         type="primary"
         plain
         @click="handleSonarAdd"
-        >添加</el-button
+        >Add To</el-button
       >
     </div>
     <div class="jeknins-container">
@@ -46,19 +46,19 @@ export default {
       tableColumns: [
         {
           prop: 'server_address',
-          label: '服务地址'
+          label: 'Service Address'
         },
         {
-          label: '操作',
+          label: 'Operate',
           width: '160px',
           render: (scope) => {
             return (
               <div>
                 <el-button type="primary" size="mini" onClick={() => { this.handleSonarEdit(scope.row) }} plain>
-                  编辑
+                  Edit
                 </el-button>
                 <el-button type="danger" size="mini" onClick={() => { this.handleSonarDelete(scope.row) }} plain>
-                  删除
+                  Delete
                 </el-button>
               </div>
             )
@@ -70,13 +70,13 @@ export default {
   },
   methods: {
     async handleSonarDelete (data) {
-      this.$confirm('确定要删除这个配置吗？', '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to delete this configuration？', 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteSonarAPI(data).then(() => {
-          this.$message.success('删除成功')
+          this.$message.success('Successfully Deleted')
           this.getSonar()
         })
       })

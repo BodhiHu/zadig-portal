@@ -2,18 +2,18 @@
   <div class="approval">
     <header class="mg-b8">
       <el-col :span="2" class>
-        <span class="type">人工审核</span>
+        <span class="type">Manual Review</span>
       </el-col>
       <el-col :span="6" class="text">
-        <span>开始时间：</span>
+        <span>Starting Time：</span>
         <span>{{$utils.convertTimestamp(approvalInfo.start_time)}}</span>
       </el-col>
       <el-col :span="6" class="text" v-if="!isDisabled">
-        <span class="red">{{approvalInfo.approval.timeout}} 分钟</span>
-        <span>后审核超时</span>
+        <span class="red">{{approvalInfo.approval.timeout}} Minute</span>
+        <span>Post Review Timeout</span>
       </el-col>
       <el-col :span="6" class="text" v-else>
-        <span>完成时间：</span>
+        <span>Complete Time：</span>
         <span>{{$utils.convertTimestamp(approvalInfo.end_time)}}</span>
         <span
           :class="[`status-${$utils.taskElTagType(approvalInfo.approval.reject_or_approve)}`]"
@@ -27,32 +27,32 @@
     </header>
     <main>
       <el-table :data="approvalInfo.approval.approve_users" size="small" class="mg-t24">
-        <el-table-column prop="user_name" label="审核人"></el-table-column>
-        <el-table-column prop="reject_or_approve" label="审核结果">
+        <el-table-column prop="user_name" label="Reviewer"></el-table-column>
+        <el-table-column prop="reject_or_approve" label="Audit Results">
           <template slot-scope="scope">
             <span
               :class="$translate.calcTaskStatusColor(scope.row.reject_or_approve,'approval','status')"
             >{{ wordTranslation(scope.row.reject_or_approve,'approval','status') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="operation_time" label="审核时间">
+        <el-table-column prop="operation_time" label="Review Time">
           <template slot-scope="scope">
             <span>{{$utils.convertTimestamp(scope.row.operation_time)}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="comment" label="评论信息"></el-table-column>
+        <el-table-column prop="comment" label="Comment Information"></el-table-column>
       </el-table>
       <el-row class="mg-t24">
-        <el-button type="warning" size="small" @click="isShowCommentDialog=true" :disabled="isDisabled">审核</el-button>
+        <el-button type="warning" size="small" @click="isShowCommentDialog=true" :disabled="isDisabled">Audit</el-button>
       </el-row>
     </main>
-    <el-dialog title="评论信息" :visible.sync="isShowCommentDialog">
+    <el-dialog title="Comment Information" :visible.sync="isShowCommentDialog">
       <el-form :model="form">
-        <el-input placeholder="输入评论信息" size="small" v-model="form.comment"></el-input>
+        <el-input placeholder="Enter comment information" size="small" v-model="form.comment"></el-input>
       </el-form>
       <span slot="footer">
-        <el-button type="primary" size="small" @click="submit(true)">通过</el-button>
-        <el-button size="small" @click="submit(false)">拒绝</el-button>
+        <el-button type="primary" size="small" @click="submit(true)">Pass</el-button>
+        <el-button size="small" @click="submit(false)">Reject</el-button>
       </span>
     </el-dialog>
   </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="build-env">
     <el-form :label-width="labelWidth" :model="form" ref="ruleForm">
-      <el-form-item label="镜像仓库" :required="required" prop="docker_registry_id">
-        <el-select v-model="form.docker_registry_id" placeholder="请选择" :size="size">
+      <el-form-item label="Mirror Repository" :required="required" prop="docker_registry_id">
+        <el-select v-model="form.docker_registry_id" placeholder="Please Choose" :size="size">
           <el-option v-for="item in dockerList" :key="item.id" :label="item.namespace" :value="item.id"></el-option>
         </el-select>
       </el-form-item>

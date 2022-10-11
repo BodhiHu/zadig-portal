@@ -1,18 +1,18 @@
 <template>
   <el-dialog
-    :title=" isEdit ? '编辑':'新增' "
+    :title=" isEdit ? 'Edit':'New' "
     custom-class="create-user-dialog"
     :close-on-click-modal="false"
     :visible.sync="isShowDialogRoleVisible"
   >
     <el-form :model="form" @submit.native.prevent ref="roleForm" label-position="left" label-width="120px" class="primary-form">
-      <el-form-item label="角色名称" prop="name" :rules="{ required: true, trigger: 'change', validator: validateRoleName }">
+      <el-form-item label="Role Name" prop="name" :rules="{ required: true, trigger: 'change', validator: validateRoleName }">
         <el-input size="small" v-model="form.name" :disabled="isEdit"></el-input>
       </el-form-item>
-      <el-form-item label="描述信息" prop="account">
+      <el-form-item label="Description" prop="account">
         <el-input size="small" v-model="form.desc"></el-input>
       </el-form-item>
-      <el-form-item label="权限列表" prop="permissions" label-width="100px">
+      <el-form-item label="List Of Permissions" prop="permissions" label-width="100px">
         <div class="permissions-group" v-for="(group,group_index) in permissionGroups" :key="group_index">
           <el-checkbox
             :label="group.resource"
@@ -37,8 +37,8 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" size="small" @click="submit" class="start-create">确定</el-button>
-      <el-button plain native-type="submit" size="small" @click="isShowDialogRoleVisible = false">取消</el-button>
+      <el-button type="primary" size="small" @click="submit" class="start-create">Sure</el-button>
+      <el-button plain native-type="submit" size="small" @click="isShowDialogRoleVisible = false">Cancel</el-button>
     </div>
   </el-dialog>
 </template>
@@ -60,10 +60,10 @@ const initFormData = {
 }
 const validateRoleName = (rule, value, callback) => {
   if (typeof value === 'undefined' || value === '') {
-    callback(new Error('填写角色名称'))
+    callback(new Error('Fill In The Role Name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('角色名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('Character names only support lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -214,7 +214,7 @@ export default {
             console.log(error)
           )
           if (result) {
-            this.$message.success('修改成功')
+            this.$message.success('Successfully Modified')
             this.isShowDialogRoleVisible = false
             this.$emit('refreshUserList')
           }
@@ -226,7 +226,7 @@ export default {
             rules: rules
           }).catch(error => console.log(error))
           if (result) {
-            this.$message.success('添加成功')
+            this.$message.success('Added Successfully')
             this.isShowDialogRoleVisible = false
             this.$emit('refreshUserList')
           }

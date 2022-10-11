@@ -6,12 +6,12 @@
           <div class="tabs__item"
                :class="{'selected': $route.query.rightbar === 'var'}"
                @click="changeRoute('var')">
-            <span class="step-name">变量</span>
+            <span class="step-name">Variable</span>
           </div>
           <div class="tabs__item"
                :class="{'selected': $route.query.rightbar === 'reference'}"
                @click="changeRoute('reference')">
-            <span class="step-name">引用列表</span>
+            <span class="step-name">Citation List</span>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div v-if="$route.query.rightbar === 'reference'"
              class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">引用列表</div>
+            <div class="service-aside-box__title">Citation List</div>
           </header>
           <div class="service-aside-box__content">
             <section class="aside-section">
@@ -27,13 +27,13 @@
                         stripe
                         style="width: 100%;">
                 <el-table-column prop="project_name"
-                                 label="项目">
+                                 label="Project">
                 </el-table-column>
                 <el-table-column prop="value"
-                                 label="服务名称">
+                                 label="Service Name">
                   <template slot-scope="scope">
                     <router-link v-if="scope.row.service_name" :to="`/v1/projects/detail/${scope.row.project_name}/services?service_name=${scope.row.service_name}&rightbar=var`">{{scope.row.service_name}}</router-link>
-                    <span v-else>空</span>
+                    <span v-else>Null</span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -43,12 +43,12 @@
         <div v-if="$route.query.rightbar === 'var'"
              class="service-aside--variables">
           <header class="service-aside-box__header">
-            <div class="service-aside-box__title">变量列表</div>
+            <div class="service-aside-box__title">Variable List</div>
           </header>
           <div class="service-aside-box__content">
             <section class="aside-section">
               <h4>
-                <span><i class="iconfont iconfuwu"></i></span> 系统内置变量
+                <span><i class="iconfont iconfuwu"></i></span> System built-in variables
               </h4>
               <el-table :data="systemVariables"
                         stripe
@@ -57,19 +57,19 @@
                                  label="Key">
                 </el-table-column>
                 <el-table-column prop="description"
-                                 label="描述">
+                                 label="Describe">
                   <template slot-scope="scope">
                     <span v-if="scope.row.description">{{scope.row.description}}</span>
-                    <span v-else>空</span>
+                    <span v-else>Null</span>
                   </template>
                 </el-table-column>
               </el-table>
             </section>
             <section class="aside-section">
               <h4>
-                <span><i class="iconfont icontanhao"></i></span> 自定义变量
+                <span><i class="iconfont icontanhao"></i></span> Custom Variable
                 <el-tooltip effect="dark"
-                            :content="'自定义变量通过'+' {{'+'.key}} ' +' 声明'"
+                            :content="'Custom Variable Via'+' {{'+'.key}} ' +' Statement'"
                             placement="top">
                   <span><i class="el-icon-question"></i></span>
                 </el-tooltip>
@@ -88,7 +88,7 @@
                                 v-model="scope.row.value"
                                 type="textarea"
                                 :autosize="{ minRows: 1, maxRows: 4}"
-                                placeholder="请输入 Value"></el-input>
+                                placeholder="Please Enter Value"></el-input>
                     </template>
                   </el-table-column>
                 </el-table>

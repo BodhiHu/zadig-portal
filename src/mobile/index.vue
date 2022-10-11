@@ -7,7 +7,7 @@
                     background="#ecf9ff"
                     :scrollable="true"
                     left-icon="info-o">
-      欢迎使用 Zadig 移动端，功能有限，如需更多功能请前往 PC 端使用
+      Welcome Zadig Mobile，Limited Functionality，For More Features Go To PC End Use
     </van-notice-bar>
     <router-view />
     <van-tabbar v-model="active"
@@ -17,19 +17,19 @@
       <van-tabbar-item replace
                        name="status"
                        to="/mobile/status"
-                       icon="browsing-history-o">运行状态</van-tabbar-item>
+                       icon="browsing-history-o">Operating Status</van-tabbar-item>
       <van-tabbar-item replace
                        name="pipelines"
                        to="/mobile/pipelines"
-                       icon="play-circle-o">工作流</van-tabbar-item>
+                       icon="play-circle-o">Workflow</van-tabbar-item>
       <van-tabbar-item replace
                        name="envs"
                        to="/mobile/envs"
-                       icon="points">环境</van-tabbar-item>
+                       icon="points">Surroundings</van-tabbar-item>
       <van-tabbar-item replace
                        name="profile"
                        to="/mobile/profile"
-                       icon="user-circle-o">账号设置</van-tabbar-item>
+                       icon="user-circle-o">Account Settings</van-tabbar-item>
     </van-tabbar>
 
   </div>

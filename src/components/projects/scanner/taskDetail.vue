@@ -3,9 +3,9 @@
     <div class="common-parcel-block">
       <div class="workflow-basic-info">
         <div class="basic-left">
-          <div class="primary-title not-first-child">基本信息</div>
+          <div class="primary-title not-first-child">Basic Information</div>
           <el-form class="secondary-form" label-width="100px" label-position="left">
-            <el-form-item label="状态">
+            <el-form-item label="State">
               <el-tag
                 size="small"
                 effect="dark"
@@ -13,22 +13,22 @@
                 close-transition
               >{{ myTranslate(taskDetail.status) }}</el-tag>
             </el-form-item>
-            <el-form-item label="创建者">{{ taskDetail.creator }}</el-form-item>
-            <el-form-item v-if="taskDetail.task_revoker" label="取消者">{{ taskDetail.task_revoker }}</el-form-item>
-            <el-form-item label="持续时间">{{ taskDetail.interval }}</el-form-item>
-            <el-form-item v-if="showOperation()" label="操作">
+            <el-form-item label="Creator">{{ taskDetail.creator }}</el-form-item>
+            <el-form-item v-if="taskDetail.task_revoker" label="Canceller">{{ taskDetail.task_revoker }}</el-form-item>
+            <el-form-item label="Duration">{{ taskDetail.interval }}</el-form-item>
+            <el-form-item v-if="showOperation()" label="Operate">
               <!-- <el-button
                 v-if="taskDetail.status==='failed' || taskDetail.status==='cancelled' || taskDetail.status==='timeout'"
                 @click="rerun"
                 type="text"
                 size="medium"
-              >失败重试</el-button> -->
-              <el-button v-if="taskDetail.status==='running'||taskDetail.status==='created'" @click="cancel" type="text" size="medium">取消任务</el-button>
+              >Retry On Failure</el-button> -->
+              <el-button v-if="taskDetail.status==='running'||taskDetail.status==='created'" @click="cancel" type="text" size="medium">Cancel Task</el-button>
             </el-form-item>
           </el-form>
         </div>
       </div>
-      <div class="primary-title not-first-child">代码扫描</div>
+      <div class="primary-title not-first-child">Code Scan</div>
       <template v-if="scannerTaskArray.length > 0">
         <el-table
           :data="scannerTaskArray"
@@ -36,7 +36,7 @@
           :expand-row-keys="expandedTasks"
           @expand-change="updateTestExpanded"
           row-class-name="my-table-row"
-          empty-text="无"
+          empty-text="None"
           class="task-table"
         >
           <el-table-column type="expand">
@@ -51,29 +51,29 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="名称" width="200px">
+          <el-table-column label="Name" width="200px">
             <template>
               <span>{{scannerName}}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="代码库">
+          <el-table-column label="Code Library">
             <template slot-scope="scope">
               <span v-if="scope.row.repo_info && scope.row.repo_info.length > 0">{{scope.row.repo_info[0].repo_name}}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="状态">
+          <el-table-column label="State">
             <template slot-scope="scope">
               <span :class="colorTranslation(scope.row.status, 'pipeline', 'task')">{{ myTranslate(scope.row.status) }}</span>
               <span style="margin-left: 10px;">{{ makePrettyElapsedTime(scope.row) }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="链接">
+          <el-table-column label="Link">
             <template slot-scope="scope">
               <span v-if="scope.row.result_link">
-                <a :href="scope.row.result_link" target="_blank" rel="noopener noreferrer">查看</a>
+                <a :href="scope.row.result_link" target="_blank" rel="noopener noreferrer">Check</a>
               </span>
               <span v-else>N/A</span>
             </template>
@@ -147,7 +147,7 @@ export default {
         this.taskID,
         this.projectName
       ).then(res => {
-        this.$message.success('任务已重新启动')
+        this.$message.success('Task Restarted')
         this.$router.push(taskUrl)
       })
     },
@@ -159,7 +159,7 @@ export default {
         if (this.$refs && this.$refs.taskDetailScanner) {
           this.$refs.taskDetailScanner.killLog('scanner')
         }
-        this.$message.success('任务取消成功')
+        this.$message.success('The task was canceled successfully')
       })
     },
     fetchRunningTaskDetail () {
@@ -251,14 +251,14 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '代码扫描',
+          title: 'Code Scan',
           url: `/v1/projects/detail/${this.projectName}/scanner`
         },
         {

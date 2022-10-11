@@ -4,14 +4,14 @@
       <div class="error-wrapper">
         <el-alert
           v-if="distributeDeploy.release_imageSubTask.error"
-          title="错误信息"
+          title="Error Message"
           :description="distributeDeploy.release_imageSubTask.error"
           type="error"
-          close-text="知道了"
+          close-text="Understood"
         ></el-alert>
       </div>
       <div slot="header" class="clearfix subtask-header">
-        <span>分发</span>
+        <span>Distribution</span>
         <div v-if="distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status === 'running'" class="loader">
           <div class="ball-scale-multiple">
             <div></div>
@@ -24,21 +24,21 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconzhuangtai"></i> 分发状态
+              <i class="iconfont iconzhuangtai"></i> Distribution Status
             </div>
           </el-col>
           <el-col :span="6">
             <div
               class="grid-content item-desc"
               :class="$translate.calcTaskStatusColor(distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status)"
-            >{{distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status?$translate.translateTaskStatus(distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status):"未运行"}}</div>
+            >{{distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status?$translate.translateTaskStatus(distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status):"Not Running"}}</div>
           </el-col>
           <el-col
             v-if=" distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status && distributeDeploy.release_imageSubTask.distribute_info[0].distribute_status !=='running'"
             :span="6"
           >
             <div class="grid-content item-title">
-              <i class="iconfont iconshijian"></i> 持续时间
+              <i class="iconfont iconshijian"></i> Duration
             </div>
           </el-col>
           <el-col
@@ -53,15 +53,15 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconshengji"></i> 分发方式
+              <i class="iconfont iconshengji"></i> Distribution Method
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content item-desc">镜像分发</div>
+            <div class="grid-content item-desc">Mirror Distribution</div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconSliceCopy"></i> 镜像信息
+              <i class="iconfont iconSliceCopy"></i> Mirror Information
             </div>
           </el-col>
           <el-col :span="6">
@@ -79,7 +79,7 @@
     <template v-if="deployInfo && deployInfo.length > 0">
       <el-card v-for="(deploy,index) in deployInfo" :key="index" class="box-card task-process" :body-style="{ margin: '15px 0 0 0' }">
         <div slot="header" class="clearfix subtask-header">
-          <span>部署</span>
+          <span>Deploy</span>
           <div v-if="deploy.deploy_status === 'running'" class="loader">
             <div class="ball-scale-multiple">
               <div></div>
@@ -92,18 +92,18 @@
           <el-row :gutter="0">
             <el-col :span="6">
               <div class="grid-content item-title">
-                <i class="iconfont iconzhuangtai"></i> 部署状态
+                <i class="iconfont iconzhuangtai"></i> Deployment Status
               </div>
             </el-col>
             <el-col :span="6">
               <div
                 class="grid-content item-desc"
                 :class="$translate.calcTaskStatusColor(deploy.deploy_status)"
-              >{{deploy.deploy_status?$translate.translateTaskStatus(deploy.deploy_status):"未运行"}}</div>
+              >{{deploy.deploy_status?$translate.translateTaskStatus(deploy.deploy_status):"Not Running"}}</div>
             </el-col>
             <el-col :span="6">
               <div class="grid-content item-title">
-                <i class="iconfont iconjiqun1"></i> 部署环境
+                <i class="iconfont iconjiqun1"></i> Deployment Environment
               </div>
             </el-col>
             <el-col :span="6">
@@ -113,7 +113,7 @@
           <el-row :gutter="0">
             <el-col :span="6">
               <div class="grid-content item-title">
-                <i class="iconfont iconfuwu"></i> 服务名称
+                <i class="iconfont iconfuwu"></i> Service Name
               </div>
             </el-col>
             <el-col :span="6">
@@ -121,7 +121,7 @@
             </el-col>
             <el-col :span="6">
               <div class="grid-content item-title">
-                <i class="iconfont iconSliceCopy"></i> 镜像信息
+                <i class="iconfont iconSliceCopy"></i> Mirror Information
               </div>
             </el-col>
             <el-col :span="6">
@@ -142,7 +142,7 @@
       :body-style="{ margin: '15px 0 0 0' }"
     >
       <div slot="header" class="clearfix subtask-header">
-        <span>分发</span>
+        <span>Distribution</span>
         <div v-if="distributeDeploy.distribute2kodoSubTask.status === 'running'" class="loader">
           <div class="ball-scale-multiple">
             <div></div>
@@ -155,18 +155,18 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconzhuangtai"></i> 分发状态
+              <i class="iconfont iconzhuangtai"></i> Distribution Status
             </div>
           </el-col>
           <el-col :span="6">
             <div
               class="grid-content item-desc"
               :class="$translate.calcTaskStatusColor(distributeDeploy.distribute2kodoSubTask.status)"
-            >{{distributeDeploy.distribute2kodoSubTask.status?$translate.translateTaskStatus(distributeDeploy.distribute2kodoSubTask.status):"未运行"}}</div>
+            >{{distributeDeploy.distribute2kodoSubTask.status?$translate.translateTaskStatus(distributeDeploy.distribute2kodoSubTask.status):"Not Running"}}</div>
           </el-col>
           <!-- <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconjiqun1"></i> 持续时间
+              <i class="iconfont iconjiqun1"></i> Duration
             </div>
           </el-col>
           <el-col :span="6">
@@ -178,15 +178,15 @@
         <el-row :gutter="0">
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconshengji"></i> 分发方式
+              <i class="iconfont iconshengji"></i> Distribution Method
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content item-desc">对象存储</div>
+            <div class="grid-content item-desc">Object Storage</div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content item-title">
-              <i class="iconfont iconbaoguanli"></i> 二进制包
+              <i class="iconfont iconbaoguanli"></i> Binary Package
             </div>
           </el-col>
           <el-col :span="6">

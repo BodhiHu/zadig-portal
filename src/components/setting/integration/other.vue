@@ -1,20 +1,20 @@
 <template>
   <div class="integration-other-container">
-    <el-dialog title="其他外部系统" :close-on-click-modal="false" :visible.sync="dialogExternalVisible">
+    <el-dialog title="Other External Systems" :close-on-click-modal="false" :visible.sync="dialogExternalVisible">
       <el-form :model="externalEdit" @submit.native.prevent :rules="externalRules" ref="externalForm" label-width="100px">
-        <el-form-item label="系统名称" prop="name">
-          <el-input v-model="externalEdit.name" placeholder="输入系统名称" size="small"></el-input>
+        <el-form-item label="System Name" prop="name">
+          <el-input v-model="externalEdit.name" placeholder="Enter System Name" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="访问地址" prop="server">
-          <el-input v-model="externalEdit.server" placeholder="输入系统访问地址" size="small"></el-input>
+        <el-form-item label="Address" prop="server">
+          <el-input v-model="externalEdit.server" placeholder="Enter the system access address" size="small"></el-input>
         </el-form-item>
         <el-form-item label="API Token" prop="api_token">
-          <el-input v-model="externalEdit.api_token" show-password v-if="dialogExternalVisible" type="password" placeholder="输入 API Token" size="small"></el-input>
+          <el-input v-model="externalEdit.api_token" show-password v-if="dialogExternalVisible" type="password" placeholder="Enter API Token" size="small"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" native-type="submit" size="small" @click="updateExternalConfig" class="start-create">确定</el-button>
-        <el-button plain native-type="submit" size="small" @click="dialogExternalVisible = false">取消</el-button>
+        <el-button type="primary" native-type="submit" size="small" @click="updateExternalConfig" class="start-create">Sure</el-button>
+        <el-button plain native-type="submit" size="small" @click="dialogExternalVisible = false">Cancel</el-button>
       </div>
     </el-dialog>
 
@@ -22,30 +22,30 @@
       <template>
         <el-alert type="info" :closable="false">
           <template>
-            支持集成其他外部系统，配置后工作流可以调用外部系统 API，详情可参考
+            Support for integration with other external systems，Workflows can call external systems after configuration API，For details, please refer to
             <el-link
               style="font-size: 14px; vertical-align: baseline;"
               type="primary"
               :href="`https://docs.koderover.com/zadig/settings/others/`"
               :underline="false"
               target="_blank"
-            >帮助文档</el-link>。
+            >Help Documentation</el-link>。
           </template>
         </el-alert>
       </template>
       <div class="sync-container">
-        <el-button size="small" type="primary" plain @click="dialogExternalVisible = true">添加</el-button>
+        <el-button size="small" type="primary" plain @click="dialogExternalVisible = true">Add To</el-button>
       </div>
       <el-table :data="external" style="width: 100%;">
-        <el-table-column label="系统名称" prop="name"></el-table-column>
-        <el-table-column label="访问地址" prop="server"></el-table-column>
+        <el-table-column label="System Name" prop="name"></el-table-column>
+        <el-table-column label="Address" prop="server"></el-table-column>
         <el-table-column label="API Token">
           <template>**********</template>
         </el-table-column>
-        <el-table-column label="操作" width="160">
+        <el-table-column label="Operate" width="160">
           <template slot-scope="{ row }">
-            <el-button type="primary" size="mini" plain @click="handleExternalEdit(row)">编辑</el-button>
-            <el-button type="danger" size="mini" @click="handleExternalDelete(row.id)" plain>删除</el-button>
+            <el-button type="primary" size="mini" plain @click="handleExternalEdit(row)">Edit</el-button>
+            <el-button type="danger" size="mini" @click="handleExternalDelete(row.id)" plain>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -70,10 +70,10 @@ const externalInfo = {
 
 const validateURL = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入系统访问地址'))
+    callback(new Error('Please enter the system access address'))
   } else {
     if (value.endsWith('/')) {
-      callback(new Error('URL 末尾不能包含 /'))
+      callback(new Error('URL Cannot contain at the end /'))
     } else {
       callback()
     }
@@ -85,13 +85,13 @@ export default {
     this.externalRules = {
       name: {
         required: true,
-        message: '请输入系统名称',
+        message: 'Please enter a system name',
         trigger: ['blur', 'change']
       },
       server: [
         {
           type: 'url',
-          message: '请输入正确的 URL，包含协议',
+          message: 'Please Enter The Correct URL，Include Agreement',
           trigger: ['blur', 'change']
         },
         {
@@ -135,15 +135,15 @@ export default {
       })
     },
     handleExternalDelete (id) {
-      this.$confirm(`确定要删除这个外部系统配置吗？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Are you sure you want to delete this external system configuration？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteExternalSystemAPI(id).then(res => {
           this.getExternalConfig()
           this.$message({
-            message: '外部系统配置删除成功',
+            message: 'The external system configuration was deleted successfully',
             type: 'success'
           })
         })
@@ -165,7 +165,7 @@ export default {
             this.getExternalConfig()
             this.dialogExternalVisible = false
             this.$message({
-              message: `外部系统配置${id ? '修改' : '创建'}成功`,
+              message: `External system configuration${id ? 'Revise' : 'Create'}Success`,
               type: 'success'
             })
           })

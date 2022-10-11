@@ -8,11 +8,11 @@
         @click="startTask(workflow)"
         class="left"
       >
-        <span class="iconfont iconzhixing">&nbsp;执行</span>
+        <span class="iconfont iconzhixing">&nbsp;Implement</span>
       </el-button>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <el-button type="primary" effect="dark" class="left permission-disabled">
-          <span class="iconfont iconzhixing">&nbsp;执行</span>
+          <span class="iconfont iconzhixing">&nbsp;Implement</span>
         </el-button>
       </el-tooltip>
       <router-link
@@ -22,7 +22,7 @@
       >
         <span class="iconfont icondeploy edit-setting"></span>
       </router-link>
-      <el-tooltip v-else effect="dark" content="无权限操作" placement="top">
+      <el-tooltip v-else effect="dark" content="Unauthorized Operation" placement="top">
         <span class="middle">
           <span class="permission-disabled iconfont icondeploy edit-setting"></span>
         </span>
@@ -30,11 +30,11 @@
       <div class="right">
         <CusTags :values="stages" class="item"></CusTags>
         <span class="item">
-          <span class="item left">修改人</span>
+          <span class="item left">Modified By</span>
           {{ detail.updated_by }}
         </span>
         <span class="item">
-          <span class="item left">更新时间</span>
+          <span class="item left">Update Time</span>
           {{ $utils.convertTimestamp(detail.update_time) }}
         </span>
       </div>
@@ -43,7 +43,7 @@
     <el-card class="box-card full" :body-style="{ padding: '0px', margin: '15px 0 30px 0' }">
       <div slot="header" class="block-title">
         <span>
-          <i class="iconfont iconhistory title-icon"></i>历史任务
+          <i class="iconfont iconhistory title-icon"></i>Historical Mission
         </span>
         <!-- <FilterStatus
           ref="filterStatusRef"
@@ -69,7 +69,7 @@
       ></TaskList>
     </el-card>
 
-    <el-dialog :visible.sync="taskDialogVisible" title="执行工作流" custom-class="run-workflow" width="60%" class="dialog">
+    <el-dialog :visible.sync="taskDialogVisible" title="Execute Workflow" custom-class="run-workflow" width="60%" class="dialog">
        <RunCustomWorkflow
         v-if="taskDialogVisible"
         :workflowName="workflowName"
@@ -100,11 +100,11 @@ export default {
       filteredItems: [
         {
           value: 'creator',
-          text: '执行人'
+          text: 'Executor'
         },
         {
           value: 'serviceName',
-          text: '服务名称'
+          text: 'Service Name'
         },
         {
           value: 'committer',
@@ -112,15 +112,15 @@ export default {
         },
         {
           value: 'taskStatus',
-          text: '状态'
+          text: 'State'
         }
       ],
       defaultFilterList: {
         taskStatus: [
-          { text: '失败', value: 'failed' },
-          { text: '成功', value: 'passed' },
-          { text: '超时', value: 'timeout' },
-          { text: '取消', value: 'cancelled' }
+          { text: 'Fail', value: 'failed' },
+          { text: 'Success', value: 'passed' },
+          { text: 'Time Out', value: 'timeout' },
+          { text: 'Cancel', value: 'cancelled' }
         ]
       },
       workflow: {},
@@ -155,7 +155,7 @@ export default {
     async refreshHistoryTask () {
       await this.fetchHistory(this.pageStart, this.pageSize)
       if (!this.timeTimeoutFinishFlag) {
-        this.timerId = setTimeout(this.refreshHistoryTask, 3000) // 保证内存中只有一个定时器
+        this.timerId = setTimeout(this.refreshHistoryTask, 3000) // Ensure that there is only one timer in memory
       }
     },
     processTestData (res) {
@@ -258,14 +258,14 @@ export default {
     bus.$emit('set-topbar-title', {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         {
           title: this.projectName,
           isProjectName: true,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
-          title: '工作流',
+          title: 'Workflow',
           url: `/v1/projects/detail/${this.projectName}/pipelines`
         },
         { title: this.workflowName, url: '' }

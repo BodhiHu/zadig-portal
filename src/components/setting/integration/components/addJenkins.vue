@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="(isEdit ? '编辑': '新增') + ' Jenkins 配置'"
+    :title="(isEdit ? 'Edit': 'New') + ' Jenkins Configure'"
     custom-class="edit-form-dialog"
     :visible.sync="dialogVisible"
     center
@@ -21,18 +21,18 @@
       label-position="left"
       label-width="100px"
     >
-      <el-form-item label="服务地址" prop="url">
+      <el-form-item label="Service Address" prop="url">
         <el-input
           v-model="addForm.url"
           @change="validate(checkPassword)"
-          placeholder="Jenkins 服务地址"
+          placeholder="Jenkins Service Address"
         ></el-input>
       </el-form-item>
-      <el-form-item label="用户名" prop="username">
+      <el-form-item label="Username" prop="username">
         <el-input
           @change="validate(checkPassword)"
           v-model="addForm.username"
-          placeholder="Jenkins 用户名"
+          placeholder="Jenkins Username"
         ></el-input>
       </el-form-item>
       <el-form-item label="API Token" prop="password">
@@ -48,7 +48,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" :disabled="checkRes!=='pass'" size="small" @click="validate(save)">保存</el-button>
+        <el-button type="primary" :disabled="checkRes!=='pass'" size="small" @click="validate(save)">Save</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -73,18 +73,18 @@ export default {
       },
       formRules: {
         url: [
-          { required: true, message: '服务地址不能为空', trigger: 'blur' },
+          { required: true, message: 'Service address cannot be empty', trigger: 'blur' },
           {
             pattern: /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/,
-            message: '请输入正确的服务地址',
+            message: 'Please enter the correct service address',
             trigger: 'blur'
           }
         ],
         username: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' }
+          { required: true, message: 'Username can not be empty', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: 'API token不能为空', trigger: 'blur' }
+          { required: true, message: 'API tokenCan Not Be Empty', trigger: 'blur' }
         ]
       }
     }
@@ -108,7 +108,7 @@ export default {
           console.log(error)
         )
         if (res && res.message === 'success') {
-          this.$message.success('新增成功')
+          this.$message.success('Added Successfully')
           this.dialogVisible = false
           this.getJenkins()
         }
@@ -119,7 +119,7 @@ export default {
         console.log(error)
       )
       if (res && res.message === 'success') {
-        this.$message.success('保存成功')
+        this.$message.success('Successfully Saved')
         this.dialogVisible = false
         this.getJenkins()
       }

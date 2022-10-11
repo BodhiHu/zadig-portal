@@ -1,13 +1,13 @@
 <template>
-  <div class="create-pm-env-container" v-loading="loading" element-loading-text="正在加载中" element-loading-spinner="el-icon-loading">
+  <div class="create-pm-env-container" v-loading="loading" element-loading-text="Loading" element-loading-spinner="el-icon-loading">
     <div v-if="$utils.isEmpty(this.pmServiceMap) && !loading" class="no-resources">
       <img src="@assets/icons/illustration/environment.svg" alt />
       <div class="description">
         <p>
-          该环境暂无服务，请点击
+          This environment is currently out of service，Please Click
           <router-link :to="`/v1/projects/detail/${projectName}/services`">
-            <el-button type="primary" size="mini" round plain>服务</el-button>
-          </router-link>新建服务
+            <el-button type="primary" size="mini" round plain>Serve</el-button>
+          </router-link>New Service
         </p>
       </div>
     </div>
@@ -20,16 +20,16 @@
         :model="projectConfig"
         inline-message
       >
-        <el-form-item label="环境名称" prop="env_name" :rules="{ required: true, trigger: 'change', validator: validateEnvName }">
+        <el-form-item label="Environment Name" prop="env_name" :rules="{ required: true, trigger: 'change', validator: validateEnvName }">
           <el-input v-model="projectConfig.env_name" size="small"></el-input>
         </el-form-item>
       </el-form>
       <div class="common-parcel-block">
-        <div class="primary-title">服务列表</div>
+        <div class="primary-title">Service List</div>
         <div class="box-card-service">
           <div slot="header" class="clearfix">
-            <span class="second-title">单服务或微服务(自定义脚本/Docker 部署)</span>
-            <span class="small-title">(请关联服务的主机资源，后续也可以在服务中进行配置)</span>
+            <span class="second-title">Single service or microservice(Custom Script/Docker Deploy)</span>
+            <span class="small-title">(Please associate the host resource of the service，It can also be configured in the service later)</span>
           </div>
           <el-form class="service-form-block" label-width="50%" label-position="left">
             <div class="service-item" v-for="(typeServiceMap, serviceName) in pmServiceMap" :key="serviceName">
@@ -37,15 +37,15 @@
               <div class="service-content">
                 <div v-for="service in typeServiceMap" :key="`${service.service_name}-${service.type}`" class="service-block">
                   <template v-if="service.type==='pm'" class="container-images">
-                    <el-form-item label="请关联主机资源" label-width="40%">
-                      <el-button v-if="allHost.reduce((pre, cur) => pre + cur.options.length, 0) === 0" @click="$router.push('/v1/system/host')" type="text">创建主机</el-button>
+                    <el-form-item label="Please associate the host resource" label-width="40%">
+                      <el-button v-if="allHost.reduce((pre, cur) => pre + cur.options.length, 0) === 0" @click="$router.push('/v1/system/host')" type="text">Create Host</el-button>
                       <el-select
                         v-else
                         v-model="service.host_with_labels"
                         filterable
                         multiple
                         @change="addHost(service)"
-                        placeholder="请选择要关联的主机"
+                        placeholder="Please select a host to associate"
                         size="small"
                       >
                         <el-option-group
@@ -70,13 +70,13 @@
       </div>
       <el-form label-width="35%" class="ops">
         <el-form-item>
-          <el-button @click="$router.back()" :loading="startDeployLoading" size="medium">取消</el-button>
-          <el-button @click="deployPmEnv" :loading="startDeployLoading" type="primary" size="medium">立即创建</el-button>
+          <el-button @click="$router.back()" :loading="startDeployLoading" size="medium">Cancel</el-button>
+          <el-button @click="deployPmEnv" :loading="startDeployLoading" type="primary" size="medium">Create Now</el-button>
         </el-form-item>
       </el-form>
       <footer v-if="startDeployLoading" class="create-footer">
         <div class="description">
-          <el-tag type="primary">正在创建环境中....</el-tag>
+          <el-tag type="primary">Creating Environment....</el-tag>
         </div>
         <div class="deploy-loading">
           <div class="spinner__item1"></div>
@@ -101,10 +101,10 @@ import bus from '@utils/eventBus'
 
 const validateEnvName = (rule, value, callback) => {
   if (typeof value === 'undefined' || value === '') {
-    callback(new Error('填写环境名称'))
+    callback(new Error('Fill in the environment name'))
   } else {
     if (!/^[a-z0-9-]+$/.test(value)) {
-      callback(new Error('环境名称只支持小写字母和数字，特殊字符只支持中划线'))
+      callback(new Error('Environment names only support lowercase letters and numbers，Special characters only support underscores'))
     } else {
       callback()
     }
@@ -158,11 +158,11 @@ export default {
         })
         this.allHost = [
           {
-            label: '项目资源',
+            label: 'Project Resources',
             options: projectOptions
           },
           {
-            label: '系统资源',
+            label: 'System Resource',
             options: systemOptions
           }
         ]
@@ -242,7 +242,7 @@ export default {
                 const envName = payload.env_name
                 this.startDeployLoading = false
                 this.$message({
-                  message: '创建环境成功',
+                  message: 'Created the environment successfully',
                   type: 'success'
                 })
                 this.$router.push(
@@ -266,15 +266,15 @@ export default {
       title: '',
       breadcrumb: [
         {
-          title: '项目',
+          title: 'Project',
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
         {
           title: `${this.projectName}`,
           url: `/v1/projects/detail/${this.projectName}/detail`
         },
-        { title: '环境', url: '' },
-        { title: '创建', url: '' }
+        { title: 'Surroundings', url: '' },
+        { title: 'Create', url: '' }
       ]
     })
     this.projectConfig.product_name = this.projectName

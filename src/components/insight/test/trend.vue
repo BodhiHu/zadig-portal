@@ -21,7 +21,7 @@ export default {
           trigger: 'axis'
         },
         legend: {
-          data: ['成功', '失败', '超时']
+          data: ['Success', 'Fail', 'Time Out']
         },
         grid: {
           left: '3%',
@@ -54,26 +54,26 @@ export default {
         },
         series: [
           {
-            name: '成功',
+            name: 'Success',
             type: 'line',
             smooth: true,
-            stack: '总量',
+            stack: 'Total',
             areaStyle: {},
             data: []
           },
           {
-            name: '失败',
+            name: 'Fail',
             type: 'line',
             smooth: true,
-            stack: '总量',
+            stack: 'Total',
             areaStyle: {},
             data: []
           },
           {
-            name: '超时',
+            name: 'Time Out',
             type: 'line',
             smooth: true,
-            stack: '总量',
+            stack: 'Total',
             areaStyle: {},
             data: []
           }

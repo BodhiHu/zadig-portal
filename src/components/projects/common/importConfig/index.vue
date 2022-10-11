@@ -5,7 +5,7 @@
       :style="{ 'margin-bottom': importRepoInfoUse.showParams.showImport ? '0' : '16px'}"
     >{{ importRepoInfoUse.showParams.title }}</div>
     <div class="values-yaml-content">
-      <el-button v-if="importRepoInfoUse.showParams.showImport" type="text" class="title-btn" @click="showGitImportDialog = true">从代码库导入</el-button>
+      <el-button v-if="importRepoInfoUse.showParams.showImport" type="text" class="title-btn" @click="showGitImportDialog = true">Import From Codebase</el-button>
       <Resize class="desc mirror" @sizeChange="$refs.codemirror.refresh()">
         <codemirror ref="codemirror" v-model="importRepoInfoUse.overrideYaml" :placeholder="placeholder" :cmOption="cmOption"></codemirror>
       </Resize>
@@ -13,14 +13,14 @@
         v-if="importRepoInfoUse.showParams.checkAssociated && (importRepoInfoUse.services && importRepoInfoUse.services.length)"
         style="margin-top: 16px;"
       >
-        <el-checkbox v-model="importRepoInfoUse.restart_associated_svc">重启关联服务 {{ importRepoInfoUse.services.join('、') }}</el-checkbox>
+        <el-checkbox v-model="importRepoInfoUse.restart_associated_svc">Restart associated services {{ importRepoInfoUse.services.join('、') }}</el-checkbox>
       </div>
     </div>
-    <el-dialog title="环境配置 - 从代码库导入" :visible.sync="showGitImportDialog" append-to-body>
+    <el-dialog title="Environment configuration - Import From Codebase" :visible.sync="showGitImportDialog" append-to-body>
       <Repository ref="valueRepoRef" :repoSource="importRepoInfoUse.gitRepoConfig" :fileType="'k8sYaml'" showAutoSync></Repository>
       <div slot="footer">
-        <el-button @click="showGitImportDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="importConfigYaml" size="small" :loading="loadValueYamls">导 入</el-button>
+        <el-button @click="showGitImportDialog = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="importConfigYaml" size="small" :loading="loadValueYamls">Import</el-button>
       </div>
     </el-dialog>
   </div>
@@ -47,7 +47,7 @@ const valueInfo = {
 }
 
 const showParams = {
-  title: '添加环境配置',
+  title: 'Add environment configuration',
   showImport: true,
   checkAssociated: false
 }
@@ -71,7 +71,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: '可直接粘贴 Ingress、ConfigMap、Secret、PVC 类型的 K8s YAML 文件'
+      default: 'Can Be Directly Pasted Ingress、ConfigMap、Secret、PVC Type Of K8s YAML Document'
     }
   },
   computed: {

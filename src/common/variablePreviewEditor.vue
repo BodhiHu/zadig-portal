@@ -1,16 +1,16 @@
 <template>
   <div class="variable-preview-editor-container">
-    <span @click="dialogVisible=true" class="view-btn">效果预览</span>
+    <span @click="dialogVisible=true" class="view-btn">Effect Preview</span>
     <el-dialog
-      title="效果预览"
+      title="Effect Preview"
       :visible.sync="dialogVisible"
       width="60%"
       class="global-variable-preview-dialog"
       append-to-body
       :close-on-click-modal="false"
     >
-      <span>选择服务</span>
-      <el-select v-model="currentService" @change="getPreviewYaml" size="small" placeholder="请选择服务">
+      <span>Select Service</span>
+      <el-select v-model="currentService" @change="getPreviewYaml" size="small" placeholder="Please Select A Service">
         <el-option v-for="item in services" :key="item.service_name" :label="item.service_name" :value="item.service_name"></el-option>
       </el-select>
       <CodeMirror ref="codemirror-full" :value="renderedYaml" :options="options" class="editor-container" />
@@ -23,7 +23,7 @@
         </ul>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" type="primary" @click="dialogVisible = false">确定</el-button>
+        <el-button size="small" type="primary" @click="dialogVisible = false">Sure</el-button>
       </span>
     </el-dialog>
   </div>

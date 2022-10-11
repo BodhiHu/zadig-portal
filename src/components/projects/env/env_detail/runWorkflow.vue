@@ -2,12 +2,12 @@
   <el-form class="run-workflow"
            label-width="80px">
     <el-form-item prop="pipelines"
-                  label="工作流">
+                  label="Workflow">
       <el-select v-model="workflowName"
                  size="small"
                  class="full-width"
                  @change="getWorkflow"
-                 placeholder="请选择">
+                 placeholder="Please Choose">
         <el-option v-for="(item,index) in workflows"
                    :key="index"
                    :label="item.name"
@@ -25,20 +25,20 @@
         </div>
         <div class="advanced-setting">
           <el-collapse v-model="activeNames">
-            <el-collapse-item title="高级设置"
+            <el-collapse-item title="Advanced Settings"
                               name="1">
-              <el-checkbox v-model="runner.reset_cache">不使用工作空间缓存
+              <el-checkbox v-model="runner.reset_cache">Do not use workspace cache
                 <el-tooltip effect="dark"
-                            content="可能会增加任务时长。如果构建中不使用工作空间缓存，该设置会被忽略"
+                            content="May increase task duration。If the build does not use the workspace cache，This setting will be ignored"
                             placement="top">
                   <span><i style="color: #909399;"
                        class="el-icon-question"></i></span>
                 </el-tooltip>
               </el-checkbox>
               <br>
-              <el-checkbox v-model="runner.ignore_cache">不使用 Docker 缓存
+              <el-checkbox v-model="runner.ignore_cache">Do Not Use Docker Cache
                 <el-tooltip effect="dark"
-                            content="只对配置了镜像构建步骤的构建生效"
+                            content="Only takes effect for builds configured with an image build step"
                             placement="top">
                   <span><i style="color: #909399;"
                        class="el-icon-question"></i></span>
@@ -54,10 +54,10 @@
                      type="primary"
                      size="small"
                      plain>
-            {{ startTaskLoading?'启动中':'启动任务' }}
+            {{ startTaskLoading?'Starting':'Start Task' }}
           </el-button>
           <span style="color: #ff1949;"
-                v-if="pickedTargets.length === 0">该服务尚未配置构建，无法启动任务</span>
+                v-if="pickedTargets.length === 0">The service has not been configured to build，Failed To Start Task</span>
         </div>
       </div>
     </template>
@@ -377,7 +377,7 @@ export default {
       }
       const projectName = this.workflowMeta.product_tmpl_name
       runWorkflowAPI(projectName, clone).then(res => {
-        this.$message.success('创建成功')
+        this.$message.success('Created Successfully')
         this.$emit('success')
         this.$router.push(`/v1/projects/detail/${projectName}/pipelines/multi/${res.pipeline_name}/${res.task_id}?status=running`)
       }).catch(error => {
@@ -386,7 +386,7 @@ export default {
           const envName = error.response.data.extra.envName
           const serviceName = error.response.data.extra.serviceName
           this.$message({
-            message: `检测到 ${projectName} 中 ${envName} 环境下的 ${serviceName} 服务未启动 <br> 请检查后再运行工作流`,
+            message: `Detected ${projectName} Middle ${envName} Environment ${serviceName} Service Not Started <br> Please check before running the workflow`,
             type: 'warning',
             dangerouslyUseHTMLString: true,
             duration: 5000
@@ -399,7 +399,7 @@ export default {
     },
     checkInput () {
       if (!this.runner.product_tmpl_name || !this.runner.namespace || !this.workflowName) {
-        this.$message.error('请选择工作流')
+        this.$message.error('Please Select A Workflow')
         return false
       }
 
@@ -419,7 +419,7 @@ export default {
         return true
       } else {
         this.$message({
-          message: emptyValue.join(',') + ' 代码库尚未选择构建信息',
+          message: emptyValue.join(',') + ' The codebase has not yet selected build information',
           type: 'error'
         })
         return false

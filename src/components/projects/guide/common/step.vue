@@ -2,15 +2,15 @@
   <div class="step-container">
     <div class="step-detail">
       <div class="guide-title">
-        <h4>项目初始化向导</h4>
+        <h4>Project initialization wizard</h4>
       </div>
       <el-row :gutter="0" class="steps-wrap" type="flex">
         <el-col :span="envDisabled?24:18" style="display: flex;">
           <OnboardingSteps :active="activeStep" class="steps-container" align-center simple finish-status="success">
-            <OnboardingStep title="项目配置" description></OnboardingStep>
-            <OnboardingStep title="新建服务" description></OnboardingStep>
+            <OnboardingStep title="Project Configuration" description></OnboardingStep>
+            <OnboardingStep title="New Service" description></OnboardingStep>
             <OnboardingStep :title="stepThreeTitle" description></OnboardingStep>
-            <OnboardingStep title="执行工作流" description></OnboardingStep>
+            <OnboardingStep title="Execute Workflow" description></OnboardingStep>
           </OnboardingSteps>
         </el-col>
         <el-col v-if="!envDisabled" :span="6">
@@ -23,7 +23,7 @@
             </span>
             <span class="env-blocks">
               <i class="iconfont iconvery-environ"></i>
-              <span class="name">开发环境</span>
+              <span class="name">Development Environment</span>
             </span>
           </div>
           <div class="envs">
@@ -35,7 +35,7 @@
             </span>
             <span class="env-blocks">
               <i class="iconfont iconvery-environ"></i>
-              <span class="name">测试环境</span>
+              <span class="name">Test Environment</span>
             </span>
           </div>
           <div class="envs">
@@ -47,7 +47,7 @@
             </span>
             <span class="env-blocks">
               <i class="iconfont iconvery-environ"></i>
-              <span class="name">预发布环境</span>
+              <span class="name">Pre Release Environment</span>
             </span>
           </div>
         </el-col>
@@ -68,7 +68,7 @@ export default {
       type: Number
     },
     stepThreeTitle: {
-      default: '加入环境',
+      default: 'Join The Environment',
       type: String
     },
     envDisabled: {

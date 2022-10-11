@@ -1,10 +1,10 @@
 <template>
     <div v-loading="loading"
-         element-loading-text="加载中..."
+         element-loading-text="Loading..."
          element-loading-spinner="iconfont iconfont-loading iconyingyongshezhi"
          class="setting-app-container">
       <!--apps-create-dialog-->
-      <el-dialog title='新建'
+      <el-dialog title='New'
                  width="55%"
                  :close-on-click-modal="false"
                  custom-class="create-app-dialog"
@@ -14,15 +14,15 @@
                  :model="createApp"
                  label-position="left"
                  label-width="100px">
-          <el-form-item label="名称"
+          <el-form-item label="Name"
                         prop="name">
             <el-input size="small"
                       v-model="createApp.name"></el-input>
           </el-form-item>
-          <el-form-item label="版本"
+          <el-form-item label="Version"
                         prop="version">
             <el-input size="small"
-                      placeholder="例如 1.0.0"
+                      placeholder="E G 1.0.0"
                       v-model="createApp.version"></el-input>
           </el-form-item>
           <el-form-item label="Bin Path"
@@ -33,18 +33,18 @@
           </el-form-item>
           <el-form-item class="label-icon">
             <template #label>
-              <span>启用</span>
-              <el-tooltip content="控制软件包列表中是否展示，正在使用中的不受影响"
+              <span>Enable</span>
+              <el-tooltip content="Controls whether to show in the package list，In Use Is Not Affected"
                           placement="top">
                 <i class="el-icon-question"></i>
               </el-tooltip>
             </template>
-            <el-checkbox v-model="createApp.enabled">启用该软件包</el-checkbox>
+            <el-checkbox v-model="createApp.enabled">Enable The Package</el-checkbox>
           </el-form-item>
           <el-form-item prop="download_path" class="label-icon">
             <template #label>
-              <span>安装包地址</span>
-              <el-tooltip content="系统自动从配置地址下载安装包并做缓存，安装包可通过 ${FILEPATH} 变量获取"
+              <span>Installation package address</span>
+              <el-tooltip content="The system automatically downloads the installation package from the configuration address and caches it，The installation package is available through ${FILEPATH} Variable Acquisition"
                           placement="top">
                 <i class="el-icon-question"></i>
               </el-tooltip>
@@ -53,7 +53,7 @@
                       placeholder="http://domain/install_pkg.tar.gz"
                       v-model="createApp.download_path"></el-input>
           </el-form-item>
-          <el-form-item label="安装脚本"
+          <el-form-item label="Install Script"
                         prop="scripts">
             <Editor v-model="createApp.scripts"
                     lang="sh"
@@ -66,17 +66,17 @@
         <div slot="footer"
              class="dialog-footer">
           <el-button size="small"
-                     @click="dialogAppCreateFormVisible = false">取 消</el-button>
+                     @click="dialogAppCreateFormVisible = false">Cancel</el-button>
           <el-button :plain="true"
                      type="success"
                      size="small"
-                     @click="appOperation('add')">保存</el-button>
+                     @click="appOperation('add')">Save</el-button>
         </div>
       </el-dialog>
       <!--apps-create-dialog-->
 
       <!--apps-edit-dialog-->
-      <el-dialog title='修改软件包'
+      <el-dialog title='Modify The Package'
                  width="55%"
                  custom-class="create-app-dialog"
                  :close-on-click-modal="false"
@@ -94,20 +94,20 @@
           </el-form-item>
           <el-form-item v-if="(typeof swapApp.enabled)!=='undefined'" class="label-icon">
             <template #label>
-              <span>启用</span>
-              <el-tooltip content="控制软件包列表中是否展示，正在使用中的不受影响"
+              <span>Enable</span>
+              <el-tooltip content="Controls whether to show in the package list，In Use Is Not Affected"
                           placement="top">
                 <i class="el-icon-question"></i>
               </el-tooltip>
             </template>
-            <el-checkbox v-model="swapApp.enabled">启用该软件包</el-checkbox>
+            <el-checkbox v-model="swapApp.enabled">Enable The Package</el-checkbox>
           </el-form-item>
           <el-form-item v-if="(typeof swapApp.download_path)!=='undefined'"
                         prop="download_path"
                         class="label-icon">
             <template #label>
-              <span>安装包地址</span>
-              <el-tooltip content="系统自动从配置地址下载安装包并做缓存，安装包可通过 ${FILEPATH} 变量获取"
+              <span>Installation package address</span>
+              <el-tooltip content="The system automatically downloads the installation package from the configuration address and caches it，The installation package is available through ${FILEPATH} Variable Acquisition"
                           placement="top">
                 <i class="el-icon-question"></i>
               </el-tooltip>
@@ -115,7 +115,7 @@
             <el-input size="small"
                       v-model="swapApp.download_path"></el-input>
           </el-form-item>
-          <el-form-item label="安装脚本"
+          <el-form-item label="Install Script"
                         prop="scripts">
             <Editor v-model="swapApp.scripts"
                     lang="sh"
@@ -127,11 +127,11 @@
         <div slot="footer"
              class="dialog-footer">
           <el-button size="small"
-                     @click="dialogAppEditFormVisible = false">取 消</el-button>
+                     @click="dialogAppEditFormVisible = false">Cancel</el-button>
           <el-button size="small"
                      :plain="true"
                      type="success"
-                     @click="appOperation('update')">保存</el-button>
+                     @click="appOperation('update')">Save</el-button>
         </div>
       </el-dialog>
       <!--apps-edit-dialog-->
@@ -139,21 +139,21 @@
         <el-alert type="info"
                   :closable="false">
           <template>
-            运行构建及测试步骤时，根据实际业务去安装必要的软件包，详情可参考
+            When running build and test steps，Install the necessary software packages according to the actual business，For details, please refer to
             <el-link style="font-size: 14px; vertical-align: baseline;"
                      type="primary"
                      :href="`https://docs.koderover.com/zadig/settings/app/`"
                      :underline="false"
-                     target="_blank">帮助文档</el-link>
+                     target="_blank">Help Documentation</el-link>
           </template>
         </el-alert>
         <div class="sync-container">
           <el-button :plain="true"
                      @click="dialogAppCreateFormVisible=true"
                      size="small"
-                     type="success">新建</el-button>
+                     type="success">New</el-button>
           <span class="switch-span"
-                :style="{color: proxyInfo.enable_application_proxy?'#0066ff':'#303133'}">启用代理</span>
+                :style="{color: proxyInfo.enable_application_proxy?'#0066ff':'#303133'}">Enable Proxy</span>
           <el-switch size="small"
                      :value="proxyInfo.enable_application_proxy"
                      @change="changeProxy"></el-switch>
@@ -162,16 +162,16 @@
           <template>
             <el-table :data="availableApps"
                       style="width: 100%;">
-              <el-table-column label="名称">
+              <el-table-column label="Name">
                 <template slot-scope="scope">
                   <span>{{scope.row.name}}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="版本">
+              <el-table-column label="Version">
                 <template slot-scope="scope">
                   <el-select v-model="defaultVersion[scope.row.name]"
                              size="small"
-                             placeholder="请选择">
+                             placeholder="Please Choose">
                     <el-option v-for="item in appBucket[scope.row.name]"
                                :key="item.version"
                                :label="item.version"
@@ -180,7 +180,7 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="更新时间">
+              <el-table-column label="Update Time">
                 <template slot-scope="scope">
                   <i class="el-icon-time"></i>
                   <span style="margin-left: 10px;">{{
@@ -188,36 +188,36 @@
                   }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="更新人">
+              <el-table-column label="Updater">
                 <template slot-scope="scope">
                   <span style="margin-left: 10px;">{{
                   selectedApp(scope.row.name,defaultVersion[scope.row.name],"update_by") }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="操作">
+              <el-table-column label="Operate">
                 <template slot-scope="scope">
                   <el-button @click="appOperation('edit',selectedApp(scope.row.name,defaultVersion[scope.row.name]))"
                              type="primary"
-                             size="mini" plain>编辑</el-button>
+                             size="mini" plain>Edit</el-button>
                   <el-popover v-model="showPopper[scope.row.name]"
                               trigger="click"
                               placement="top"
                               width="260"
                               style="display: inline-block;">
-                    <p>软件包删除可能会影响正在使用的工作流，确定删除软件包 {{scope.row.name}} 的
-                      {{defaultVersion[scope.row.name]}} 版本吗？</p>
+                    <p>Package removal may affect workflows in use，OK To Remove The Package {{scope.row.name}} Of
+                      {{defaultVersion[scope.row.name]}} Version？</p>
                     <div style=" margin: 0; text-align: right;">
                       <el-button size="mini"
                                  @click="showPopper[scope.row.name]=false"
-                                 type="text">取消</el-button>
+                                 type="text">Cancel</el-button>
                       <el-button type="primary"
                                  @click="appOperation('delete',selectedApp(scope.row.name,defaultVersion[scope.row.name]))"
-                                 size="mini">确定</el-button>
+                                 size="mini">Sure</el-button>
                     </div>
                     <div slot="reference">
                       <el-button size="mini"
                                  @click="showDeleteModal(scope.row.name)"
-                                 type="danger" plain>删除</el-button>
+                                 type="danger" plain>Delete</el-button>
                     </div>
                   </el-popover>
                 </template>
@@ -275,10 +275,10 @@ export default {
       availableApps: [],
       showPopper: {},
       rules: {
-        name: [{ required: true, message: '请填写软件包名称', trigger: 'blur' }],
-        version: [{ required: true, message: '请填写软件包版本', trigger: 'blur' }],
-        scripts: [{ required: true, message: '请填写安装脚本', trigger: 'blur' }],
-        bin_path: [{ required: true, message: '请填写软件包 Bin Path', trigger: 'blur' }]
+        name: [{ required: true, message: 'Please fill in the package name', trigger: 'blur' }],
+        version: [{ required: true, message: 'Please fill in the package version', trigger: 'blur' }],
+        scripts: [{ required: true, message: 'Please fill in the installation script', trigger: 'blur' }],
+        bin_path: [{ required: true, message: 'Please fill in the package Bin Path', trigger: 'blur' }]
       }
     }
   },
@@ -318,7 +318,7 @@ export default {
     addApp (data) {
       createAppAPI(data).then(res => {
         this.$message({
-          message: '新增软件包成功',
+          message: 'Successfully added package',
           type: 'success'
         })
         this.getApps()
@@ -333,7 +333,7 @@ export default {
         }
       }).catch(() => {
         this.$message({
-          message: '新增软件包失败',
+          message: 'Failed To Add Package',
           type: 'error'
         })
       }).then(() => {
@@ -343,13 +343,13 @@ export default {
     updateApp (data) {
       updateAppAPI(data).then(response => {
         this.$message({
-          message: '更新软件包成功',
+          message: 'Update Package Succeeded',
           type: 'success'
         })
         this.getApps()
       }).catch(response => {
         this.$message({
-          message: '更新软件包失败',
+          message: 'Failed To Update Package',
           type: 'error'
         })
       }).then(() => {
@@ -363,12 +363,12 @@ export default {
       deleteAppAPI(data).then(response => {
         this.getApps()
         this.$message({
-          message: '软件包已删除',
+          message: 'Package Removed',
           type: 'success'
         })
       }).catch(response => {
         this.$message({
-          message: '软件包删除失败',
+          message: 'Package Removal Failed',
           type: 'error'
         })
       })
@@ -420,13 +420,13 @@ export default {
     changeProxy (value) {
       if (!this.proxyInfo.id || this.proxyInfo.type === 'no') {
         this.proxyInfo.enable_application_proxy = false
-        this.$message.error('未配置代理，请前往「系统配置」->「代理配置」配置代理！')
+        this.$message.error('Proxy Not Configured，Go To「System Configuration」->「Proxy Configuration」Configure The Proxy！')
         return
       }
       this.proxyInfo.enable_application_proxy = value
       updateProxyConfigAPI(this.proxyInfo.id, this.proxyInfo).then(response => {
         if (response.message === 'success') {
-          const mess = value ? '启用代理成功！' : '成功关闭代理！'
+          const mess = value ? 'Proxy enabled successfully！' : 'Agent closed successfully！'
           this.$message({
             message: `${mess}`,
             type: 'success'
@@ -436,7 +436,7 @@ export default {
         }
       }).catch(err => {
         this.proxyInfo.enable_application_proxy = !value
-        this.$message.error(`修改配置失败：${err}`)
+        this.$message.error(`Failed to modify configuration：${err}`)
       })
     },
     getProxyConfig () {
@@ -445,7 +445,7 @@ export default {
           this.proxyInfo = Object.assign({}, this.proxyInfo, response[0])
         }
       }).catch(error => {
-        this.$message.error(`获取代理配置失败：${error}`)
+        this.$message.error(`Failed to get proxy configuration：${error}`)
       })
     }
   },
@@ -453,7 +453,7 @@ export default {
 
   },
   created () {
-    bus.$emit('set-topbar-title', { title: '软件包管理', breadcrumb: [] })
+    bus.$emit('set-topbar-title', { title: 'Package Management', breadcrumb: [] })
     this.getProxyConfig()
     this.getApps()
   },

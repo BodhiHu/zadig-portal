@@ -4,8 +4,8 @@
       <Step :activeStep="1" envDisabled/>
       <div class="current-step-container">
         <div class="title-container">
-          <span class="first">第二步</span>
-          <span class="second">配置服务的构建脚本，后续仍可在项目中重新配置</span>
+          <span class="first">Second Step</span>
+          <span class="second">Build script to configure service，Can still be reconfigured in the project later</span>
         </div>
       </div>
     </div>
@@ -15,14 +15,14 @@
       <div v-else class="no-content">
         <img src="@assets/icons/illustration/editorNoService.svg" alt />
         <p style="color: #909399;">
-          暂无服务，创建服务请在左侧栏点击&nbsp;
-          <el-button size="mini" icon="el-icon-plus" @click="$refs.serviceLsit.newService()" plain circle></el-button>&nbsp;创建服务
+          No Service，To create a service, click on the left column&nbsp;
+          <el-button size="mini" icon="el-icon-plus" @click="$refs.serviceLsit.newService()" plain circle></el-button>&nbsp;Create Service
         </p>
       </div>
     </div>
     <div class="controls__wrap">
       <div class="controls__right">
-        <el-button type="primary" size="small" :disabled="!showNext" @click="toNext">下一步</el-button>
+        <el-button type="primary" size="small" :disabled="!showNext" @click="toNext">Next Step</el-button>
       </div>
     </div>
   </div>
@@ -82,7 +82,7 @@ export default {
     bus.$emit(`set-topbar-title`, {
       title: '',
       breadcrumb: [
-        { title: '项目', url: '/v1/projects' },
+        { title: 'Project', url: '/v1/projects' },
         { title: this.projectName, isProjectName: true, url: '' }
       ]
     })

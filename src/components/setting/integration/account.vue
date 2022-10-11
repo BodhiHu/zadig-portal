@@ -1,14 +1,14 @@
 <template>
   <div class="integration-account-container">
-    <el-dialog :title="'账号系统管理-'+(userAccount.mode === 'add'?'添加':'编辑')" :close-on-click-modal="false" custom-class="user-form-dialog" :visible.sync="dialogUserAccountFormVisible">
+    <el-dialog :title="'Account system management-'+(userAccount.mode === 'add'?'Add To':'Edit')" :close-on-click-modal="false" custom-class="user-form-dialog" :visible.sync="dialogUserAccountFormVisible">
       <el-form class="mg-t32" :model="userAccount" @submit.native.prevent :rules="userAccountRules" status-icon ref="userAccountForm" label-position="left" label-width="120px">
-        <el-form-item label="账号系统类型" prop="type">
+        <el-form-item label="Account System Type" prop="type">
           <el-select v-model="userAccount.name" @change="clearValidate()" :disabled="userAccount.mode ==='edit'">
             <el-option label="Microsoft Active Directory" value="Microsoft Active Directory"></el-option>
             <el-option label="OpenLDAP" value="OpenLDAP"></el-option>
             <el-option label="GitHub" value="GitHub"></el-option>
             <el-option label="OAuth" value="OAuth"></el-option>
-            <el-option label="自定义" value="custom"></el-option>
+            <el-option label="Customize" value="custom"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -23,7 +23,7 @@
         >
           <el-alert type="info" :closable="false" style="margin-bottom: 15px;">
             <slot>
-              <span class="tips">{{`Authorization Callback URL 请填写`}}</span>
+              <span class="tips">{{`Authorization Callback URL Please Fill Out`}}</span>
               <span class="tips code-line">
                 {{`${$utils.getOrigin()}/dex/callback`}}
                 <span
@@ -38,7 +38,7 @@
           <el-form-item label="Client ID" prop="clientID">
             <el-input
               v-model="userAccountGitHub.config.clientID"
-              placeholder="输入 OAuth App Client ID"
+              placeholder="Enter OAuth App Client ID"
               autofocus
               clearable
               auto-complete="off"
@@ -47,7 +47,7 @@
           <el-form-item label="Client Secret" prop="clientSecret">
             <el-input
               v-model="userAccountGitHub.config.clientSecret"
-              placeholder="输入 OAuth App Client Secret"
+              placeholder="Enter OAuth App Client Secret"
               autofocus
               show-password
               type="password"
@@ -67,71 +67,71 @@
           label-width="185px"
           label-position="left"
         >
-          <h4>基本配置</h4>
-          <el-form-item label="主机地址" prop="addr">
+          <h4>Basic Configuration</h4>
+          <el-form-item label="Host Address" prop="addr">
             <el-col :span="14">
               <el-form-item prop="addr">
-                <el-input v-model="userAccountAD.config.addr" placeholder="AD 地址" autofocus clearable auto-complete="off"></el-input>
+                <el-input v-model="userAccountAD.config.addr" placeholder="AD Address" autofocus clearable auto-complete="off"></el-input>
               </el-form-item>
             </el-col>
             <el-col style="text-align: center;" :span="1">:</el-col>
             <el-col :span="5">
               <el-form-item prop="port">
-                <el-input v-model="userAccountAD.config.port" placeholder="端口" autofocus clearable auto-complete="off"></el-input>
+                <el-input v-model="userAccountAD.config.port" placeholder="Port" autofocus clearable auto-complete="off"></el-input>
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="管理员账号" prop="bindDN">
+          <el-form-item label="Administrator Account" prop="bindDN">
             <el-input
               v-model="userAccountAD.config.bindDN"
-              placeholder="AD 管理员，示例：cn=user,dc=domain,dc=name"
+              placeholder="AD Administrator，Example：cn=user,dc=domain,dc=name"
               autofocus
               clearable
               auto-complete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="管理员密码" prop="bindPW">
+          <el-form-item label="Administrator Password" prop="bindPW">
             <el-input v-model="userAccountAD.config.bindPW"   show-password v-if="dialogUserAccountFormVisible && userAccount.name ==='Microsoft Active Directory'"
-                      type="password" placeholder="管理员密码" autofocus clearable auto-complete="off"></el-input>
+                      type="password" placeholder="Administrator Password" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="startTLS" label="使用 SSL">
+          <el-form-item prop="startTLS" label="Use SSL">
             <el-checkbox v-model="userAccountAD.config.startTLS"></el-checkbox>
           </el-form-item>
-          <h4>用户规则</h4>
-          <el-form-item label="基础 DN" prop="userSearch.baseDN">
+          <h4>User Rules</h4>
+          <el-form-item label="Base DN" prop="userSearch.baseDN">
             <el-input
               v-model="userAccountAD.config.userSearch.baseDN"
-              placeholder="从根节点搜索用户，例如：cn=users,dc=example.com,dc=com"
+              placeholder="Search user from root node，E G：cn=users,dc=example.com,dc=com"
               autofocus
               auto-complete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="用户过滤器" prop="userSearch.filter">
+          <el-form-item label="User Filter" prop="userSearch.filter">
             <el-input v-model="userAccountAD.config.userSearch.filter" placeholder="userSearch.filter" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户名属性（用于登录）" prop="userSearch.username">
+          <el-form-item label="Username Property（For Login）" prop="userSearch.username">
             <el-input v-model="userAccountAD.config.userSearch.username" placeholder="cn" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户昵称属性" prop="userSearch.nameAttr">
-            <el-input v-model="userAccountAD.config.userSearch.nameAttr" label="用户邮箱" autofocus auto-complete="off"></el-input>
+          <el-form-item label="User Nickname Attribute" prop="userSearch.nameAttr">
+            <el-input v-model="userAccountAD.config.userSearch.nameAttr" label="User Mailbox" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户邮箱属性" prop="userSearch.emailAttr">
-            <el-input v-model="userAccountAD.config.userSearch.emailAttr" label="用户邮箱" autofocus auto-complete="off"></el-input>
+          <el-form-item label="User Mailbox Properties" prop="userSearch.emailAttr">
+            <el-input v-model="userAccountAD.config.userSearch.emailAttr" label="User Mailbox" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <h4>组规则</h4>
-          <el-form-item label="组基础 DN" prop="groupSearch.baseDN">
+          <h4>Group Rules</h4>
+          <el-form-item label="Group Basis DN" prop="groupSearch.baseDN">
             <el-input
               v-model="userAccountAD.config.groupSearch.baseDN"
-              placeholder="从根节点搜索用户组，例如：cn=group,dc=example.com,dc=com"
+              placeholder="Search for user groups from root node，E G：cn=group,dc=example.com,dc=com"
               autofocus
               auto-complete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="组过滤器" prop="groupSearch.filter">
+          <el-form-item label="Group Filter" prop="groupSearch.filter">
             <el-input v-model="userAccountAD.config.groupSearch.filter" placeholder="groupSearch.filter" autofocus auto-complete="off"></el-input>
           </el-form-item>
           <!-- todo userMatchers: -->
-          <el-form-item label="组名称属性" prop="groupSearch.nameAttr">
+          <el-form-item label="Group Name Attribute" prop="groupSearch.nameAttr">
             <el-input v-model="userAccountAD.config.groupSearch.nameAttr" placeholder="groupSearch.nameAttr" autofocus auto-complete="off"></el-input>
           </el-form-item>
         </el-form>
@@ -145,71 +145,71 @@
           label-width="185px"
           label-position="left"
         >
-          <h4>基本配置</h4>
-          <el-form-item label="主机地址" prop="addr">
+          <h4>Basic Configuration</h4>
+          <el-form-item label="Host Address" prop="addr">
             <el-col :span="14">
               <el-form-item prop="addr">
-                <el-input v-model="userAccountLDAP.config.addr" placeholder="LDAP 地址" autofocus clearable auto-complete="off"></el-input>
+                <el-input v-model="userAccountLDAP.config.addr" placeholder="LDAP Address" autofocus clearable auto-complete="off"></el-input>
               </el-form-item>
             </el-col>
             <el-col style="text-align: center;" :span="1">:</el-col>
             <el-col :span="5">
               <el-form-item prop="port">
-                <el-input v-model="userAccountLDAP.config.port" placeholder="端口" autofocus clearable auto-complete="off"></el-input>
+                <el-input v-model="userAccountLDAP.config.port" placeholder="Port" autofocus clearable auto-complete="off"></el-input>
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="管理员账号" prop="bindDN">
+          <el-form-item label="Administrator Account" prop="bindDN">
             <el-input
               v-model="userAccountLDAP.config.bindDN"
-              placeholder="LDAP 管理员，示例：cn=user,dc=domain,dc=name"
+              placeholder="LDAP Administrator，Example：cn=user,dc=domain,dc=name"
               autofocus
               clearable
               auto-complete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="管理员密码" prop="bindPW">
+          <el-form-item label="Administrator Password" prop="bindPW">
             <el-input v-model="userAccountLDAP.config.bindPW"  show-password v-if="dialogUserAccountFormVisible && userAccount.name ==='OpenLDAP'"
-                      type="password" placeholder="管理员密码" autofocus clearable auto-complete="off"></el-input>
+                      type="password" placeholder="Administrator Password" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="startTLS" label="使用 SSL">
+          <el-form-item prop="startTLS" label="Use SSL">
             <el-checkbox v-model="userAccountLDAP.config.startTLS"></el-checkbox>
           </el-form-item>
-          <h4>用户规则</h4>
-          <el-form-item label="基础 DN" prop="userSearch.baseDN">
+          <h4>User Rules</h4>
+          <el-form-item label="Base DN" prop="userSearch.baseDN">
             <el-input
               v-model="userAccountLDAP.config.userSearch.baseDN"
-              placeholder="从根节点搜索用户，例如：cn=users,dc=example.com,dc=com"
+              placeholder="Search user from root node，E G：cn=users,dc=example.com,dc=com"
               autofocus
               auto-complete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="用户过滤器" prop="userSearch.filter">
+          <el-form-item label="User Filter" prop="userSearch.filter">
             <el-input v-model="userAccountLDAP.config.userSearch.filter" placeholder="userSearch.filter" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户名属性（用于登录）" prop="userSearch.username">
+          <el-form-item label="Username Property（For Login）" prop="userSearch.username">
             <el-input v-model="userAccountLDAP.config.userSearch.username" placeholder="cn" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户昵称属性" prop="userSearch.nameAttr">
+          <el-form-item label="User Nickname Attribute" prop="userSearch.nameAttr">
             <el-input v-model="userAccountLDAP.config.userSearch.nameAttr" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户邮箱属性" prop="userSearch.emailAttr">
+          <el-form-item label="User Mailbox Properties" prop="userSearch.emailAttr">
             <el-input v-model="userAccountLDAP.config.userSearch.emailAttr" autofocus auto-complete="off"></el-input>
           </el-form-item>
-          <h4>组规则</h4>
-          <el-form-item label="组基础 DN" prop="groupSearch.baseDN">
+          <h4>Group Rules</h4>
+          <el-form-item label="Group Basis DN" prop="groupSearch.baseDN">
             <el-input
               v-model="userAccountLDAP.config.groupSearch.baseDN"
-              placeholder="从根节点搜索用户组，例如：cn=group,dc=example.com,dc=com"
+              placeholder="Search for user groups from root node，E G：cn=group,dc=example.com,dc=com"
               autofocus
               auto-complete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="组过滤器" prop="groupSearch.filter">
+          <el-form-item label="Group Filter" prop="groupSearch.filter">
             <el-input v-model="userAccountLDAP.config.groupSearch.filter" placeholder="groupSearch.filter" autofocus auto-complete="off"></el-input>
           </el-form-item>
           <!-- todo userMatchers: -->
-          <el-form-item label="组名称属性" prop="groupSearch.nameAttr">
+          <el-form-item label="Group Name Attribute" prop="groupSearch.nameAttr">
             <el-input
               v-model="userAccountLDAP.config.groupSearch.nameAttr"
               placeholder="groupSearch.nameAttr"
@@ -230,7 +230,7 @@
         >
           <el-alert type="info" :closable="false" style="margin-bottom: 15px;">
             <slot>
-              <span class="tips">{{`Authorization Callback URL 请填写`}}</span>
+              <span class="tips">{{`Authorization Callback URL Please Fill Out`}}</span>
               <span class="tips code-line">
                 {{`${$utils.getOrigin()}/dex/callback`}}
                 <span
@@ -243,7 +243,7 @@
             </slot>
           </el-alert>
           <el-form-item label="Client ID" prop="clientID">
-            <el-input v-model="userAccountOAuth.config.clientID" placeholder="输入 OAuth Client ID" autofocus clearable auto-complete="off"></el-input>
+            <el-input v-model="userAccountOAuth.config.clientID" placeholder="Enter OAuth Client ID" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="Client Secret" prop="clientSecret">
             <el-input
@@ -251,7 +251,7 @@
               v-model="userAccountOAuth.config.clientSecret"
               show-password
               type="password"
-              placeholder="输入 OAuth Client Secret"
+              placeholder="Enter OAuth Client Secret"
               autofocus
               clearable
               auto-complete="off"
@@ -260,25 +260,25 @@
           <el-form-item label="Authorization URL" prop="authorizationURL">
             <el-input
               v-model="userAccountOAuth.config.authorizationURL"
-              placeholder="输入 Authorization URL"
+              placeholder="Enter Authorization URL"
               autofocus
               clearable
               auto-complete="off"
             ></el-input>
           </el-form-item>
           <el-form-item label="Token URL" prop="tokenURL">
-            <el-input v-model="userAccountOAuth.config.tokenURL" placeholder="输入 Token URL" autofocus clearable auto-complete="off"></el-input>
+            <el-input v-model="userAccountOAuth.config.tokenURL" placeholder="Enter Token URL" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户信息 URL" prop="userInfoURL">
-            <el-input v-model="userAccountOAuth.config.userInfoURL" placeholder="用户信息 URL" autofocus clearable auto-complete="off"></el-input>
+          <el-form-item label="User Info URL" prop="userInfoURL">
+            <el-input v-model="userAccountOAuth.config.userInfoURL" placeholder="User Info URL" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户名属性（用于登录）" prop="userIDKey">
+          <el-form-item label="Username Property（For Login）" prop="userIDKey">
             <el-input v-model="userAccountOAuth.config.userIDKey" placeholder="user_id" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户昵称属性" prop="claimMapping.userNameKey">
+          <el-form-item label="User Nickname Attribute" prop="claimMapping.userNameKey">
             <el-input v-model="userAccountOAuth.config.claimMapping.userNameKey" placeholder="user_name" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户邮箱属性" prop="claimMapping.emailKey">
+          <el-form-item label="User Mailbox Properties" prop="claimMapping.emailKey">
             <el-input v-model="userAccountOAuth.config.claimMapping.emailKey" placeholder="email" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="Scopes" prop="scopes">
@@ -287,7 +287,7 @@
               filterable
               allow-create
               default-first-option
-              placeholder="请输入 Scopes">
+              placeholder="Please Enter Scopes">
             </el-select>
           </el-form-item>
         </el-form>
@@ -301,16 +301,16 @@
           label-position="left"
           label-width="140px"
         >
-          <el-form-item label="账号系统类型" prop="type">
-            <el-input v-model="userAccountCustom.type" :disabled="userAccount.mode ==='edit'" placeholder="输入自定义账号系统类型" autofocus clearable auto-complete="off"></el-input>
+          <el-form-item label="Account System Type" prop="type">
+            <el-input v-model="userAccountCustom.type" :disabled="userAccount.mode ==='edit'" placeholder="Enter custom account system type" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="账号系统名称" prop="name">
-            <el-input v-model="userAccountCustom.name" placeholder="输入账号系统名称" autofocus clearable auto-complete="off"></el-input>
+          <el-form-item label="Account System Name" prop="name">
+            <el-input v-model="userAccountCustom.name" placeholder="Enter the account system name" autofocus clearable auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="YAML 配置" prop="yaml">
+          <el-form-item label="YAML Configure" prop="yaml">
             <span slot="label">
-              YAML 配置
-              <HelpLink :inline="true" :keyword="{location:'账号系统',key:'custom'}" />
+              YAML Configure
+              <HelpLink :inline="true" :keyword="{location:'Account System',key:'custom'}" />
             </span>
           </el-form-item>
         </el-form>
@@ -327,7 +327,7 @@
           size="small"
           @click="createAccountUser()"
           class="start-create"
-        >确定</el-button>
+        >Sure</el-button>
         <el-button
           v-else-if="userAccount.mode==='edit'"
           :disabled="userAccount.name === ''"
@@ -336,8 +336,8 @@
           size="small"
           @click="updateAccountUser()"
           class="start-create"
-        >保存</el-button>
-        <el-button plain native-type="submit" size="small" @click="handleUserAccountCancel">取消</el-button>
+        >Save</el-button>
+        <el-button plain native-type="submit" size="small" @click="handleUserAccountCancel">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of add account dialog-->
@@ -346,36 +346,36 @@
       <template>
         <el-alert type="info" :closable="false">
           <template>
-            支持集成 Microsoft Active Directory、OpenLDAP、GitHub 以及 OAuth 集成等外部账号系统，详情可参考
+            Support Integration Microsoft Active Directory、OpenLDAP、GitHub As Well As OAuth Integration with other external account systems，For details, please refer to
             <el-link
               style="font-size: 14px; vertical-align: baseline;"
               type="primary"
               :href="`https://docs.koderover.com/zadig/settings/account/ldap/`"
               :underline="false"
               target="_blank"
-            >帮助文档</el-link>。
+            >Help Documentation</el-link>。
           </template>
         </el-alert>
       </template>
       <div class="sync-container">
-        <el-button size="small" type="primary" plain @click="addAccount()">添加</el-button>
+        <el-button size="small" type="primary" plain @click="addAccount()">Add To</el-button>
       </div>
       <el-table :data="accounts" style="width: 100%;"  @cell-mouse-enter="enter" @cell-mouse-leave="leave">
-        <el-table-column label="账号系统名称">
+        <el-table-column label="Account System Name">
           <template slot-scope="scope">
             <span>{{scope.row.name}}</span>
-             <el-tag size="mini" type="primary" plain  class="btn" v-show="scope.row.is_default">默认</el-tag>
+             <el-tag size="mini" type="primary" plain  class="btn" v-show="scope.row.is_default">Default</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="right">
           <span slot-scope="scope"  style="display: none;" :ref="'popover' + scope.row.id">
-            <el-checkbox  :value="scope.row.is_default"  @change="setDefaultAccount(scope.row)">设置为默认账号系统</el-checkbox >
+            <el-checkbox  :value="scope.row.is_default"  @change="setDefaultAccount(scope.row)">Set as default account system</el-checkbox >
           </span>
         </el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column label="Operate" width="300">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" plain @click="handleUserAccountEdit(scope.row)">编辑</el-button>
-            <el-button type="danger" size="mini" @click="handleUserAccountDelete(scope.row)" plain>删除</el-button>
+            <el-button type="primary" size="mini" plain @click="handleUserAccountEdit(scope.row)">Edit</el-button>
+            <el-button type="danger" size="mini" @click="handleUserAccountDelete(scope.row)" plain>Delete</el-button>
             <el-button
               v-if="scope.row.name === 'OpenLDAP' || scope.row.name === 'Microsoft Active Directory'"
               type="primary"
@@ -383,7 +383,7 @@
               :loading="syncAccountUserLoading"
               @click="syncAccountUser(scope.row)"
               plain
-            >同步</el-button>
+            >Synchronize</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -444,7 +444,7 @@ export default {
           // rootCAData:'',
           bindDN: '',
           bindPW: '',
-          usernamePrompt: 'AD 用户名',
+          usernamePrompt: 'AD Username',
           userSearch: {
             baseDN: '',
             filter: '(cn=*)',
@@ -481,7 +481,7 @@ export default {
           // rootCAData:'',
           bindDN: '',
           bindPW: '',
-          usernamePrompt: 'LDAP 用户名',
+          usernamePrompt: 'LDAP Username',
           userSearch: {
             baseDN: '',
             filter: '(cn=*)',
@@ -559,17 +559,17 @@ export default {
       userAccountCustomRules: {
         type: {
           required: true,
-          message: '请填写自定义账号系统类型',
+          message: 'Please fill in the custom account system type',
           trigger: ['blur', 'change']
         },
         name: {
           required: true,
-          message: '请填写名称',
+          message: 'Please Fill In The Name',
           trigger: ['blur', 'change']
         },
         yaml: {
           required: true,
-          message: '请输入 YAML 配置',
+          message: 'Please Enter YAML Configure',
           trigger: ['blur', 'change']
         }
       },
@@ -577,173 +577,173 @@ export default {
       userAccountADRules: {
         addr: {
           required: true,
-          message: '请输入 AD 地址',
+          message: 'Please Enter AD Address',
           trigger: ['blur', 'change']
         },
         port: {
           required: true,
-          message: '请输入端口',
+          message: 'Please Enter The Port',
           trigger: ['blur', 'change']
         },
         bindDN: {
           required: true,
-          message: '请输入管理员账号',
+          message: 'Please enter an administrator account',
           trigger: ['blur', 'change']
         },
         bindPW: {
           required: true,
-          message: '请输入管理员密码',
+          message: 'Please enter administrator password',
           trigger: ['blur', 'change']
         },
         'userSearch.baseDN': {
           required: true,
-          message: '请输入基础 DN',
+          message: 'Please Enter The Base DN',
           trigger: ['blur', 'change']
         },
         'userSearch.filter': {
           required: true,
-          message: '请输入用户过滤器',
+          message: 'Please Enter User Filter',
           trigger: ['blur', 'change']
         },
         'userSearch.username': {
           required: true,
-          message: '请输入用户属性',
+          message: 'Please enter user attributes',
           trigger: ['blur', 'change']
         },
         'userSearch.emailAttr': {
           required: true,
-          message: '请输入用户邮箱属性',
+          message: 'Please enter user email properties',
           trigger: ['blur', 'change']
         },
         'groupSearch.baseDN': {
           required: true,
-          message: '请输入组基础 DN',
+          message: 'Please Enter Group Basis DN',
           trigger: ['blur', 'change']
         },
         'groupSearch.nameAttr': {
           required: true,
-          message: '请输入组名称属性',
+          message: 'Please enter a group name attribute',
           trigger: ['blur', 'change']
         },
         'groupSearch.filter': {
           required: true,
-          message: '请输入组过滤器',
+          message: 'Please enter a group filter',
           trigger: ['blur', 'change']
         }
       },
       userAccountLDAPRules: {
         addr: {
           required: true,
-          message: '请输入 LDAP 地址',
+          message: 'Please Enter LDAP Address',
           trigger: ['blur', 'change']
         },
         port: {
           required: true,
-          message: '请输入端口',
+          message: 'Please Enter The Port',
           trigger: ['blur', 'change']
         },
         bindDN: {
           required: true,
-          message: '请输入管理员账号',
+          message: 'Please enter an administrator account',
           trigger: ['blur', 'change']
         },
         bindPW: {
           required: true,
-          message: '请输入管理员密码',
+          message: 'Please enter administrator password',
           trigger: ['blur', 'change']
         },
         'userSearch.baseDN': {
           required: true,
-          message: '请输入基础 DN',
+          message: 'Please Enter The Base DN',
           trigger: ['blur', 'change']
         },
         'userSearch.filter': {
           required: true,
-          message: '请输入用户过滤器',
+          message: 'Please Enter User Filter',
           trigger: ['blur', 'change']
         },
         'userSearch.username': {
           required: true,
-          message: '请输入用户属性',
+          message: 'Please enter user attributes',
           trigger: ['blur', 'change']
         },
         'userSearch.emailAttr': {
           required: true,
-          message: '请输入用户邮箱属性',
+          message: 'Please enter user email properties',
           trigger: ['blur', 'change']
         },
         'groupSearch.baseDN': {
           required: true,
-          message: '请输入组基础 DN',
+          message: 'Please Enter Group Basis DN',
           trigger: ['blur', 'change']
         },
         'groupSearch.nameAttr': {
           required: true,
-          message: '请输入组名称属性',
+          message: 'Please enter a group name attribute',
           trigger: ['blur', 'change']
         },
         'groupSearch.filter': {
           required: true,
-          message: '请输入组过滤器',
+          message: 'Please enter a group filter',
           trigger: ['blur', 'change']
         }
       },
       userAccountGitHubRules: {
         clientID: {
           required: true,
-          message: '请填写 Client ID',
+          message: 'Please Fill Out Client ID',
           trigger: ['blur', 'change']
         },
         clientSecret: {
           required: true,
-          message: '请填写 Client Secret',
+          message: 'Please Fill Out Client Secret',
           trigger: ['blur', 'change']
         }
       },
       userAccountOAuthRules: {
         clientID: {
           required: true,
-          message: '请填写 Client ID',
+          message: 'Please Fill Out Client ID',
           trigger: ['blur', 'change']
         },
         clientSecret: {
           required: true,
-          message: '请填写 Client Secret',
+          message: 'Please Fill Out Client Secret',
           trigger: ['blur', 'change']
         },
         authorizationURL: {
           required: true,
-          message: '请填写 Authorization URL',
+          message: 'Please Fill Out Authorization URL',
           trigger: ['blur', 'change']
         },
         tokenURL: {
           required: true,
-          message: '请填写 Token URL',
+          message: 'Please Fill Out Token URL',
           trigger: ['blur', 'change']
         },
         userInfoURL: {
           required: true,
-          message: '请填写 User Info URL',
+          message: 'Please Fill Out User Info URL',
           trigger: ['blur', 'change']
         },
         userIDKey: {
           required: true,
-          message: '请填写用户名属性',
+          message: 'Please fill in the username attribute',
           trigger: ['blur', 'change']
         },
         'claimMapping.userNameKey': {
           required: true,
-          message: '请填写用户昵称属性',
+          message: 'Please fill in the user nickname attribute',
           trigger: ['blur', 'change']
         },
         'claimMapping.emailKey': {
           required: true,
-          message: '请填写用户邮箱属性',
+          message: 'Please fill in the user email properties',
           trigger: ['blur', 'change']
         },
         scopes: {
           required: true,
-          message: '请输入 Scopes',
+          message: 'Please Enter Scopes',
           trigger: ['blur', 'change']
         }
       }
@@ -757,13 +757,13 @@ export default {
   methods: {
     copyCommandSuccess (event) {
       this.$message({
-        message: '地址已成功复制到剪贴板',
+        message: 'Address successfully copied to clipboard',
         type: 'success'
       })
     },
     copyCommandError (event) {
       this.$message({
-        message: '地址复制失败',
+        message: 'Address Copy Failed',
         type: 'error'
       })
     },
@@ -855,7 +855,7 @@ export default {
             // rootCAData:'',
             bindDN: '',
             bindPW: '',
-            usernamePrompt: 'LDAP 用户名',
+            usernamePrompt: 'LDAP Username',
             userSearch: {
               baseDN: '',
               filter: '(cn=*)',
@@ -894,7 +894,7 @@ export default {
             // rootCAData:'',
             bindDN: '',
             bindPW: '',
-            usernamePrompt: 'AD 用户名',
+            usernamePrompt: 'AD Username',
             userSearch: {
               baseDN: '',
               filter: '(cn=*)',
@@ -954,15 +954,15 @@ export default {
       this.dialogUserAccountFormVisible = false
     },
     handleUserAccountDelete (row) {
-      this.$confirm(`确定要删除 ${row.name} 这个账号系统吗？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Sure You Want To Delete ${row.name} Is This Account System？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteConnectorAPI(row.id).then(res => {
           this.getAccountConfig()
           this.$message({
-            message: '删除成功',
+            message: 'Successfully Deleted',
             type: 'success'
           })
         })
@@ -989,7 +989,7 @@ export default {
         res => {
           this.syncAccountUserLoading = false
           this.$message({
-            message: '同步 LDAP 数据成功',
+            message: 'Synchronize LDAP Data Success',
             type: 'success'
           })
         },
@@ -1011,7 +1011,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统添加成功',
+                message: 'Account system added successfully',
                 type: 'success'
               })
             })
@@ -1031,7 +1031,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统添加成功',
+                message: 'Account system added successfully',
                 type: 'success'
               })
             })
@@ -1048,7 +1048,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统添加成功',
+                message: 'Account system added successfully',
                 type: 'success'
               })
             })
@@ -1066,7 +1066,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统添加成功',
+                message: 'Account system added successfully',
                 type: 'success'
               })
             })
@@ -1085,7 +1085,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统添加成功',
+                message: 'Account system added successfully',
                 type: 'success'
               })
             })
@@ -1107,7 +1107,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统修改成功',
+                message: 'Account system modified successfully',
                 type: 'success'
               })
             })
@@ -1125,7 +1125,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统修改成功',
+                message: 'Account system modified successfully',
                 type: 'success'
               })
             })
@@ -1142,7 +1142,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统修改成功',
+                message: 'Account system modified successfully',
                 type: 'success'
               })
             })
@@ -1160,7 +1160,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统修改成功',
+                message: 'Account system modified successfully',
                 type: 'success'
               })
             })
@@ -1178,7 +1178,7 @@ export default {
               this.getAccountConfig()
               this.handleUserAccountCancel()
               this.$message({
-                message: '账号系统修改成功',
+                message: 'Account system modified successfully',
                 type: 'success'
               })
             })
@@ -1201,19 +1201,19 @@ export default {
         default_login: !row.is_default ? row.id : 'local'
       }
       if (!row.is_default) {
-        const confirmInfo = `<p>设置后，系统默认登录页面为默认账号系统登录页。</p>
-                    <p style='color: red' v-if="row.is_default">请确保配置的账号系统可用，否则系统将无法登录。</p>`
+        const confirmInfo = `<p>After Setting，The system default login page is the default account system login page。</p>
+                    <p style='color: red' v-if="row.is_default">Please make sure that the configured account system is available，Otherwise, the system will not be able to log in。</p>`
         const cancelInfo = ``
-        this.$confirm(row.is_default ? cancelInfo : confirmInfo, `确定${row.is_default ? '取消' : '设置'}默认账号系统?`, {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(row.is_default ? cancelInfo : confirmInfo, `Sure${row.is_default ? 'Cancel' : 'Set Up'}Default Account System?`, {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Cancel',
           type: 'warning',
           dangerouslyUseHTMLString: true
         }).then(res => {
           setDefaultAccountAPI(params).then(res => {
             this.$message({
               type: 'success',
-              message: '设置默认账号系统成功'
+              message: 'Set default account system successfully'
             })
             this.getAccountConfig()
           })
@@ -1222,7 +1222,7 @@ export default {
         setDefaultAccountAPI(params).then(res => {
           this.$message({
             type: 'success',
-            message: '取消默认账号系统成功'
+            message: 'Cancel the default account system successfully'
           })
           this.getAccountConfig()
         })

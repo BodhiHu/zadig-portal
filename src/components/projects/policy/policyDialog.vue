@@ -3,48 +3,48 @@
     <div
       slot="title"
       style="text-align: center;"
-    >{{ mode | desc }}协作模式 {{ mode === 'updated' ? collaborationData.initName : collaborationData.name }}</div>
+    >{{ mode | desc }}Collaborative Mode {{ mode === 'updated' ? collaborationData.initName : collaborationData.name }}</div>
     <div class="policy-content">
       <div
         class="title update-name"
         v-if="mode === 'updated' && collaborationData.initName !== collaborationData.name"
-      >协作模式名称修改为：{{ collaborationData.name }}</div>
+      >The collaboration mode name is changed to：{{ collaborationData.name }}</div>
       <div v-for="key in Object.keys(changedInfo)" :key="key">
         <div class="title">
-          您将
+          You Will
           <span class="title-weight" :class="[key]">{{ key | desc }}</span>
-          以下用户权限：
+          The following user rights：
         </div>
         <div class="content" :style="{ 'margin-top' : key === 'updated' ? '10px' : '0' }">
           <div class="role" v-if="key !== 'updated'">
             <span class="member" v-for="member in changedInfo[key].members" :key="member">{{ member }}</span>
           </div>
           <div v-for="workflow in changedInfo[key].workflows" :key="workflow.name">
-            {{ workflow.collaboration_type === 'new' ? '独享': '共享' }}工作流 {{ workflow.name }} ：
+            {{ workflow.collaboration_type === 'new' ? 'Exclusive': 'Shared' }}Workflow {{ workflow.name }} ：
             <span
               v-for="(verb, index) in workflow.verbs"
               :key="verb"
             >{{ policyMap.workflow[verb] }}{{ workflow.verbs.length - 1 !== index ? '、' : '' }}</span>
-            <span v-if="workflow.verbs.length === 0">无</span>
-            权限
+            <span v-if="workflow.verbs.length === 0">None</span>
+            Permission
           </div>
           <div v-for="product in changedInfo[key].products" :key="product.name">
-            {{ product.collaboration_type === 'new' ? '独享': '共享' }}环境 {{ product.name }} ：
+            {{ product.collaboration_type === 'new' ? 'Exclusive': 'Shared' }}Surroundings {{ product.name }} ：
             <span
               v-for="(verb, index) in product.verbs"
               :key="verb"
             >{{ policyMap.environment[verb] }}{{ product.verbs.length - 1 !== index ? '、' : '' }}</span>
-            <span v-if="product.verbs.length === 0">无</span>
-            权限
+            <span v-if="product.verbs.length === 0">None</span>
+            Permission
           </div>
-          <div v-if="changedInfo.updated && changedInfo.updated.recycle_day">资源回收策略更新为 {{ changedInfo.updated.recycle_day }} 天。</div>
+          <div v-if="changedInfo.updated && changedInfo.updated.recycle_day">The resource recycling policy is updated to {{ changedInfo.updated.recycle_day }} Sky。</div>
         </div>
       </div>
-      <div class="title">请确认！</div>
+      <div class="title">Please Confirm！</div>
     </div>
     <div slot="footer">
-      <el-button size="small" @click="dialogVisible = false" :disabled="loading">取 消</el-button>
-      <el-button size="small" type="primary" @click="handleCollaboration" :loading="loading">确 定</el-button>
+      <el-button size="small" @click="dialogVisible = false" :disabled="loading">Cancel</el-button>
+      <el-button size="small" type="primary" @click="handleCollaboration" :loading="loading">Sure</el-button>
     </div>
   </el-dialog>
 </template>
@@ -90,9 +90,9 @@ export default {
   filters: {
     desc (val) {
       const info = {
-        added: '增加',
-        deleted: '删除',
-        updated: '更新'
+        added: 'Increase',
+        deleted: 'Delete',
+        updated: 'Renew'
       }
       return info[val]
     }
@@ -146,7 +146,7 @@ export default {
           payload = cloneDeep(this.collaborationData)
           fn(payload)
           await createCollaborationAPI(this.projectName, payload).then(() => {
-            this.$message.success(`您成功生成了 ${payload.name} 协作模式！`)
+            this.$message.success(`You have successfully generated ${payload.name} Collaborative Mode！`)
             fn(this.collaborationData)
             init(this.collaborationData)
             this.updateCollaboration(payload)
@@ -160,7 +160,7 @@ export default {
             this.collaborationData.initName,
             payload
           ).then(() => {
-            this.$message.success(`您成功更新了 ${payload.name} 协作模式！`)
+            this.$message.success(`You have successfully updated ${payload.name} Collaborative Mode！`)
             fn(this.collaborationData)
             init(this.collaborationData)
             this.updateCollaboration(payload)
@@ -169,13 +169,13 @@ export default {
         case 'deleted':
           const name = this.collaborationData.initName
           await deleteCollaborationAPI(this.projectName, name).then(() => {
-            this.$message.success(`您成功删除了 ${name} 协作模式！`)
+            this.$message.success(`You have successfully deleted ${name} Collaborative Mode！`)
             delete this.collaborationData.initCollaboration
             this.deleteMode(name)
           })
           break
         default:
-          this.$message.error('模式错误：', this.mode)
+          this.$message.error('Mode Error：', this.mode)
       }
       this.loading = false
       this.dialogVisible = false

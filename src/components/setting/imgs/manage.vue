@@ -1,10 +1,10 @@
 <template>
   <div v-loading="loading"
-       element-loading-text="加载中..."
+       element-loading-text="Loading..."
        element-loading-spinner="iconfont iconfont-loading iconjingxiang"
        class="setting-img-container">
     <!--imgs-create-dialog-->
-    <el-dialog title='添加镜像'
+    <el-dialog title='Add Mirror'
                width="40%"
                :close-on-click-modal="false"
                custom-class="create-img-dialog"
@@ -13,32 +13,32 @@
                :rules="rules"
                :model="createImg"
                label-width="125px">
-        <el-form-item label="标签"
+        <el-form-item label="Label"
                       prop="label">
           <el-input size="small"
                     v-model="createImg.label"></el-input>
         </el-form-item>
-        <el-form-item label="镜像名称"
+        <el-form-item label="Image Name"
                       prop="value">
           <el-input size="small"
-                    placeholder="仓库地址/命名空间/镜像名:标签"
+                    placeholder="Warehouse Address/Namespaces/Mirror Name:Label"
                     v-model.trim="createImg.value"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer"
            class="dialog-footer">
         <el-button size="small"
-                   @click="dialogImgCreateFormVisible = false">取 消</el-button>
+                   @click="dialogImgCreateFormVisible = false">Cancel</el-button>
         <el-button :plain="true"
                    type="success"
                    size="small"
-                   @click="addImg">保存</el-button>
+                   @click="addImg">Save</el-button>
       </div>
     </el-dialog>
     <!--imgs-create-dialog-->
 
     <!--imgs-edit-dialog-->
-    <el-dialog title='修改镜像'
+    <el-dialog title='Modify The Image'
                custom-class="create-img-dialog"
                :close-on-click-modal="false"
                :visible.sync="dialogImgEditFormVisible">
@@ -46,13 +46,13 @@
                :rules="rules"
                :model="swapImg"
                label-width="125px">
-        <el-form-item label="标签"
+        <el-form-item label="Label"
                       prop="label">
           <el-input size="small"
                     disabled
                     v-model="swapImg.label"></el-input>
         </el-form-item>
-        <el-form-item label="镜像名称"
+        <el-form-item label="Image Name"
                       prop="value">
           <el-input size="small"
                     v-model.trim="swapImg.value"></el-input>
@@ -61,11 +61,11 @@
       <div slot="footer"
            class="dialog-footer">
         <el-button size="small"
-                   @click="dialogImgEditFormVisible = false">取 消</el-button>
+                   @click="dialogImgEditFormVisible = false">Cancel</el-button>
         <el-button size="small"
                    :plain="true"
                    @click="updateImg"
-                   type="success">保存</el-button>
+                   type="success">Save</el-button>
       </div>
     </el-dialog>
     <!--imgs-edit-dialog-->
@@ -73,12 +73,12 @@
       <el-alert type="info"
                 :closable="false">
         <template slot>
-          <span>项目的构建和测试可以使用构建镜像作为基础环境镜像，构建镜像中需要添加一些必要软件包，详情可参考
+          <span>The build and test of the project can use the build image as the base environment image，Some necessary packages need to be added to the build image，For details, please refer to
             <el-link style="vertical-align: baseline;"
                      type="primary"
                      href="https://docs.koderover.com/zadig/settings/custom-image/"
                      :underline="false"
-                     target="_blank">帮助文档</el-link>
+                     target="_blank">Help Documentation</el-link>
           </span><br>
         </template>
       </el-alert>
@@ -86,30 +86,30 @@
         <el-button :plain="true"
                    @click="dialogImgCreateFormVisible=true"
                    size="small"
-                   type="success">添加</el-button>
+                   type="success">Add To</el-button>
       </div>
       <div class="img-list">
         <template>
           <el-table :data="imgs"
                     style="width: 100%;">
-            <el-table-column label="标签">
+            <el-table-column label="Label">
               <template slot-scope="scope">
                 <span>{{scope.row.label}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="镜像名称">
+            <el-table-column label="Image Name">
               <template slot-scope="scope">
                 <span>{{scope.row.value}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="Operate">
               <template slot-scope="scope">
                 <el-button @click="editImg(scope.row)"
                            type="primary"
-                           size="mini" plain>编辑</el-button>
+                           size="mini" plain>Edit</el-button>
                 <el-button size="mini"
                            @click="deleteImg(scope.row)"
-                           type="danger" plain>删除</el-button>
+                           type="danger" plain>Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -141,8 +141,8 @@ export default {
       },
       imgs: [],
       rules: {
-        label: [{ required: true, message: '请填写镜像标签', trigger: 'blur' }],
-        value: [{ required: true, message: '请填写镜像名称', trigger: 'blur' }]
+        label: [{ required: true, message: 'Please fill in the mirror tag', trigger: 'blur' }],
+        value: [{ required: true, message: 'Please fill in the mirror name', trigger: 'blur' }]
       }
     }
   },
@@ -152,16 +152,16 @@ export default {
       this.swapImg = this.$utils.cloneObj(data)
     },
     deleteImg (data) {
-      this.$confirm(`确定要删除 ${data.label} 这个镜像吗？`, '删除镜像确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Sure You Want To Delete ${data.label} Is This Mirror？`, 'Delete mirror confirmation', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteImgAPI(data.id).then(
           res => {
             this.getImgList()
             this.$message({
-              message: '删除镜像成功',
+              message: 'Mirror deleted successfully',
               type: 'success'
             })
           }
@@ -178,7 +178,7 @@ export default {
               this.$refs.createImg.resetFields()
               this.getImgList()
               this.$message({
-                message: '新增镜像成功',
+                message: 'Added mirror successfully',
                 type: 'success'
               })
             }
@@ -199,7 +199,7 @@ export default {
               this.$refs.updateImg.resetFields()
               this.getImgList()
               this.$message({
-                message: '更新镜像成功',
+                message: 'Mirror updated successfully',
                 type: 'success'
               })
             }
@@ -223,7 +223,7 @@ export default {
 
   },
   created () {
-    bus.$emit(`set-topbar-title`, { title: '构建镜像管理', breadcrumb: [] })
+    bus.$emit(`set-topbar-title`, { title: 'Build Image Management', breadcrumb: [] })
 
     this.getImgList()
   },

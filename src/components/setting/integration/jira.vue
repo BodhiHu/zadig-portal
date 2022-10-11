@@ -2,7 +2,7 @@
   <div class="integration-jira-container">
 
     <!--start of edit jira dialog-->
-    <el-dialog title="Jira 配置-修改"
+    <el-dialog title="Jira Configure-Revise"
                :close-on-click-modal="false"
                custom-class="edit-form-dialog"
                :visible.sync="dialogJiraEditFormVisible">
@@ -13,24 +13,24 @@
                label-width="100px"
                class="mg-t32"
                ref="jiraEditForm">
-        <el-form-item label="Jira 地址"
+        <el-form-item label="Jira Address"
                       prop="host">
           <el-input v-model="jiraEdit.host"
-                    placeholder="企业 Jira 地址"
+                    placeholder="Enterprise Jira Address"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="用户名"
+        <el-form-item label="Username"
                       prop="user">
           <el-input v-model="jiraEdit.user"
-                    placeholder="有读写 Issue 权限的用户"
+                    placeholder="Have Read And Write Issue Privileged User"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码"
+        <el-form-item label="Password"
                       prop="access_token">
           <el-input v-model="jiraEdit.access_token"
-                    placeholder="用户密码"
+                    placeholder="User Password"
                     autofocus
                     v-if="dialogJiraEditFormVisible"
                     show-password
@@ -44,17 +44,17 @@
                    native-type="submit"
                    size="small"
                    @click="updateJiraConfig()"
-                   class="start-create">确定</el-button>
+                   class="start-create">Sure</el-button>
         <el-button plain
                    native-type="submit"
                    size="small"
-                   @click="handleJiraCancel()">取消</el-button>
+                   @click="handleJiraCancel()">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of edit jira dialog-->
 
     <!--start of edit jira dialog-->
-    <el-dialog title="Jira 配置-添加"
+    <el-dialog title="Jira Configure-Add To"
                :close-on-click-modal="false"
                custom-class="edit-form-dialog"
                :visible.sync="dialogJiraAddFormVisible">
@@ -65,24 +65,24 @@
                label-width="100px"
                class="mg-t32"
                ref="jiraAddForm">
-        <el-form-item label="Jira 地址"
+        <el-form-item label="Jira Address"
                       prop="host">
           <el-input v-model="jiraAdd.host"
-                    placeholder="企业 Jira 地址"
+                    placeholder="Enterprise Jira Address"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="用户名"
+        <el-form-item label="Username"
                       prop="user">
           <el-input v-model="jiraAdd.user"
-                    placeholder="有读写 Issue 权限的用户"
+                    placeholder="Have Read And Write Issue Privileged User"
                     autofocus
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码"
+        <el-form-item label="Password"
                       prop="access_token">
           <el-input v-model="jiraAdd.access_token"
-                    placeholder="用户密码"
+                    placeholder="User Password"
                     autofocus
                     show-password
                     type="password"
@@ -95,11 +95,11 @@
                    native-type="submit"
                    size="small"
                    @click="createJiraConfig()"
-                   class="start-create">确定</el-button>
+                   class="start-create">Sure</el-button>
         <el-button plain
                    native-type="submit"
                    size="small"
-                   @click="handleJiraCancel()">取消</el-button>
+                   @click="handleJiraCancel()">Cancel</el-button>
       </div>
     </el-dialog>
     <!--end of edit jira dialog-->
@@ -108,12 +108,12 @@
         <el-alert type="info"
                   :closable="false">
           <template>
-            支持集成 Jira，配置后工作流可以追踪到 Jira Issue，详情可参考
+            Support Integration Jira，After configuration the workflow can be traced to Jira Issue，For details, please refer to
             <el-link style="font-size: 14px; vertical-align: baseline;"
                      type="primary"
                      :href="`https://docs.koderover.com/zadig/settings/jira/`"
                      :underline="false"
-                     target="_blank">帮助文档</el-link> 。
+                     target="_blank">Help Documentation</el-link> 。
           </template>
         </el-alert>
       </template>
@@ -122,36 +122,36 @@
                    size="small"
                    type="primary"
                    plain
-                   @click="handleJiraAdd">添加</el-button>
+                   @click="handleJiraAdd">Add To</el-button>
       </div>
       <el-table :data="jira"
                 style="width: 100%;">
-        <el-table-column label="Jira 地址">
+        <el-table-column label="Jira Address">
           <template slot-scope="scope">
             {{scope.row.host}}
           </template>
         </el-table-column>
-        <el-table-column label="用户名">
+        <el-table-column label="Username">
           <template slot-scope="scope">
             {{scope.row.user}}
           </template>
         </el-table-column>
-        <el-table-column label="密码">
+        <el-table-column label="Password">
           <template>
             **********
           </template>
         </el-table-column>
-        <el-table-column label="操作"
+        <el-table-column label="Operate"
                          width="160">
           <template slot-scope="scope">
             <el-button type="primary"
                        size="mini"
                        plain
-                       @click="handleJiraEdit(scope.row)">编辑</el-button>
+                       @click="handleJiraEdit(scope.row)">Edit</el-button>
             <el-button type="danger"
                        size="mini"
                        @click="handleJiraDelete"
-                       plain>删除</el-button>
+                       plain>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -164,10 +164,10 @@ import {
 } from '@api'
 const validateJiraURL = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入服务 URL'))
+    callback(new Error('Please Enter Service URL'))
   } else {
     if (value.endsWith('/')) {
-      callback(new Error('URL 末尾不能包含 /'))
+      callback(new Error('URL Cannot contain at the end /'))
     } else {
       callback()
     }
@@ -192,17 +192,17 @@ export default {
       jiraRules: {
         user: {
           required: true,
-          message: '请输入用户名',
+          message: 'Please Enter User Name',
           trigger: ['blur', 'change']
         },
         host: [{
           required: true,
-          message: '请输入 Host',
+          message: 'Please Enter Host',
           trigger: 'blur'
         },
         {
           type: 'url',
-          message: '请输入正确的 URL，包含协议',
+          message: 'Please Enter The Correct URL，Include Agreement',
           trigger: ['blur', 'change']
         }, {
           required: true,
@@ -211,7 +211,7 @@ export default {
         }],
         access_token: {
           required: true,
-          message: '请输入密码',
+          message: 'Please Enter Password',
           trigger: ['blur', 'change']
         }
       },
@@ -242,15 +242,15 @@ export default {
       this.jiraEdit = this.$utils.cloneObj(row)
     },
     handleJiraDelete () {
-      this.$confirm(`确定要删除这个 Jira 配置吗？`, '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Sure you want to delete this Jira Configure？`, 'Confirm', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         deleteJiraAPI().then((res) => {
           this.getJiraConfig()
           this.$message({
-            message: 'Jira 配置删除成功',
+            message: 'Jira Configuration deleted successfully',
             type: 'success'
           })
         })
@@ -264,7 +264,7 @@ export default {
             this.getJiraConfig()
             this.handleJiraCancel()
             this.$message({
-              message: 'Jira 配置添加成功',
+              message: 'Jira Configuration added successfully',
               type: 'success'
             })
           })
@@ -281,7 +281,7 @@ export default {
             this.getJiraConfig()
             this.handleJiraCancel()
             this.$message({
-              message: 'Jira 配置修改成功',
+              message: 'Jira Configuration modification succeeded',
               type: 'success'
             })
           })

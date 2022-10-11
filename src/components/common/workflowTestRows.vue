@@ -2,13 +2,13 @@
   <div class="workflow-build-rows">
     <el-table v-if="runnerTests.length > 0"
               :data="runnerTests"
-              empty-text="无"
+              empty-text="None"
               class="test-table">
       <el-table-column prop="test_module_name"
-                       label="测试"
+                       label="Test"
                        width="100px"></el-table-column>
 
-      <el-table-column label="代码库">
+      <el-table-column label="Code Library">
         <template slot-scope="scope">
           <el-row v-for="build of scope.row.builds"
                   class="build-row"
@@ -29,20 +29,20 @@
                             allow-create
                             clearable
                             size="small"
-                            placeholder="请选择分支">
+                            placeholder="Please Select A Branch">
                   <el-option v-for="branch of build.branchNames"
                               :key="branch"
                               :label="branch"
                               :value="branch"></el-option>
                 </el-select>
                 <el-tooltip v-else
-                            content="请求分支失败，请手动输入分支"
+                            content="Request Branch Failed，Please enter the branch manually"
                             placement="top"
                             popper-class="gray-popper">
                   <el-input v-model="build.branch"
                             class="short-input"
                             size="small"
-                            placeholder="请填写分支"></el-input>
+                            placeholder="Please fill in the branch"></el-input>
                 </el-tooltip>
               </el-col>
 
@@ -51,7 +51,7 @@
                 <el-select v-if="!$utils.isEmpty(build.branchPRsMap)"
                             v-model.number="build[build.prNumberPropName]"
                             size="small"
-                            placeholder="请选择 PR"
+                            placeholder="Please Choose PR"
                             filterable
                             clearable>
 
@@ -60,10 +60,10 @@
                               placement="left"
                               popper-class="gray-popper">
 
-                    <div slot="content">{{`创建人: ${$utils.tailCut(item.authorUsername,10)}`}}
-                      <br />{{`时间: ${$utils.convertTimestamp(item.createdAt)}`}}
-                      <br />{{`源分支: ${item.sourceBranch}`}}
-                      <br />{{`目标分支: ${item.targetBranch}`}}
+                    <div slot="content">{{`Founder: ${$utils.tailCut(item.authorUsername,10)}`}}
+                      <br />{{`Time: ${$utils.convertTimestamp(item.createdAt)}`}}
+                      <br />{{`Source Branch: ${item.sourceBranch}`}}
+                      <br />{{`Target Branch: ${item.targetBranch}`}}
                     </div>
                     <el-option :label="`#${item[build.prNumberPropName]} ${item.title}`"
                                 :value="item[build.prNumberPropName]">
@@ -71,13 +71,13 @@
                   </el-tooltip>
                 </el-select>
                 <el-tooltip v-else
-                            content="PR 不存在，支持手动输入 PR 号"
+                            content="PR Does Not Exist，Support Manual Input PR No"
                             placement="top"
                             popper-class="gray-popper">
                   <el-input v-model.number="build[build.prNumberPropName]"
                             class="short-input"
                             size="small"
-                            placeholder="请填写 PR 号"></el-input>
+                            placeholder="Please Fill Out PR No"></el-input>
                 </el-tooltip>
               </el-col>
               <el-col :span="1">
@@ -96,7 +96,7 @@
       <el-table-column width="250px">
       </el-table-column>
       <el-table-column width="100px"
-                       label="变量">
+                       label="Variable">
         <template slot-scope="scope">
           <el-popover placement="left"
                       width="450"
@@ -110,7 +110,7 @@
                     style="width: 100%;"
                     v-if="row.type==='choice'"
                     v-model="row.value"
-                    placeholder="默认值"
+                    placeholder="Defaults"
                     size="small"
                   >
                     <el-option v-for="option in row.choice_option" :key="option" :label="option" :value="option"></el-option>
@@ -118,13 +118,13 @@
                   <el-input v-else
                             size="small"
                             v-model="row.value"
-                            placeholder="请输入 value"></el-input>
+                            placeholder="Please Enter value"></el-input>
                 </template>
               </el-table-column>
             </el-table>
             <el-button style="padding: 5px 0;"
                        slot="reference"
-                       type="text">设置</el-button>
+                       type="text">Set Up</el-button>
           </el-popover>
         </template>
       </el-table-column>

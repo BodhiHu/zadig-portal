@@ -2,11 +2,11 @@
   <div class="build-console">
     <header class="mg-b8">
       <el-col :span="6">
-        <span class="type">构建</span>
+        <span class="type">Construct</span>
         <span>{{jobInfo.name}}</span>
       </el-col>
       <el-col :span="2">
-        <a :class="buildOverallColor" href="#buildv4-log">{{jobInfo.status?buildOverallStatusZh:"未运行"}}</a>
+        <a :class="buildOverallColor" href="#buildv4-log">{{jobInfo.status?buildOverallStatusZh:"Not Running"}}</a>
       </el-col>
       <el-col :span="2">
         <span>{{jobInfo.interval}}</span>
@@ -20,17 +20,17 @@
     <main>
       <section>
         <div class="error-wrapper">
-          <el-alert v-if="jobInfo.error" title="错误信息" :description="jobInfo.error" type="error" close-text="知道了"></el-alert>
+          <el-alert v-if="jobInfo.error" title="Error Message" :description="jobInfo.error" type="error" close-text="Understood"></el-alert>
         </div>
         <el-row class="text item mg-t8" :gutter="0" v-for="(build,index) in jobInfo.spec.repos" :key="index">
           <el-col :span="4">
-            <div class="grid-content item-title">代码库({{build.source}})</div>
+            <div class="grid-content item-title">Code Library({{build.source}})</div>
           </el-col>
           <el-col :span="8">
             <div>{{build.repo_name}}</div>
           </el-col>
           <el-col :span="4">
-            <div class="item-title">代码信息</div>
+            <div class="item-title">Code Information</div>
           </el-col>
           <el-col :span="8">
             <RepoJump :build="build" showIcon />
@@ -38,24 +38,24 @@
         </el-row>
         <el-row :gutter="0" class="mg-t8">
           <el-col :span="4">
-            <div class="item-title">服务名称</div>
+            <div class="item-title">Service Name</div>
           </el-col>
           <el-col :span="8">
             <span>{{jobInfo.spec.service_name}}({{jobInfo.spec.service_module}})</span>
           </el-col>
           <el-col :span="4">
             <div class="item-title">
-              镜像名称
+              Image Name
               <el-tooltip effect="dark" placement="top">
                 <div slot="content">
-                  构建镜像标签生成规则 ：
-                  <br />选择 Tag 进行构建 ： 构建时间戳 -
+                  Build image label generation rules ：
+                  <br />Choose Tag To Build ： Build Timestamp -
                   Tag
-                  <br />只选择分支进行构建：构建时间戳
-                  - 任务 ID - 分支名称
-                  <br />选择分支和 PR 进行构建：构建时间戳 - 任务 ID - 分支名称 - PR ID
-                  <br />只选择 PR
-                  进行构建：构建时间戳 - 任务 ID - PR ID
+                  <br />Only select branches to build：Build Timestamp
+                  - Task ID - Branch Name
+                  <br />Select Branch And PR To Build：Build Timestamp - Task ID - Branch Name - PR ID
+                  <br />Select Only PR
+                  To Build：Build Timestamp - Task ID - PR ID
                 </div>
                 <span>
                   <i class="el-icon-question"></i>

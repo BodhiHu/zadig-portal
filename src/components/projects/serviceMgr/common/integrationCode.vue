@@ -1,6 +1,6 @@
 <template>
   <div class="add-code-container">
-    <el-alert title="检测到代码源尚未集成请先集成代码源后再进行添加构建操作"
+    <el-alert title="It is detected that the code source has not been integrated, please integrate the code source before adding the build operation"
               :closable="false"
               type="warning">
     </el-alert>
@@ -8,19 +8,19 @@
               type="info"
               :closable="false">
       <slot>
-        <span class="tips">点击
+        <span class="tips">Click
           <el-link style="font-size: 14px; vertical-align: baseline;"
                    type="primary"
                    href="https://support.huaweicloud.com/devg-apisign/api-sign-provide-aksk.html"
                    :underline="false"
-                   target="_blank">帮助</el-link> 查看如何获取 Access Key 和 Secret Key
+                   target="_blank">Help</el-link> See How To Get Access Key And Secret Key
         </span>
-        <span class="tips">点击
+        <span class="tips">Click
           <el-link style="font-size: 14px; vertical-align: baseline;"
                    type="primary"
                    href="https://support.huaweicloud.com/usermanual-codehub/codehub_ug_8003.html"
                    :underline="false"
-                   target="_blank">帮助</el-link> 查看如何获取用户名和密码
+                   target="_blank">Help</el-link> See how to get username and password
         </span>
       </slot>
     </el-alert>
@@ -28,7 +28,7 @@
               type="info"
               :closable="false">
       <slot>
-        <span class="tips">{{`- 应用授权的回调地址请填写:`}}</span>
+        <span class="tips">{{`- Please fill in the callback address of application authorization:`}}</span>
         <span class="tips code-line">
           {{`${$utils.getOrigin()}/api/directory/codehosts/callback`}}
           <span v-clipboard:copy="`${$utils.getOrigin()}/api/directory/codehosts/callback`"
@@ -36,13 +36,13 @@
                 v-clipboard:error="copyCommandError"
                 class="el-icon-document-copy copy"></span>
         </span>
-        <span class="tips">- 应用权限请勾选：api、read_user、read_repository</span>
-        <span class="tips">- 其他配置可以点击
+        <span class="tips">- Please tick the application permission：api、read_user、read_repository</span>
+        <span class="tips">- Other configurations can be clicked
           <el-link style="font-size: 13px;"
                    type="primary"
                    :href="`https://docs.koderover.com/zadig/settings/codehost/gitlab/`"
                    :underline="false"
-                   target="_blank">帮助</el-link> 查看配置样例
+                   target="_blank">Help</el-link> View sample configuration
         </span>
       </slot>
     </el-alert>
@@ -51,7 +51,7 @@
              status-icon
              label-position="top"
              ref="codeForm">
-      <el-form-item label="代码源"
+      <el-form-item label="Code Source"
                     prop="type">
         <el-select style="width: 100%;"
                    v-model="codeAdd.type">
@@ -67,10 +67,10 @@
       </el-form-item>
       <template v-if="codeAdd.type==='gitlab'||codeAdd.type==='github'">
         <el-form-item v-if="codeAdd.type==='gitlab'"
-                      label="GitLab 服务 URL"
+                      label="GitLab Serve URL"
                       prop="address">
           <el-input v-model="codeAdd.address"
-                    placeholder="GitLab 服务 URL"
+                    placeholder="GitLab Serve URL"
                     auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item :label="codeAdd.type==='gitlab'?'Application ID':'Client ID'"
@@ -94,19 +94,19 @@
         </el-form-item>
       </template>
       <template v-else-if="codeAdd.type==='gerrit'">
-        <el-form-item label="Gerrit 服务 URL"
+        <el-form-item label="Gerrit Serve URL"
                       prop="address">
           <el-input v-model="codeAdd.address"
-                    placeholder="Gerrit 服务 URL"
+                    placeholder="Gerrit Serve URL"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="用户名"
+        <el-form-item label="Username"
                       prop="username">
           <el-input v-model="codeAdd.username"
                     placeholder="Username"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码"
+        <el-form-item label="Password"
                       prop="password">
           <el-input v-model="codeAdd.password"
                     placeholder="Password"
@@ -114,44 +114,44 @@
         </el-form-item>
       </template>
       <template v-else-if="codeAdd.type==='codehub'">
-        <el-form-item label="CodeHub 服务 URL"
+        <el-form-item label="CodeHub Serve URL"
                       prop="address">
           <el-input v-model="codeAdd.address"
-                    placeholder="CodeHub 服务 URL"
+                    placeholder="CodeHub Serve URL"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="区域"
+        <el-form-item label="Area"
                       prop="region">
           <el-input v-model="codeAdd.region"
-                    placeholder="区域"
+                    placeholder="Area"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item :rules="{required: true,message: '请填写 Access Key',trigger: ['blur']}"
+        <el-form-item :rules="{required: true,message: 'Please Fill Out Access Key',trigger: ['blur']}"
                       label="Access Key"
                       prop="applicationId">
           <el-input v-model="codeAdd.applicationId"
                     placeholder="Access Key"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item :rules="{required: true,message: '请填写 Secret Key',trigger: ['blur']}"
+        <el-form-item :rules="{required: true,message: 'Please Fill Out Secret Key',trigger: ['blur']}"
                       label="Secret Key"
                       prop="clientSecret">
           <el-input v-model="codeAdd.clientSecret"
                     placeholder="Secret Key"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item :rules="{required: true,message: '请填写用户名',trigger: ['blur']}"
-                      label="用户名"
+        <el-form-item :rules="{required: true,message: 'Please enter your username',trigger: ['blur']}"
+                      label="Username"
                       prop="username">
           <el-input v-model="codeAdd.username"
-                    placeholder="用户名"
+                    placeholder="Username"
                     auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item :rules="{required: true,message: '请填写密码',trigger: ['blur']}"
-                      label="密码"
+        <el-form-item :rules="{required: true,message: 'Please fill in the password',trigger: ['blur']}"
+                      label="Password"
                       prop="password">
           <el-input v-model="codeAdd.password"
-                    placeholder="密码"
+                    placeholder="Password"
                     auto-complete="off"></el-input>
         </el-form-item>
 
@@ -164,11 +164,11 @@
                  size="small"
                  class="start-create"
                  @click="createCodeConfig">
-        {{(codeAdd.type==='gerrit'||codeAdd.type==='codehub')?'确定':'前往授权'}}</el-button>
+        {{(codeAdd.type==='gerrit'||codeAdd.type==='codehub')?'Sure':'Go To Authorization'}}</el-button>
       <el-button plain
                  native-type="submit"
                  size="small"
-                 @click="cancel">取消</el-button>
+                 @click="cancel">Cancel</el-button>
     </div>
   </div>
 </template>
@@ -178,10 +178,10 @@ import {
 } from '@api'
 const validateGitURL = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('请输入服务 URL'))
+    callback(new Error('Please Enter Service URL'))
   } else {
     if (value.endsWith('/')) {
-      callback(new Error('URL 末尾不能包含 /'))
+      callback(new Error('URL Cannot contain at the end /'))
     } else {
       callback()
     }
@@ -203,12 +203,12 @@ export default {
       codeRules: {
         type: {
           required: true,
-          message: '请选择代码源类型',
+          message: 'Please select a code source type',
           trigger: ['blur']
         },
         address: [{
           type: 'url',
-          message: '请输入正确的 URL，包含协议',
+          message: 'Please Enter The Correct URL，Include Agreement',
           trigger: ['blur', 'change']
         }, {
           required: true,
@@ -217,37 +217,37 @@ export default {
         }],
         accessToken: {
           required: true,
-          message: '请填写 Access Token',
+          message: 'Please Fill Out Access Token',
           trigger: ['blur']
         },
         applicationId: {
           required: true,
-          message: '请填写 Id',
+          message: 'Please Fill Out Id',
           trigger: ['blur']
         },
         clientSecret: {
           required: true,
-          message: '请填写 Secret',
+          message: 'Please Fill Out Secret',
           trigger: ['blur']
         },
         region: {
           required: true,
-          message: '请填写区域',
+          message: 'Please Fill In The Area',
           trigger: ['blur']
         },
         namespace: {
           required: true,
-          message: '请填写 Org',
+          message: 'Please Fill Out Org',
           trigger: ['blur']
         },
         username: {
           required: true,
-          message: '请填写 Username',
+          message: 'Please Fill Out Username',
           trigger: ['blur']
         },
         password: {
           required: true,
-          message: '请填写 Password',
+          message: 'Please Fill Out Password',
           trigger: ['blur']
         }
       }
@@ -272,7 +272,7 @@ export default {
           createCodeSourceAPI(payload).then((res) => {
             const codehostId = res.id
             this.$message({
-              message: '代码源添加成功',
+              message: 'Code source added successfully',
               type: 'success'
             })
             if (payload.type === 'gitlab' || payload.type === 'github') {
@@ -290,13 +290,13 @@ export default {
     },
     copyCommandSuccess (event) {
       this.$message({
-        message: '地址已成功复制到剪贴板',
+        message: 'Address successfully copied to clipboard',
         type: 'success'
       })
     },
     copyCommandError (event) {
       this.$message({
-        message: '地址复制失败',
+        message: 'Address Copy Failed',
         type: 'error'
       })
     }

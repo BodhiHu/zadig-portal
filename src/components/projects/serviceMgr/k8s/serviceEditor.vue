@@ -8,11 +8,11 @@
               class="cf-pipeline-yml-build__editor-wrapper"
               @keydown.meta.83.prevent="updateServiceByKeyword"
             >
-              <div class="yaml-desc" v-show="!service.yaml">请输入 Kubernetes YAML 配置</div>
+              <div class="yaml-desc" v-show="!service.yaml">Please Enter Kubernetes YAML Configure</div>
               <CodeMirror style="width: 100%; height: 100%;" ref="myCm" :value="service.yaml" :options="cmOptions" @input="onCmCodeChange"/>
             </div>
             <div class="modal-block" v-if="service.source === 'template' && showModal">
-              <el-button type="primary" size="small" @click="showModal = false">预览/编辑</el-button>
+              <el-button type="primary" size="small" @click="showModal = false">Preview/Edit</el-button>
             </div>
           </div>
         </div>
@@ -34,8 +34,8 @@
       </div>
       <div class="controls__wrap">
         <div class="controls__right">
-          <el-button v-hasPermi="{projectName: projectName, actions:['edit_service','create_service'],operator:'or',isBtn:true}" v-if="!hideSave" type="primary" size="small" :disabled="disabledSave || !yamlChange" @click="updateService">保存</el-button>
-          <el-button v-hasPermi="{projectName: projectName, action:'manage_environment',isBtn:true}" v-if="!isOnboarding" type="primary" size="small" :disabled="!showJoinToEnvBtn" @click="showJoinToEnvDialog">加入环境</el-button>
+          <el-button v-hasPermi="{projectName: projectName, actions:['edit_service','create_service'],operator:'or',isBtn:true}" v-if="!hideSave" type="primary" size="small" :disabled="disabledSave || !yamlChange" @click="updateService">Save</el-button>
+          <el-button v-hasPermi="{projectName: projectName, action:'manage_environment',isBtn:true}" v-if="!isOnboarding" type="primary" size="small" :disabled="!showJoinToEnvBtn" @click="showJoinToEnvDialog">Join The Environment</el-button>
         </div>
       </div>
     </div>
@@ -162,7 +162,7 @@ export default {
       return saveServiceTemplateAPI(isEdit, payload).then(res => {
         this.$message({
           type: 'success',
-          message: `服务 ${payload.service_name} 保存成功`
+          message: `Serve ${payload.service_name} Successfully Saved`
         })
         this.keepInitYaml(payload.yaml)
         this.$emit('onUpdateService', {
@@ -267,7 +267,7 @@ export default {
         ) {
           this.info = {
             message:
-              '信息：其他项目的共享服务，不支持在本项目中编辑，编辑器为只读模式'
+              'Information：Shared services for other projects，Editing in this project is not supported，The editor is in read-only mode'
           }
         } else if (
           val.product_name === this.projectName &&
@@ -275,7 +275,7 @@ export default {
           val.source !== 'spock' && val.source !== 'template'
         ) {
           this.info = {
-            message: '信息：当前服务为仓库管理服务，编辑器为只读模式'
+            message: 'Information：The current service is warehouse management service，The editor is in read-only mode'
           }
         } else {
           this.info = {
